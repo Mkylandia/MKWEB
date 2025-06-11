@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MKWEB1.0</title>
+  <title>MKWEB 0.1</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="ocean">
@@ -11,7 +11,7 @@
 
   <div class="ui-container">
     <header class="ui-header">
-      <h1 class="logo">MKWEB<span>1.0</span></h1>
+      <h1 class="logo">MKWEB<span>0.1</span></h1>
       <div class="controls">
         <label for="theme-picker" class="theme-label">Theme:</label>
         <select id="theme-picker" aria-label="Theme auswählen">
@@ -25,22 +25,37 @@
     </header>
 
     <main class="ui-main">
+      <!-- Suche -->
       <div class="search-box">
         <span class="icon">🔍</span>
         <input id="search" type="text" placeholder="Suche …" autocomplete="off">
         <ul id="suggestions"></ul>
       </div>
       <div id="time" class="time"></div>
-    </main>
 
-    <footer class="ui-footer">
-      <nav class="quick-links">
+      <!-- Schnell-Links -->
+      <section class="quick-links">
         <a href="https://youtube.com" target="_blank">YouTube</a>
         <a href="https://github.com" target="_blank">GitHub</a>
         <a href="https://news.google.com" target="_blank">News</a>
         <a href="https://discord.com" target="_blank">Discord</a>
-      </nav>
-    </footer>
+      </section>
+
+      <!-- Neu: News-Block -->
+      <section class="news-section">
+        <h2>Aktuelle News</h2>
+        <div class="news-cards">
+          <a class="news-card" href="https://www.msn.com/en-xl/news/other/trump-says-france-would-speak-german-now-without-us-entering-wwii/vi-AA1GsFQw" target="_blank">
+            <h3>Trump: „Frankreich würde Deutsch sprechen…“</h3>
+            <p>Trump behauptet, ohne US-Einsatz im 2. Weltkrieg würde Frankreich heute Deutsch sprechen.</p>
+          </a>
+          <a class="news-card" href="https://www.msn.com/en-xl/news/other/north-korea-seeks-russia-s-assistance-to-repair-damaged-warship-after-botched-launch/ar-AA1Gr2SP" target="_blank">
+            <h3>Nordkorea bittet Russland um Hilfe…</h3>
+            <p>Nach missglücktem Start sucht Nordkorea Unterstützung bei Russland, um Kriegsschiff zu reparieren.</p>
+          </a>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script src="script.js"></script>
