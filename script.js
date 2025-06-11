@@ -1,81 +1,56 @@
-// Theme Picker
-const picker = document.getElementById('theme-picker');
-const body   = document.body;
-const saved  = localStorage.getItem('mkweb-theme') || 'ocean';
-picker.value = saved;
-body.dataset.theme = saved;
+// — Settings Management —
+function loadSettings() { /* … */ }
+function saveSettings() { /* … */ }
 
-picker.addEventListener('change', () => {
-  body.dataset.theme = picker.value;
-  localStorage.setItem('mkweb-theme', picker.value);
-});
+// — Theme Picker —
+const picker = document.getElementById('theme-picker'),
+      body   = document.body;
+let settings = loadSettings();
+picker.value = settings.theme || 'ocean';
+body.dataset.theme = picker.value;
+picker.addEventListener('change', ()=>{ /* fade + set theme + save */ });
 
-// Live-Uhr
-const timeEl   = document.getElementById('time');
-const searchBox= document.getElementById('search');
-function updateClock() {
-  const now = new Date();
-  timeEl.textContent = now.toLocaleDateString('de-DE', {
-    weekday:'short', day:'2-digit', month:'short'
-  }) + ' • ' + now.toLocaleTimeString('de-DE');
+// — Clock & Date —
+function updateClock() { /* Zeit & Datum aktualisieren */ }
+setInterval(updateClock,1000); updateClock();
+document.getElementById('search').addEventListener('focus', ()=>{/* fade Uhr*/});
+document.getElementById('search').addEventListener('blur', ()=>{/* restore Uhr*/});
+
+// — Multi-Engine Search & Autocomplete —
+// (searchEngines-Objekt, event listener, performSearch, suggestions…)
+
+// — ToDo System —
+// (loadTodos, renderTodos, addTodo, toggleTodo, deleteTodo, clearTodos…)
+
+// — Particle System —
+// (initParticles, animateParticles, toggle via button & save…)
+
+// — Weather Widget —
+// (updateWeather mit Geolocation & Fallback, getWeatherIcon, showSimulatedWeather…)
+
+// — News Fetch —
+// Option: statisch per Hand in HTML, oder dynamisch via fetch(RSS/API) ins #news-grid
+
+// — Keyboard Shortcuts —
+// (‘/’ fokussiert Suche, Strg+T Theme, Strg+P Partikel…)
+
+// — Easter-Egg (Konami Code) —
+// (Konami-Sequenz abfangen, rainbow-Mode…)
+
+// — IntersectionObserver für fade-in-up —
+
+// — Random Greeting —
+
+// — Productivity Stats Tracking —
+
+// — Tooltips —
+
+// — Initialization —
+function init() {
+  /* loadSettings, loadTodos, loadStats,
+     initParticles, animateParticles,
+     updateWeather(), addAnimations(),
+     showGreeting(), set intervals… */
 }
-setInterval(updateClock, 1000);
-updateClock();
-
-// Uhr-Fade auf Suche-Fokus
-searchBox.addEventListener('focus', () => timeEl.classList.add('faded'));
-searchBox.addEventListener('blur',  () => timeEl.classList.remove('faded'));
-
-// Autocomplete-Suche
-const suggList= document.getElementById('suggestions');
-const terms   = ['Google','YouTube','GitHub','Wikipedia','Reddit','StackOverflow'];
-searchBox.addEventListener('input', () => {
-  const v = searchBox.value.trim().toLowerCase();
-  suggList.innerHTML = '';
-  if (!v) return suggList.classList.remove('visible');
-  terms.filter(t => t.toLowerCase().includes(v))
-       .forEach(t => {
-         const li = document.createElement('li');
-         li.textContent = t;
-         li.onclick = () => window.location.href =
-                      `https://www.google.com/search?q=${encodeURIComponent(t)}`;
-         suggList.append(li);
-       });
-  suggList.classList.toggle('visible', suggList.childElementCount > 0);
-});
-searchBox.addEventListener('keydown', e => {
-  if (e.key==='Enter' && searchBox.value.trim()) {
-    window.location.href =
-      `https://www.google.com/search?q=${encodeURIComponent(searchBox.value)}`;
-  }
-});
-
-// Partikel-Hintergrund
-const canvas = document.getElementById('bg-canvas'),
-      ctx    = canvas.getContext('2d');
-let particles = [];
-function initParticles() {
-  canvas.width = innerWidth; canvas.height = innerHeight;
-  particles = Array.from({length:120}, ()=>({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: Math.random()*2+1,
-    dx:(Math.random()-0.5)*0.4,
-    dy:(Math.random()-0.5)*0.4
-  }));
-}
-function draw() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
-    ctx.fillStyle = `rgba(255,255,255,0.2)`;
-    ctx.fill();
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width)p.dx*=-1;
-    if(p.y<0||p.y>canvas.height)p.dy*=-1;
-  });
-  requestAnimationFrame(draw);
-}
-window.addEventListener('resize', initParticles);
-initParticles(); draw();
+window.addEventListener('load', init);
+window.addEventListener('resize', ()=>{ /* initParticles() */ });
