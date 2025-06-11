@@ -1,116 +1,221 @@
-// Default-Konfiguration und Persistenz
-const DEFAULT = {
-  theme:'ocean', font:'Inter', blur:20, particles:true,
-  sections:{search:true,time:true,bookmarks:true,news:true,stats:true},
-  logo:'MKWEB 2.0', placeholder:'Suche im Web...', bookmarks:[]
-};
-let cfg = JSON.parse(localStorage.getItem('mkweb')) || DEFAULT;
-const save = () => localStorage.setItem('mkweb', JSON.stringify(cfg));
-
-// UI-Elemente
-const elems = {
-  themePicker: document.getElementById('theme-picker-settings'),
-  fontPicker: document.getElementById('font-picker'),
-  blurSlider: document.getElementById('blur-slider'),
-  blurValue: document.getElementById('blur-value'),
-  particlesToggle: document.getElementById('particles-toggle'),
-  sectionToggles: ['search','time','bookmarks','news','stats'].reduce((o,s)=>{
-    o[s] = document.getElementById(`${s}-toggle`); return o;
-  },{}),
-  logo: document.getElementById('logo'),
-  searchInput: document.getElementById('search'),
-  bookmarkGrid: document.getElementById('bookmark-grid'),
+const cfgKey = 'mkwebcfg';
+const DEFAULT = { 
+  theme: 'ocean', 
+  font: 'Inter', 
+  blur: 20, 
+  particles: true,
+  sections: {
+    search: true, 
+    time: true, 
+    bookmarks: true, 
+    news: true, 
+    stats: true
+  }
 };
 
-// Änderungen anwenden
-function apply() {
-  document.body.dataset.theme = cfg.theme;
-  document.body.style.setProperty('--font-family', cfg.font);
-  elems.blurValue.textContent = cfg.blur + 'px';
-  document.documentElement.style.setProperty('--glass-blur', cfg.blur + 'px');
-  elems.themePicker.value = cfg.theme;
-  elems.fontPicker.value = cfg.font;
-  elems.blurSlider.value = cfg.blur;
-  elems.particlesToggle.classList.toggle('active', cfg.particles);
-  elems.searchInput.placeholder = cfg.placeholder;
-  elems.logo.textContent = cfg.logo;
-  Object.entries(cfg.sections).forEach(([sec,val]) => {
-    document.getElementById(sec + '-section').style.display = val ? 'block' : 'none';
-    elems.sectionToggles[sec].checked = val;
+let cfg = JSON.parse(localStorage.getItem(cfgKey)) || DEFAULT;
+let startTime = Date.now();
+let clickCount = 0;
+let searchCount = 0;
+
+// DOM-Elemente
+const timeEl = document.getElementById('time');
+const dateEl = document.getElementById('date');
+const searchInput = document.getElementById('search-input');
+const bookmarkGrid = document.getElementById('bookmark-grid');
+const newsGrid = document.getElementById('news-grid');
+const statsBar = document.querySelector('.stats-bar');
+const settingsModal = document.getElementById('settings-modal');
+
+// Zeitaktualisierung
+function updateTime() {
+  const now = new Date();
+  timeEl.textContent = now.toLocaleTimeString('de-DE');
+  dateEl.textContent = now.toLocaleDateString('de-DE', { 
+    weekday: 'long', 
+    day: 'numeric', 
+    month: 'long' 
   });
-  renderBookmarks();
 }
 
-// Favoriten rendern
-function renderBookmarks(){
-  elems.bookmarkGrid.innerHTML = '';
-  cfg.bookmarks.forEach((b,i)=>{
-    const a = document.createElement('a');
-    a.className = 'bookmark-card glass';
-    a.href = b.url; a.target = '_blank';
-    a.innerHTML = `<span>${b.icon||'🔖'}</span>
-                   <div><div>${b.name}</div><small>${b.url}</small></div>
-                   <button class="bookmark-remove" data-i="${i}">×</button>`;
-    elems.bookmarkGrid.appendChild(a);
+// Konfiguration anwenden
+function applyConfig() {
+  // Theme anwenden
+  document.body.setAttribute('data-theme', cfg.theme);
+  
+  // Schriftart anwenden
+  document.body.style.fontFamily = cfg.font;
+  
+  // Unschärfe anwenden
+  document.querySelector('.bg-blur').style.backdropFilter = `blur(${cfg.blur}px)`;
+  
+  // Abschnitts-Sichtbarkeit
+  document.getElementById('search-section').style.display = 
+    cfg.sections.search ? 'block' : 'none';
+  document.getElementById('time-section').style.display = 
+    cfg.sections.time ? 'block' : 'none';
+  document.getElementById('bookmarks-section').style.display = 
+    cfg.sections.bookmarks ? 'block' : 'none';
+  document.getElementById('news-section').style.display = 
+    cfg.sections.news ? 'block' : 'none';
+  statsBar.style.display = cfg.sections.stats ? 'flex' : 'none';
+  
+  // UI-Elemente aktualisieren
+  document.getElementById('theme-select').value = cfg.theme;
+  document.getElementById('font-select').value = cfg.font;
+  document.getElementById('blur-range').value = cfg.blur;
+  document.getElementById('blur-value').textContent = `${cfg.blur}px`;
+  document.getElementById('particles-toggle').checked = cfg.particles;
+  
+  // Lesezeichen laden
+  loadBookmarks();
+  
+  // Nachrichten laden
+  loadNews();
+}
+
+// Lesezeichen laden
+function loadBookmarks() {
+  const bookmarks = [
+    { name: 'Google', url: 'https://google.com', icon: 'fab fa-google' },
+    { name: 'YouTube', url: 'https://youtube.com', icon: 'fab fa-youtube' },
+    { name: 'GitHub', url: 'https://github.com', icon: 'fab fa-github' },
+    { name: 'Amazon', url: 'https://amazon.de', icon: 'fab fa-amazon' },
+    { name: 'Reddit', url: 'https://reddit.com', icon: 'fab fa-reddit' },
+    { name: 'Twitter', url: 'https://twitter.com', icon: 'fab fa-twitter' }
+  ];
+
+  bookmarkGrid.innerHTML = '';
+  bookmarks.forEach(bookmark => {
+    const bookmarkEl = document.createElement('div');
+    bookmarkEl.className = 'bookmark-item';
+    bookmarkEl.innerHTML = `
+      <i class="${bookmark.icon}"></i>
+      <div>${bookmark.name}</div>
+    `;
+    bookmarkEl.addEventListener('click', () => {
+      window.open(bookmark.url, '_blank');
+      incrementClickCount();
+    });
+    bookmarkGrid.appendChild(bookmarkEl);
   });
-  document.querySelectorAll('.bookmark-remove').forEach(btn=>{
-    btn.onclick = e => {
-      cfg.bookmarks.splice(e.target.dataset.i,1);
-      save(); apply();
-    };
+}
+
+// Nachrichten laden
+function loadNews() {
+  const news = [
+    { title: 'KI-Revolution', source: 'TechNews', icon: 'fas fa-robot' },
+    { title: 'Börsenupdate', source: 'Finanzen', icon: 'fas fa-chart-line' },
+    { title: 'Wetterwarnung', source: 'Wetter', icon: 'fas fa-cloud-sun' },
+    { title: 'Sport-Ergebnisse', source: 'Sport', icon: 'fas fa-futbol' },
+    { title: 'Gesundheitstipps', source: 'Gesundheit', icon: 'fas fa-heart' },
+    { title: 'Reiseangebote', source: 'Reisen', icon: 'fas fa-suitcase' }
+  ];
+
+  newsGrid.innerHTML = '';
+  news.forEach(item => {
+    const newsEl = document.createElement('div');
+    newsEl.className = 'news-item';
+    newsEl.innerHTML = `
+      <i class="${item.icon}"></i>
+      <h3>${item.title}</h3>
+      <small>${item.source}</small>
+    `;
+    newsEl.addEventListener('click', incrementClickCount);
+    newsGrid.appendChild(newsEl);
   });
+}
+
+// Statistik-Funktionen
+function incrementClickCount() {
+  clickCount++;
+  document.getElementById('click-count').textContent = clickCount;
+}
+
+function incrementSearchCount() {
+  searchCount++;
+  document.getElementById('search-count').textContent = searchCount;
+}
+
+function updateTimeSpent() {
+  const minutes = Math.floor((Date.now() - startTime) / 60000);
+  document.getElementById('time-spent').textContent = minutes;
+}
+
+// Einstellungen speichern
+function saveConfig() {
+  localStorage.setItem(cfgKey, JSON.stringify(cfg));
+  applyConfig();
 }
 
 // Event-Listener
-document.getElementById('settings-btn').onclick = _=> showSettings();
-document.getElementById('settings-close').onclick = _=> { hideSettings(); save(); };
-elems.themePicker.onchange = e=> { cfg.theme = e.target.value; apply(); };
-elems.fontPicker.onchange = e=> { cfg.font = e.target.value; apply(); };
-elems.blurSlider.oninput = e=> { cfg.blur = e.target.value; apply(); };
-elems.particlesToggle.onclick = _=> { cfg.particles = !cfg.particles; apply(); };
-Object.entries(elems.sectionToggles).forEach(([sec,el])=>{
-  el.onchange = e => { cfg.sections[sec] = e.target.checked; apply(); };
+document.getElementById('settings-btn').addEventListener('click', () => {
+  settingsModal.classList.remove('hidden');
 });
-document.getElementById('add-bookmark').onclick = _=>{
-  const n = document.getElementById('bookmark-name').value;
-  const u = document.getElementById('bookmark-url').value;
-  const i = document.getElementById('bookmark-icon').value;
-  if(n && u) { cfg.bookmarks.push({name:n,url:u,icon:i}); save(); apply(); }
-};
-document.getElementById('logo-text').oninput = e=>{ cfg.logo = e.target.value; apply(); };
-document.getElementById('search-placeholder').oninput = e=>{ cfg.placeholder = e.target.value; apply(); };
 
-// Export, Import, Reset
-document.getElementById('export-settings').onclick = _=> {
-  const blob = new Blob([JSON.stringify(cfg)],{type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download='mkweb-settings.json'; a.click();
-};
-document.getElementById('import-settings-btn').onclick = _=> document.getElementById('import-settings').click();
-document.getElementById('import-settings').onchange = e=>{
-  const file = e.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => { cfg = JSON.parse(ev.target.result); apply(); save(); };
-  reader.readAsText(file);
-};
-document.getElementById('reset-settings').onclick = _=> { cfg = DEFAULT; apply(); save(); };
-
-// Keyboard Shortcuts & Zeit-Update
-document.addEventListener('keydown', e=>{
-  if((e.ctrlKey||e.metaKey)&&e.key==',') showSettings();
-  if((e.ctrlKey||e.metaKey)&&e.key=='/') { e.preventDefault(); elems.searchInput.focus(); }
-  if(e.key=='Escape') hideSettings();
+document.getElementById('settings-close').addEventListener('click', () => {
+  settingsModal.classList.add('hidden');
 });
-function updateTime(){
-  const now = new Date();
-  document.getElementById('time').textContent = now.toLocaleTimeString('de-DE');
-  document.getElementById('date').textContent = now.toLocaleDateString('de-DE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-}
-setInterval(updateTime,1000); updateTime();
 
-// Hilfsfunktionen
-function showSettings(){ document.getElementById('settings-overlay').style.display='flex'; }
-function hideSettings(){ document.getElementById('settings-overlay').style.display='none'; }
+document.getElementById('reset-settings').addEventListener('click', () => {
+  cfg = {...DEFAULT};
+  saveConfig();
+});
+
+document.getElementById('theme-select').addEventListener('change', (e) => {
+  cfg.theme = e.target.value;
+  saveConfig();
+});
+
+document.getElementById('font-select').addEventListener('change', (e) => {
+  cfg.font = e.target.value;
+  saveConfig();
+});
+
+document.getElementById('blur-range').addEventListener('input', (e) => {
+  cfg.blur = e.target.value;
+  document.getElementById('blur-value').textContent = `${cfg.blur}px`;
+  saveConfig();
+});
+
+document.getElementById('particles-toggle').addEventListener('change', (e) => {
+  cfg.particles = e.target.checked;
+  saveConfig();
+});
+
+document.querySelectorAll('.modal-body input[type="checkbox"][data-section]').forEach(checkbox => {
+  checkbox.addEventListener('change', (e) => {
+    const section = e.target.dataset.section;
+    cfg.sections[section] = e.target.checked;
+    saveConfig();
+  });
+});
+
+document.querySelector('.search-bar button').addEventListener('click', () => {
+  if (searchInput.value.trim()) {
+    incrementSearchCount();
+    window.open(`https://google.com/search?q=${encodeURIComponent(searchInput.value)}`, '_blank');
+  }
+});
+
+searchInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter' && searchInput.value.trim()) {
+    incrementSearchCount();
+    window.open(`https://google.com/search?q=${encodeURIComponent(searchInput.value)}`, '_blank');
+  }
+});
+
+document.querySelectorAll('.action-btn').forEach(btn => {
+  btn.addEventListener('click', incrementClickCount);
+});
 
 // Initialisierung
-apply();
+setInterval(updateTime, 1000);
+setInterval(updateTimeSpent, 60000);
+updateTime();
+applyConfig();
+
+// Partikel-Effekt (Platzhalter)
+if (cfg.particles) {
+  console.log("Partikel-Effekt aktiviert");
+}
