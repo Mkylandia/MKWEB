@@ -1,133 +1,166 @@
-/* Variablen & Reset */
+/* === Variablen & Reset === */
 :root {
-  --bg-light: #f9f9f9;
-  --fg-light: #222;
-  --bg-dark:  #1a1a1a;
-  --fg-dark:  #eee;
-  --accent:   #007aff;
-  --transition: 0.3s;
+  --transition: 0.4s ease;
+  --bg-gradient-start: #1e3c72;
+  --bg-gradient-end:   #2a5298;
+  --fg-primary:        #ffffff;
+  --accent:            #4fc3f7;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: var(--bg-dark);
-  color: var(--fg-dark);
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--transition), color var(--transition);
+body[data-theme="ocean"] {
+  --bg-gradient-start: #1e3c72;
+  --bg-gradient-end:   #2a5298;
+  --fg-primary:        #ffffff;
+  --accent:            #4fc3f7;
 }
-body.light {
-  background: var(--bg-light);
-  color: var(--fg-light);
+body[data-theme="sunset"] {
+  --bg-gradient-start: #ff5f6d;
+  --bg-gradient-end:   #ffc371;
+  --fg-primary:        #222222;
+  --accent:            #ffeb3b;
+}
+body[data-theme="forest"] {
+  --bg-gradient-start: #134e5e;
+  --bg-gradient-end:   #71b280;
+  --fg-primary:        #ffffff;
+  --accent:            #a5d6a7;
+}
+body[data-theme="light"] {
+  --bg-gradient-start: #f0f0f0;
+  --bg-gradient-end:   #ffffff;
+  --fg-primary:        #222222;
+  --accent:            #007aff;
+}
+body[data-theme="dark"] {
+  --bg-gradient-start: #121212;
+  --bg-gradient-end:   #1e1e1e;
+  --fg-primary:        #e0e0e0;
+  --accent:            #bb86fc;
 }
 
-/* Layout */
-.container {
-  width: 100%; max-width: 480px;
-  padding: 1rem;
-  text-align: center;
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; font-family:'Segoe UI', sans-serif; }
+
+/* Hintergrund-Gradient */
+body {
+  background: linear-gradient(135deg,
+    var(--bg-gradient-start),
+    var(--bg-gradient-end)
+  ) fixed;
+  color: var(--fg-primary);
 }
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+/* Canvas für Partikel */
+#bg-canvas {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%; z-index:0;
+}
+
+/* Container */
+.ui-container {
+  position:relative; z-index:1;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:space-between;
+  height:100vh; padding:2rem;
+}
+
+/* Header */
+.ui-header {
+  width:100%; max-width:800px;
+  display:flex; justify-content:space-between; align-items:center;
 }
 .logo {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size:2rem; font-weight:700;
 }
 .logo span {
   color: var(--accent);
   transition: color var(--transition);
 }
-body.light .logo span {
-  color: var(--accent);
-}
-.btn-icon {
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition: transform var(--transition);
-}
-.btn-icon:hover { transform: scale(1.1); }
-
-/* Suchfeld */
-.search-wrapper {
-  position: relative;
-  margin-top: 3rem;
-}
-.search-wrapper input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: transparent;
+.controls select {
+  padding:0.4rem 0.6rem;
+  border-radius:0.4rem;
+  border:none;
+  background:rgba(255,255,255,0.2);
   color: inherit;
-  font-size: 1rem;
-  transition: border-color var(--transition), background var(--transition);
-}
-body.light .search-wrapper input {
-  border-color: rgba(0,0,0,0.2);
-}
-.search-wrapper input:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: rgba(255,255,255,0.1);
-}
-.suggestions {
-  list-style: none;
-  position: absolute;
-  top: 110%;
-  left: 0; right: 0;
-  background: inherit;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  opacity: 0;
-  transform: translateY(-0.5rem);
-  transition: opacity var(--transition), transform var(--transition);
-  pointer-events: none;
-}
-.suggestions.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.suggestions li {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+  font-size:0.9rem;
+  cursor:pointer;
   transition: background var(--transition);
 }
-.suggestions li:hover {
-  background: var(--accent);
-  color: #fff;
+.controls select:focus {
+  outline:none;
+  background:rgba(255,255,255,0.3);
 }
 
-/* Uhrzeit */
+/* Main (Suche + Uhr) */
+.ui-main {
+  text-align:center;
+  width:100%; max-width:600px;
+}
+.search-box {
+  position:relative;
+  margin-bottom:2rem;
+}
+.search-box .icon {
+  position:absolute; top:50%; left:1rem;
+  transform:translateY(-50%);
+  font-size:1.2rem;
+  color: var(--accent);
+}
+.search-box input {
+  width:100%; padding:0.8rem 1rem 0.8rem 3rem;
+  border-radius:2rem;
+  border:none;
+  background:rgba(255,255,255,0.2);
+  color: inherit;
+  font-size:1rem;
+  transition: background var(--transition);
+}
+.search-box input:focus {
+  outline:none;
+  background:rgba(255,255,255,0.3);
+}
+#suggestions {
+  position:absolute; top:110%; left:0; right:0;
+  list-style:none; background:rgba(0,0,0,0.2);
+  border-radius:0.5rem; overflow:hidden;
+  opacity:0; transform:translateY(-0.5rem);
+  transition: opacity var(--transition), transform var(--transition);
+  pointer-events:none;
+}
+#suggestions.visible {
+  opacity:1; transform:translateY(0);
+  pointer-events:auto;
+}
+#suggestions li {
+  padding:0.5rem 1rem; cursor:pointer;
+  transition: background var(--transition);
+}
+#suggestions li:hover {
+  background: var(--accent);
+  color: var(--fg-primary);
+}
+
+/* Live-Uhr */
 .time {
-  margin-top: 2rem;
-  font-size: 1.25rem;
-  opacity: 0.8;
+  font-size:1.25rem;
+  opacity:0.8;
   transition: opacity var(--transition);
 }
-.time:hover { opacity: 1; }
+.time:hover {
+  opacity:1;
+}
 
-/* Quick Links */
+/* Footer (Quick-Links) */
+.ui-footer {
+  width:100%; max-width:800px;
+}
 .quick-links {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 3rem;
+  display:flex; gap:1.5rem; justify-content:center;
 }
 .quick-links a {
-  text-decoration: none;
-  color: inherit;
-  font-size: 0.95rem;
-  border-bottom: 2px solid transparent;
-  transition: border-color var(--transition);
+  color:inherit; text-decoration:none;
+  font-size:0.95rem;
+  border-bottom:2px solid transparent;
+  transition:border-color var(--transition);
 }
 .quick-links a:hover {
   border-color: var(--accent);
