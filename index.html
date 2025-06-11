@@ -1,148 +1,141 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MKWEB 2.0 - Enhanced</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* CSS wird hier eingefügt (siehe unten) */
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MKWEB 2.0 – Enhanced</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-theme="ocean">
   <canvas id="bg-canvas"></canvas>
-  
-  <div class="container">
-    <header class="header">
-      <h1 class="logo">MKWEB<span style="color: var(--accent);">2.0</span></h1>
-      <div class="controls">
-        <div class="control-group">
-          <label for="theme-picker" class="theme-label">Theme:</label>
-          <select id="theme-picker">
+
+  <!-- Settings Overlay -->
+  <div class="settings-overlay" id="settings-overlay">
+    <div class="settings-panel glass">
+      <button class="settings-close" id="settings-close">×</button>
+      <h2>⚙️ Einstellungen</h2>
+
+      <!-- Design -->
+      <div class="settings-section">
+        <h3>🎨 Design</h3>
+        <div class="setting-item">
+          <label for="theme-picker-settings">Theme</label>
+          <select id="theme-picker-settings">
             <option value="ocean">🌊 Ocean</option>
             <option value="sunset">🌅 Sunset</option>
             <option value="forest">🌲 Forest</option>
             <option value="midnight">🌙 Midnight</option>
-            <option value="aurora">🌌 Aurora</option>
+            <option value="aurora">✨ Aurora</option>
             <option value="cyberpunk">🤖 Cyberpunk</option>
-            <option value="neon">⚡ Neon</option>
+            <option value="monochrome">⚫ Monochrome</option>
           </select>
         </div>
-        <button id="toggle-particles">⏸️ Partikel</button>
-        <button id="fullscreen-btn">🔳 Vollbild</button>
-        <div class="weather-widget" id="weather">
-          <span class="weather-icon">🌤️</span>
-          <span class="weather-text" id="weather-text">Lade...</span>
+        <div class="setting-item">
+          <label for="font-picker">Schriftart</label>
+          <select id="font-picker">
+            <option value="Inter">Inter</option>
+            <option value="Poppins">Poppins</option>
+            <option value="JetBrains Mono">JetBrains Mono</option>
+          </select>
         </div>
+        <div class="setting-item range-item">
+          <label for="blur-slider">Blur Effekt</label>
+          <input type="range" id="blur-slider" min="0" max="30" />
+          <span id="blur-value">20px</span>
+        </div>
+        <div class="setting-item">
+          <label>Partikel Animation</label>
+          <div class="toggle-switch" id="particles-toggle"></div>
+        </div>
+      </div>
+
+      <!-- Layout -->
+      <div class="settings-section">
+        <h3>📄 Layout-Kontrolle</h3>
+        <div class="setting-item"><label><input type="checkbox" id="search-toggle" checked /> Suche</label></div>
+        <div class="setting-item"><label><input type="checkbox" id="time-toggle" checked /> Uhr</label></div>
+        <div class="setting-item"><label><input type="checkbox" id="bookmarks-toggle" checked /> Favoriten</label></div>
+        <div class="setting-item"><label><input type="checkbox" id="news-toggle" checked /> News</label></div>
+        <div class="setting-item"><label><input type="checkbox" id="stats-toggle" checked /> Stats</label></div>
+      </div>
+
+      <!-- Favoriten -->
+      <div class="settings-section">
+        <h3>🔖 Favoriten-Manager</h3>
+        <div class="bookmark-manager">
+          <div class="bookmark-form">
+            <input type="text" id="bookmark-name" placeholder="Name" />
+            <input type="url" id="bookmark-url" placeholder="URL" />
+            <input type="text" id="bookmark-icon" placeholder="Icon (Emoji)" />
+            <button id="add-bookmark">Hinzufügen</button>
+          </div>
+          <div class="bookmark-list" id="bookmark-list"></div>
+        </div>
+      </div>
+
+      <!-- Erweitert -->
+      <div class="settings-section">
+        <h3>🔧 Erweitert</h3>
+        <div class="setting-item">
+          <label for="logo-text">Logo Text</label>
+          <input type="text" id="logo-text" />
+        </div>
+        <div class="setting-item">
+          <label for="search-placeholder">Suchplatzhalter</label>
+          <input type="text" id="search-placeholder" />
+        </div>
+        <div class="setting-item">
+          <button id="reset-settings">Reset</button>
+          <button id="export-settings">Export</button>
+          <button id="import-settings-btn">Import</button>
+          <input type="file" id="import-settings" accept="application/json" style="display: none;" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header class="header glass">
+      <h1 class="logo" id="logo">MKWEB 2.0</h1>
+      <div class="controls">
+        <button id="settings-btn">⚙️ Settings</button>
       </div>
     </header>
 
-    <main class="main">
-      <section class="search-section">
-        <div class="search-engines">
-          <button class="search-engine active" data-engine="google">Google</button>
-          <button class="search-engine" data-engine="bing">Bing</button>
-          <button class="search-engine" data-engine="duckduckgo">DuckDuckGo</button>
-          <button class="search-engine" data-engine="youtube">YouTube</button>
-          <button class="search-engine" data-engine="github">GitHub</button>
-        </div>
+    <main>
+      <section class="search-section glass" id="search-section">
+        <div class="search-engines"></div>
         <div class="search-container">
           <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input id="search" type="text" placeholder="Suche im Web..." autocomplete="off">
-            <ul id="suggestions"></ul>
+            <span>🔍</span>
+            <input id="search" placeholder="Suche im Web..." autocomplete="off" />
           </div>
         </div>
       </section>
 
-      <section class="time-display">
-        <div id="time" class="time"></div>
-        <div id="date" class="date"></div>
+      <section class="time-display glass" id="time-section">
+        <div id="time"></div>
+        <div id="date"></div>
       </section>
 
-      <section class="quick-actions">
-        <a class="action-card" href="https://youtube.com" target="_blank">
-          <div class="icon">📺</div>
-          <div class="label">YouTube</div>
-        </a>
-        <a class="action-card" href="https://github.com" target="_blank">
-          <div class="icon">💻</div>
-          <div class="label">GitHub</div>
-        </a>
-        <a class="action-card" href="https://gmail.com" target="_blank">
-          <div class="icon">📧</div>
-          <div class="label">Gmail</div>
-        </a>
-        <a class="action-card" href="https://discord.com" target="_blank">
-          <div class="icon">💬</div>
-          <div class="label">Discord</div>
-        </a>
-        <a class="action-card" href="https://netflix.com" target="_blank">
-          <div class="icon">🎬</div>
-          <div class="label">Netflix</div>
-        </a>
-        <a class="action-card" href="https://spotify.com" target="_blank">
-          <div class="icon">🎵</div>
-          <div class="label">Spotify</div>
-        </a>
-        <a class="action-card" href="https://reddit.com" target="_blank">
-          <div class="icon">🔴</div>
-          <div class="label">Reddit</div>
-        </a>
-        <a class="action-card" href="https://stackoverflow.com" target="_blank">
-          <div class="icon">💡</div>
-          <div class="label">Stack Overflow</div>
-        </a>
+      <section class="bookmark-section glass" id="bookmarks-section">
+        <h2>🔖 Favoriten</h2>
+        <div class="bookmark-grid" id="bookmark-grid"></div>
       </section>
 
-      <section class="news-section">
-        <h2>📰 Aktuelle Nachrichten</h2>
-        <div class="news-grid">
-          <a class="news-card" href="https://www.tagesschau.de" target="_blank">
-            <h3>Tagesschau</h3>
-            <p>Die wichtigsten Nachrichten des Tages aus Deutschland und der Welt</p>
-            <div class="news-source">ARD Tagesschau</div>
-          </a>
-          <a class="news-card" href="https://www.spiegel.de" target="_blank">
-            <h3>Der Spiegel</h3>
-            <p>Nachrichten, Analysen und Hintergründe zu Politik, Wirtschaft und Gesellschaft</p>
-            <div class="news-source">Spiegel Online</div>
-          </a>
-          <a class="news-card" href="https://www.zeit.de" target="_blank">
-            <h3>Die Zeit</h3>
-            <p>Qualitätsjournalismus mit tiefgreifenden Berichten und Kommentaren</p>
-            <div class="news-source">Zeit Online</div>
-          </a>
-          <a class="news-card" href="https://www.heise.de" target="_blank">
-            <h3>Heise Online</h3>
-            <p>IT-News, Tests, Ratgeber und Hintergründe zu Technik und Digitalisierung</p>
-            <div class="news-source">Heise Verlag</div>
-          </a>
-          <a class="news-card" href="https://www.golem.de" target="_blank">
-            <h3>Golem.de</h3>
-            <p>IT-News für Profis - Hardware, Software, Games und Gadgets</p>
-            <div class="news-source">Golem Media</div>
-          </a>
-          <a class="news-card" href="https://www.welt.de" target="_blank">
-            <h3>Die Welt</h3>
-            <p>Aktuelle Nachrichten, Hintergründe und Kommentare</p>
-            <div class="news-source">Welt.de</div>
-          </a>
-        </div>
+      <section class="news-section glass" id="news-section">
+        <h2>📰 Nachrichten</h2>
+        <div class="news-grid"></div>
       </section>
+
+      <div class="stats-panel glass" id="stats-panel">
+        <div>🔍 <span id="search-count">0</span></div>
+        <div>⏱️ <span id="time-spent">0</span>min</div>
+        <div>🎯 <span id="click-count">0</span></div>
+      </div>
     </main>
-
-    <div class="stats-panel" id="stats-panel">
-      <div>🔍 Suchen: <span id="search-count">0</span></div>
-      <div>⏱️ Zeit: <span id="time-spent">0min</span></div>
-      <div>🎯 Klicks: <span id="click-count">0</span></div>
-    </div>
   </div>
 
-  <script>
-    // JavaScript wird hier eingefügt (siehe unten)
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
