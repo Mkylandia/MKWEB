@@ -33,7 +33,6 @@
     </header>
 
     <main class="ui-main">
-      <!-- Suche & Engines -->
       <div class="search-container">
         <div class="search-engines">
           <button class="search-engine active" data-engine="google">Google</button>
@@ -47,22 +46,31 @@
           <ul id="suggestions"></ul>
         </div>
       </div>
-
-      <!-- Uhr & Datum -->
+      
       <div class="time-container">
         <div id="time" class="time"></div>
         <div id="date" class="date"></div>
       </div>
 
-      <!-- Schnellaktionen -->
       <section class="quick-actions">
-        <a class="action-card" href="https://youtube.com" target="_blank"><div class="icon">📺</div><div class="label">YouTube</div></a>
-        <a class="action-card" href="https://github.com"  target="_blank"><div class="icon">💻</div><div class="label">GitHub</div></a>
-        <a class="action-card" href="https://gmail.com"   target="_blank"><div class="icon">📧</div><div class="label">Gmail</div></a>
-        <a class="action-card" href="https://discord.com" target="_blank"><div class="icon">💬</div><div class="label">Discord</div></a>
+        <a class="action-card" href="https://youtube.com" target="_blank">
+          <div class="icon">📺</div>
+          <div class="label">YouTube</div>
+        </a>
+        <a class="action-card" href="https://github.com" target="_blank">
+          <div class="icon">💻</div>
+          <div class="label">GitHub</div>
+        </a>
+        <a class="action-card" href="https://gmail.com" target="_blank">
+          <div class="icon">📧</div>
+          <div class="label">Gmail</div>
+        </a>
+        <a class="action-card" href="https://discord.com" target="_blank">
+          <div class="icon">💬</div>
+          <div class="label">Discord</div>
+        </a>
       </section>
 
-      <!-- ToDo-Widget -->
       <div class="todo-widget">
         <div class="todo-header">
           <h3>📋 Aufgaben</h3>
@@ -75,10 +83,30 @@
         <ul id="todo-list" class="todo-list"></ul>
       </div>
 
-      <!-- News-Section -->
       <section class="news-section">
         <h2>📰 Aktuelle News</h2>
-        <div class="news-grid" id="news-grid"></div>
+        <div class="news-grid">
+          <a class="news-card" href="https://www.tagesschau.de" target="_blank">
+            <h3>Tagesschau</h3>
+            <p>Aktuelle Nachrichten aus Deutschland und der Welt</p>
+            <div class="news-source">tagesschau.de</div>
+          </a>
+          <a class="news-card" href="https://www.spiegel.de" target="_blank">
+            <h3>Der Spiegel</h3>
+            <p>Nachrichten, Analysen und Hintergründe</p>
+            <div class="news-source">spiegel.de</div>
+          </a>
+          <a class="news-card" href="https://www.zeit.de" target="_blank">
+            <h3>Die Zeit</h3>
+            <p>Qualitätsjournalismus und tiefgreifende Berichte</p>
+            <div class="news-source">zeit.de</div>
+          </a>
+          <a class="news-card" href="https://www.heise.de" target="_blank">
+            <h3>Heise Online</h3>
+            <p>IT-News, Tests und Ratgeber</p>
+            <div class="news-source">heise.de</div>
+          </a>
+        </div>
       </section>
     </main>
   </div>
