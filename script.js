@@ -35,7 +35,7 @@ const doSearch = query => {
     youtube: `https://youtube.com/results?search_query=${encodeURIComponent(query)}`,
     github: `https://github.com/search?q=${encodeURIComponent(query)}`
   };
-  open(urls[activeEngine], '_blank');
+  window.open(urls[activeEngine], '_blank');
   updateStats('search');
 };
 
