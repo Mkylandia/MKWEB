@@ -1,141 +1,136 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MKWEB 2.0 – Enhanced</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>MKWEB 2.0 – iOS18-Polished</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body data-theme="ocean">
-  <canvas id="bg-canvas"></canvas>
+  <div class="bg-blur"></div>
+  <header class="header">
+    <button id="settings-btn" class="icon-btn"><i class="fas fa-gear"></i></button>
+    <h1 id="logo">MKWEB 2.0</h1>
+    <div></div>
+  </header>
 
-  <!-- Settings Overlay -->
-  <div class="settings-overlay" id="settings-overlay">
-    <div class="settings-panel glass">
-      <button class="settings-close" id="settings-close">×</button>
-      <h2>⚙️ Einstellungen</h2>
-
-      <!-- Design -->
-      <div class="settings-section">
-        <h3>🎨 Design</h3>
-        <div class="setting-item">
-          <label for="theme-picker-settings">Theme</label>
-          <select id="theme-picker-settings">
-            <option value="ocean">🌊 Ocean</option>
-            <option value="sunset">🌅 Sunset</option>
-            <option value="forest">🌲 Forest</option>
-            <option value="midnight">🌙 Midnight</option>
-            <option value="aurora">✨ Aurora</option>
-            <option value="cyberpunk">🤖 Cyberpunk</option>
-            <option value="monochrome">⚫ Monochrome</option>
-          </select>
-        </div>
-        <div class="setting-item">
-          <label for="font-picker">Schriftart</label>
-          <select id="font-picker">
-            <option value="Inter">Inter</option>
-            <option value="Poppins">Poppins</option>
-            <option value="JetBrains Mono">JetBrains Mono</option>
-          </select>
-        </div>
-        <div class="setting-item range-item">
-          <label for="blur-slider">Blur Effekt</label>
-          <input type="range" id="blur-slider" min="0" max="30" />
-          <span id="blur-value">20px</span>
-        </div>
-        <div class="setting-item">
-          <label>Partikel Animation</label>
-          <div class="toggle-switch" id="particles-toggle"></div>
-        </div>
+  <main>
+    <section id="search-section" class="card">
+      <div class="search-bar">
+        <input id="search-input" type="text" placeholder="Suche im Web...">
+        <button class="icon-btn"><i class="fas fa-magnifying-glass"></i></button>
       </div>
+    </section>
 
-      <!-- Layout -->
-      <div class="settings-section">
-        <h3>📄 Layout-Kontrolle</h3>
-        <div class="setting-item"><label><input type="checkbox" id="search-toggle" checked /> Suche</label></div>
-        <div class="setting-item"><label><input type="checkbox" id="time-toggle" checked /> Uhr</label></div>
-        <div class="setting-item"><label><input type="checkbox" id="bookmarks-toggle" checked /> Favoriten</label></div>
-        <div class="setting-item"><label><input type="checkbox" id="news-toggle" checked /> News</label></div>
-        <div class="setting-item"><label><input type="checkbox" id="stats-toggle" checked /> Stats</label></div>
+    <section id="time-section" class="card time-card">
+      <div id="time"></div>
+      <div id="date"></div>
+    </section>
+
+    <section class="card quick-actions">
+      <button class="action-btn"><i class="fab fa-youtube"></i></button>
+      <button class="action-btn"><i class="fab fa-github"></i></button>
+      <button class="action-btn"><i class="fas fa-envelope"></i></button>
+      <button class="action-btn"><i class="fab fa-discord"></i></button>
+      <button class="action-btn"><i class="fab fa-spotify"></i></button>
+      <button class="action-btn"><i class="fas fa-film"></i></button>
+    </section>
+
+    <section id="bookmarks-section" class="card">
+      <h2>Favoriten</h2>
+      <div id="bookmark-grid" class="grid"></div>
+    </section>
+
+    <section id="news-section" class="card">
+      <h2>Nachrichten</h2>
+      <div id="news-grid" class="grid"></div>
+    </section>
+  </main>
+
+  <footer class="stats-bar">
+    <div>🔍 <span id="search-count">0</span></div>
+    <div>⏱️ <span id="time-spent">0</span>min</div>
+    <div>🎯 <span id="click-count">0</span></div>
+  </footer>
+
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-header">
+      <h2>Einstellungen</h2>
+      <button id="settings-close" class="icon-btn"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="setting-group">
+        <label>Thema:</label>
+        <select id="theme-select" class="setting-control">
+          <option value="ocean">Ozean</option>
+          <option value="dark">Dunkel</option>
+          <option value="light">Hell</option>
+          <option value="forest">Wald</option>
+        </select>
       </div>
-
-      <!-- Favoriten -->
-      <div class="settings-section">
-        <h3>🔖 Favoriten-Manager</h3>
-        <div class="bookmark-manager">
-          <div class="bookmark-form">
-            <input type="text" id="bookmark-name" placeholder="Name" />
-            <input type="url" id="bookmark-url" placeholder="URL" />
-            <input type="text" id="bookmark-icon" placeholder="Icon (Emoji)" />
-            <button id="add-bookmark">Hinzufügen</button>
-          </div>
-          <div class="bookmark-list" id="bookmark-list"></div>
-        </div>
+      <div class="setting-group">
+        <label>Schriftart:</label>
+        <select id="font-select" class="setting-control">
+          <option value="Inter">Inter</option>
+          <option value="Helvetica">Helvetica</option>
+          <option value="Arial">Arial</option>
+          <option value="Georgia">Georgia</option>
+        </select>
       </div>
-
-      <!-- Erweitert -->
-      <div class="settings-section">
-        <h3>🔧 Erweitert</h3>
-        <div class="setting-item">
-          <label for="logo-text">Logo Text</label>
-          <input type="text" id="logo-text" />
-        </div>
-        <div class="setting-item">
-          <label for="search-placeholder">Suchplatzhalter</label>
-          <input type="text" id="search-placeholder" />
-        </div>
-        <div class="setting-item">
-          <button id="reset-settings">Reset</button>
-          <button id="export-settings">Export</button>
-          <button id="import-settings-btn">Import</button>
-          <input type="file" id="import-settings" accept="application/json" style="display: none;" />
-        </div>
+      <div class="setting-group">
+        <label>Unschärfe-Stärke:</label>
+        <input id="blur-range" type="range" min="5" max="50" value="20" class="setting-control">
+        <span id="blur-value">20px</span>
+      </div>
+      <div class="setting-group">
+        <label>Partikel-Effekt:</label>
+        <label class="switch">
+          <input id="particles-toggle" type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <h3>Sichtbare Abschnitte:</h3>
+      <div class="setting-group">
+        <label>Suchleiste:</label>
+        <label class="switch">
+          <input type="checkbox" data-section="search" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-group">
+        <label>Uhrzeit:</label>
+        <label class="switch">
+          <input type="checkbox" data-section="time" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-group">
+        <label>Favoriten:</label>
+        <label class="switch">
+          <input type="checkbox" data-section="bookmarks" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-group">
+        <label>Nachrichten:</label>
+        <label class="switch">
+          <input type="checkbox" data-section="news" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-group">
+        <label>Statistiken:</label>
+        <label class="switch">
+          <input type="checkbox" data-section="stats" checked>
+          <span class="slider"></span>
+        </label>
       </div>
     </div>
+    <div class="modal-footer">
+      <button id="reset-settings" class="btn primary">Zurücksetzen</button>
+    </div>
   </div>
-
-  <div class="container">
-    <header class="header glass">
-      <h1 class="logo" id="logo">MKWEB 2.0</h1>
-      <div class="controls">
-        <button id="settings-btn">⚙️ Settings</button>
-      </div>
-    </header>
-
-    <main>
-      <section class="search-section glass" id="search-section">
-        <div class="search-engines"></div>
-        <div class="search-container">
-          <div class="search-box">
-            <span>🔍</span>
-            <input id="search" placeholder="Suche im Web..." autocomplete="off" />
-          </div>
-        </div>
-      </section>
-
-      <section class="time-display glass" id="time-section">
-        <div id="time"></div>
-        <div id="date"></div>
-      </section>
-
-      <section class="bookmark-section glass" id="bookmarks-section">
-        <h2>🔖 Favoriten</h2>
-        <div class="bookmark-grid" id="bookmark-grid"></div>
-      </section>
-
-      <section class="news-section glass" id="news-section">
-        <h2>📰 Nachrichten</h2>
-        <div class="news-grid"></div>
-      </section>
-
-      <div class="stats-panel glass" id="stats-panel">
-        <div>🔍 <span id="search-count">0</span></div>
-        <div>⏱️ <span id="time-spent">0</span>min</div>
-        <div>🎯 <span id="click-count">0</span></div>
-      </div>
-    </main>
-  </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
