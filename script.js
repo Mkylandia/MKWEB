@@ -1,4 +1,4 @@
-// — Theme Picker mit localStorage —
+// Theme Picker mit sanften Übergängen
 const picker = document.getElementById('theme-picker');
 const body   = document.body;
 const saved  = localStorage.getItem('mkweb-theme') || 'ocean';
@@ -6,12 +6,11 @@ picker.value = saved;
 body.dataset.theme = saved;
 
 picker.addEventListener('change', () => {
-  const t = picker.value;
-  body.dataset.theme = t;
-  localStorage.setItem('mkweb-theme', t);
+  body.dataset.theme = picker.value;
+  localStorage.setItem('mkweb-theme', picker.value);
 });
 
-// — Live-Uhr & Datum —
+// Live-Uhr & Datum
 const timeEl = document.getElementById('time');
 function updateClock() {
   const now = new Date();
@@ -22,7 +21,7 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// — Autocomplete-Suche —
+// Autocomplete-Suche
 const searchBox = document.getElementById('search');
 const suggList  = document.getElementById('suggestions');
 const terms = ['Google','YouTube','GitHub','Wikipedia','Reddit','StackOverflow'];
@@ -37,7 +36,7 @@ searchBox.addEventListener('input', () => {
          li.onclick = () => window.location.href = `https://www.google.com/search?q=${encodeURIComponent(t)}`;
          suggList.append(li);
        });
-  suggList.classList.toggle('visible', suggList.childElementCount > 0);
+  suggList.classList.toggle('visible', !!suggList.childElementCount);
 });
 searchBox.addEventListener('keydown', e => {
   if (e.key === 'Enter' && searchBox.value.trim()) {
@@ -45,13 +44,12 @@ searchBox.addEventListener('keydown', e => {
   }
 });
 
-// — Hintergrund-Partikel (Canvas) —
+// Partikel-Hintergrund
 const canvas = document.getElementById('bg-canvas');
 const ctx    = canvas.getContext('2d');
 let particles = [];
 function initParticles() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
+  canvas.width = innerWidth; canvas.height = innerHeight;
   particles = Array.from({length:120}, () => ({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
@@ -64,16 +62,14 @@ function draw() {
   ctx.clearRect(0,0,canvas.width,canvas.height);
   particles.forEach(p => {
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
     ctx.fillStyle = `rgba(255,255,255,0.2)`;
     ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
-    if (p.x<0||p.x>canvas.width)  p.dx*=-1;
+    p.x += p.dx; p.y += p.dy;
+    if (p.x<0||p.x>canvas.width) p.dx*=-1;
     if (p.y<0||p.y>canvas.height) p.dy*=-1;
   });
   requestAnimationFrame(draw);
 }
 window.addEventListener('resize', initParticles);
-initParticles();
-draw();
+initParticles(); draw();
