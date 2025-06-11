@@ -28,18 +28,24 @@ engines.forEach(btn => {
 });
 
 const doSearch = query => {
+  if (!query || query.trim() === '') return; // Verhindert leere Suchanfragen
   const urls = {
-    google: `https://google.com/search?q=${encodeURIComponent(query)}`,
-    bing: `https://bing.com/search?q=${encodeURIComponent(query)}`,
-    duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
-    youtube: `https://youtube.com/results?search_query=${encodeURIComponent(query)}`,
-    github: `https://github.com/search?q=${encodeURIComponent(query)}`
+    google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
+    bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
+    duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
+    youtube: `https://youtube.com/results?search_query=${encodeURIComponent(query.trim())}`,
+    github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`
   };
   window.open(urls[activeEngine], '_blank');
   updateStats('search');
 };
 
-search.onkeydown = e => e.key === 'Enter' && doSearch(search.value);
+search.onkeydown = e => {
+  if (e.key === 'Enter') {
+    e.preventDefault(); // Verhindert Standard-Formularverhalten
+    doSearch(search.value); // Übergibt den aktuellen Wert des Suchfelds
+  }
+};
 
 const updateClock = () => {
   const now = new Date();
