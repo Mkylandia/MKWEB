@@ -1,210 +1,116 @@
-// === Enhanced MKWEB 2.0 JavaScript ===
-
-// Core Settings & State Management
-class SettingsManager {
-  constructor() {
-    this.defaultSettings = {
-      theme: 'ocean',
-      particlesEnabled: true,
-      searchEngine: 'google'
-    };
-    this.settings = this.loadSettings();
-  }
-
-  loadSettings() {
-    return JSON.parse(localStorage.getItem('mkweb-settings') || '{}') || this.defaultSettings;
-  }
-
-  saveSettings() {
-    localStorage.setItem('mkweb-settings', JSON.stringify(this.settings));
-  }
-
-  get(key) { return this.settings[key]; }
-  set(key, value) { this.settings[key] = value; this.saveSettings(); }
-}
-
-// Statistics Manager
-class StatsManager {
-  constructor() {
-    this.stats = this.loadStats();
-    this.startTime = Date.now();
-    this.currentSessionTime = 0;
-    setInterval(() => {
-      this.currentSessionTime = Math.floor((Date.now() - this.startTime) / 1000);
-      this.updateDisplay();
-    }, 1000);
-  }
-
-  loadStats() {
-    return JSON.parse(localStorage.getItem('mkweb-stats') || '{"searchCount":0,"timeSpent":0,"clickCount":0}') || { searchCount: 0, timeSpent: 0, clickCount: 0 };
-  }
-
-  saveStats() { localStorage.setItem('mkweb-stats', JSON.stringify(this.stats)); }
-
-  increment(stat) { this.stats[stat]++; this.saveStats(); this.updateDisplay(); }
-
-  setupTracking() {
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.action-card') || e.target.closest('.news-card')) this.increment('clickCount');
-    });
-    window.addEventListener('beforeunload', () => {
-      this.stats.timeSpent += this.currentSessionTime;
-      this.saveStats();
-    });
-  }
-
-  updateDisplay() {
-    document.getElementById('search-count').textContent = this.stats.searchCount;
-    document.getElementById('click-count').textContent = this.stats.clickCount;
-    const totalTimeSpent = this.stats.timeSpent + this.currentSessionTime;
-    const minutes = Math.floor(totalTimeSpent / 60);
-    document.getElementById('time-spent').textContent = `${minutes}min`;
-  }
-}
-
-const settingsManager = new SettingsManager();
-const statsManager = new StatsManager();
-statsManager.setupTracking();
-
-// Theme Picker
-const picker = document.getElementById('theme-picker');
-const body = document.body;
-picker.value = settingsManager.get('theme');
-body.dataset.theme = settingsManager.get('theme');
-picker.addEventListener('change', () => {
-  body.dataset.theme = picker.value;
-  settingsManager.set('theme', picker.value);
-});
-
-// Particle System
-const particleSettings = { count: 80, speed: 0.3, size: { min: 1, max: 3 }, paused: !settingsManager.get('particlesEnabled') };
-const toggleParticlesBtn = document.getElementById('toggle-particles');
-toggleParticlesBtn.textContent = particleSettings.paused ? '▶️ Partikel' : '⏸️ Partikel';
-toggleParticlesBtn.addEventListener('click', () => {
-  particleSettings.paused = !particleSettings.paused;
-  toggleParticlesBtn.textContent = particleSettings.paused ? '▶️ Partikel' : '⏸️ Partikel';
-  if (!particleSettings.paused) animateParticles();
-  settingsManager.set('particlesEnabled', !particleSettings.paused);
-});
-
-// Fullscreen Button
-document.getElementById('fullscreen-btn').addEventListener('click', function () {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-    this.textContent = '🔳 Vollbild beenden';
-  } else {
-    document.exitFullscreen();
-    this.textContent = '🔳 Vollbild';
-  }
-});
-
-// Search Functionality
-const searchEl = document.getElementById('search');
-const suggList = document.getElementById('suggestions');
-const searchEngines = {
-  google: 'https://www.google.com/search?q=',
-  bing: 'https://www.bing.com/search?q=',
-  duckduckgo: 'https://duckduckgo.com/?q=',
-  youtube: 'https://www.youtube.com/results?search_query=',
-  github: 'https://github.com/search?q='
+// Default-Konfiguration und Persistenz
+const DEFAULT = {
+  theme:'ocean', font:'Inter', blur:20, particles:true,
+  sections:{search:true,time:true,bookmarks:true,news:true,stats:true},
+  logo:'MKWEB 2.0', placeholder:'Suche im Web...', bookmarks:[]
 };
-let currentEngine = 'google';
+let cfg = JSON.parse(localStorage.getItem('mkweb')) || DEFAULT;
+const save = () => localStorage.setItem('mkweb', JSON.stringify(cfg));
 
-document.querySelectorAll('.search-engine').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentEngine = btn.dataset.engine;
-    searchEl.placeholder = `Suche auf ${btn.textContent}...`;
+// UI-Elemente
+const elems = {
+  themePicker: document.getElementById('theme-picker-settings'),
+  fontPicker: document.getElementById('font-picker'),
+  blurSlider: document.getElementById('blur-slider'),
+  blurValue: document.getElementById('blur-value'),
+  particlesToggle: document.getElementById('particles-toggle'),
+  sectionToggles: ['search','time','bookmarks','news','stats'].reduce((o,s)=>{
+    o[s] = document.getElementById(`${s}-toggle`); return o;
+  },{}),
+  logo: document.getElementById('logo'),
+  searchInput: document.getElementById('search'),
+  bookmarkGrid: document.getElementById('bookmark-grid'),
+};
+
+// Änderungen anwenden
+function apply() {
+  document.body.dataset.theme = cfg.theme;
+  document.body.style.setProperty('--font-family', cfg.font);
+  elems.blurValue.textContent = cfg.blur + 'px';
+  document.documentElement.style.setProperty('--glass-blur', cfg.blur + 'px');
+  elems.themePicker.value = cfg.theme;
+  elems.fontPicker.value = cfg.font;
+  elems.blurSlider.value = cfg.blur;
+  elems.particlesToggle.classList.toggle('active', cfg.particles);
+  elems.searchInput.placeholder = cfg.placeholder;
+  elems.logo.textContent = cfg.logo;
+  Object.entries(cfg.sections).forEach(([sec,val]) => {
+    document.getElementById(sec + '-section').style.display = val ? 'block' : 'none';
+    elems.sectionToggles[sec].checked = val;
   });
-});
-
-const searchTerms = ['Google', 'YouTube', 'GitHub', 'Wikipedia', 'Reddit', 'StackOverflow', 'Amazon', 'Netflix', 'Spotify'];
-searchEl.addEventListener('input', () => {
-  const query = searchEl.value.trim().toLowerCase();
-  suggList.innerHTML = '';
-  if (!query) return suggList.classList.remove('visible');
-  const matches = searchTerms.filter(term => term.toLowerCase().includes(query)).slice(0, 5);
-  matches.forEach(term => {
-    const li = document.createElement('li');
-    li.textContent = term;
-    li.onclick = () => { searchEl.value = term; performSearch(term); };
-    suggList.appendChild(li);
-  });
-  suggList.classList.toggle('visible', matches.length > 0);
-});
-
-function performSearch(query) {
-  if (!query.trim()) return;
-  statsManager.increment('searchCount');
-  window.open(searchEngines[currentEngine] + encodeURIComponent(query), '_blank');
-  suggList.classList.remove('visible');
+  renderBookmarks();
 }
 
-searchEl.addEventListener('keydown', e => {
-  if (e.key === 'Enter') performSearch(searchEl.value);
-});
+// Favoriten rendern
+function renderBookmarks(){
+  elems.bookmarkGrid.innerHTML = '';
+  cfg.bookmarks.forEach((b,i)=>{
+    const a = document.createElement('a');
+    a.className = 'bookmark-card glass';
+    a.href = b.url; a.target = '_blank';
+    a.innerHTML = `<span>${b.icon||'🔖'}</span>
+                   <div><div>${b.name}</div><small>${b.url}</small></div>
+                   <button class="bookmark-remove" data-i="${i}">×</button>`;
+    elems.bookmarkGrid.appendChild(a);
+  });
+  document.querySelectorAll('.bookmark-remove').forEach(btn=>{
+    btn.onclick = e => {
+      cfg.bookmarks.splice(e.target.dataset.i,1);
+      save(); apply();
+    };
+  });
+}
 
-// Clock
-const timeEl = document.getElementById('time');
-const dateEl = document.getElementById('date');
-function updateClock() {
+// Event-Listener
+document.getElementById('settings-btn').onclick = _=> showSettings();
+document.getElementById('settings-close').onclick = _=> { hideSettings(); save(); };
+elems.themePicker.onchange = e=> { cfg.theme = e.target.value; apply(); };
+elems.fontPicker.onchange = e=> { cfg.font = e.target.value; apply(); };
+elems.blurSlider.oninput = e=> { cfg.blur = e.target.value; apply(); };
+elems.particlesToggle.onclick = _=> { cfg.particles = !cfg.particles; apply(); };
+Object.entries(elems.sectionToggles).forEach(([sec,el])=>{
+  el.onchange = e => { cfg.sections[sec] = e.target.checked; apply(); };
+});
+document.getElementById('add-bookmark').onclick = _=>{
+  const n = document.getElementById('bookmark-name').value;
+  const u = document.getElementById('bookmark-url').value;
+  const i = document.getElementById('bookmark-icon').value;
+  if(n && u) { cfg.bookmarks.push({name:n,url:u,icon:i}); save(); apply(); }
+};
+document.getElementById('logo-text').oninput = e=>{ cfg.logo = e.target.value; apply(); };
+document.getElementById('search-placeholder').oninput = e=>{ cfg.placeholder = e.target.value; apply(); };
+
+// Export, Import, Reset
+document.getElementById('export-settings').onclick = _=> {
+  const blob = new Blob([JSON.stringify(cfg)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download='mkweb-settings.json'; a.click();
+};
+document.getElementById('import-settings-btn').onclick = _=> document.getElementById('import-settings').click();
+document.getElementById('import-settings').onchange = e=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => { cfg = JSON.parse(ev.target.result); apply(); save(); };
+  reader.readAsText(file);
+};
+document.getElementById('reset-settings').onclick = _=> { cfg = DEFAULT; apply(); save(); };
+
+// Keyboard Shortcuts & Zeit-Update
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==',') showSettings();
+  if((e.ctrlKey||e.metaKey)&&e.key=='/') { e.preventDefault(); elems.searchInput.focus(); }
+  if(e.key=='Escape') hideSettings();
+});
+function updateTime(){
   const now = new Date();
-  timeEl.textContent = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  dateEl.textContent = now.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('time').textContent = now.toLocaleTimeString('de-DE');
+  document.getElementById('date').textContent = now.toLocaleDateString('de-DE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 }
-setInterval(updateClock, 1000);
-updateClock();
+setInterval(updateTime,1000); updateTime();
 
-// Particle Animation
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
+// Hilfsfunktionen
+function showSettings(){ document.getElementById('settings-overlay').style.display='flex'; }
+function hideSettings(){ document.getElementById('settings-overlay').style.display='none'; }
 
-function initParticles() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  particles = Array.from({ length: particleSettings.count }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * (particleSettings.size.max - particleSettings.size.min) + particleSettings.size.min,
-    dx: (Math.random() - 0.5) * particleSettings.speed,
-    dy: (Math.random() - 0.5) * particleSettings.speed,
-    opacity: Math.random() * 0.3 + 0.1
-  }));
-}
-
-function animateParticles() {
-  if (particleSettings.paused) return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
-    ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
-    if (p.x <= 0 || p.x >= canvas.width) p.dx *= -1;
-    if (p.y <= 0 || p.y >= canvas.height) p.dy *= -1;
-  });
-  requestAnimationFrame(animateParticles);
-}
-
-window.addEventListener('resize', initParticles);
-initParticles();
-if (!particleSettings.paused) animateParticles();
-
-// Weather Widget (Simulated)
-async function updateWeather() {
-  const weatherText = document.getElementById('weather-text');
-  const weatherIcon = document.querySelector('.weather-icon');
-  const weathers = [
-    { icon: '☀️', temp: 22, desc: 'Sonnig' },
-    { icon: '⛅', temp: 18, desc: 'Bewölkt' },
-    { icon: '🌧️', temp: 15, desc: 'Regnerisch' }
-  ];
-  const w = weathers[Math.floor(Math.random() * weathers.length)];
-  weatherIcon.textContent = w.icon;
-  weatherText.textContent = `${w.temp}°C, ${w.desc}`;
-}
-updateWeather();
+// Initialisierung
+apply();
