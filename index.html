@@ -7,37 +7,28 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Partikel-Hintergrund -->
-  <canvas id="particle-canvas"></canvas>
-
-  <div class="overlay">
-    <header>
-      <h1 id="greeting">Willkommen!</h1>
-      <div id="datetime"></div>
-      <button id="theme-toggle">🌗</button>
+  <div class="container">
+    <header class="header">
+      <h1 class="logo">MKWEB<span>1.0</span></h1>
+      <button id="theme-toggle" class="btn-icon" aria-label="Theme umschalten">🌗</button>
     </header>
 
-    <!-- Schnellstart-Kacheln -->
-    <section class="quick-launch">
-      <div class="tile" data-url="https://youtube.com">
-        <img src="icons/youtube.svg" alt="YouTube"><span>YouTube</span>
+    <main class="main">
+      <div class="search-wrapper">
+        <input id="search" type="text" placeholder="Suchen…" autocomplete="off">
+        <ul id="suggestions" class="suggestions"></ul>
       </div>
-      <div class="tile" data-url="https://github.com">
-        <img src="icons/github.svg" alt="GitHub"><span>GitHub</span>
-      </div>
-      <div class="tile" data-url="https://news.google.com">
-        <img src="icons/news.svg" alt="News"><span>News</span>
-      </div>
-      <div class="tile" data-url="https://discord.com">
-        <img src="icons/discord.svg" alt="Discord"><span>Discord</span>
-      </div>
-    </section>
+      <div id="time" class="time"></div>
+    </main>
 
-    <!-- Suchfeld mit Autocomplete -->
-    <div class="search-box">
-      <input id="search" type="text" placeholder="Suchen…">
-      <ul id="suggestions"></ul>
-    </div>
+    <footer class="footer">
+      <nav class="quick-links">
+        <a href="https://youtube.com" target="_blank">YouTube</a>
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="https://news.google.com" target="_blank">News</a>
+        <a href="https://discord.com" target="_blank">Discord</a>
+      </nav>
+    </footer>
   </div>
 
   <script src="script.js"></script>
