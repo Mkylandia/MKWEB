@@ -2,135 +2,153 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>MKWEB 2.0 – iOS18-Polished</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MKWEB 2.0 - Enhanced</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body data-theme="ocean">
-  <div class="bg-blur"></div>
-  <header class="header">
-    <button id="settings-btn" class="icon-btn"><i class="fas fa-gear"></i></button>
-    <h1 id="logo">MKWEB 2.0</h1>
-    <div></div>
-  </header>
-
-  <main>
-    <section id="search-section" class="card">
-      <div class="search-bar">
-        <input id="search-input" type="text" placeholder="Suche im Web...">
-        <button class="icon-btn"><i class="fas fa-magnifying-glass"></i></button>
-      </div>
-    </section>
-
-    <section id="time-section" class="card time-card">
-      <div id="time"></div>
-      <div id="date"></div>
-    </section>
-
-    <section class="card quick-actions">
-      <button class="action-btn"><i class="fab fa-youtube"></i></button>
-      <button class="action-btn"><i class="fab fa-github"></i></button>
-      <button class="action-btn"><i class="fas fa-envelope"></i></button>
-      <button class="action-btn"><i class="fab fa-discord"></i></button>
-      <button class="action-btn"><i class="fab fa-spotify"></i></button>
-      <button class="action-btn"><i class="fas fa-film"></i></button>
-    </section>
-
-    <section id="bookmarks-section" class="card">
-      <h2>Favoriten</h2>
-      <div id="bookmark-grid" class="grid"></div>
-    </section>
-
-    <section id="news-section" class="card">
-      <h2>Nachrichten</h2>
-      <div id="news-grid" class="grid"></div>
-    </section>
-  </main>
-
-  <footer class="stats-bar">
-    <div>🔍 <span id="search-count">0</span></div>
-    <div>⏱️ <span id="time-spent">0</span>min</div>
-    <div>🎯 <span id="click-count">0</span></div>
-  </footer>
-
-  <div id="settings-modal" class="modal hidden">
-    <div class="modal-header">
-      <h2>Einstellungen</h2>
-      <button id="settings-close" class="icon-btn"><i class="fas fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
-      <div class="setting-group">
-        <label>Thema:</label>
-        <select id="theme-select" class="setting-control">
-          <option value="ocean">Ozean</option>
-          <option value="dark">Dunkel</option>
-          <option value="light">Hell</option>
-          <option value="forest">Wald</option>
+<body data-theme="neon">
+  <div class="grain"></div>
+  
+  <div class="container">
+    <header class="header glass">
+      <h1 class="logo">MKWEB 2.0</h1>
+      <div class="controls">
+        <select id="theme-picker">
+          <option value="neon">⚡ Neon</option>
+          <option value="cyber">🤖 Cyber</option>
+          <option value="hologram">✨ Hologram</option>
+          <option value="minimal">🎯 Minimal</option>
+          <option value="dark">🌙 Dark</option>
+          <option value="light">☀️ Light</option>
+          <option value="forest">🌲 Forest</option>
+          <option value="ocean">🌊 Ocean</option>
         </select>
+        <button id="fullscreen-btn">🚀 Vollbild</button>
+        <div class="weather-widget">
+          <span>🌤️</span>
+          <span id="weather-text">22°C</span>
+        </div>
       </div>
-      <div class="setting-group">
-        <label>Schriftart:</label>
-        <select id="font-select" class="setting-control">
-          <option value="Inter">Inter</option>
-          <option value="Helvetica">Helvetica</option>
-          <option value="Arial">Arial</option>
-          <option value="Georgia">Georgia</option>
-        </select>
-      </div>
-      <div class="setting-group">
-        <label>Unschärfe-Stärke:</label>
-        <input id="blur-range" type="range" min="5" max="50" value="20" class="setting-control">
-        <span id="blur-value">20px</span>
-      </div>
-      <div class="setting-group">
-        <label>Partikel-Effekt:</label>
-        <label class="switch">
-          <input id="particles-toggle" type="checkbox" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <h3>Sichtbare Abschnitte:</h3>
-      <div class="setting-group">
-        <label>Suchleiste:</label>
-        <label class="switch">
-          <input type="checkbox" data-section="search" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="setting-group">
-        <label>Uhrzeit:</label>
-        <label class="switch">
-          <input type="checkbox" data-section="time" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="setting-group">
-        <label>Favoriten:</label>
-        <label class="switch">
-          <input type="checkbox" data-section="bookmarks" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="setting-group">
-        <label>Nachrichten:</label>
-        <label class="switch">
-          <input type="checkbox" data-section="news" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div class="setting-group">
-        <label>Statistiken:</label>
-        <label class="switch">
-          <input type="checkbox" data-section="stats" checked>
-          <span class="slider"></span>
-        </label>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button id="reset-settings" class="btn primary">Zurücksetzen</button>
+    </header>
+
+    <main class="main">
+      <section class="search-section glass">
+        <div class="search-engines">
+          <button class="search-engine active" data-engine="google">🔍 Google</button>
+          <button class="search-engine" data-engine="bing">🅱️ Bing</button>
+          <button class="search-engine" data-engine="duckduckgo">🦆 DuckDuckGo</button>
+          <button class="search-engine" data-engine="youtube">📺 YouTube</button>
+          <button class="search-engine" data-engine="github">💻 GitHub</button>
+        </div>
+        <div class="search-container">
+          <div class="search-box">
+            <span style="font-size: 1.5rem;">🔍</span>
+            <input id="search" type="text" placeholder="Suche im Web..." autocomplete="off">
+          </div>
+        </div>
+      </section>
+
+      <section class="time-display glass">
+        <div id="time"></div>
+        <div id="date"></div>
+      </section>
+
+      <section class="quick-actions">
+        <a class="action-card" href="https://youtube.com" target="_blank">
+          <span class="icon">📺</span>
+          <span class="label">YouTube</span>
+        </a>
+        <a class="action-card" href="https://github.com" target="_blank">
+          <span class="icon">💻</span>
+          <span class="label">GitHub</span>
+        </a>
+        <a class="action-card" href="https://gmail.com" target="_blank">
+          <span class="icon">📧</span>
+          <span class="label">Gmail</span>
+        </a>
+        <a class="action-card" href="https://discord.com" target="_blank">
+          <span class="icon">💬</span>
+          <span class="label">Discord</span>
+        </a>
+        <a class="action-card" href="https://netflix.com" target="_blank">
+          <span class="icon">🎬</span>
+          <span class="label">Netflix</span>
+        </a>
+        <a class="action-card" href="https://spotify.com" target="_blank">
+          <span class="icon">🎵</span>
+          <span class="label">Spotify</span>
+        </a>
+      </section>
+
+      <section class="bookmark-section glass">
+        <h2>🔖 Favoriten</h2>
+        <div class="bookmark-grid">
+          <a class="bookmark-card" href="https://reddit.com" target="_blank">
+            <span style="font-size: 2rem;">📱</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">Reddit</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Social News</div>
+            </div>
+          </a>
+          <a class="bookmark-card" href="https://stackoverflow.com" target="_blank">
+            <span style="font-size: 2rem;">💡</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">Stack Overflow</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Developer Q&A</div>
+            </div>
+          </a>
+          <a class="bookmark-card" href="https://codepen.io" target="_blank">
+            <span style="font-size: 2rem;">🎨</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">CodePen</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Code Playground</div>
+            </div>
+          </a>
+          <a class="bookmark-card" href="https://unsplash.com" target="_blank">
+            <span style="font-size: 2rem;">📸</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">Unsplash</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Stock Photos</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="news-section glass">
+        <h2>📰 News</h2>
+        <div class="news-grid">
+          <a class="news-card" href="https://www.tagesschau.de" target="_blank">
+            <h3>📺 Tagesschau</h3>
+            <p>Die wichtigsten Nachrichten des Tages aus Deutschland und der Welt</p>
+            <div class="news-source">ARD Tagesschau</div>
+          </a>
+          <a class="news-card" href="https://www.spiegel.de" target="_blank">
+            <h3>📄 Der Spiegel</h3>
+            <p>Nachrichten, Analysen und investigative Berichte</p>
+            <div class="news-source">Spiegel Online</div>
+          </a>
+          <a class="news-card" href="https://www.heise.de" target="_blank">
+            <h3>💻 Heise</h3>
+            <p>IT-News, Technik und digitale Trends</p>
+            <div class="news-source">Heise Online</div>
+          </a>
+          <a class="news-card" href="https://www.golem.de" target="_blank">
+            <h3>🤖 Golem</h3>
+            <p>IT-News für Profis und Technik-Enthusiasten</p>
+            <div class="news-source">Golem.de</div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <div class="stats-panel glass">
+      <div>🔍 <span id="search-count">0</span></div>
+      <div>⏱️ <span id="time-spent">0</span>min</div>
+      <div>🎯 <span id="click-count">0</span></div>
     </div>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
