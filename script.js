@@ -1,5 +1,5 @@
 // script.js
-const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'neon', showAvatar: true, lastActiveEngine: 'google'};
+const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
 const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
 
 document.body.dataset.theme = settings.theme;
@@ -141,30 +141,6 @@ const fetchWeather = async () => {
     weatherText.textContent = 'N/A';
     weatherIcon.textContent = '❓';
     weatherLocation.textContent = 'Ort unbekannt';
-  }
-};
-
-const getWeatherEmoji = (iconCode) => {
-  switch (iconCode) {
-    case '01d': return '☀️';
-    case '01n': return '🌙';
-    case '02d': return '🌤️';
-    case '02n': return '☁️';
-    case '03d':
-    case '03n': return '☁️';
-    case '04d':
-    case '04n': return ' overcast';
-    case '09d':
-    case '09n': return '🌧️';
-    case '10d': return '🌦️';
-    case '10n': return '🌧️';
-    case '11d':
-    case '11n': return '⛈️';
-    case '13d':
-    case '13n': return '❄️';
-    case '50d':
-    case '50n': return '🌫️';
-    default: return '❓';
   }
 };
 
