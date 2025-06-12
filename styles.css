@@ -1,73 +1,54 @@
-/* styles.css - MKWEB 3.0 - The Ultimate Animated Dashboard */
-
-/* Global Design Variables - Meticulously tuned for polish, realism, and performance */
+/* styles.css - Extreme Performance Optimization */
 :root {
-  --t: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slower, more elegant transitions */
-  --r: 28px; /* Softer, more luxurious border-radius */
-  --s: 0 12px 35px rgba(0,0,0,0.25); /* Deeper, more diffused shadow */
-  --sh: 0 25px 70px rgba(0,0,0,0.5); /* Prominent shadow for hover */
-  --border-width: 1.5px; /* Slightly thicker borders for definition */
-  --text-gradient-angle: 45deg; /* Optimized angle for text gradients */
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%, rgba(255, 255, 255, 0.04) 100%); /* Enhanced reflection on glass */
-  --glow-strength: 0 0 20px; /* Base glow strength */
+  /* Global Design Variables - Tuned for ultimate polish and realism */
+  --t: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly faster, still elegant transitions */
+  --r: 24px; /* Refined border-radius for softness */
+  --s: 0 10px 30px rgba(0,0,0,0.2); /* Reduced, more focused shadow */
+  --sh: 0 20px 60px rgba(0,0,0,0.4); /* Reduced prominent shadow for hover */
+  --border-width: 1px; /* Thinner borders */
+  --text-gradient-angle: 50deg; /* Angle for text gradients */
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%, rgba(255, 255, 255, 0.02) 100%); /* Subtle reflection on glass */
+  --glow-strength: 0 0 15px; /* Base glow strength - significantly reduced */
   --glow-color: var(--acc); /* Base glow color */
-  --blur-intensity: 20px; /* Main backdrop-filter blur value */
-  --saturate-intensity: 180%; /* Increased saturate for vibrant glass effect */
+  --blur-intensity: 15px; /* Main backdrop-filter blur value - drasitcally reduced for performance */
+  --saturate-intensity: 150%; /* Slightly reduced saturate for glass effect */
 }
 
-/* Themed Variables (Default: Dark) - Optimized for each aesthetic */
-
-/* Deep Dark Theme (Default) */
-[data-theme="dark"] {
-  --bg: linear-gradient(135deg, #1A1A2E 0%, #0F0F1A 100%); /* Dark, moody background */
-  --fg: #E0E0E0; --dim: rgba(224,224,224,0.6); /* Lighter foreground, subtle dim */
-  --acc: #BB86FC; --ah: #9C5CFC; /* Vibrant purple accent */
-  --gl: rgba(255,255,255,0.06); /* Very subtle glass background */
-  --gb: rgba(255,255,255,0.18); /* Slightly more prominent glass border */
-  --inner-shadow: inset 0 0 6px rgba(255,255,255,0.02); /* Deeper inner shadow */
-  --acc-rgb: 187, 134, 252;
-  --fg-rgb: 224, 224, 224;
-}
-
-/* Neon Glow Theme */
+/* Themed Variables (Default: Neon - meticulously refined) */
 [data-theme="neon"] {
   --bg: radial-gradient(circle at 15% 25%, #ffebf7 0%, #d4a9ff 35%, #a1cdff 65%, #bafffb 100%);
-  --fg: #fff; --dim: rgba(255,255,255,0.7);
+  --fg: #fff; --dim: rgba(255,255,255,0.7); /* Slightly less opaque for better contrast on glass */
   --acc: #e040fb; --ah: #c200ed;
-  --gl: rgba(255,255,255,0.08);
-  --gb: rgba(255,255,255,0.25);
-  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.03);
-  --acc-rgb: 224, 64, 251;
-  --fg-rgb: 255, 255, 255;
+  --gl: rgba(255,255,255,0.08); /* Less substantial glass background */
+  --gb: rgba(255,255,255,0.25); /* Less defined glass border */
+  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.03); /* Lighter inner shadow for depth */
+  --acc-rgb: 224, 64, 251; /* RGB values for accent color glow */
+  --fg-rgb: 255, 255, 255; /* RGB values for foreground color glow */
 }
 
-/* Cyber Pulse Theme */
+/* Refined Theme Definitions (Adjusted for consistency and potential perf improvements) */
 [data-theme="cyber"] {
-  --bg: linear-gradient(45deg, #020202 0%, #0A000D 30%, #000812 60%, #000406 100%);
-  --fg: #00E5E5; --dim: rgba(0,229,229,0.6);
-  --acc: #FF2080; --ah: #CC0066;
+  --bg: linear-gradient(45deg, #020202 0%, #0a000d 30%, #000812 60%, #000406 100%);
+  --fg: #00e5e5; --dim: rgba(0,229,229,0.6);
+  --acc: #ff2080; --ah: #cc0066;
   --gl: rgba(0,255,255,0.05);
   --gb: rgba(0,255,255,0.15);
-  --inner-shadow: inset 0 0 5px rgba(0,255,255,0.02);
   --acc-rgb: 255, 32, 128;
   --fg-rgb: 0, 229, 229;
 }
 
-/* Hologram Dream Theme */
 [data-theme="hologram"] {
   --bg: linear-gradient(135deg, #6c7dd6 0%, #7d59b2 50%, #e281ff 100%);
   --fg: #fff; --dim: rgba(255,255,255,0.8);
   --acc: #00f2fe; --ah: #4facfe;
   --gl: rgba(255,255,255,0.1);
   --gb: rgba(255,255,255,0.25);
-  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.04);
   --acc-rgb: 0, 242, 254;
   --fg-rgb: 255, 255, 255;
 }
 
-/* Minimal Chic Theme */
 [data-theme="minimal"] {
-  --bg: linear-gradient(135deg, #F0F3F8 0%, #E0E5EB 100%);
+  --bg: linear-gradient(135deg, #f0f3f8 0%, #e0e5eb 100%);
   --fg: #2c3e50; --dim: rgba(44,62,80,0.7);
   --acc: #3498db; --ah: #2980b9;
   --gl: rgba(255,255,255,0.8);
@@ -77,38 +58,42 @@
   --fg-rgb: 44, 62, 80;
 }
 
-/* Bright Light Theme */
+[data-theme="dark"] {
+  --bg: linear-gradient(135deg, #121212 0%, #202020 100%);
+  --fg: #e0e0e0; --dim: rgba(224,224,224,0.6);
+  --acc: #bb86fc; --ah: #9c5cfc;
+  --gl: rgba(255,255,255,0.05);
+  --gb: rgba(255,255,255,0.15);
+  --acc-rgb: 187, 134, 252;
+  --fg-rgb: 224, 224, 224;
+}
+
 [data-theme="light"] {
   --bg: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
   --fg: #333333; --dim: rgba(51,51,51,0.6);
   --acc: #007bff; --ah: #0056b3;
   --gl: rgba(0,0,0,0.03);
   --gb: rgba(0,0,0,0.1);
-  --inner-shadow: inset 0 0 3px rgba(0,0,0,0.01);
   --acc-rgb: 0, 123, 255;
   --fg-rgb: 51, 51, 51;
 }
 
-/* Forest Aura Theme */
 [data-theme="forest"] {
-  --bg: linear-gradient(135deg, #0A3035 0%, #40754D 100%);
+  --bg: linear-gradient(135deg, #0a3035 0%, #40754d 100%);
   --fg: #ffffff; --dim: rgba(255,255,255,0.7);
-  --acc: #8BC34A; --ah: #689F38;
+  --acc: #8bc34a; --ah: #689f38;
   --gl: rgba(255,255,255,0.08);
   --gb: rgba(255,255,255,0.2);
-  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.03);
   --acc-rgb: 139, 195, 74;
   --fg-rgb: 255, 255, 255;
 }
 
-/* Ocean Depth Theme */
 [data-theme="ocean"] {
   --bg: linear-gradient(135deg, #405080 0%, #005080 100%);
   --fg: #ffffff; --dim: rgba(255,255,255,0.8);
-  --acc: #5ED8E0; --ah: #3BC7CF;
+  --acc: #5ed8e0; --ah: #3bc7cf;
   --gl: rgba(255,255,255,0.1);
   --gb: rgba(255,255,255,0.25);
-  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.04);
   --acc-rgb: 94, 216, 224;
   --fg-rgb: 255, 255, 255;
 }
@@ -131,32 +116,36 @@ body {
   transition: background var(--t), color var(--t);
   overflow-x: hidden;
   position: relative;
+  /* Removed perspective for less 3D rendering overhead */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Animated Background Elements */
+/* Animated Background Elements (Drastically Optimized) */
+/* Reduced to one very subtle shape, less blur, slower animation */
 .background-shape {
   content: '';
   position: fixed;
   border-radius: 50%;
-  opacity: 0.05;
-  filter: blur(80px); /* Increased blur for softer effect */
+  opacity: 0.05; /* Even more subtle */
+  filter: blur(60px); /* Reduced blur for performance */
   z-index: -1;
   pointer-events: none;
-  width: 500px; height: 500px; /* Larger size */
+  width: 400px; height: 400px; /* Smaller size */
   background: var(--acc);
-  top: -100px; left: -100px;
-  animation: floatEffect 35s ease-in-out infinite alternate; /* Slightly slower float */
-  will-change: transform, opacity;
+  top: -80px; left: -80px; /* Consistent positioning */
+  animation: floatEffect 30s ease-in-out infinite alternate; /* Slower animation */
+  will-change: transform, opacity; /* Hint to browser for animation optimization */
 }
+
+/* Removed the second shape (body::after or another .background-shape) for maximum performance */
 
 @keyframes floatEffect {
   0% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, 40px) scale(1.02); } /* Larger movement */
-  50% { transform: translate(-20px, -30px) scale(0.98); }
-  75% { transform: translate(10px, -15px) scale(1.01); }
+  25% { transform: translate(15px, 20px) scale(1.01); } /* Smaller movements */
+  50% { transform: translate(-10px, -15px) scale(0.99); }
+  75% { transform: translate(5px, -5px) scale(1.005); }
   100% { transform: translate(0, 0) scale(1); }
 }
 
@@ -164,41 +153,44 @@ body {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: grain 0.3s steps(1) infinite;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); /* Even lower opacity */
+  background-size: 60px 60px; /* Larger pattern for less density */
+  animation: grain 0.3s steps(1) infinite; /* Slower step animation for less flicker */
   pointer-events: none;
   z-index: 0;
-  opacity: 0.3;
+  opacity: 0.3; /* Minimal opacity */
 }
 
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.3%, 0.3%); }
+  50% { transform: translate(-0.3%, 0.3%); } /* Smaller translation */
 }
 
 .container {
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding: 3rem; /* Increased padding */
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3.5rem; /* Increased gap between sections */
+  gap: 3rem;
 }
 
-/* Glassmorphism Base Style */
+/* Glassmorphism Base Style with subtle reflection - Drastically Optimized Blur */
 .glass {
   background: var(--gl);
+  /* Drastically reduced blur intensity */
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
+  /* Reduced transition properties for performance */
   transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
   position: relative;
   overflow: hidden;
-  will-change: transform, box-shadow, border-color, background-color, backdrop-filter;
+  will-change: transform, box-shadow, border-color, background-color, backdrop-filter; /* Explicit will-change */
+  /* Add subtle reflection effect */
   &::after {
     content: '';
     position: absolute;
@@ -208,16 +200,16 @@ body {
     height: 100%;
     background: var(--glass-reflection);
     pointer-events: none;
-    opacity: 0.7; /* Slightly more prominent reflection */
+    opacity: 0.6; /* Slightly less visible reflection */
     transition: opacity var(--t);
   }
 }
 
-/* Animation for elements appearing on scroll/load */
+/* Animation for elements appearing on scroll */
 .animate-in {
   opacity: 0;
-  transform: translateY(30px) scale(0.95); /* Deeper initial translateY, smaller scale */
-  animation: fadeInSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Slower, smoother animation */
+  transform: translateY(20px) scale(0.98); /* Even less aggressive initial state */
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Faster animation */
   will-change: opacity, transform;
 }
 
@@ -234,21 +226,20 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1600px; /* Wider header */
-  padding: 2rem 2.5rem; /* Increased padding */
-  margin-bottom: 2rem;
+  max-width: 1500px; /* Slightly narrower header */
+  padding: 1.8rem 2rem;
 }
 
 .logo {
-  font-size: 3.2rem; /* Larger logo */
+  font-size: 2.8rem;
   font-weight: 900;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 250% 250%;
+  background-size: 250% 250%; /* Smaller gradient area for potentially smoother animation */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient 8s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+  animation: gradient 8s ease infinite alternate; /* Slower, more subtle gradient animation */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Reduced logo glow */
   position: relative;
   will-change: background-position, text-shadow;
 }
@@ -260,50 +251,44 @@ body {
 
 .controls {
   display: flex;
-  gap: 1.5rem; /* Increased gap between controls */
+  gap: 1.2rem; /* Reduced gap */
   align-items: center;
   flex-wrap: wrap;
 }
 
-/* General button/select/input styles */
-.glass-button, .glass-select, .glass-input-wrapper {
-  padding: 1rem 2rem; /* Increased padding */
+/* Buttons and Selects */
+select, button {
+  padding: 0.9rem 1.8rem;
   border: var(--border-width) solid var(--gb);
-  border-radius: 20px; /* More rounded */
+  border-radius: 18px; /* Slightly smaller radius */
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: all var(--t);
-  font-size: 1rem;
+  transition: all var(--t); /* Reduced transition properties */
+  font-size: 0.95rem;
   font-weight: 500;
   outline: none;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* Deeper shadow */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12); /* Less prominent shadow */
   position: relative;
   z-index: 1;
   overflow: hidden;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   will-change: transform, box-shadow, border-color;
-  -webkit-appearance: none; /* Remove default browser styling for select */
-  -moz-appearance: none;
-  appearance: none;
 }
 
-.glass-button:hover, .glass-select:hover, .glass-input-wrapper:hover {
+select:hover, button:hover {
   border-color: var(--acc);
-  transform: translateY(-4px) scale(1.03); /* More pronounced hover effect */
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--glow-color-rgb, var(--acc-rgb)), 0.4);
+  transform: translateY(-3px) scale(1.02); /* Less pronounced lift and scale */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--glow-color-rgb, var(--acc-rgb)), 0.3); /* Reduced glow */
+  /* Removed brightness filter for performance */
 }
 
-.glass-button::after, .glass-select::after, .glass-input-wrapper::after {
+select::after, button::after { /* Animated hover glow border */
   content: '';
   position: absolute;
-  top: -4px; bottom: -4px; /* Expand border for glow effect */
-  left: -4px; right: -4px;
-  border-radius: 22px; /* Match outer border-radius */
-  border: 2px solid transparent;
+  top: -3px; bottom: -3px; /* Even thinner border */
+  left: -3px; right: -3px;
+  border-radius: 20px;
+  border: 1.5px solid transparent; /* Thinner border */
   background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc)) border-box;
   -webkit-mask:
      linear-gradient(#fff 0 0) padding-box,
@@ -316,399 +301,624 @@ body {
   will-change: opacity;
 }
 
-.glass-button:hover::after, .glass-select:hover::after, .glass-input-wrapper:hover::after {
+select:hover::after, button:hover::after {
   opacity: 1;
 }
-
-/* Specific select styling */
-.glass-select {
-    padding-right: 3rem; /* Space for custom arrow */
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1.2em;
-}
-
-/* Input styles */
-.glass-input-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 1rem 1.5rem;
-    border-radius: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.glass-input {
-    flex-grow: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--fg);
-    font-size: 1.1rem;
-    padding: 0; /* Remove default input padding */
-}
-
-.glass-input::placeholder {
-    color: var(--dim);
-    opacity: 0.7;
-}
-
-/* Search Engines & Search Box */
-.search-section {
-  width: 100%;
-  max-width: 1200px;
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-}
-
-.search-engines {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem; /* Tighter gap */
-  justify-content: center;
-}
-
-.search-engine {
-  padding: 0.8rem 1.6rem; /* Slightly smaller buttons */
-  border-radius: 16px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: all var(--t);
-  opacity: 0.7;
-  border-color: transparent; /* Default to no border */
-  background: var(--gl);
-}
-
-.search-engine.active {
-  opacity: 1;
-  border-color: var(--acc);
-  box-shadow: 0 0 0 2px rgba(var(--acc-rgb), 0.3); /* Subtle active glow */
-  transform: translateY(-2px); /* Slight lift for active */
-}
-
-.search-engine:hover {
-  opacity: 1;
-}
-
-.search-container {
-  width: 100%;
-  max-width: 800px; /* Wider search box */
-}
-
-.search-box {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  font-size: 1.8rem; /* Larger icon */
-  color: var(--acc);
-  gap: 1rem;
-}
-
-.search-icon-magnify {
-  font-size: 1.8rem;
-  color: var(--acc);
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
-}
-
-/* Time & Date Display */
-.time-display {
-  padding: 2.5rem 3rem; /* Larger padding */
-  text-align: center;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  position: relative;
-  width: 100%;
-  max-width: 500px; /* Fixed width */
-}
-
-#time {
-  font-size: 4.5rem; /* Very large time */
-  margin-bottom: 0.5rem;
-  background: linear-gradient(var(--text-gradient-angle), var(--fg), var(--acc));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: var(--glow-strength) rgba(var(--fg-rgb), 0.15);
-  animation: gradient 8s ease infinite alternate;
-}
-
-#date {
-  font-size: 1.6rem; /* Large date */
-  color: var(--dim);
-  text-shadow: 0 0 5px rgba(var(--dim-rgb, 255,255,255), 0.1);
-}
-
-/* Quote of the Day */
-.quote-of-the-day {
-    padding: 2.5rem;
-    text-align: center;
-    width: 100%;
-    max-width: 800px;
-}
-
-.quote-of-the-day h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-    animation: gradient 8s ease infinite alternate;
-}
-
-.quote-of-the-day p {
-    font-size: 1.3rem;
-    line-height: 1.8;
-    color: var(--fg);
-    margin-bottom: 1rem;
-}
-
-#quote-author {
-    font-size: 1.1rem;
-    color: var(--dim);
-    font-style: italic;
-}
-
-
-/* Quick Actions */
-.quick-actions {
-  width: 100%;
-  max-width: 1500px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* More compact, more items per row */
-  gap: 1.5rem; /* Smaller gap */
-  justify-content: center;
-}
-
-.action-card {
-  text-decoration: none;
-  color: var(--fg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.8rem; /* Adjusted padding */
-  border-radius: var(--r);
-  transition: all var(--t);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  will-change: transform, box-shadow, border-color;
-}
-
-.action-card:hover {
-  transform: translateY(-5px) scale(1.04); /* More pronounced lift */
-  border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-}
-
-.action-card .icon {
-  font-size: 3.5rem; /* Larger icons */
-  margin-bottom: 0.8rem;
-  filter: drop-shadow(0 0 10px rgba(var(--acc-rgb), 0.3)); /* Subtle icon glow */
-  transition: filter var(--t);
-}
-
-.action-card:hover .icon {
-  filter: drop-shadow(0 0 15px rgba(var(--acc-rgb), 0.6));
-}
-
-.action-card .label {
-  font-size: 1.1rem; /* Slightly larger label */
-  font-weight: 600;
-  color: var(--fg);
-  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.1);
-}
-
-/* Bookmark Section */
-.bookmark-section {
-  width: 100%;
-  max-width: 1500px;
-  padding: 2.5rem;
-}
-
-.bookmark-section h2 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  text-align: center;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
-  animation: gradient 8s ease infinite alternate;
-}
-
-.bookmark-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min-width for bookmarks */
-  gap: 1.8rem; /* Consistent gap */
-}
-
-.bookmark-card {
-  text-decoration: none;
-  color: var(--fg);
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
-  border-radius: var(--r);
-  transition: all var(--t);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  will-change: transform, box-shadow, border-color;
-  gap: 1rem;
-}
-
-.bookmark-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-}
-
-.bookmark-card span {
-  filter: drop-shadow(0 0 8px rgba(var(--acc-rgb), 0.2));
-  transition: filter var(--t);
-}
-
-.bookmark-card:hover span {
-  filter: drop-shadow(0 0 12px rgba(var(--acc-rgb), 0.4));
-}
-
 
 /* Weather Widget */
 .weather-widget {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0.8rem 1.5rem;
+  padding: 0.9rem 1.8rem;
+  border: var(--border-width) solid var(--gb);
   border-radius: 18px;
-  font-size: 1rem;
-  font-weight: 600;
+  background: var(--gl);
   color: var(--fg);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-weight: 500;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  transition: all var(--t);
+  cursor: default;
 }
 
-.weather-icon {
-  font-size: 1.8rem;
-  line-height: 1;
-  color: var(--acc);
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
+.weather-widget .weather-icon {
+  font-size: 1.4rem; /* Smaller icon */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced icon glow */
+  animation: pulseIcon 3s infinite alternate; /* Slower, more subtle pulse on icon */
+  will-change: transform, opacity;
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.01); opacity: 0.98; } /* Even smaller pulse */
 }
 
 .weather-info {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  line-height: 1.2;
 }
-#weather-text { font-size: 1.1rem; font-weight: 700; }
-#weather-location { font-size: 0.85rem; color: var(--dim); }
+.weather-info #weather-text {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.weather-info #weather-location {
+  font-size: 0.85rem;
+  color: var(--dim);
+}
 
+/* User Avatar Toggle & Avatar Itself */
+.hidden-avatar {
+  opacity: 0 !important;
+  transform: scale(0.6) !important; /* Slightly less aggressive scale */
+  pointer-events: none !important;
+  transition: opacity var(--t), transform var(--t) !important;
+}
 
-/* User Avatar */
+#user-avatar-toggle {
+  padding: 0.9rem 1.8rem;
+  border-radius: 18px;
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  color: var(--fg);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all var(--t);
+  outline: none;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  will-change: transform, box-shadow, border-color;
+}
+
+#user-avatar-toggle:hover {
+  border-color: var(--acc);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--sh);
+}
+
 .user-avatar {
-    width: 55px; /* Larger avatar */
-    height: 55px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.2rem; /* Larger icon inside */
-    background: var(--gl);
-    border: var(--border-width) solid var(--gb);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    cursor: pointer;
-    transition: all var(--t);
-    filter: drop-shadow(0 0 8px rgba(var(--fg-rgb), 0.1));
+  width: 45px; /* Smaller avatar */
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem; /* Smaller icon */
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  color: var(--acc);
+  cursor: pointer;
+  transition: all var(--t);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  overflow: hidden;
+  will-change: transform, box-shadow, border-color;
 }
 
 .user-avatar:hover {
-    transform: scale(1.08) rotate(5deg);
-    border-color: var(--acc);
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-    filter: drop-shadow(0 0 12px rgba(var(--acc-rgb), 0.4));
+  transform: scale(1.05) rotate(3deg); /* Less strong effect */
+  border-color: var(--acc);
+  box-shadow: var(--glow-strength) var(--acc), var(--sh);
 }
 
-.user-avatar.hidden {
-    opacity: 0;
-    transform: scale(0.5);
-    pointer-events: none;
+/* Main Content Layout */
+.main {
+  width: 100%;
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
 }
 
+.search-section { padding: 2.5rem; }
+
+/* Search Engines */
+.search-engines {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-engine {
+  padding: 0.9rem 2.2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  border: var(--border-width) solid transparent;
+  background: var(--gl);
+  box-shadow: inset 0 0 0 transparent;
+  transition: all var(--t);
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow, background-color, border-color;
+}
+
+.search-engine.active {
+  background: var(--acc);
+  color: var(--bg);
+  transform: scale(1.05) translateY(-2px); /* Less strong pop-out effect */
+  box-shadow: var(--glow-strength) var(--acc), var(--s);
+  border-color: var(--acc);
+}
+
+.search-engine:not(.active):hover {
+  border-color: var(--acc);
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 10px rgba(var(--acc-rgb), 0.1), 0 5px 12px rgba(0,0,0,0.08); /* Lighter inner glow, reduced outer shadow */
+}
+
+/* Search Box */
+.search-box {
+  display: flex;
+  align-items: center;
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: 50px;
+  padding: 1.5rem 2.2rem;
+  transition: all var(--t), box-shadow 0.2s ease-in-out; /* Faster shadow transition */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15), var(--inner-shadow);
+  will-change: transform, box-shadow, border-color;
+}
+
+.search-box:focus-within {
+  border-color: var(--acc);
+  transform: scale(1.002); /* Very subtle scale on focus */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); /* Reduced glow on focus */
+}
+
+.search-box:focus-within::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px; /* Thinner animated border */
+    background: linear-gradient(90deg, transparent, var(--acc), transparent);
+    animation: borderGrow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Faster animation */
+    will-change: transform;
+}
+
+@keyframes borderGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+#search {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  font-size: 1.2rem;
+  outline: none;
+  margin-left: 1rem;
+  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.1); /* Subtler text shadow */
+}
+
+#search::placeholder {
+  color: var(--dim);
+  opacity: 0.7;
+  transition: opacity 0.1s ease; /* Faster transition */
+}
+
+#search:focus::placeholder {
+  opacity: 0.3;
+}
+
+/* Time Display */
+.time-display {
+  text-align: center;
+  padding: 3.5rem;
+}
+
+#time {
+  font-size: 6rem; /* Slightly smaller time display */
+  font-weight: 900;
+  margin-bottom: 1.2rem;
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 8s ease infinite alternate, pulseText 3.5s infinite alternate; /* Slower pulse, slightly slower gradient */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced text glow */
+  will-change: background-position, text-shadow;
+}
+
+@keyframes pulseText {
+  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 15px rgba(var(--fg-rgb), 0.08); }
+  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), 0 0 20px rgba(var(--fg-rgb), 0.12); }
+  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 15px rgba(var(--fg-rgb), 0.08); }
+}
+
+#date {
+  font-size: 1.6rem;
+  color: var(--dim);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* Quote of the Day Section */
+.quote-of-the-day {
+  text-align: center;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.quote-of-the-day h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced heading glow */
+}
+
+.quote-of-the-day #quote-text {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: var(--fg);
+  margin-bottom: 0.8rem;
+  font-style: italic;
+  max-width: 700px;
+  animation: textFadeIn 0.7s ease-out forwards; /* Faster fade in */
+  transform: translateY(6px); /* Less vertical displacement */
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+@keyframes textFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quote-of-the-day #quote-author {
+  font-size: 1rem;
+  color: var(--dim);
+  font-weight: 400;
+  animation: textFadeIn 0.7s ease-out forwards 0.1s; /* Slightly delayed fade for author, faster */
+  transform: translateY(6px);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+.action-card {
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--fg);
+  transition: all var(--t); /* Reduced transition properties */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), var(--inner-shadow);
+  /* Removed transform-style: preserve-3d; for performance */
+  will-change: transform, box-shadow, border-color;
+}
+
+.action-card::before { /* Simplified shimmer effect on hover */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%; /* Reduced shimmer travel distance */
+  width: 50%; /* Thinner shimmer */
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); /* Reduced opacity */
+  transition: all var(--t);
+  z-index: 1;
+  transform: skewX(-15deg); /* Angled shimmer */
+  will-change: left;
+}
+
+.action-card:hover::before {
+  left: 100%; /* Reduced shimmer travel distance */
+}
+
+.action-card:hover {
+  transform: translateY(-8px) scale(1.03); /* Less strong lift and scale, no 3D tilt */
+  border-color: var(--acc);
+  box-shadow: var(--sh), var(--glow-strength) var(--acc); /* Reduced glow */
+  /* Removed brightness filter for performance */
+}
+
+.action-card .icon, .action-card .label {
+  position: relative;
+  z-index: 2;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1.2rem;
+  display: block;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Reduced icon glow */
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+
+.action-card:hover .icon {
+  transform: scale(1.05) rotate(2deg); /* Less icon rotation on hover */
+}
+
+.label {
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+/* News and Bookmark Sections */
+.news-section, .bookmark-section {
+  padding: 3rem;
+}
+
+.news-section h2, .bookmark-section h2 {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-align: center;
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced heading glow */
+}
+
+.news-grid, .bookmark-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly smaller min width for cards */
+  gap: 2rem;
+}
+
+.news-card, .bookmark-card {
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  padding: 2rem;
+  text-decoration: none;
+  color: var(--fg);
+  transition: all var(--t); /* Reduced transition properties */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), var(--inner-shadow);
+  /* Removed transform-style: preserve-3d; for performance */
+  will-change: transform, box-shadow, border-color;
+}
+
+.news-card:hover, .bookmark-card:hover {
+  transform: translateY(-6px) scale(1.01); /* Lift, subtle scale, no tilt */
+  border-color: var(--acc);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Reduced glow */
+  /* Removed brightness filter for performance */
+}
+
+.news-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(var(--fg-rgb), 0.08); /* Subtler text shadow */
+}
+
+.news-card p {
+  color: var(--dim);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.news-source {
+  font-size: 0.95rem;
+  color: var(--acc);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bookmark-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.bookmark-card span:first-child {
+  font-size: 2.5rem;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced icon glow */
+}
+
+.bookmark-card > div > div:first-child {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.bookmark-card > div > div:last-child {
+  font-size: 0.9rem;
+  color: var(--dim);
+}
 
 /* Stats Panel */
 .stats-panel {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  padding: 1.5rem 2.5rem;
   display: flex;
-  gap: 2.5rem; /* More space between stats */
-  padding: 1.5rem 3rem; /* Generous padding */
-  border-radius: 24px;
-  font-size: 1.1rem; /* Larger text */
+  gap: 3rem;
   font-weight: 600;
-  color: var(--fg);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.08);
+  z-index: 100;
+  border-radius: 40px;
+  box-shadow: var(--s), var(--inner-shadow);
+  animation: floatPanel 10s ease-in-out infinite alternate; /* Slower, more elegant float */
+  will-change: transform, box-shadow;
+}
+
+@keyframes floatPanel {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); } /* Subtle float, no tilt */
 }
 
 .stats-panel div {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.05rem;
 }
 
-.stats-panel span {
-    color: var(--acc);
-    font-weight: 800;
-    font-size: 1.3rem;
-}
-
-
-/* Accessibility - Screen Reader Only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-
-/* Scrollbar Styling */
+/* Scrollbar Styling (Subtle customization) */
 ::-webkit-scrollbar {
-  width: 8px; /* Wider scrollbar */
-  background-color: transparent;
-  border-radius: 4px;
+  width: 7px; /* Even thinner scrollbar */
+  background-color: transparent; /* Make transparent to reduce rendering */
+  border-radius: 3.5px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent;
+    background-color: transparent; /* No track background */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--acc-rgb), 0.7); /* More opaque */
-  border-radius: 4px;
-  border: 1px solid rgba(var(--gb-rgb, 255,255,255), 0.15);
+  background-color: rgba(var(--acc-rgb), 0.6); /* Semi-transparent accent */
+  border-radius: 3.5px;
+  border: 1px solid rgba(var(--gb-rgb, 255,255,255), 0.1); /* Very subtle border */
   transition: background-color var(--t);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--ah-rgb), 0.9); /* Even more opaque on hover */
+  background-color: rgba(var(--ah-rgb, 180,100,230), 0.8); /* Slightly more opaque on hover */
 }
 
 
-/* Fallback for browsers that don't support backdrop-filter */
+/* Media Queries for Responsiveness - Aggressively Optimized for Performance */
+@media (max-width: 1200px) {
+  .logo { font-size: 2.5rem; }
+  #time { font-size: 5.5rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .header { padding: 1.5rem 1.8rem; }
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2rem; }
+  .stats-panel { bottom: 1.8rem; right: 1.8rem; padding: 1.4rem 2.2rem; gap: 2.5rem; font-size: 0.95rem;}
+  .glass { backdrop-filter: blur(12px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
+}
+
+@media (max-width: 992px) {
+  .container { padding: 1.5rem; gap: 2.5rem; }
+  .header { flex-direction: column; gap: 1.2rem; padding: 1.2rem; }
+  .controls { justify-content: center; gap: 0.6rem; }
+  .logo { font-size: 2rem; }
+  #time { font-size: 4.5rem; }
+  #date { font-size: 1.4rem; letter-spacing: 2px; }
+  .quote-of-the-day h2 { font-size: 2rem; }
+  .quote-of-the-day #quote-text { font-size: 1.2rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 0 0.8rem; gap: 1.5rem;}
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 1.5rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2.2rem; }
+  .search-box { padding: 1.2rem 1.8rem; }
+  #search { font-size: 1.1rem; }
+  .stats-panel {
+    bottom: 1.2rem; right: 1.2rem;
+    padding: 1rem 1.8rem;
+    gap: 2rem;
+    font-size: 0.9rem;
+  }
+  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
+}
+
+@media (max-width: 768px) {
+  .container { padding: 1rem; gap: 2rem; }
+  .header { padding: 1rem; }
+  .logo { font-size: 1.6rem; }
+  select, button, .weather-widget { padding: 0.7rem 1.3rem; font-size: 0.9rem; border-radius: 14px; }
+  .user-avatar, #user-avatar-toggle { width: 40px; height: 40px; font-size: 1.5rem; }
+  .search-section { padding: 1.2rem; }
+  .search-engine { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 40px; }
+  .search-box { padding: 1rem 1.5rem; border-radius: 40px; }
+  #search { font-size: 1rem; margin-left: 0.6rem; }
+  #time { font-size: 3.5rem; margin-bottom: 0.7rem;}
+  #date { font-size: 1.1rem; letter-spacing: 1.2px; }
+  .quote-of-the-day h2 { font-size: 1.8rem; margin-bottom: 1rem;}
+  .quote-of-the-day #quote-text { font-size: 1rem; }
+  .quote-of-the-day #quote-author { font-size: 0.85rem; }
+  .quick-actions { grid-template-columns: 1fr; padding: 0 0.5rem; gap: 1.5rem; }
+  .action-card { padding: 2rem 1rem; }
+  .icon { font-size: 3.5rem; margin-bottom: 0.8rem; }
+  .label { font-size: 1.05rem; letter-spacing: 1.2px; }
+  .news-section, .bookmark-section { padding: 1.2rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2rem; margin-bottom: 1.8rem;}
+  .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .news-card, .bookmark-card { padding: 1.8rem; }
+  .news-card h3 { font-size: 1.3rem; }
+  .news-card p { font-size: 0.9rem; margin-bottom: 1rem;}
+  .bookmark-card span:first-child { font-size: 2rem; }
+  .bookmark-card > div > div:first-child { font-size: 1.1rem; }
+  .bookmark-card > div > div:last-child { font-size: 0.85rem; }
+  .stats-panel {
+    position: static;
+    margin-top: 2rem;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--r);
+    animation: none; /* Disable float animation on mobile */
+  }
+  .stats-panel div { justify-content: center; }
+  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); } /* Very low blur for tablets */
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0.8rem; gap: 1.2rem; }
+  .header { padding: 0.8rem; gap: 1rem; }
+  .logo { font-size: 1.2rem; }
+  select, button, .weather-widget { padding: 0.6rem 1rem; font-size: 0.8rem; border-radius: 8px; }
+  .user-avatar, #user-avatar-toggle { width: 32px; height: 32px; font-size: 1.2rem; }
+  .search-section { padding: 1rem; }
+  .search-engine { padding: 0.6rem 1rem; font-size: 0.8rem; border-radius: 20px; }
+  .search-box { padding: 0.7rem 1rem; border-radius: 30px; }
+  #search { font-size: 0.8rem; margin-left: 0.4rem; }
+  #time { font-size: 2.5rem; margin-bottom: 0.5rem;}
+  #date { font-size: 0.9rem; letter-spacing: 1px; }
+  .quote-of-the-day h2 { font-size: 1.4rem; margin-bottom: 0.8rem;}
+  .quote-of-the-day #quote-text { font-size: 0.85rem; }
+  .quote-of-the-day #quote-author { font-size: 0.75rem; }
+  .quick-actions { padding: 0 0.5rem; gap: 1rem; }
+  .action-card { padding: 1.5rem 0.6rem; }
+  .icon { font-size: 2.8rem; margin-bottom: 0.5rem; }
+  .label { font-size: 0.95rem; letter-spacing: 1px; }
+  .news-section, .bookmark-section { padding: 1rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 1.6rem; margin-bottom: 1.2rem;}
+  .news-card, .bookmark-card { padding: 1.5rem; }
+  .news-card h3 { font-size: 1rem; }
+  .news-card p { font-size: 0.8rem; margin-bottom: 0.8rem;}
+  .bookmark-card span:first-child { font-size: 1.6rem; }
+  .bookmark-card > div > div:first-child { font-size: 1rem; }
+  .bookmark-card > div > div:last-child { font-size: 0.8rem; }
+  .stats-panel { padding: 0.6rem 1rem; gap: 1rem; font-size: 0.8rem; }
+  .glass { backdrop-filter: blur(5px) saturate(var(--saturate-intensity)); } /* Minimum blur for mobile */
+}
+
+/* Fallback for browsers that don't support backdrop-filter or for extreme performance mode */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
     background: rgba(var(--fg-rgb), 0.15); /* More opaque background without blur */
+    /* Remove backdrop-filter entirely */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -721,145 +931,4 @@ body.no-animations * {
     transform: none !important;
     will-change: auto !important;
     filter: none !important;
-}
-
-
-/* Media Queries for Responsiveness */
-@media (max-width: 1400px) {
-  .container { padding: 2.5rem; gap: 3rem; }
-  .header { padding: 1.8rem 2rem; }
-  .logo { font-size: 2.8rem; }
-  .controls { gap: 1rem; }
-  .glass-button, .glass-select, .glass-input-wrapper { padding: 0.9rem 1.8rem; font-size: 0.95rem; border-radius: 18px; }
-  .search-section { padding: 2rem; }
-  .search-engine { padding: 0.7rem 1.4rem; font-size: 0.9rem; border-radius: 14px; }
-  .search-box { font-size: 1.6rem; }
-  .glass-input { font-size: 1rem; }
-  .time-display { padding: 2rem 2.5rem; }
-  #time { font-size: 4rem; }
-  #date { font-size: 1.4rem; }
-  .quote-of-the-day { padding: 2rem; }
-  .quote-of-the-day h2 { font-size: 1.8rem; }
-  .quote-of-the-day p { font-size: 1.2rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem; }
-  .action-card { padding: 1.5rem; }
-  .action-card .icon { font-size: 3rem; }
-  .action-card .label { font-size: 1rem; }
-  .bookmark-section { padding: 2rem; }
-  .bookmark-section h2 { font-size: 2rem; }
-  .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-  .bookmark-card { padding: 1.2rem; }
-  .stats-panel { padding: 1.2rem 2.5rem; font-size: 1rem; gap: 2rem; }
-  .stats-panel span { font-size: 1.2rem; }
-  .weather-widget { padding: 0.7rem 1.2rem; font-size: 0.95rem; border-radius: 16px; }
-  .weather-icon { font-size: 1.6rem; }
-  .user-avatar { width: 50px; height: 50px; font-size: 2rem; }
-}
-
-@media (max-width: 992px) {
-  .container { padding: 2rem; gap: 2.5rem; }
-  .header { flex-direction: column; gap: 1rem; padding: 1.5rem; }
-  .logo { font-size: 2.4rem; }
-  .controls { justify-content: center; gap: 0.8rem; }
-  .glass-button, .glass-select, .glass-input-wrapper { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 16px; }
-  .search-section { padding: 1.8rem; gap: 1.5rem; }
-  .search-engines { gap: 0.6rem; }
-  .search-engine { padding: 0.6rem 1.2rem; font-size: 0.85rem; border-radius: 12px; }
-  .search-box { font-size: 1.4rem; }
-  .glass-input { font-size: 0.95rem; }
-  .time-display { padding: 1.8rem 2rem; }
-  #time { font-size: 3.5rem; }
-  #date { font-size: 1.2rem; }
-  .quote-of-the-day { padding: 1.8rem; }
-  .quote-of-the-day h2 { font-size: 1.6rem; margin-bottom: 1rem; }
-  .quote-of-the-day p { font-size: 1rem; }
-  #quote-author { font-size: 0.9rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
-  .action-card { padding: 1.2rem; }
-  .action-card .icon { font-size: 2.8rem; margin-bottom: 0.6rem; }
-  .action-card .label { font-size: 0.9rem; }
-  .bookmark-section { padding: 1.8rem; }
-  .bookmark-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem; }
-  .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
-  .bookmark-card { padding: 1rem; gap: 0.8rem; }
-  .bookmark-card span { font-size: 1.8rem !important; }
-  .bookmark-card div div:first-child { font-size: 1.1rem !important; }
-  .bookmark-card div div:last-child { font-size: 0.85rem !important; }
-  .stats-panel { padding: 1rem 2rem; font-size: 0.9rem; gap: 1.5rem; }
-  .stats-panel span { font-size: 1.1rem; }
-  .weather-widget { padding: 0.6rem 1rem; font-size: 0.9rem; border-radius: 14px; }
-  .weather-icon { font-size: 1.4rem; }
-  .user-avatar { width: 45px; height: 45px; font-size: 1.8rem; }
-  .glass { backdrop-filter: blur(15px) saturate(var(--saturate-intensity)); }
-}
-
-@media (max-width: 768px) {
-  .container { padding: 1.5rem; gap: 2rem; }
-  .header { padding: 1.2rem; }
-  .logo { font-size: 2rem; }
-  .controls { flex-direction: column; gap: 0.6rem; }
-  .glass-button, .glass-select, .glass-input-wrapper { width: 100%; max-width: 300px; padding: 0.7rem 1.2rem; font-size: 0.85rem; border-radius: 14px; }
-  .search-section { padding: 1.5rem; gap: 1.2rem; }
-  .search-engines { flex-direction: column; }
-  .search-engine { width: 100%; max-width: 250px; }
-  .search-box { font-size: 1.2rem; gap: 0.8rem; }
-  .glass-input { font-size: 0.9rem; }
-  .time-display { padding: 1.5rem; }
-  #time { font-size: 3rem; }
-  #date { font-size: 1rem; }
-  .quote-of-the-day { padding: 1.5rem; }
-  .quote-of-the-day h2 { font-size: 1.4rem; }
-  .quote-of-the-day p { font-size: 0.9rem; }
-  #quote-author { font-size: 0.8rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.8rem; }
-  .action-card { padding: 1rem; }
-  .action-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-  .action-card .label { font-size: 0.8rem; }
-  .bookmark-section { padding: 1.5rem; }
-  .bookmark-section h2 { font-size: 1.6rem; margin-bottom: 1.2rem; }
-  .bookmark-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .bookmark-card { padding: 0.8rem; gap: 0.6rem; }
-  .bookmark-card span { font-size: 1.6rem !important; }
-  .bookmark-card div div:first-child { font-size: 1rem !important; }
-  .bookmark-card div div:last-child { font-size: 0.8rem !important; }
-  .stats-panel { flex-direction: column; padding: 0.8rem 1.5rem; font-size: 0.8rem; gap: 1rem; }
-  .stats-panel span { font-size: 1rem; }
-  .weather-widget { padding: 0.5rem 0.8rem; font-size: 0.85rem; border-radius: 12px; }
-  .weather-icon { font-size: 1.2rem; }
-  .user-avatar { width: 40px; height: 40px; font-size: 1.6rem; }
-  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); }
-}
-
-@media (max-width: 480px) {
-  .container { padding: 1rem; gap: 1.5rem; }
-  .header { padding: 1rem; }
-  .logo { font-size: 1.6rem; }
-  .glass-button, .glass-select, .glass-input-wrapper { max-width: 250px; padding: 0.6rem 1rem; font-size: 0.75rem; border-radius: 12px; }
-  .search-section { padding: 1.2rem; gap: 1rem; }
-  .search-engine { max-width: 200px; }
-  .search-box { font-size: 1rem; gap: 0.6rem; }
-  .glass-input { font-size: 0.85rem; }
-  .time-display { padding: 1.2rem; }
-  #time { font-size: 2.5rem; }
-  #date { font-size: 0.9rem; }
-  .quote-of-the-day { padding: 1.2rem; }
-  .quote-of-the-day h2 { font-size: 1.2rem; }
-  .quote-of-the-day p { font-size: 0.8rem; }
-  #quote-author { font-size: 0.75rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.6rem; }
-  .action-card { padding: 0.8rem; }
-  .action-card .icon { font-size: 2.2rem; margin-bottom: 0.4rem; }
-  .action-card .label { font-size: 0.75rem; }
-  .bookmark-section { padding: 1.2rem; }
-  .bookmark-section h2 { font-size: 1.4rem; }
-  .bookmark-card { padding: 0.7rem; }
-  .bookmark-card span { font-size: 1.4rem !important; }
-  .bookmark-card div div:first-child { font-size: 0.9rem !important; }
-  .bookmark-card div div:last-child { font-size: 0.75rem !important; }
-  .stats-panel { padding: 0.6rem 1.2rem; font-size: 0.75rem; gap: 0.8rem; }
-  .stats-panel span { font-size: 0.9rem; }
-  .weather-widget { padding: 0.4rem 0.6rem; font-size: 0.75rem; border-radius: 10px; }
-  .weather-icon { font-size: 1rem; }
-  .user-avatar { width: 35px; height: 35px; font-size: 1.4rem; }
-  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); }
 }
