@@ -2,20 +2,19 @@
 const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
 const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
 
-// Ensure the theme is one of the allowed values
-const allowedThemes = ['deep-dark', 'dark', 'light'];
+// Nur noch 'dark' und 'light' als erlaubte Themes
+const allowedThemes = ['dark', 'light'];
 if (!allowedThemes.includes(settings.theme)) {
-    settings.theme = 'dark'; // Default to 'dark' if an invalid theme is stored
+    settings.theme = 'dark'; // Fallback auf 'dark', falls 'deep-dark' oder ein ungültiges Theme gespeichert war
     save();
 }
 
 document.body.dataset.theme = settings.theme;
 const themePicker = document.getElementById('theme-picker');
 
-// Clear existing options and add only deep-dark, dark, and light
-themePicker.innerHTML = ''; // Clear existing options
+// Nur 'dark' und 'light' Optionen hinzufügen
+themePicker.innerHTML = ''; // Vorhandene Optionen löschen
 const themes = [
-    { value: 'deep-dark', text: 'Deep Dark Theme' },
     { value: 'dark', text: 'Dark Theme' },
     { value: 'light', text: 'Light Theme' }
 ];
@@ -27,7 +26,7 @@ themes.forEach(theme => {
     themePicker.appendChild(option);
 });
 
-themePicker.value = settings.theme; // Set the selected value
+themePicker.value = settings.theme; // Aktuelles Theme auswählen
 
 // User Avatar & Toggle Logic
 const userAvatar = document.getElementById('user-avatar');
@@ -155,7 +154,7 @@ const getWeatherEmoji = (iconCode) => {
 
 const fetchWeather = async () => {
     const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual key
-    const city = 'Heidenheim'; // Current location is Heidenheim
+    const city = 'Heidenheim';
 
     if (apiKey === 'YOUR_OPENWEATHERMAP_API_KEY' || !apiKey || apiKey.length < 30) {
         console.warn("OpenWeatherMap API Key not set or invalid. Using placeholder weather data.");
