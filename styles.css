@@ -1,99 +1,99 @@
-/* styles.css - Polished and Optimized for Performance */
+/* styles.css - Extreme Performance Optimization */
 :root {
   /* Global Design Variables - Tuned for ultimate polish and realism */
-  --t: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly faster, still elegant transitions */
-  --r: 28px; /* Refined border-radius for softness */
-  --s: 0 15px 60px rgba(0,0,0,0.3); /* Deeper, more diffused shadow, less spread */
-  --sh: 0 30px 90px rgba(0,0,0,0.5); /* Powerful shadow for prominent elements on hover */
-  --border-width: 1.5px; /* Consistent border width, slightly thinner */
+  --t: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly faster, still elegant transitions */
+  --r: 24px; /* Refined border-radius for softness */
+  --s: 0 10px 30px rgba(0,0,0,0.2); /* Reduced, more focused shadow */
+  --sh: 0 20px 60px rgba(0,0,0,0.4); /* Reduced prominent shadow for hover */
+  --border-width: 1px; /* Thinner borders */
   --text-gradient-angle: 50deg; /* Angle for text gradients */
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%, rgba(255, 255, 255, 0.04) 100%); /* Subtle reflection on glass */
-  --glow-strength: 0 0 25px; /* Base glow strength, slightly less aggressive */
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%, rgba(255, 255, 255, 0.02) 100%); /* Subtle reflection on glass */
+  --glow-strength: 0 0 15px; /* Base glow strength - significantly reduced */
   --glow-color: var(--acc); /* Base glow color */
-  --blur-intensity: 30px; /* Main backdrop-filter blur value - reduced for performance */
-  --saturate-intensity: 180%; /* Saturate for glass effect */
+  --blur-intensity: 15px; /* Main backdrop-filter blur value - drasitcally reduced for performance */
+  --saturate-intensity: 150%; /* Slightly reduced saturate for glass effect */
 }
 
 /* Themed Variables (Default: Neon - meticulously refined) */
 [data-theme="neon"] {
   --bg: radial-gradient(circle at 15% 25%, #ffebf7 0%, #d4a9ff 35%, #a1cdff 65%, #bafffb 100%);
-  --fg: #fff; --dim: rgba(255,255,255,0.8); /* Slightly less opaque for better contrast on glass */
+  --fg: #fff; --dim: rgba(255,255,255,0.7); /* Slightly less opaque for better contrast on glass */
   --acc: #e040fb; --ah: #c200ed;
-  --gl: rgba(255,255,255,0.15); /* More substantial glass background */
-  --gb: rgba(255,255,255,0.45); /* Stronger, more defined glass border */
-  --inner-shadow: inset 0 0 10px rgba(255,255,255,0.06); /* Prominent inner shadow for depth */
+  --gl: rgba(255,255,255,0.08); /* Less substantial glass background */
+  --gb: rgba(255,255,255,0.25); /* Less defined glass border */
+  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.03); /* Lighter inner shadow for depth */
   --acc-rgb: 224, 64, 251; /* RGB values for accent color glow */
   --fg-rgb: 255, 255, 255; /* RGB values for foreground color glow */
 }
 
-/* Refined Theme Definitions */
+/* Refined Theme Definitions (Adjusted for consistency and potential perf improvements) */
 [data-theme="cyber"] {
-  --bg: linear-gradient(45deg, #020202 0%, #0a000d 30%, #000812 60%, #000406 100%); /* Darker base */
-  --fg: #00e5e5; --dim: rgba(0,229,229,0.7);
+  --bg: linear-gradient(45deg, #020202 0%, #0a000d 30%, #000812 60%, #000406 100%);
+  --fg: #00e5e5; --dim: rgba(0,229,229,0.6);
   --acc: #ff2080; --ah: #cc0066;
-  --gl: rgba(0,255,255,0.1);
-  --gb: rgba(0,255,255,0.3);
+  --gl: rgba(0,255,255,0.05);
+  --gb: rgba(0,255,255,0.15);
   --acc-rgb: 255, 32, 128;
   --fg-rgb: 0, 229, 229;
 }
 
 [data-theme="hologram"] {
   --bg: linear-gradient(135deg, #6c7dd6 0%, #7d59b2 50%, #e281ff 100%);
-  --fg: #fff; --dim: rgba(255,255,255,0.85);
+  --fg: #fff; --dim: rgba(255,255,255,0.8);
   --acc: #00f2fe; --ah: #4facfe;
-  --gl: rgba(255,255,255,0.18);
-  --gb: rgba(255,255,255,0.5);
+  --gl: rgba(255,255,255,0.1);
+  --gb: rgba(255,255,255,0.25);
   --acc-rgb: 0, 242, 254;
   --fg-rgb: 255, 255, 255;
 }
 
 [data-theme="minimal"] {
   --bg: linear-gradient(135deg, #f0f3f8 0%, #e0e5eb 100%);
-  --fg: #2c3e50; --dim: rgba(44,62,80,0.75);
+  --fg: #2c3e50; --dim: rgba(44,62,80,0.7);
   --acc: #3498db; --ah: #2980b9;
-  --gl: rgba(255,255,255,0.85);
-  --gb: rgba(255,255,255,0.95);
-  --inner-shadow: inset 0 0 8px rgba(0,0,0,0.02);
+  --gl: rgba(255,255,255,0.8);
+  --gb: rgba(255,255,255,0.9);
+  --inner-shadow: inset 0 0 4px rgba(0,0,0,0.01);
   --acc-rgb: 52, 152, 219;
   --fg-rgb: 44, 62, 80;
 }
 
 [data-theme="dark"] {
   --bg: linear-gradient(135deg, #121212 0%, #202020 100%);
-  --fg: #e0e0e0; --dim: rgba(224,224,224,0.7);
+  --fg: #e0e0e0; --dim: rgba(224,224,224,0.6);
   --acc: #bb86fc; --ah: #9c5cfc;
-  --gl: rgba(255,255,255,0.08);
-  --gb: rgba(255,255,255,0.22);
+  --gl: rgba(255,255,255,0.05);
+  --gb: rgba(255,255,255,0.15);
   --acc-rgb: 187, 134, 252;
   --fg-rgb: 224, 224, 224;
 }
 
 [data-theme="light"] {
   --bg: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
-  --fg: #333333; --dim: rgba(51,51,51,0.65);
+  --fg: #333333; --dim: rgba(51,51,51,0.6);
   --acc: #007bff; --ah: #0056b3;
-  --gl: rgba(0,0,0,0.05);
-  --gb: rgba(0,0,0,0.15);
+  --gl: rgba(0,0,0,0.03);
+  --gb: rgba(0,0,0,0.1);
   --acc-rgb: 0, 123, 255;
   --fg-rgb: 51, 51, 51;
 }
 
 [data-theme="forest"] {
-  --bg: linear-gradient(135deg, #0a3035 0%, #40754d 100%); /* Deeper greens */
-  --fg: #ffffff; --dim: rgba(255,255,255,0.75);
+  --bg: linear-gradient(135deg, #0a3035 0%, #40754d 100%);
+  --fg: #ffffff; --dim: rgba(255,255,255,0.7);
   --acc: #8bc34a; --ah: #689f38;
-  --gl: rgba(255,255,255,0.12);
-  --gb: rgba(255,255,255,0.28);
+  --gl: rgba(255,255,255,0.08);
+  --gb: rgba(255,255,255,0.2);
   --acc-rgb: 139, 195, 74;
   --fg-rgb: 255, 255, 255;
 }
 
 [data-theme="ocean"] {
-  --bg: linear-gradient(135deg, #405080 0%, #005080 100%); /* Deeper blues */
-  --fg: #ffffff; --dim: rgba(255,255,255,0.85);
+  --bg: linear-gradient(135deg, #405080 0%, #005080 100%);
+  --fg: #ffffff; --dim: rgba(255,255,255,0.8);
   --acc: #5ed8e0; --ah: #3bc7cf;
-  --gl: rgba(255,255,255,0.15);
-  --gb: rgba(255,255,255,0.32);
+  --gl: rgba(255,255,255,0.1);
+  --gb: rgba(255,255,255,0.25);
   --acc-rgb: 94, 216, 224;
   --fg-rgb: 255, 255, 255;
 }
@@ -105,8 +105,8 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
-  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
-  scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -116,48 +116,36 @@ body {
   transition: background var(--t), color var(--t);
   overflow-x: hidden;
   position: relative;
-  perspective: 1000px; /* Slightly reduced perspective for stability on weaker GPUs */
-  text-rendering: optimizeLegibility; /* Better font rendering */
-  -webkit-font-smoothing: antialiased; /* Smoother fonts */
-  -moz-osx-font-smoothing: grayscale; /* Smoother fonts */
+  /* Removed perspective for less 3D rendering overhead */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Animated Background Elements (Optimized for performance) */
-/* Reduced blur, fewer shapes */
-body::before, .background-shape {
+/* Animated Background Elements (Drastically Optimized) */
+/* Reduced to one very subtle shape, less blur, slower animation */
+.background-shape {
   content: '';
   position: fixed;
   border-radius: 50%;
-  opacity: 0.08; /* Very subtle */
-  filter: blur(80px); /* Reduced blur for performance */
-  z-index: -1; /* Behind everything */
+  opacity: 0.05; /* Even more subtle */
+  filter: blur(60px); /* Reduced blur for performance */
+  z-index: -1;
   pointer-events: none;
-  animation: floatEffect 25s ease-in-out infinite alternate; /* Slower animation */
+  width: 400px; height: 400px; /* Smaller size */
+  background: var(--acc);
+  top: -80px; left: -80px; /* Consistent positioning */
+  animation: floatEffect 30s ease-in-out infinite alternate; /* Slower animation */
   will-change: transform, opacity; /* Hint to browser for animation optimization */
 }
 
-body::before {
-  width: 500px; height: 500px; /* Reduced size */
-  background: var(--acc);
-  top: -100px; left: -100px;
-  animation-delay: 0s;
-}
-
-/* Removed body::after for less complexity */
-
-.background-shape { /* Single additional shape for complexity */
-  width: 350px; height: 350px; /* Reduced size */
-  background: var(--dim);
-  bottom: -120px; right: -120px;
-  animation-delay: 12s; /* Longer delay */
-  animation: floatEffect 28s ease-in-out infinite reverse; /* Slower, reverse animation */
-}
+/* Removed the second shape (body::after or another .background-shape) for maximum performance */
 
 @keyframes floatEffect {
   0% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(25px, 35px) scale(1.02); }
-  50% { transform: translate(-15px, -25px) scale(0.98); }
-  75% { transform: translate(8px, -8px) scale(1.01); }
+  25% { transform: translate(15px, 20px) scale(1.01); } /* Smaller movements */
+  50% { transform: translate(-10px, -15px) scale(0.99); }
+  75% { transform: translate(5px, -5px) scale(1.005); }
   100% { transform: translate(0, 0) scale(1); }
 }
 
@@ -165,39 +153,40 @@ body::before {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px); /* Even lower opacity */
-  background-size: 50px 50px; /* Smaller pattern for finer grain */
-  animation: grain 0.2s steps(1) infinite; /* Faster step animation for subtle flicker */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); /* Even lower opacity */
+  background-size: 60px 60px; /* Larger pattern for less density */
+  animation: grain 0.3s steps(1) infinite; /* Slower step animation for less flicker */
   pointer-events: none;
   z-index: 0;
-  opacity: 0.5; /* Even less noticeable */
+  opacity: 0.3; /* Minimal opacity */
 }
 
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.5%, 0.5%); } /* Smaller translation */
+  50% { transform: translate(-0.3%, 0.3%); } /* Smaller translation */
 }
 
 .container {
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding: 2.5rem; /* Standardized padding */
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3.5rem; /* Consistent gap between sections */
+  gap: 3rem;
 }
 
-/* Glassmorphism Base Style with subtle reflection - Optimized Blur */
+/* Glassmorphism Base Style with subtle reflection - Drastically Optimized Blur */
 .glass {
   background: var(--gl);
-  /* Reduced blur intensity and removed contrast for better performance */
+  /* Drastically reduced blur intensity */
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  transition: all var(--t), transform var(--t), box-shadow var(--t), filter var(--t); /* Added filter for brightness transition */
+  /* Reduced transition properties for performance */
+  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
   position: relative;
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background-color, backdrop-filter; /* Explicit will-change */
@@ -211,7 +200,7 @@ body::before {
     height: 100%;
     background: var(--glass-reflection);
     pointer-events: none;
-    opacity: 0.7; /* More visible reflection */
+    opacity: 0.6; /* Slightly less visible reflection */
     transition: opacity var(--t);
   }
 }
@@ -219,8 +208,8 @@ body::before {
 /* Animation for elements appearing on scroll */
 .animate-in {
   opacity: 0;
-  transform: translateY(30px) scale(0.95); /* Slightly less aggressive initial state */
-  animation: fadeInSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Faster animation */
+  transform: translateY(20px) scale(0.98); /* Even less aggressive initial state */
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Faster animation */
   will-change: opacity, transform;
 }
 
@@ -237,20 +226,20 @@ body::before {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1600px; /* Slightly narrower header */
-  padding: 2rem 2.5rem; /* Refined padding */
+  max-width: 1500px; /* Slightly narrower header */
+  padding: 1.8rem 2rem;
 }
 
 .logo {
-  font-size: 3rem; /* Slightly smaller logo */
+  font-size: 2.8rem;
   font-weight: 900;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 300% 300%; /* Smaller gradient area for potentially smoother animation */
+  background-size: 250% 250%; /* Smaller gradient area for potentially smoother animation */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient 7s ease infinite alternate; /* Slower, more subtle gradient animation */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger logo glow */
+  animation: gradient 8s ease infinite alternate; /* Slower, more subtle gradient animation */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Reduced logo glow */
   position: relative;
   will-change: background-position, text-shadow;
 }
@@ -262,44 +251,44 @@ body::before {
 
 .controls {
   display: flex;
-  gap: 1.5rem; /* Slightly reduced gap */
+  gap: 1.2rem; /* Reduced gap */
   align-items: center;
   flex-wrap: wrap;
 }
 
 /* Buttons and Selects */
 select, button {
-  padding: 1rem 2rem;
+  padding: 0.9rem 1.8rem;
   border: var(--border-width) solid var(--gb);
-  border-radius: 20px; /* Slightly smaller radius */
+  border-radius: 18px; /* Slightly smaller radius */
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: all var(--t);
-  font-size: 1rem; /* Slightly smaller font */
+  transition: all var(--t); /* Reduced transition properties */
+  font-size: 0.95rem;
   font-weight: 500;
   outline: none;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* More prominent shadow */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12); /* Less prominent shadow */
   position: relative;
   z-index: 1;
-  overflow: hidden; /* For hover effects */
-  will-change: transform, box-shadow, border-color, filter;
+  overflow: hidden;
+  will-change: transform, box-shadow, border-color;
 }
 
 select:hover, button:hover {
   border-color: var(--acc);
-  transform: translateY(-5px) scale(1.03); /* Slightly less pronounced lift and scale */
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--glow-color-rgb, var(--acc-rgb)), 0.4); /* Stronger glow */
-  filter: brightness(1.15); /* Subtle brightness increase */
+  transform: translateY(-3px) scale(1.02); /* Less pronounced lift and scale */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--glow-color-rgb, var(--acc-rgb)), 0.3); /* Reduced glow */
+  /* Removed brightness filter for performance */
 }
 
 select::after, button::after { /* Animated hover glow border */
   content: '';
   position: absolute;
-  top: -4px; bottom: -4px; /* Slightly thinner border */
-  left: -4px; right: -4px;
-  border-radius: 24px;
-  border: 2px solid transparent;
+  top: -3px; bottom: -3px; /* Even thinner border */
+  left: -3px; right: -3px;
+  border-radius: 20px;
+  border: 1.5px solid transparent; /* Thinner border */
   background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc)) border-box;
   -webkit-mask:
      linear-gradient(#fff 0 0) padding-box,
@@ -320,29 +309,29 @@ select:hover::after, button:hover::after {
 .weather-widget {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  padding: 1rem 2rem;
+  gap: 0.7rem;
+  padding: 0.9rem 1.8rem;
   border: var(--border-width) solid var(--gb);
-  border-radius: 20px;
+  border-radius: 18px;
   background: var(--gl);
   color: var(--fg);
   font-weight: 500;
-  font-size: 1rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  font-size: 0.95rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
   transition: all var(--t);
-  cursor: default; /* Not interactive like buttons */
+  cursor: default;
 }
 
 .weather-widget .weather-icon {
-  font-size: 1.6rem; /* Slightly smaller icon */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Icon glow */
-  animation: pulseIcon 2.5s infinite alternate; /* Slower, more subtle pulse on icon */
+  font-size: 1.4rem; /* Smaller icon */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced icon glow */
+  animation: pulseIcon 3s infinite alternate; /* Slower, more subtle pulse on icon */
   will-change: transform, opacity;
 }
 
 @keyframes pulseIcon {
   0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.03); opacity: 0.95; }
+  100% { transform: scale(1.01); opacity: 0.98; } /* Even smaller pulse */
 }
 
 .weather-info {
@@ -352,89 +341,89 @@ select:hover::after, button:hover::after {
 }
 .weather-info #weather-text {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 .weather-info #weather-location {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--dim);
 }
 
 /* User Avatar Toggle & Avatar Itself */
-.hidden-avatar { /* Class to hide avatar */
+.hidden-avatar {
   opacity: 0 !important;
-  transform: scale(0.5) !important;
+  transform: scale(0.6) !important; /* Slightly less aggressive scale */
   pointer-events: none !important;
   transition: opacity var(--t), transform var(--t) !important;
 }
 
-#user-avatar-toggle { /* New button for avatar toggle */
-  padding: 1rem 2rem;
-  border-radius: 20px;
+#user-avatar-toggle {
+  padding: 0.9rem 1.8rem;
+  border-radius: 18px;
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--fg);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   transition: all var(--t);
   outline: none;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  will-change: transform, box-shadow, border-color, filter;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  will-change: transform, box-shadow, border-color;
 }
 
 #user-avatar-toggle:hover {
   border-color: var(--acc);
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-3px) scale(1.01);
   box-shadow: var(--sh);
 }
 
 .user-avatar {
-  width: 50px; /* Slightly smaller avatar */
-  height: 50px;
+  width: 45px; /* Smaller avatar */
+  height: 45px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem; /* Slightly smaller icon */
+  font-size: 1.6rem; /* Smaller icon */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
   cursor: pointer;
   transition: all var(--t);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  overflow: hidden; /* For potential image scaling */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  overflow: hidden;
   will-change: transform, box-shadow, border-color;
 }
 
 .user-avatar:hover {
-  transform: scale(1.1) rotate(5deg); /* Slightly less dynamic effect */
+  transform: scale(1.05) rotate(3deg); /* Less strong effect */
   border-color: var(--acc);
-  box-shadow: var(--glow-strength) var(--acc), var(--sh); /* Stronger glow on hover */
+  box-shadow: var(--glow-strength) var(--acc), var(--sh);
 }
 
 /* Main Content Layout */
 .main {
   width: 100%;
-  max-width: 1600px; /* Slightly narrower main content */
+  max-width: 1500px;
   display: flex;
   flex-direction: column;
-  gap: 4rem; /* Generous spacing between sections */
+  gap: 3.5rem;
 }
 
-.search-section { padding: 3rem; }
+.search-section { padding: 2.5rem; }
 
 /* Search Engines */
 .search-engines {
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 2.8rem;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: 1rem 2.5rem;
-  border-radius: 60px; /* More pill-like shape */
+  padding: 0.9rem 2.2rem;
+  border-radius: 50px;
   font-weight: 600;
   border: var(--border-width) solid transparent;
   background: var(--gl);
@@ -447,16 +436,16 @@ select:hover::after, button:hover::after {
 
 .search-engine.active {
   background: var(--acc);
-  color: var(--bg); /* Use background color for contrast */
-  transform: scale(1.08) translateY(-3px); /* Slightly less strong pop-out effect */
-  box-shadow: var(--glow-strength) var(--acc), var(--s); /* Stronger glow when active */
+  color: var(--bg);
+  transform: scale(1.05) translateY(-2px); /* Less strong pop-out effect */
+  box-shadow: var(--glow-strength) var(--acc), var(--s);
   border-color: var(--acc);
 }
 
 .search-engine:not(.active):hover {
   border-color: var(--acc);
-  transform: translateY(-2px);
-  box-shadow: inset 0 0 15px rgba(var(--acc-rgb), 0.15), 0 6px 15px rgba(0,0,0,0.1); /* More visible inner glow, reduced outer shadow */
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 10px rgba(var(--acc-rgb), 0.1), 0 5px 12px rgba(0,0,0,0.08); /* Lighter inner glow, reduced outer shadow */
 }
 
 /* Search Box */
@@ -465,19 +454,19 @@ select:hover::after, button:hover::after {
   align-items: center;
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
-  border-radius: 60px; /* More rounded search box */
-  padding: 1.8rem 2.5rem; /* Generous padding */
-  transition: all var(--t), box-shadow 0.3s ease-in-out;
+  border-radius: 50px;
+  padding: 1.5rem 2.2rem;
+  transition: all var(--t), box-shadow 0.2s ease-in-out; /* Faster shadow transition */
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.18), var(--inner-shadow);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15), var(--inner-shadow);
   will-change: transform, box-shadow, border-color;
 }
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.005); /* Very subtle scale on focus */
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.6), var(--s); /* Enhanced glow on focus */
+  transform: scale(1.002); /* Very subtle scale on focus */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); /* Reduced glow on focus */
 }
 
 .search-box:focus-within::after {
@@ -486,9 +475,9 @@ select:hover::after, button:hover::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px; /* Thinner animated border */
+    height: 2px; /* Thinner animated border */
     background: linear-gradient(90deg, transparent, var(--acc), transparent);
-    animation: borderGrow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Faster animation */
+    animation: borderGrow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Faster animation */
     will-change: transform;
 }
 
@@ -502,86 +491,86 @@ select:hover::after, button:hover::after {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: 1.4rem; /* Slightly smaller font */
+  font-size: 1.2rem;
   outline: none;
-  margin-left: 1.2rem;
-  text-shadow: 0 0 6px rgba(var(--fg-rgb), 0.15); /* Subtle text shadow to search input */
+  margin-left: 1rem;
+  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.1); /* Subtler text shadow */
 }
 
 #search::placeholder {
   color: var(--dim);
-  opacity: 0.8;
-  transition: opacity 0.2s ease; /* Faster transition */
+  opacity: 0.7;
+  transition: opacity 0.1s ease; /* Faster transition */
 }
 
 #search:focus::placeholder {
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 /* Time Display */
 .time-display {
   text-align: center;
-  padding: 4rem;
+  padding: 3.5rem;
 }
 
 #time {
-  font-size: 6.5rem; /* Slightly smaller time display */
+  font-size: 6rem; /* Slightly smaller time display */
   font-weight: 900;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient 7s ease infinite alternate, pulseText 3s infinite alternate; /* Slower pulse, slightly faster gradient */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+  animation: gradient 8s ease infinite alternate, pulseText 3.5s infinite alternate; /* Slower pulse, slightly slower gradient */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced text glow */
   will-change: background-position, text-shadow;
 }
 
 @keyframes pulseText {
-  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 20px rgba(var(--fg-rgb), 0.1); }
-  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), 0 0 30px rgba(var(--fg-rgb), 0.15); }
-  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 20px rgba(var(--fg-rgb), 0.1); }
+  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 15px rgba(var(--fg-rgb), 0.08); }
+  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), 0 0 20px rgba(var(--fg-rgb), 0.12); }
+  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 15px rgba(var(--fg-rgb), 0.08); }
 }
 
 #date {
-  font-size: 1.8rem; /* Slightly smaller date display */
+  font-size: 1.6rem;
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
 }
 
 /* Quote of the Day Section */
 .quote-of-the-day {
   text-align: center;
-  padding: 3.5rem;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 220px; /* Ensure consistent height */
+  min-height: 200px;
 }
 
 .quote-of-the-day h2 {
-  margin-bottom: 1.8rem;
-  font-size: 2.5rem; /* Slightly smaller heading */
+  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced heading glow */
 }
 
 .quote-of-the-day #quote-text {
-  font-size: 1.5rem;
-  line-height: 1.6;
+  font-size: 1.4rem;
+  line-height: 1.5;
   color: var(--fg);
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   font-style: italic;
-  max-width: 800px; /* Constrain width for readability */
-  animation: textFadeIn 0.8s ease-out forwards; /* Faster fade in */
-  transform: translateY(8px); /* Less vertical displacement */
+  max-width: 700px;
+  animation: textFadeIn 0.7s ease-out forwards; /* Faster fade in */
+  transform: translateY(6px); /* Less vertical displacement */
   opacity: 0;
   will-change: opacity, transform;
 }
@@ -594,11 +583,11 @@ select:hover::after, button:hover::after {
 }
 
 .quote-of-the-day #quote-author {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--dim);
   font-weight: 400;
-  animation: textFadeIn 0.8s ease-out forwards 0.1s; /* Slightly delayed fade for author, faster */
-  transform: translateY(8px);
+  animation: textFadeIn 0.7s ease-out forwards 0.1s; /* Slightly delayed fade for author, faster */
+  transform: translateY(6px);
   opacity: 0;
   will-change: opacity, transform;
 }
@@ -606,51 +595,50 @@ select:hover::after, button:hover::after {
 /* Quick Actions */
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Slightly smaller min width */
-  gap: 2.5rem;
-  padding: 0 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
 }
 
 .action-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 3rem 1.8rem; /* More padding */
+  padding: 2.5rem 1.5rem;
   text-align: center;
   text-decoration: none;
   color: var(--fg);
-  transition: all var(--t), transform var(--t), box-shadow var(--t), filter var(--t);
+  transition: all var(--t); /* Reduced transition properties */
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18), var(--inner-shadow);
-  transform-style: preserve-3d; /* For 3D tilt effect */
-  transform: translateZ(0); /* Enable hardware acceleration */
-  will-change: transform, box-shadow, border-color, filter;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), var(--inner-shadow);
+  /* Removed transform-style: preserve-3d; for performance */
+  will-change: transform, box-shadow, border-color;
 }
 
-.action-card::before { /* Enhanced Animated shimmer effect on hover */
+.action-card::before { /* Simplified shimmer effect on hover */
   content: '';
   position: absolute;
   top: 0;
-  left: -120%; /* Reduced shimmer travel distance */
-  width: 80%; /* Thinner shimmer */
+  left: -100%; /* Reduced shimmer travel distance */
+  width: 50%; /* Thinner shimmer */
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); /* Reduced opacity */
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); /* Reduced opacity */
   transition: all var(--t);
   z-index: 1;
-  transform: skewX(-20deg); /* Angled shimmer */
+  transform: skewX(-15deg); /* Angled shimmer */
   will-change: left;
 }
 
 .action-card:hover::before {
-  left: 120%; /* Reduced shimmer travel distance */
+  left: 100%; /* Reduced shimmer travel distance */
 }
 
 .action-card:hover {
-  transform: translateY(-10px) scale(1.05) rotateX(1deg) rotateY(-1deg); /* Slightly less strong lift, scale, and subtle 3D tilt */
+  transform: translateY(-8px) scale(1.03); /* Less strong lift and scale, no 3D tilt */
   border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) var(--acc); /* Stronger glow */
-  filter: brightness(1.1); /* Subtle brightness increase */
+  box-shadow: var(--sh), var(--glow-strength) var(--acc); /* Reduced glow */
+  /* Removed brightness filter for performance */
 }
 
 .action-card .icon, .action-card .label {
@@ -659,87 +647,86 @@ select:hover::after, button:hover::after {
 }
 
 .icon {
-  font-size: 4.5rem; /* Slightly smaller icons */
-  margin-bottom: 1.5rem;
+  font-size: 4rem;
+  margin-bottom: 1.2rem;
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Icon glow */
-  transition: transform 0.2s ease-out; /* Faster transition */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Reduced icon glow */
+  transition: transform 0.2s ease-out;
   will-change: transform;
 }
 
 .action-card:hover .icon {
-  transform: scale(1.08) rotate(3deg); /* Slightly less icon rotation on hover */
+  transform: scale(1.05) rotate(2deg); /* Less icon rotation on hover */
 }
 
 .label {
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.8px;
 }
 
 /* News and Bookmark Sections */
 .news-section, .bookmark-section {
-  padding: 3.5rem;
+  padding: 3rem;
 }
 
 .news-section h2, .bookmark-section h2 {
-  margin-bottom: 2.5rem;
-  font-size: 2.8rem; /* Slightly smaller heading */
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
   font-weight: 900;
   text-align: center;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced heading glow */
 }
 
 .news-grid, .bookmark-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Consistent min width for cards */
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly smaller min width for cards */
+  gap: 2rem;
 }
 
 .news-card, .bookmark-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 2.5rem;
+  padding: 2rem;
   text-decoration: none;
   color: var(--fg);
-  transition: all var(--t), transform var(--t), box-shadow var(--t), filter var(--t);
+  transition: all var(--t); /* Reduced transition properties */
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18), var(--inner-shadow);
-  transform-style: preserve-3d;
-  transform: translateZ(0);
-  will-change: transform, box-shadow, border-color, filter;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), var(--inner-shadow);
+  /* Removed transform-style: preserve-3d; for performance */
+  will-change: transform, box-shadow, border-color;
 }
 
 .news-card:hover, .bookmark-card:hover {
-  transform: translateY(-8px) scale(1.02) rotateX(0.5deg); /* Lift, subtle scale, and very subtle tilt */
+  transform: translateY(-6px) scale(1.01); /* Lift, subtle scale, no tilt */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Subtle glow on hover */
-  filter: brightness(1.08); /* Subtle brightness increase */
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Reduced glow */
+  /* Removed brightness filter for performance */
 }
 
 .news-card h3 {
-  margin-bottom: 1.2rem;
-  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(var(--fg-rgb), 0.1);
+  text-shadow: 0 0 6px rgba(var(--fg-rgb), 0.08); /* Subtler text shadow */
 }
 
 .news-card p {
   color: var(--dim);
-  margin-bottom: 1.8rem;
-  line-height: 1.7;
-  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: 1rem;
 }
 
 .news-source {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--acc);
   font-weight: 700;
   text-transform: uppercase;
@@ -749,136 +736,140 @@ select:hover::after, button:hover::after {
 .bookmark-card {
   display: flex;
   align-items: center;
-  gap: 1.8rem;
+  gap: 1.5rem;
 }
 
 .bookmark-card span:first-child {
-  font-size: 2.8rem; /* Slightly smaller bookmark icons */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Icon glow */
+  font-size: 2.5rem;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced icon glow */
 }
 
 .bookmark-card > div > div:first-child {
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .bookmark-card > div > div:last-child {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--dim);
 }
 
 /* Stats Panel */
 .stats-panel {
   position: fixed;
-  bottom: 2.5rem; right: 2.5rem;
-  padding: 1.8rem 2.8rem;
+  bottom: 2rem; right: 2rem;
+  padding: 1.5rem 2.5rem;
   display: flex;
-  gap: 3.5rem;
+  gap: 3rem;
   font-weight: 600;
   z-index: 100;
-  border-radius: 50px; /* More rounded */
+  border-radius: 40px;
   box-shadow: var(--s), var(--inner-shadow);
-  animation: floatPanel 8s ease-in-out infinite alternate; /* Slower, more elegant float */
+  animation: floatPanel 10s ease-in-out infinite alternate; /* Slower, more elegant float */
   will-change: transform, box-shadow;
 }
 
 @keyframes floatPanel {
-  0%, 100% { transform: translateY(0) rotateX(0deg); }
-  50% { transform: translateY(-10px) rotateX(1deg); } /* Subtle tilt while floating */
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); } /* Subtle float, no tilt */
 }
 
 .stats-panel div {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
+  gap: 0.4rem;
+  font-size: 1.05rem;
 }
 
 /* Scrollbar Styling (Subtle customization) */
 ::-webkit-scrollbar {
-  width: 8px; /* Thinner scrollbar */
-  background-color: var(--gl);
-  border-radius: 4px;
+  width: 7px; /* Even thinner scrollbar */
+  background-color: transparent; /* Make transparent to reduce rendering */
+  border-radius: 3.5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent; /* No track background */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--acc);
-  border-radius: 4px;
-  border: 1px solid var(--gl); /* Thinner border */
+  background-color: rgba(var(--acc-rgb), 0.6); /* Semi-transparent accent */
+  border-radius: 3.5px;
+  border: 1px solid rgba(var(--gb-rgb, 255,255,255), 0.1); /* Very subtle border */
   transition: background-color var(--t);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--ah);
+  background-color: rgba(var(--ah-rgb, 180,100,230), 0.8); /* Slightly more opaque on hover */
 }
 
 
-/* Media Queries for Responsiveness - Further optimized for performance */
+/* Media Queries for Responsiveness - Aggressively Optimized for Performance */
 @media (max-width: 1200px) {
-  .logo { font-size: 2.8rem; }
-  #time { font-size: 6rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-  .header { padding: 1.8rem 2.2rem; }
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.5rem; }
-  .stats-panel { bottom: 2rem; right: 2rem; padding: 1.6rem 2.5rem; gap: 3rem; font-size: 1rem;}
-  .glass { backdrop-filter: blur(25px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
+  .logo { font-size: 2.5rem; }
+  #time { font-size: 5.5rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .header { padding: 1.5rem 1.8rem; }
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2rem; }
+  .stats-panel { bottom: 1.8rem; right: 1.8rem; padding: 1.4rem 2.2rem; gap: 2.5rem; font-size: 0.95rem;}
+  .glass { backdrop-filter: blur(12px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
 }
 
 @media (max-width: 992px) {
-  .container { padding: 1.8rem; gap: 3rem; }
-  .header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
-  .controls { justify-content: center; gap: 0.8rem; }
-  .logo { font-size: 2.2rem; }
-  #time { font-size: 5rem; }
-  #date { font-size: 1.5rem; letter-spacing: 2px; }
-  .quote-of-the-day h2 { font-size: 2.2rem; }
-  .quote-of-the-day #quote-text { font-size: 1.3rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); padding: 0 1rem; gap: 2rem;}
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.5rem; }
-  .search-box { padding: 1.5rem 2rem; }
-  #search { font-size: 1.3rem; }
+  .container { padding: 1.5rem; gap: 2.5rem; }
+  .header { flex-direction: column; gap: 1.2rem; padding: 1.2rem; }
+  .controls { justify-content: center; gap: 0.6rem; }
+  .logo { font-size: 2rem; }
+  #time { font-size: 4.5rem; }
+  #date { font-size: 1.4rem; letter-spacing: 2px; }
+  .quote-of-the-day h2 { font-size: 2rem; }
+  .quote-of-the-day #quote-text { font-size: 1.2rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 0 0.8rem; gap: 1.5rem;}
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 1.5rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2.2rem; }
+  .search-box { padding: 1.2rem 1.8rem; }
+  #search { font-size: 1.1rem; }
   .stats-panel {
-    bottom: 1.5rem; right: 1.5rem;
-    padding: 1.2rem 2rem;
-    gap: 2.5rem;
-    font-size: 0.95rem;
+    bottom: 1.2rem; right: 1.2rem;
+    padding: 1rem 1.8rem;
+    gap: 2rem;
+    font-size: 0.9rem;
   }
-  .glass { backdrop-filter: blur(20px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
+  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
 }
 
 @media (max-width: 768px) {
-  .container { padding: 1.2rem; gap: 2.5rem; }
-  .header { padding: 1.2rem; }
-  .logo { font-size: 1.8rem; }
-  select, button, .weather-widget { padding: 0.8rem 1.5rem; font-size: 0.95rem; border-radius: 16px; }
-  .user-avatar, #user-avatar-toggle { width: 44px; height: 44px; font-size: 1.6rem; }
-  .search-section { padding: 1.5rem; }
-  .search-engine { padding: 0.9rem 1.8rem; font-size: 0.95rem; border-radius: 50px; }
-  .search-box { padding: 1.2rem 1.8rem; border-radius: 60px; }
-  #search { font-size: 1.1rem; margin-left: 0.8rem; }
-  #time { font-size: 4rem; margin-bottom: 0.8rem;}
-  #date { font-size: 1.2rem; letter-spacing: 1.5px; }
-  .quote-of-the-day h2 { font-size: 2rem; margin-bottom: 1.2rem;}
-  .quote-of-the-day #quote-text { font-size: 1.1rem; }
-  .quote-of-the-day #quote-author { font-size: 0.9rem; }
-  .quick-actions { grid-template-columns: 1fr; padding: 0 0.8rem; gap: 1.8rem; }
-  .action-card { padding: 2.5rem 1.2rem; }
-  .icon { font-size: 4rem; margin-bottom: 1rem; }
-  .label { font-size: 1.1rem; letter-spacing: 1.5px; }
-  .news-section, .bookmark-section { padding: 1.5rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.2rem; margin-bottom: 2rem;}
-  .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 1.8rem; }
-  .news-card, .bookmark-card { padding: 2rem; }
-  .news-card h3 { font-size: 1.4rem; }
-  .news-card p { font-size: 0.95rem; margin-bottom: 1.2rem;}
-  .bookmark-card span:first-child { font-size: 2.2rem; }
-  .bookmark-card > div > div:first-child { font-size: 1.15rem; }
-  .bookmark-card > div > div:last-child { font-size: 0.9rem; }
+  .container { padding: 1rem; gap: 2rem; }
+  .header { padding: 1rem; }
+  .logo { font-size: 1.6rem; }
+  select, button, .weather-widget { padding: 0.7rem 1.3rem; font-size: 0.9rem; border-radius: 14px; }
+  .user-avatar, #user-avatar-toggle { width: 40px; height: 40px; font-size: 1.5rem; }
+  .search-section { padding: 1.2rem; }
+  .search-engine { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 40px; }
+  .search-box { padding: 1rem 1.5rem; border-radius: 40px; }
+  #search { font-size: 1rem; margin-left: 0.6rem; }
+  #time { font-size: 3.5rem; margin-bottom: 0.7rem;}
+  #date { font-size: 1.1rem; letter-spacing: 1.2px; }
+  .quote-of-the-day h2 { font-size: 1.8rem; margin-bottom: 1rem;}
+  .quote-of-the-day #quote-text { font-size: 1rem; }
+  .quote-of-the-day #quote-author { font-size: 0.85rem; }
+  .quick-actions { grid-template-columns: 1fr; padding: 0 0.5rem; gap: 1.5rem; }
+  .action-card { padding: 2rem 1rem; }
+  .icon { font-size: 3.5rem; margin-bottom: 0.8rem; }
+  .label { font-size: 1.05rem; letter-spacing: 1.2px; }
+  .news-section, .bookmark-section { padding: 1.2rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2rem; margin-bottom: 1.8rem;}
+  .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .news-card, .bookmark-card { padding: 1.8rem; }
+  .news-card h3 { font-size: 1.3rem; }
+  .news-card p { font-size: 0.9rem; margin-bottom: 1rem;}
+  .bookmark-card span:first-child { font-size: 2rem; }
+  .bookmark-card > div > div:first-child { font-size: 1.1rem; }
+  .bookmark-card > div > div:last-child { font-size: 0.85rem; }
   .stats-panel {
     position: static;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     justify-content: center;
     flex-direction: column;
     text-align: center;
@@ -889,36 +880,55 @@ select:hover::after, button:hover::after {
     animation: none; /* Disable float animation on mobile */
   }
   .stats-panel div { justify-content: center; }
-  .glass { backdrop-filter: blur(15px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
+  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); } /* Very low blur for tablets */
 }
 
 @media (max-width: 480px) {
-  .container { padding: 0.5rem; gap: 1.5rem; }
-  .header { padding: 0.5rem; gap: 1.2rem; }
-  .logo { font-size: 1.4rem; }
-  select, button, .weather-widget { padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 10px; }
-  .user-avatar, #user-avatar-toggle { width: 36px; height: 36px; font-size: 1.4rem; }
+  .container { padding: 0.8rem; gap: 1.2rem; }
+  .header { padding: 0.8rem; gap: 1rem; }
+  .logo { font-size: 1.2rem; }
+  select, button, .weather-widget { padding: 0.6rem 1rem; font-size: 0.8rem; border-radius: 8px; }
+  .user-avatar, #user-avatar-toggle { width: 32px; height: 32px; font-size: 1.2rem; }
   .search-section { padding: 1rem; }
-  .search-engine { padding: 0.7rem 1.2rem; font-size: 0.85rem; border-radius: 30px; }
-  .search-box { padding: 0.8rem 1.2rem; border-radius: 40px; }
-  #search { font-size: 0.9rem; margin-left: 0.5rem; }
-  #time { font-size: 2.8rem; margin-bottom: 0.6rem;}
-  #date { font-size: 1rem; letter-spacing: 1px; }
-  .quote-of-the-day h2 { font-size: 1.6rem; margin-bottom: 1rem;}
-  .quote-of-the-day #quote-text { font-size: 0.9rem; }
-  .quote-of-the-day #quote-author { font-size: 0.8rem; }
-  .quick-actions { padding: 0 0.5rem; gap: 1.2rem; }
-  .action-card { padding: 1.8rem 0.8rem; }
-  .icon { font-size: 3rem; margin-bottom: 0.6rem; }
-  .label { font-size: 1rem; letter-spacing: 1.2px; }
+  .search-engine { padding: 0.6rem 1rem; font-size: 0.8rem; border-radius: 20px; }
+  .search-box { padding: 0.7rem 1rem; border-radius: 30px; }
+  #search { font-size: 0.8rem; margin-left: 0.4rem; }
+  #time { font-size: 2.5rem; margin-bottom: 0.5rem;}
+  #date { font-size: 0.9rem; letter-spacing: 1px; }
+  .quote-of-the-day h2 { font-size: 1.4rem; margin-bottom: 0.8rem;}
+  .quote-of-the-day #quote-text { font-size: 0.85rem; }
+  .quote-of-the-day #quote-author { font-size: 0.75rem; }
+  .quick-actions { padding: 0 0.5rem; gap: 1rem; }
+  .action-card { padding: 1.5rem 0.6rem; }
+  .icon { font-size: 2.8rem; margin-bottom: 0.5rem; }
+  .label { font-size: 0.95rem; letter-spacing: 1px; }
   .news-section, .bookmark-section { padding: 1rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem;}
-  .news-card, .bookmark-card { padding: 1.2rem; }
-  .news-card h3 { font-size: 1.1rem; }
-  .news-card p { font-size: 0.85rem; margin-bottom: 1rem;}
-  .bookmark-card span:first-child { font-size: 1.8rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 1.6rem; margin-bottom: 1.2rem;}
+  .news-card, .bookmark-card { padding: 1.5rem; }
+  .news-card h3 { font-size: 1rem; }
+  .news-card p { font-size: 0.8rem; margin-bottom: 0.8rem;}
+  .bookmark-card span:first-child { font-size: 1.6rem; }
   .bookmark-card > div > div:first-child { font-size: 1rem; }
   .bookmark-card > div > div:last-child { font-size: 0.8rem; }
-  .stats-panel { padding: 0.8rem 1.2rem; gap: 1.2rem; font-size: 0.85rem; }
-  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); } /* Minimum blur for mobile */
+  .stats-panel { padding: 0.6rem 1rem; gap: 1rem; font-size: 0.8rem; }
+  .glass { backdrop-filter: blur(5px) saturate(var(--saturate-intensity)); } /* Minimum blur for mobile */
+}
+
+/* Fallback for browsers that don't support backdrop-filter or for extreme performance mode */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: rgba(var(--fg-rgb), 0.15); /* More opaque background without blur */
+    /* Remove backdrop-filter entirely */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Optional: Class to remove all animations for extreme performance needs */
+body.no-animations * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    will-change: auto !important;
+    filter: none !important;
 }
