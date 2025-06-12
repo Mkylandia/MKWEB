@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MKWEB 3.0 - The Ultimate Animated Dashboard</title> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>MKWEB 3.0 - The Ultimate Animated Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="neon">
   <div class="grain"></div>
-  <div class="background-shape"></div> <div class="container">
+  <div class="background-shape"></div>
+  <div class="container">
     <header class="header glass">
       <h1 class="logo">MKWEB 3.0</h1>
       <div class="controls">
@@ -26,7 +28,8 @@
           </select>
         </div>
         <button id="fullscreen-btn" title="Vollbild umschalten">🚀 Vollbild</button>
-        <button id="user-avatar-toggle" title="Avatar ein-/ausblenden">🙈 Avatar ausblenden</button> <div class="weather-widget glass">
+        <button id="user-avatar-toggle" title="Avatar ein-/ausblenden">🙈 Avatar ausblenden</button>
+        <div class="weather-widget glass">
           <span class="weather-icon" aria-label="Aktuelles Wetter">🌤️</span>
           <div class="weather-info">
             <span id="weather-text">Lädt...</span>
@@ -69,7 +72,8 @@
       </section>
 
       <section class="quick-actions" aria-labelledby="quick-actions-heading">
-        <h2 id="quick-actions-heading" class="sr-only">Schnellzugriffe</h2> <a class="action-card glass" href="https://gemini.google.com/" target="_blank" title="Zu Google Gemini">
+        <h2 id="quick-actions-heading" class="sr-only">Schnellzugriffe</h2>
+        <a class="action-card glass" href="https://gemini.google.com/" target="_blank" title="Zu Google Gemini">
           <span class="icon" aria-hidden="true">♊</span>
           <span class="label">Gemini AI</span>
         </a>
@@ -137,31 +141,11 @@
         </div>
       </section>
 
-      <section class="news-section glass" aria-labelledby="news-heading">
+      <a class="news-section glass animate-in" href="https://mkwebnews.vercel.app" target="_blank" title="Zu den aktuellen Nachrichten">
         <h2 id="news-heading">📰 News</h2>
-        <div class="news-grid">
-          <a class="news-card glass" href="https://www.tagesschau.de" target="_blank" title="Zu Tagesschau">
-            <h3>📺 Tagesschau</h3>
-            <p>Die wichtigsten Nachrichten des Tages aus Deutschland und der Welt</p>
-            <div class="news-source">ARD Tagesschau</div>
-          </a>
-          <a class="news-card glass" href="https://www.spiegel.de" target="_blank" title="Zu Der Spiegel">
-            <h3>📄 Der Spiegel</h3>
-            <p>Nachrichten, Analysen und investigative Berichte</p>
-            <div class="news-source">Spiegel Online</div>
-          </a>
-          <a class="news-card glass" href="https://www.heise.de" target="_blank" title="Zu Heise Online">
-            <h3>💻 Heise</h3>
-            <p>IT-News, Technik und digitale Trends</p>
-            <div class="news-source">Heise Online</div>
-          </a>
-          <a class="news-card glass" href="https://www.golem.de" target="_blank" title="Zu Golem.de">
-            <h3>🤖 Golem</h3>
-            <p>IT-News für Profis und Technik-Enthusiasten</p>
-            <div class="news-source">Golem.de</div>
-          </a>
-        </div>
-      </section>
+        <p>Klicken Sie hier, um die neuesten Nachrichten zu lesen!</p>
+      </a>
+
     </main>
 
     <div class="stats-panel glass" aria-live="polite" aria-label="Benutzerstatistiken">
