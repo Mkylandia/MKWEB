@@ -2,8 +2,32 @@
 const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
 const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
 
+// Ensure the theme is one of the allowed values
+const allowedThemes = ['deep-dark', 'dark', 'light'];
+if (!allowedThemes.includes(settings.theme)) {
+    settings.theme = 'dark'; // Default to 'dark' if an invalid theme is stored
+    save();
+}
+
 document.body.dataset.theme = settings.theme;
-document.getElementById('theme-picker').value = settings.theme;
+const themePicker = document.getElementById('theme-picker');
+
+// Clear existing options and add only deep-dark, dark, and light
+themePicker.innerHTML = ''; // Clear existing options
+const themes = [
+    { value: 'deep-dark', text: 'Deep Dark Theme' },
+    { value: 'dark', text: 'Dark Theme' },
+    { value: 'light', text: 'Light Theme' }
+];
+
+themes.forEach(theme => {
+    const option = document.createElement('option');
+    option.value = theme.value;
+    option.textContent = theme.text;
+    themePicker.appendChild(option);
+});
+
+themePicker.value = settings.theme; // Set the selected value
 
 // User Avatar & Toggle Logic
 const userAvatar = document.getElementById('user-avatar');
@@ -31,14 +55,14 @@ userAvatarToggleBtn.onclick = () => {
 applyAvatarVisibility();
 
 
-document.getElementById('theme-picker').onchange = e => {
-  settings.theme = e.target.value;
-  document.body.dataset.theme = e.target.value;
-  save();
+themePicker.onchange = e => {
+    settings.theme = e.target.value;
+    document.body.dataset.theme = e.target.value;
+    save();
 };
 
 document.getElementById('fullscreen-btn').onclick = () => {
-  document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
 };
 
 const searchInput = document.getElementById('search');
@@ -57,44 +81,44 @@ if (initialEngineButton) {
 }
 
 engines.forEach(btn => {
-  btn.onclick = () => {
-    engines.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeEngine = btn.dataset.engine;
-    settings.lastActiveEngine = activeEngine;
-    save();
-    searchInput.focus();
-  };
+    btn.onclick = () => {
+        engines.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeEngine = btn.dataset.engine;
+        settings.lastActiveEngine = activeEngine;
+        save();
+        searchInput.focus();
+    };
 });
 
 const doSearch = query => {
-  if (!query || query.trim() === '') return;
-  const urls = {
-    google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
-    bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
-    duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
-    youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Corrected Youtube URL
-    github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
-    yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
-  };
-  window.open(urls[activeEngine], '_blank');
-  updateStats('search');
-  searchInput.value = '';
+    if (!query || query.trim() === '') return;
+    const urls = {
+        google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
+        bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
+        duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
+        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Corrected Youtube URL
+        github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
+        yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
+    };
+    window.open(urls[activeEngine], '_blank');
+    updateStats('search');
+    searchInput.value = '';
 };
 
 searchInput.onkeydown = e => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    doSearch(searchInput.value);
-  }
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        doSearch(searchInput.value);
+    }
 };
 
 const updateClock = () => {
-  const now = new Date();
-  document.getElementById('time').textContent = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-  document.getElementById('date').textContent = now.toLocaleDateString('de-DE', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
+    const now = new Date();
+    document.getElementById('time').textContent = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('date').textContent = now.toLocaleDateString('de-DE', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
 };
 setInterval(updateClock, 1000);
 updateClock();
@@ -104,48 +128,73 @@ const weatherText = document.getElementById('weather-text');
 const weatherIcon = document.querySelector('.weather-widget .weather-icon');
 const weatherLocation = document.getElementById('weather-location');
 
+// Helper function to map OpenWeatherMap icon codes to emojis
+const getWeatherEmoji = (iconCode) => {
+    switch (iconCode) {
+        case '01d': return '☀️'; // clear sky day
+        case '01n': return '🌙'; // clear sky night
+        case '02d': return '🌤️'; // few clouds day
+        case '02n': return '☁️'; // few clouds night
+        case '03d':
+        case '03n': return '☁️'; // scattered clouds
+        case '04d':
+        case '04n': return '☁️'; // broken clouds
+        case '09d':
+        case '09n': return '🌧️'; // shower rain
+        case '10d': return '🌦️'; // rain day
+        case '10n': return '🌧️'; // rain night
+        case '11d':
+        case '11n': return '⛈️'; // thunderstorm
+        case '13d':
+        case '13n': return '🌨️'; // snow
+        case '50d':
+        case '50n': return '🌫️'; // mist
+        default: return '❓';
+    }
+};
+
 const fetchWeather = async () => {
-  const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual key
-  const city = 'Heidenheim';
+    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual key
+    const city = 'Heidenheim'; // Current location is Heidenheim
 
-  if (apiKey === 'YOUR_OPENWEATHERMAP_API_KEY' || !apiKey || apiKey.length < 30) {
-      console.warn("OpenWeatherMap API Key not set or invalid. Using placeholder weather data.");
-      weatherText.textContent = '22°C';
-      weatherIcon.textContent = '☀️';
-      weatherLocation.textContent = 'Heidenheim';
-      return;
-  }
-
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-        if (response.status === 401) {
-            console.error('Error: Invalid API key for OpenWeatherMap. Please get a valid key.');
-            weatherText.textContent = 'N/A';
-            weatherIcon.textContent = '❓';
-            weatherLocation.textContent = 'API Fehler';
-        } else {
-            throw new Error(`Weather data not found or API error: ${response.statusText}`);
-        }
+    if (apiKey === 'YOUR_OPENWEATHERMAP_API_KEY' || !apiKey || apiKey.length < 30) {
+        console.warn("OpenWeatherMap API Key not set or invalid. Using placeholder weather data.");
+        weatherText.textContent = '22°C';
+        weatherIcon.textContent = '☀️';
+        weatherLocation.textContent = 'Heidenheim';
         return;
     }
-    const data = await response.json();
-    weatherText.textContent = `${Math.round(data.main.temp)}°C`;
-    const iconCode = data.weather[0].icon;
-    weatherIcon.textContent = getWeatherEmoji(iconCode);
-    weatherLocation.textContent = data.name;
-  } catch (error) {
-    console.error('Error fetching weather:', error);
-    weatherText.textContent = 'N/A';
-    weatherIcon.textContent = '❓';
-    weatherLocation.textContent = 'Ort unbekannt';
-  }
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            if (response.status === 401) {
+                console.error('Error: Invalid API key for OpenWeatherMap. Please get a valid key.');
+                weatherText.textContent = 'N/A';
+                weatherIcon.textContent = '❓';
+                weatherLocation.textContent = 'API Fehler';
+            } else {
+                throw new Error(`Weather data not found or API error: ${response.statusText}`);
+            }
+            return;
+        }
+        const data = await response.json();
+        weatherText.textContent = `${Math.round(data.main.temp)}°C`;
+        const iconCode = data.weather[0].icon;
+        weatherIcon.textContent = getWeatherEmoji(iconCode);
+        weatherLocation.textContent = data.name;
+    } catch (error) {
+        console.error('Error fetching weather:', error);
+        weatherText.textContent = 'N/A';
+        weatherIcon.textContent = '❓';
+        weatherLocation.textContent = 'Ort unbekannt';
+    }
 };
 
 fetchWeather();
-setInterval(fetchWeather, 3600000);
+setInterval(fetchWeather, 3600000); // Update every hour
 
 // Inspirational Quote of the Day
 const quoteText = document.getElementById('quote-text');
@@ -184,28 +233,28 @@ let stats = {searches: 0, clicks: 0, startTime: Date.now()};
 
 const savedStats = JSON.parse(localStorage?.getItem('mkweb-stats'));
 if (savedStats) {
-  stats = savedStats;
-  stats.startTime = Date.now() - (savedStats.timeSpentMinutes * 60000 || 0);
+    stats = savedStats;
+    stats.startTime = Date.now() - (savedStats.timeSpentMinutes * 60000 || 0);
 }
 
 const updateStats = type => {
-  if (type === 'search') stats.searches++;
-  if (type === 'click') stats.clicks++;
+    if (type === 'search') stats.searches++;
+    if (type === 'click') stats.clicks++;
 
-  const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
-  stats.timeSpentMinutes = timeSpentMinutes;
+    const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
+    stats.timeSpentMinutes = timeSpentMinutes;
 
-  document.getElementById('search-count').textContent = stats.searches;
-  document.getElementById('click-count').textContent = stats.clicks;
-  document.getElementById('time-spent').textContent = timeSpentMinutes;
+    document.getElementById('search-count').textContent = stats.searches;
+    document.getElementById('click-count').textContent = stats.clicks;
+    document.getElementById('time-spent').textContent = timeSpentMinutes;
 
-  localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
+    localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
 };
 
 updateStats();
 
 document.querySelectorAll('a[target="_blank"]').forEach(link => {
-  link.onclick = () => updateStats('click');
+    link.onclick = () => updateStats('click');
 });
 
 // Animate elements on scroll/load
