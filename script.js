@@ -182,13 +182,14 @@ const fetchQuote = async () => {
         const data = await response.json();
 
         // Apply fade-out before setting new text, then fade-in
-        quoteText.style.animation = 'none'; // Reset animation
-        quoteAuthor.style.animation = 'none'; // Reset animation
-        void quoteText.offsetWidth; // Trigger reflow
-        void quoteAuthor.offsetWidth; // Trigger reflow
+        // Resetting animations by reading offsetWidth forces reflow
+        quoteText.style.animation = 'none';
+        quoteAuthor.style.animation = 'none';
+        void quoteText.offsetWidth;
+        void quoteAuthor.offsetWidth;
 
-        quoteText.style.animation = ''; // Re-apply animation
-        quoteAuthor.style.animation = ''; // Re-apply animation
+        quoteText.style.animation = '';
+        quoteAuthor.style.animation = '';
 
         quoteText.textContent = `"${data.content}"`;
         quoteAuthor.textContent = `- ${data.author}`;
@@ -236,7 +237,7 @@ const animateOnScroll = () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1
+        threshold: 0.05 // Reduced threshold for earlier animation trigger
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
