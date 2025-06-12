@@ -683,6 +683,25 @@ select:hover::after, button:hover::after {
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced heading glow */
 }
 
+/* News Section Button Styling (Previously 'p' tag) */
+.news-section p {
+  font-size: 1.2rem; /* Larger text */
+  padding: 1.8rem 2.5rem; /* Adjusted padding */
+  text-align: center;
+  color: var(--fg);
+  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.1); /* Subtle text shadow */
+  transition: all var(--t);
+  display: block; /* Ensure it behaves like a block for full click area */
+  margin-top: 1rem; /* Space from heading */
+}
+
+.news-section:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: var(--acc);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+}
+
+
 .news-grid, .bookmark-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly smaller min width for cards */
