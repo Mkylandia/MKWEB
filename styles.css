@@ -15,23 +15,13 @@
 }
 
 /* Themed Variables */
-[data-theme="deep-dark"] {
-  --bg: linear-gradient(135deg, #000000 0%, #0a0a0a 100%); /* Even darker background */
-  --fg: #f0f0f0; --dim: rgba(240,240,240,0.5); /* Slightly brighter foreground for contrast */
-  --acc: #8a2be2; --ah: #6a00cd; /* Deep purple accent */
-  --gl: rgba(255,255,255,0.03); /* Very subtle glass background */
-  --gb: rgba(255,255,255,0.1); /* Very subtle glass border */
-  --inner-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-  --acc-rgb: 138, 43, 226;
-  --fg-rgb: 240, 240, 240;
-}
-
 [data-theme="dark"] {
   --bg: linear-gradient(135deg, #121212 0%, #202020 100%);
   --fg: #e0e0e0; --dim: rgba(224,224,224,0.6);
-  --acc: #bb86fc; --ah: #9c5cfc;
-  --gl: rgba(255,255,255,0.05);
-  --gb: rgba(255,255,255,0.15);
+  --acc: #bb86fc; --ah: #9c5cfc; /* Deep purple, slightly adjusted */
+  --gl: rgba(255,255,255,0.05); /* Very subtle glass background */
+  --gb: rgba(255,255,255,0.15); /* Very subtle glass border */
+  --inner-shadow: inset 0 0 5px rgba(0,0,0,0.05);
   --acc-rgb: 187, 134, 252;
   --fg-rgb: 224, 224, 224;
 }
@@ -39,9 +29,10 @@
 [data-theme="light"] {
   --bg: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
   --fg: #333333; --dim: rgba(51,51,51,0.6);
-  --acc: #007bff; --ah: #0056b3;
-  --gl: rgba(0,0,0,0.03);
-  --gb: rgba(0,0,0,0.1);
+  --acc: #007bff; --ah: #0056b3; /* Blue accent */
+  --gl: rgba(0,0,0,0.03); /* Very subtle glass background */
+  --gb: rgba(0,0,0,0.1); /* Very subtle glass border */
+  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.05);
   --acc-rgb: 0, 123, 255;
   --fg-rgb: 51, 51, 51;
 }
@@ -631,7 +622,7 @@ select:hover::after, button:hover::after {
 }
 
 /* News Section Button Styling (Previously 'p' tag) */
-.news-section p {
+.news-section {
   font-size: 1.2rem; /* Larger text */
   padding: 1.8rem 2.5rem; /* Adjusted padding */
   text-align: center;
@@ -640,6 +631,12 @@ select:hover::after, button:hover::after {
   transition: all var(--t);
   display: block; /* Ensure it behaves like a block for full click area */
   margin-top: 1rem; /* Space from heading */
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), var(--inner-shadow);
+  text-decoration: none; /* Remove underline for links */
+  will-change: transform, box-shadow, border-color;
 }
 
 .news-section:hover {
@@ -769,6 +766,18 @@ select:hover::after, button:hover::after {
   background-color: rgba(var(--ah-rgb, 180,100,230), 0.8); /* Slightly more opaque on hover */
 }
 
+/* SR-Only class for accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
 
 /* Media Queries for Responsiveness - Aggressively Optimized for Performance */
 @media (max-width: 1200px) {
