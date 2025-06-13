@@ -2,18 +2,18 @@
 const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
 const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
 
-// Nur noch 'dark' und 'light' als erlaubte Themes
+// Only 'dark' and 'light' themes allowed
 const allowedThemes = ['dark', 'light'];
 if (!allowedThemes.includes(settings.theme)) {
-    settings.theme = 'dark'; // Fallback auf 'dark', falls 'deep-dark' oder ein ungültiges Theme gespeichert war
+    settings.theme = 'dark'; // Fallback to 'dark' if an invalid theme was saved
     save();
 }
 
 document.body.dataset.theme = settings.theme;
 const themePicker = document.getElementById('theme-picker');
 
-// Nur 'dark' und 'light' Optionen hinzufügen
-themePicker.innerHTML = ''; // Vorhandene Optionen löschen
+// Only 'dark' and 'light' options added
+themePicker.innerHTML = ''; // Clear existing options
 const themes = [
     { value: 'dark', text: 'Dark Theme' },
     { value: 'light', text: 'Light Theme' }
@@ -26,7 +26,7 @@ themes.forEach(theme => {
     themePicker.appendChild(option);
 });
 
-themePicker.value = settings.theme; // Aktuelles Theme auswählen
+themePicker.value = settings.theme; // Select the current theme
 
 // User Avatar & Toggle Logic
 const userAvatar = document.getElementById('user-avatar');
@@ -209,11 +209,11 @@ const fetchQuote = async () => {
         // Resetting animations by reading offsetWidth forces reflow
         quoteText.style.animation = 'none';
         quoteAuthor.style.animation = 'none';
-        void quoteText.offsetWidth;
-        void quoteAuthor.offsetWidth;
+        void quoteText.offsetWidth; // Trigger reflow
+        void quoteAuthor.offsetWidth; // Trigger reflow
 
-        quoteText.style.animation = '';
-        quoteAuthor.style.animation = '';
+        quoteText.style.animation = ''; // Re-apply animation
+        quoteAuthor.style.animation = ''; // Re-apply animation
 
         quoteText.textContent = `"${data.content}"`;
         quoteAuthor.textContent = `- ${data.author}`;
@@ -233,6 +233,7 @@ let stats = {searches: 0, clicks: 0, startTime: Date.now()};
 const savedStats = JSON.parse(localStorage?.getItem('mkweb-stats'));
 if (savedStats) {
     stats = savedStats;
+    // Calculate startTime based on saved timeSpentMinutes to maintain session duration
     stats.startTime = Date.now() - (savedStats.timeSpentMinutes * 60000 || 0);
 }
 
@@ -250,7 +251,7 @@ const updateStats = type => {
     localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
 };
 
-updateStats();
+updateStats(); // Initial update to display saved stats
 
 document.querySelectorAll('a[target="_blank"]').forEach(link => {
     link.onclick = () => updateStats('click');
