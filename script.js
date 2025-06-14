@@ -96,8 +96,7 @@ const doSearch = query => {
         google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
         bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
         duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
-        // Korrigierte Youtube URL, entfernt den googleusercontent.com Teil
-        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`,
+        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Korrigierte Youtube URL
         github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
         yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
     };
@@ -116,9 +115,6 @@ searchInput.onkeydown = e => {
 // Verbesserte Uhrzeit-Anzeige
 const updateClock = () => {
     const now = new Date();
-    // Beachte: Der Zeitstempel ist Freitag, 13. Juni 2025, 15:14:48 UTC+2.
-    // Die toLocaleTimeString/DateString-Methoden verwenden standardmäßig die lokale Zeitzone des Benutzers.
-    // Für Heidenheim (CEST) ist das korrekt.
     const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }; // Sekunden hinzugefügt
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -159,10 +155,8 @@ const getWeatherEmoji = (iconCode) => {
 };
 
 const fetchWeather = async () => {
-    // Ersetze 'YOUR_OPENWEATHERMAP_API_KEY' durch deinen tatsächlichen API-Schlüssel von OpenWeatherMap
-    // Du kannst diesen Schlüssel kostenlos unter https://openweathermap.org/api erhalten.
-    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
-    const city = 'Heidenheim'; // Ort basierend auf dem aktuellen Datum und der Zeit
+    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual key
+    const city = 'Heidenheim';
 
     if (apiKey === 'YOUR_OPENWEATHERMAP_API_KEY' || !apiKey || apiKey.length < 30) {
         console.warn("OpenWeatherMap API Key not set or invalid. Using placeholder weather data.");
@@ -282,7 +276,7 @@ const animateOnScroll = () => {
     }, observerOptions);
 
     // Select all sections and cards that should animate in
-    document.querySelectorAll('.glass, .action-card, .news-card, .bookmark-card, .stats-card').forEach(element => {
+    document.querySelectorAll('.glass, .action-card').forEach(element => {
         observer.observe(element);
     });
 };
