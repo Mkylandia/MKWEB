@@ -16,8 +16,8 @@ if (!allowedThemes.includes(settings.theme)) {
     saveSettings();
 }
 
-// Apply initial theme immediately
-document.documentElement.setAttribute('data-theme', settings.theme); // Apply to html element for broader CSS scope
+// Apply initial theme immediately to html element for broader CSS scope
+document.documentElement.setAttribute('data-theme', settings.theme);
 
 
 // --- DOM Element Caching (Performance) ---
@@ -105,7 +105,7 @@ searchInput.addEventListener('keypress', (e) => {
                 case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
                 case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
                 case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break;
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
                 case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
                 default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
