@@ -96,10 +96,24 @@ const doSearch = query => {
         google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
         bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
         duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
-        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Korrigierte Youtube URL
+        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Corrected Youtube URL
         github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
         yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
     };
+
+    // Animate search icon on search
+    const searchIcon = document.querySelector('.search-box .search-icon-magnify');
+    searchIcon.style.animation = 'none';
+    void searchIcon.offsetWidth; // Trigger reflow
+    searchIcon.style.animation = 'pulseSearch 0.5s ease-out';
+
+    // Optional: add a temporary class for a brief input animation
+    searchInput.classList.add('searching');
+    setTimeout(() => {
+        searchInput.classList.remove('searching');
+    }, 500);
+
+
     window.open(urls[activeEngine], '_blank');
     updateStats('search');
     searchInput.value = '';
@@ -111,6 +125,17 @@ searchInput.onkeydown = e => {
         doSearch(searchInput.value);
     }
 };
+
+// Keyframe for search icon pulse
+const styleSheet = document.styleSheets[0];
+styleSheet.insertRule(`
+    @keyframes pulseSearch {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+`, styleSheet.cssRules.length);
+
 
 // Verbesserte Uhrzeit-Anzeige
 const updateClock = () => {
@@ -155,6 +180,10 @@ const getWeatherEmoji = (iconCode) => {
 };
 
 const fetchWeather = async () => {
+    weatherText.textContent = 'Lädt...'; // Loading state
+    weatherIcon.textContent = '🔄';
+    weatherLocation.textContent = '';
+
     const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual key
     const city = 'Heidenheim';
 
@@ -200,8 +229,13 @@ setInterval(fetchWeather, 3600000); // Update every hour
 // Inspirational Quote of the Day
 const quoteText = document.getElementById('quote-text');
 const quoteAuthor = document.getElementById('quote-author');
+const quoteSection = document.querySelector('.quote-of-the-day');
 
 const fetchQuote = async () => {
+    quoteText.textContent = 'Lade Zitat...'; // Loading state
+    quoteAuthor.textContent = '';
+    quoteSection.classList.add('loading-quote'); // Add a class for potential loading animation
+
     try {
         const response = await fetch('https://api.quotable.io/random');
         if (!response.ok) throw new Error('Quote data not found');
@@ -223,11 +257,22 @@ const fetchQuote = async () => {
         console.error('Error fetching quote:', error);
         quoteText.textContent = '"Sei die Veränderung, die du in der Welt sehen möchtest."';
         quoteAuthor.textContent = '- Mahatma Gandhi';
+    } finally {
+        quoteSection.classList.remove('loading-quote');
     }
 };
 
 fetchQuote();
 setInterval(fetchQuote, 86400000); // Fetch a new quote every 24 hours
+
+// Add a button to manually refresh the quote
+const refreshQuoteBtn = document.createElement('button');
+refreshQuoteBtn.textContent = '🔄 Neues Zitat';
+refreshQuoteBtn.classList.add('glass');
+refreshQuoteBtn.style.marginTop = '20px';
+refreshQuoteBtn.onclick = fetchQuote;
+quoteSection.appendChild(refreshQuoteBtn);
+
 
 // Stats Tracking
 let stats = {searches: 0, clicks: 0, startTime: Date.now()};
@@ -282,3 +327,60 @@ const animateOnScroll = () => {
 };
 
 document.addEventListener('DOMContentLoaded', animateOnScroll);
+
+// Dynamic Background Shapes (More advanced, remove static shapes from HTML)
+const createBackgroundShapes = (count) => {
+    const container = document.body;
+    for (let i = 0; i < count; i++) {
+        const shape = document.createElement('div');
+        shape.classList.add('background-shape');
+        const size = Math.random() * (400 - 200) + 200; // Size between 200px and 400px
+        const top = Math.random() * 100 - 20; // -20% to 80%
+        const left = Math.random() * 100 - 20; // -20% to 80%
+        const delay = Math.random() * 20; // Animation delay up to 20s
+        const duration = Math.random() * (50 - 30) + 30; // Animation duration between 30s and 50s
+        const opacity = Math.random() * (0.05 - 0.01) + 0.01; // Opacity between 0.01 and 0.05
+
+        shape.style.width = `${size}px`;
+        shape.style.height = `${size}px`;
+        shape.style.top = `${top}%`;
+        shape.style.left = `${left}%`;
+        shape.style.animationDelay = `${delay}s`;
+        shape.style.animationDuration = `${duration}s`;
+        shape.style.opacity = opacity;
+        shape.style.backgroundColor = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${opacity})`; // Random color, but might clash with theme
+
+        // To make colors theme-aware, use CSS variables for color and adjust opacity
+        if (i % 2 === 0) {
+            shape.style.backgroundColor = 'var(--acc)';
+        } else {
+            shape.style.backgroundColor = 'var(--fg)';
+        }
+        shape.style.opacity = opacity; // Reapply opacity
+
+        container.appendChild(shape);
+    }
+};
+
+// Call this to generate shapes on load
+// createBackgroundShapes(3); // You can adjust the number of shapes
+
+// Scroll to top button logic
+const scrollToTopBtn = document.createElement('button');
+scrollToTopBtn.classList.add('scroll-to-top');
+scrollToTopBtn.innerHTML = '⬆️';
+scrollToTopBtn.title = 'Nach oben scrollen';
+document.body.appendChild(scrollToTopBtn);
+
+window.onscroll = () => {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollToTopBtn.classList.add('show');
+    } else {
+        scrollToTopBtn.classList.remove('show');
+    }
+};
+
+scrollToTopBtn.onclick = () => {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+};
