@@ -290,9 +290,10 @@ const updateStats = type => {
     const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
     stats.timeSpentMinutes = timeSpentMinutes;
 
-    document.getElementById('search-count').textContent = stats.searches;
-    document.getElementById('click-count').textContent = stats.clicks;
-    document.getElementById('time-spent').textContent = timeSpentMinutes;
+    // You might want to display these stats somewhere in your HTML
+    // document.getElementById('search-count').textContent = stats.searches;
+    // document.getElementById('click-count').textContent = stats.clicks;
+    // document.getElementById('time-spent').textContent = timeSpentMinutes;
 
     localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
 };
@@ -331,6 +332,9 @@ document.addEventListener('DOMContentLoaded', animateOnScroll);
 // Dynamic Background Shapes (More advanced, remove static shapes from HTML)
 const createBackgroundShapes = (count) => {
     const container = document.body;
+    // Remove existing static shapes if any
+    document.querySelectorAll('.background-shape').forEach(shape => shape.remove());
+
     for (let i = 0; i < count; i++) {
         const shape = document.createElement('div');
         shape.classList.add('background-shape');
@@ -348,22 +352,25 @@ const createBackgroundShapes = (count) => {
         shape.style.animationDelay = `${delay}s`;
         shape.style.animationDuration = `${duration}s`;
         shape.style.opacity = opacity;
-        shape.style.backgroundColor = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${opacity})`; // Random color, but might clash with theme
-
-        // To make colors theme-aware, use CSS variables for color and adjust opacity
+        
+        // Ensure color is theme-aware by using CSS variables.
+        // This will allow the color to switch with theme.
+        // The opacity is set directly here as it's random.
         if (i % 2 === 0) {
             shape.style.backgroundColor = 'var(--acc)';
         } else {
-            shape.style.backgroundColor = 'var(--fg)';
+            // Use a slightly desaturated version of foreground or background for variety
+            shape.style.backgroundColor = 'rgba(var(--fg-rgb), 0.1)'; 
         }
-        shape.style.opacity = opacity; // Reapply opacity
+        shape.style.opacity = opacity; // Reapply opacity, it might be overridden by background-color if not careful
 
         container.appendChild(shape);
     }
 };
 
 // Call this to generate shapes on load
-// createBackgroundShapes(3); // You can adjust the number of shapes
+createBackgroundShapes(3); // You can adjust the number of shapes
+
 
 // Scroll to top button logic
 const scrollToTopBtn = document.createElement('button');
