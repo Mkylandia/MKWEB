@@ -96,7 +96,7 @@ const doSearch = query => {
         google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
         bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
         duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
-        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Corrected Youtube URL
+        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Corrected Youtube URL for MKWEB 6.2
         github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
         yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
     };
@@ -262,7 +262,7 @@ const animateOnScroll = () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.05 // Reduced threshold for earlier animation trigger
+        threshold: 0.08 // Slightly increased threshold for earlier animation trigger
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -275,7 +275,8 @@ const animateOnScroll = () => {
     }, observerOptions);
 
     // Select all sections and cards that should animate in
-    document.querySelectorAll('.glass, .action-card').forEach(element => {
+    // Ensure the header and stats panel are always visible and don't need animation
+    document.querySelectorAll('.search-section, .time-display, .quote-of-the-day, .action-card, .news-section, .bookmark-section').forEach(element => {
         observer.observe(element);
     });
 };
