@@ -2,8 +2,9 @@
 
 // --- Initial Setup & Settings Management ---
 const SETTINGS_KEY = 'mkweb-settings-os7'; // Unique key for OS7 settings
+// HIER: theme ist fest auf 'dark' gesetzt, kein Themenwechsel mehr
 const settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
-    theme: 'dark',
+    theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google'
 };
@@ -13,19 +14,12 @@ const saveSettings = () => {
     localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
 };
 
-// Ensure theme is valid, fallback to 'dark'
-const allowedThemes = ['dark', 'light'];
-if (!allowedThemes.includes(settings.theme)) {
-    settings.theme = 'dark'; // Fallback, falls ein ungültiges Theme gespeichert war
-    saveSettings();
-}
-
-// Apply initial theme immediately to html element for broader CSS scope
-document.documentElement.setAttribute('data-theme', settings.theme);
+// Da der Themenwechsel entfernt wurde, ist dieser Teil nicht mehr notwendig.
+// document.documentElement.setAttribute('data-theme', settings.theme);
 
 
 // --- DOM Element Caching (Performance) ---
-const themeToggleBtn = document.getElementById('theme-toggle-btn');
+// HIER: themeToggleBtn wurde entfernt
 const fullscreenBtn = document.getElementById('fullscreen-btn');
 const userAvatar = document.getElementById('user-avatar');
 const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
@@ -40,26 +34,10 @@ const menuContainer = document.getElementById('menu-container');
 const bookmarksContainer = document.getElementById('bookmarks-container');
 
 
-// --- Theme Toggle Logic ---
-const updateThemeToggleButton = () => {
-    if (settings.theme === 'dark') {
-        themeToggleBtn.textContent = '☀️ Light Theme';
-        themeToggleBtn.setAttribute('aria-label', 'Wechsel zu hellem Design');
-    } else {
-        themeToggleBtn.textContent = '🌙 Dark Theme';
-        themeToggleBtn.setAttribute('aria-label', 'Wechsel zu dunklem Design');
-    }
-};
-
-themeToggleBtn.addEventListener('click', () => {
-    settings.theme = (settings.theme === 'dark' ? 'light' : 'dark');
-    document.documentElement.setAttribute('data-theme', settings.theme); // Korrekte Anwendung auf das html-Element
-    saveSettings(); // Speichern des neuen Themes
-    updateThemeToggleButton(); // Aktualisiere den Button-Text
-});
-
-// Initial update of the theme toggle button text
-updateThemeToggleButton();
+// --- Theme Toggle Logic (KOMPLETT ENTFERNT) ---
+// const updateThemeToggleButton = () => { /* Code entfernt */ };
+// themeToggleBtn.addEventListener('click', () => { /* Code entfernt */ });
+// updateThemeToggleButton(); // Auch der Initialaufruf entfernt
 
 
 // --- User Avatar & Toggle Logic ---
