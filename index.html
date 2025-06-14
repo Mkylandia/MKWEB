@@ -1,92 +1,158 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MKWEB Downloads</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MKWEB 6.2 - Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
+  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, zitat, minimalistisch, animiert, performance, mkweb">
+  <meta name="author" content="Ihr Name/MKWEB">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourwebsite.com/"> <meta property="og:title" content="MKWEB 6.2 - Das Ultimative Animierte Dashboard">
+  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
+  <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg"> <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourwebsite.com/"> <meta property="twitter:title" content="MKWEB 6.2 - Das Ultimative Animierte Dashboard">
+  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
+  <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg"> <title>MKWEB 6.2 - Das Ultimative Animierte Dashboard</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="background-animation"></div>
-    <header>
-        <div class="container">
-            <h1><span class="logo-mk">MK</span>WEB Downloads <span class="sparkle">✨</span></h1>
-            <p class="tagline">Schnell, Sicher, Innovativ – Ihre Dateien warten!</p>
+<body data-theme="dark">
+  <div class="grain"></div>
+  <div class="container">
+    <header class="header glass">
+      <h1 class="logo">MKWEB 6.2</h1>
+      <div class="controls">
+        <div class="theme-control">
+          <label for="theme-picker" class="sr-only">Wähle ein Design</label>
+          <select id="theme-picker" aria-label="Wähle ein Design">
+            </select>
         </div>
+        <button id="fullscreen-btn" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
+        <button id="user-avatar-toggle" title="Avatar ein-/ausblenden" aria-label="Avatar ein- oder ausblenden">🙈 Avatar ausblenden</button>
+        <div class="weather-widget glass" aria-live="polite">
+          <span class="weather-icon" role="img" aria-label="Aktuelles Wetter Icon">🌤️</span>
+          <div class="weather-info">
+            <span id="weather-text">Lädt...</span>
+            <span id="weather-location"></span>
+          </div>
+        </div>
+        <div id="user-avatar" class="user-avatar glass" role="img" aria-label="Benutzerprofil-Platzhalter">
+          <span aria-hidden="true">👤</span>
+        </div>
+      </div>
     </header>
 
-    <main>
-        <div class="container">
-            <section class="download-grid">
-                <div class="download-card" data-file="MK WEB 6.2.zip" data-size="ca. 180 MB">
-                    <div class="card-icon">💻</div>
-                    <h2>MKWEB Browser Setup (ZIP)</h2>
-                    <p class="file-info">Größe: ca. 180 MB | Typ: ZIP-Archiv</p>
-                    <p class="description">
-                        Laden Sie die neueste Version des MKWEB Browsers herunter. Schnell, sicher und mit integriertem KI-Assistenten.<br><br>
-                        <strong style="color: var(--accent-blue);">Wichtige Installationshinweise:</strong><br>
-                        1. Nach dem Download, entpacken Sie die "MK WEB 6.2.zip"-Datei. Verwenden Sie hierfür ein Programm wie WinRAR oder 7-Zip.<br>
-                        2. Verschieben Sie den extrahierten Ordner (z.B. "MK WEB 6.2") auf Ihren Desktop.<br>
-                        3. Verschieben Sie anschließend den *gesamten Inhalt* dieses Ordners (z.B. die `MKWEB6.2.exe` oder `MKWEB6.py` Datei und zugehörige Ordner) direkt auf Ihren Desktop. Der leere Ordner "MK WEB 6.2" kann danach gelöscht werden.
-                    </p>
-                    <button class="download-btn" data-url="https://www.mediafire.com/file/9jerdchmwmyv5t0/MKWEB+6.2.zip/file">Download über MediaFire</button>
-                    <div class="progress-container">
-                        <div class="progress-bar"></div>
-                        <span class="progress-text">Bereit</span>
-                    </div>
-                </div>
-
-                <div class="download-card" data-file="mkweb_features_guide.pdf" data-size="5.8 MB">
-                    <div class="card-icon">📚</div>
-                    <h2>MKWEB Features Guide</h2>
-                    <p class="file-info">Größe: 5.8 MB | Typ: PDF</p>
-                    <p class="description">Ein umfassender Leitfaden zu allen Funktionen und zur Nutzung des MKWEB Browsers.</p>
-                    <button class="download-btn" data-url="/downloads/mkweb_features_guide.pdf">Download</button>
-                    <div class="progress-container">
-                        <div class="progress-bar"></div>
-                        <span class="progress-text">Bereit</span>
-                    </div>
-                </div>
-
-                <div class="download-card" data-file="mkweb_adblock_list.zip" data-size="1.1 MB">
-                    <div class="card-icon">🛡️</div>
-                    <h2>Erweiterte AdBlock Liste</h2>
-                    <p class="file-info">Größe: 1.1 MB | Typ: ZIP</p>
-                    <p class="description">Manuelle Liste für erweiterten Werbeblocker-Schutz im MKWEB Browser.</p>
-                    <button class="download-btn" data-url="/downloads/mkweb_adblock_list.zip">Download</button>
-                    <div class="progress-container">
-                        <div class="progress-bar"></div>
-                        <span class="progress-text">Bereit</span>
-                    </div>
-                </div>
-
-            </section>
-
-            <section class="info-section">
-                <h2>Warum MKWEB Downloads nutzen?</h2>
-                <ul>
-                    <li><span class="bullet-icon">⚡</span> Blitzschnelle Downloads, optimiert für MKWEB Browser.</li>
-                    <li><span class="bullet-icon">🔒</span> Gesicherte Verbindungen für Ihre Sicherheit.</li>
-                    <li><span class="bullet-icon">✨</span> Ästhetisches Design und einfache Bedienung.</li>
-                    <li><span class="bullet-icon">🖥️</span> Vollbild-Modus gefixt für nahtloses Surfen.</li>
-                    <li><span class="bullet-icon">🎨</span> Design-Verbesserungen für eine moderne Benutzeroberfläche.</li>
-                    <li><span class="bullet-icon">➕</span> Viele neue Features hinzugefügt.</li>
-                    <li><span class="bullet-icon">🌐</span> Download-Website aktualisiert für bessere Übersicht.</li>
-                    <li><span class="bullet-icon">🚫</span> Erweiterter Ad Blocker integriert.</li>
-                    <li><span class="bullet-icon">🧠</span> KI-Upgrade für intelligentere Interaktionen.</li>
-                    <li><span class="bullet-icon">🤖</span> Multi-KI-Auswahl für personalisierte Assistenten.</li>
-                </ul>
-            </section>
+    <main class="main">
+      <section class="search-section glass animate-in">
+        <h2 class="sr-only">Suchmaschinen Auswahl und Suchfeld</h2>
+        <div class="search-engines">
+          <button class="search-engine" data-engine="google" aria-label="Google Suche">🔍 Google</button>
+          <button class="search-engine" data-engine="yandex" aria-label="Yandex Suche">⚙️ Yandex</button>
+          <button class="search-engine" data-engine="bing" aria-label="Bing Suche">🅱️ Bing</button>
+          <button class="search-engine" data-engine="duckduckgo" aria-label="DuckDuckGo Suche">🦆 DuckDuckGo</button>
+          <button class="search-engine" data-engine="youtube" aria-label="YouTube Suche">📺 YouTube</button>
+          <button class="search-engine" data-engine="github" aria-label="GitHub Suche">💻 GitHub</button>
         </div>
+        <div class="search-container">
+          <div class="search-box">
+            <span class="search-icon-magnify" aria-hidden="true">🔍</span>
+            <input id="search" type="text" placeholder="Suche im Web..." autocomplete="off" aria-label="Websuche">
+          </div>
+        </div>
+      </section>
+
+      <section class="time-display glass animate-in">
+        <h2 class="sr-only">Aktuelle Uhrzeit und Datum</h2>
+        <div id="time" aria-live="polite" aria-label="Aktuelle Uhrzeit"></div>
+        <div id="date" aria-label="Aktuelles Datum"></div>
+      </section>
+
+      <section class="quote-of-the-day glass animate-in" aria-labelledby="quote-heading">
+        <h2 id="quote-heading">✨ Zitat des Tages</h2>
+        <p id="quote-text" aria-live="polite"></p>
+        <p id="quote-author"></p>
+        </section>
+
+      <section class="quick-actions" aria-labelledby="quick-actions-heading">
+        <h2 id="quick-actions-heading" class="sr-only">Schnellzugriffe</h2>
+        <a class="action-card glass animate-in" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" title="Zu Google Gemini">
+          <span class="icon" aria-hidden="true">♊</span>
+          <span class="label">Gemini AI</span>
+        </a>
+        <a class="action-card glass animate-in" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" title="Zu YouTube">
+          <span class="icon" aria-hidden="true">📺</span>
+          <span class="label">YouTube</span>
+        </a>
+        <a class="action-card glass animate-in" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub">
+          <span class="icon" aria-hidden="true">💻</span>
+          <span class="label">GitHub</span>
+        </a>
+        <a class="action-card glass animate-in" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail">
+          <span class="icon" aria-hidden="true">📧</span>
+          <span class="label">Gmail</span>
+        </a>
+        <a class="action-card glass animate-in" href="https://discord.com" target="_blank" rel="noopener noreferrer" title="Zu Discord">
+          <span class="icon" aria-hidden="true">💬</span>
+          <span class="label">Discord</span>
+        </a>
+        <a class="action-card glass animate-in" href="https://www.netflix.com" target="_blank" rel="noopener noreferrer" title="Zu Netflix">
+          <span class="icon" aria-hidden="true">🎬</span>
+          <span class="label">Netflix</span>
+        </a>
+        <a class="action-card glass animate-in" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
+          <span class="icon" aria-hidden="true">🎵</span>
+          <span class="label">Spotify</span>
+        </a>
+        <a class="action-card glass animate-in" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
+          <span class="icon" aria-hidden="true">🗨️</span>
+          <span class="label">ChatGPT</span>
+        </a>
+      </section>
+
+      <section class="bookmark-section glass animate-in" aria-labelledby="bookmark-heading">
+        <h2 id="bookmark-heading">🔖 Favoriten</h2>
+        <div class="bookmark-grid">
+          <a class="bookmark-card glass" href="https://www.reddit.com" target="_blank" rel="noopener noreferrer" title="Zu Reddit">
+            <span style="font-size: 2rem;" aria-hidden="true">📱</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">Reddit</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Social News</div>
+            </div>
+          </a>
+          <a class="bookmark-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow">
+            <span style="font-size: 2rem;" aria-hidden="true">💡</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">Stack Overflow</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Developer Q&A</div>
+            </div>
+          </a>
+          <a class="bookmark-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" title="Zu CodePen">
+            <span style="font-size: 2rem;" aria-hidden="true">🎨</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">CodePen</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Code Playground</div>
+            </div>
+          </a>
+          <a class="bookmark-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" title="Zu Unsplash">
+            <span style="font-size: 2rem;" aria-hidden="true">📸</span>
+            <div>
+              <div style="font-weight: 600; font-size: 1.2rem;">Unsplash</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Stock Photos</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <a class="news-section glass animate-in" href="https://mkwebnews.vercel.app" target="_blank" rel="noopener noreferrer" title="Zu den aktuellen Nachrichten">
+        <h2 id="news-heading">📰 News</h2>
+        <p>Klicken Sie hier, um die neuesten Nachrichten zu lesen!</p>
+      </a>
+
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 MKWEB. Alle Rechte vorbehalten.</p>
-        </div>
-    </footer>
+    </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
