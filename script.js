@@ -31,6 +31,15 @@ const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const scrollToTopBtn = document.createElement('button'); // Created dynamically
 
+// Slider Elements
+const quickActionsContainer = document.getElementById('quick-actions-container');
+const quickActionsPrevBtn = document.querySelector('.quick-actions-slider .slider-btn.prev');
+const quickActionsNextBtn = document.querySelector('.quick-actions-slider .slider-btn.next');
+
+const bookmarksContainer = document.getElementById('bookmarks-container');
+const bookmarksPrevBtn = document.querySelector('.bookmark-slider .slider-btn.prev');
+const bookmarksNextBtn = document.querySelector('.bookmark-slider .slider-btn.next');
+
 
 // --- Theme Toggle Logic ---
 const updateThemeToggleButton = () => {
@@ -296,3 +305,41 @@ const applyParallax = () => {
 };
 
 applyParallax(); // Enable the optimized mouse parallax effect
+
+
+// --- NEW: Slider Functionality for Quick Actions and Bookmarks ---
+const initializeSlider = (container, prevBtn, nextBtn) => {
+    if (!container || !prevBtn || !nextBtn) return; // Exit if elements not found
+
+    const scrollAmount = container.querySelector('.action-card, .bookmark-card').offsetWidth + parseFloat(getComputedStyle(container).gap);
+
+    const updateButtonStates = () => {
+        prevBtn.disabled = container.scrollLeft === 0;
+        nextBtn.disabled = container.scrollLeft + container.clientWidth >= container.scrollWidth - 1; // -1 to account for sub-pixel rendering
+    };
+
+    const scrollSlider = (direction) => {
+        const currentScrollLeft = container.scrollLeft;
+        const targetScrollLeft = currentScrollLeft + (direction * scrollAmount);
+        container.scrollTo({
+            left: targetScrollLeft,
+            behavior: 'smooth'
+        });
+        // Update button states after scroll animation completes
+        setTimeout(updateButtonStates, 300); // Small delay to allow scroll-behavior to finish
+    };
+
+    prevBtn.addEventListener('click', () => scrollSlider(-1));
+    nextBtn.addEventListener('click', () => scrollSlider(1));
+
+    // Update buttons on initial load and on scroll
+    container.addEventListener('scroll', updateButtonStates);
+    window.addEventListener('resize', updateButtonStates); // Also update on resize
+    updateButtonStates(); // Initial call
+};
+
+// Initialize both sliders
+document.addEventListener('DOMContentLoaded', () => {
+    initializeSlider(quickActionsContainer, quickActionsPrevBtn, quickActionsNextBtn);
+    initializeSlider(bookmarksContainer, bookmarksPrevBtn, bookmarksNextBtn);
+});
