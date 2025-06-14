@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="MKWEB OS 7 - Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
-  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, zitat, minimalistisch, animiert, performance, mkweb, os7">
+  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, zitat, minimalistisch, animiert, performance, mkweb">
   <meta name="author" content="Ihr Name/MKWEB">
 
   <meta property="og:type" content="website">
@@ -12,106 +12,106 @@
   <meta property="og:title" content="MKWEB OS 7 - Das Ultimative Animierte Dashboard">
   <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
   <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg">
+
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://yourwebsite.com/">
   <meta property="twitter:title" content="MKWEB OS 7 - Das Ultimative Animierte Dashboard">
   <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
   <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg">
-  <title>MKWEB OS 7 - Animiertes Dashboard</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+
+  <title>MKWEB OS 7 - Dein Dashboard</title>
+  <link rel="stylesheet" href="styles (6).css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 </head>
 <body data-theme="dark">
   <div class="grain"></div>
+
   <div class="container">
-    <header class="header glass">
-      <h1 class="logo">MKWEB OS 7</h1>
+    <header class="header glass animate-in">
+      <div class="logo" aria-label="MKWEB OS 7 Logo">MKWEB OS 7</div>
       <div class="controls">
-        <button id="theme-toggle-btn" title="Design umschalten" aria-label="Design umschalten">☀️ Light / 🌙 Dark</button>
-        <button id="fullscreen-btn" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
-        <button id="user-avatar-toggle" title="Avatar ein-/ausblenden" aria-label="Avatar ein- oder ausblenden">🙈 Avatar ausblenden</button>
-        <div id="user-avatar" class="user-avatar glass" role="img" aria-label="Benutzerprofil-Platzhalter">
-          <span aria-hidden="true">👤</span>
+        <button id="theme-toggle-btn" class="glass">☀️ Light Theme</button>
+        <button id="fullscreen-btn" class="glass" title="Vollbild umschalten">🚀 Vollbild</button>
+        <button id="user-avatar-toggle" class="glass">🙈 Avatar ausblenden</button>
+        <div id="user-avatar" class="user-avatar glass" aria-hidden="false">
+          <span class="material-symbols-outlined">person</span>
         </div>
       </div>
     </header>
 
     <main class="main">
       <section class="search-section glass animate-in">
-        <h2 class="sr-only">Suchmaschinen Auswahl und Suchfeld</h2>
+        <h2 class="sr-only">Websuche</h2>
         <div class="search-engines">
-          <button class="search-engine" data-engine="google" aria-label="Google Suche">🔍 Google</button>
-          <button class="search-engine" data-engine="yandex" aria-label="Yandex Suche">⚙️ Yandex</button>
-          <button class="search-engine" data-engine="bing" aria-label="Bing Suche">🅱️ Bing</button>
-          <button class="search-engine" data-engine="duckduckgo" aria-label="DuckDuckGo Suche">🦆 DuckDuckGo</button>
-          <button class="search-engine" data-engine="youtube" aria-label="YouTube Suche">📺 YouTube</button>
-          <button class="search-engine" data-engine="github" aria-label="GitHub Suche">💻 GitHub</button>
+          <button class="search-engine glass" data-engine="google">Google</button>
+          <button class="search-engine glass" data-engine="yandex">Yandex</button>
+          <button class="search-engine glass" data-engine="bing">Bing</button>
+          <button class="search-engine glass" data-engine="duckduckgo">DuckDuckGo</button>
+          <button class="search-engine glass" data-engine="youtube">YouTube</button>
+          <button class="search-engine glass" data-engine="github">GitHub</button>
         </div>
-        <div class="search-container">
-          <div class="search-box">
-            <span class="search-icon-magnify" aria-hidden="true">🔍</span>
-            <input id="search" type="text" placeholder="Suche im Web..." autocomplete="off" aria-label="Websuche">
-          </div>
+        <div class="search-box glass">
+          <span class="material-symbols-outlined icon">search</span>
+          <label for="search" class="sr-only">Suchanfrage eingeben</label>
+          <input type="text" id="search" placeholder="Was suchst du heute?">
         </div>
       </section>
 
       <section class="time-display glass animate-in">
         <h2 class="sr-only">Aktuelle Uhrzeit und Datum</h2>
-        <div id="time" aria-live="polite" aria-label="Aktuelle Uhrzeit"></div>
-        <div id="date" aria-label="Aktuelles Datum"></div>
+        <div id="time"></div>
+        <div id="date"></div>
+      </section>
+      
+      <section class="quick-actions glass animate-in">
+        <h2>🚀 Quick Actions</h2>
+        <div class="action-grid">
+          <a class="action-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
+            <span class="material-symbols-outlined icon" aria-hidden="true">chat</span>
+            <div class="label">ChatGPT</div>
+          </a>
+          <a class="action-card glass" href="https://bard.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Bard">
+            <span class="material-symbols-outlined icon" aria-hidden="true">bubble_chart</span>
+            <div class="label">Google Bard</div>
+          </a>
+          <a class="action-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer" title="Zu Notion">
+            <span class="material-symbols-outlined icon" aria-hidden="true">article</span>
+            <div class="label">Notion</div>
+          </a>
+          <a class="action-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Calendar">
+            <span class="material-symbols-outlined icon" aria-hidden="true">calendar_month</span>
+            <div class="label">Calendar</div>
+          </a>
+          <a class="action-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail">
+            <span class="material-symbols-outlined icon" aria-hidden="true">mail</span>
+            <div class="label">Gmail</div>
+          </a>
+          <a class="action-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web">
+            <span class="material-symbols-outlined icon" aria-hidden="true">chat_bubble</span>
+            <div class="label">WhatsApp</div>
+          </a>
+          <a class="action-card glass" href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
+            <span class="material-symbols-outlined icon" aria-hidden="true">headphones</span>
+            <div class="label">Spotify</div>
+          </a>
+          <a class="action-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub">
+            <span class="material-symbols-outlined icon" aria-hidden="true">data_object</span>
+            <div class="label">GitHub</div>
+          </a>
+        </div>
       </section>
 
-      <section class="quote-of-the-day glass animate-in" aria-labelledby="quote-heading">
-        <h2 id="quote-heading">✨ Zitat des Tages</h2>
-        <p id="quote-text" aria-live="polite"></p>
-        <p id="quote-author"></p>
-        </section>
-
-      <section class="quick-actions" aria-labelledby="quick-actions-heading">
-        <h2 id="quick-actions-heading" class="sr-only">Schnellzugriffe</h2>
-        <a class="action-card glass animate-in" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" title="Zu Google Gemini">
-          <span class="icon" aria-hidden="true">♊</span>
-          <span class="label">Gemini AI</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://youtube.com/" target="_blank" rel="noopener noreferrer" title="Zu YouTube">
-          <span class="icon" aria-hidden="true">📺</span>
-          <span class="label">YouTube</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub">
-          <span class="icon" aria-hidden="true">💻</span>
-          <span class="label">GitHub</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail">
-          <span class="icon" aria-hidden="true">📧</span>
-          <span class="label">Gmail</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://discord.com" target="_blank" rel="noopener noreferrer" title="Zu Discord">
-          <span class="icon" aria-hidden="true">💬</span>
-          <span class="label">Discord</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://www.netflix.com" target="_blank" rel="noopener noreferrer" title="Zu Netflix">
-          <span class="icon" aria-hidden="true">🎬</span>
-          <span class="label">Netflix</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://spotify.com/" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
-          <span class="icon" aria-hidden="true">🎵</span>
-          <span class="label">Spotify</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
-          <span class="icon" aria-hidden="true">🗨️</span>
-          <span class="label">ChatGPT</span>
-        </a>
-      </section>
-
-      <section class="bookmark-section glass animate-in" aria-labelledby="bookmark-heading">
-        <h2 id="bookmark-heading">🔖 Favoriten</h2>
+      <section class="bookmark-section glass animate-in">
+        <h2>📚 Bookmarks</h2>
         <div class="bookmark-grid">
-          <a class="bookmark-card glass" href="https://www.reddit.com" target="_blank" rel="noopener noreferrer" title="Zu Reddit">
-            <span style="font-size: 2rem;" aria-hidden="true">📱</span>
+          <a class="bookmark-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" title="Zur MDN Web Docs">
+            <span style="font-size: 2rem;" aria-hidden="true">📖</span>
             <div>
-              <div style="font-weight: 600; font-size: 1.2rem;">Reddit</div>
-              <div style="font-size: 0.9rem; color: var(--dim);">Social News</div>
+              <div style="font-weight: 600; font-size: 1.2rem;">MDN Web Docs</div>
+              <div style="font-size: 0.9rem; color: var(--dim);">Webentwicklung Referenz</div>
             </div>
           </a>
           <a class="bookmark-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow">
@@ -140,13 +140,11 @@
 
       <a class="news-section glass animate-in" href="https://mkwebnews.vercel.app" target="_blank" rel="noopener noreferrer" title="Zu den aktuellen Nachrichten">
         <h2 id="news-heading">📰 News</h2>
-        <p>Klicken Sie hier, um die neuesten Nachrichten zu lesen!</p>
+        <p class="sr-only">Klicken Sie hier, um zu den neuesten Nachrichten zu gelangen.</p>
       </a>
-
     </main>
-
   </div>
 
-  <script src="script.js"></script>
+  <script src="script (7).js"></script>
 </body>
 </html>
