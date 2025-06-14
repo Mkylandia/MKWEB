@@ -14,7 +14,7 @@
   <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg"> <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://yourwebsite.com/">
   <meta property="twitter:title" content="MKWEB OS 7 - Das Ultimative Animierte Dashboard">
-  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
+  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
   <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg"> <title>MKWEB OS 7 - Dein Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +52,7 @@
         <div class="search-box glass">
           <span class="material-symbols-outlined icon" aria-hidden="true">search</span>
           <label for="search" class="sr-only">Suchanfrage eingeben</label>
-          <input type="text" id="search" placeholder="Was suchst du heute?">
+          <input type="text" id="search" placeholder="Was suchst du heute?" autocomplete="off">
         </div>
       </section>
 
@@ -62,10 +62,9 @@
         <div id="date"></div>
       </section>
       
-      <section class="quick-actions-section glass animate-in" aria-labelledby="quick-actions-heading">
-        <h2 id="quick-actions-heading">🚀 Quick Actions</h2>
-        <div class="horizontal-scroll-container" id="quick-actions-container">
-          <a class="action-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
+      <section class="menu-section glass animate-in" aria-labelledby="menu-heading">
+        <h2 id="menu-heading">✨ Menü</h2>
+        <div class="menu-grid" id="menu-container"> <a class="action-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
             <span class="material-symbols-outlined icon" aria-hidden="true">chat</span>
             <div class="label">ChatGPT</div>
           </a>
@@ -89,7 +88,7 @@
             <span class="material-symbols-outlined icon" aria-hidden="true">chat_bubble</span>
             <div class="label">WhatsApp</div>
           </a>
-          <a class="action-card glass" href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
+          <a class="action-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
             <span class="material-symbols-outlined icon" aria-hidden="true">headphones</span>
             <div class="label">Spotify</div>
           </a>
@@ -102,8 +101,7 @@
 
       <section class="bookmark-section glass animate-in" aria-labelledby="bookmark-heading">
         <h2 id="bookmark-heading">📚 Bookmarks</h2>
-        <div class="horizontal-scroll-container" id="bookmarks-container">
-          <a class="bookmark-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" title="Zur MDN Web Docs">
+        <div class="bookmark-grid" id="bookmarks-container"> <a class="bookmark-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" title="Zur MDN Web Docs">
             <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
             <div>
               <div class="bookmark-title">MDN Web Docs</div>
