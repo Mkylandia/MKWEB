@@ -16,8 +16,8 @@ const saveSettings = () => {
 // Ensure theme is valid, fallback to 'dark'
 const allowedThemes = ['dark', 'light'];
 if (!allowedThemes.includes(settings.theme)) {
-    settings.theme = 'dark';
-    saveSettings(); // Save if theme was corrected
+    settings.theme = 'dark'; // Fallback, falls ein ungültiges Theme gespeichert war
+    saveSettings();
 }
 
 // Apply initial theme immediately to html element for broader CSS scope
@@ -35,8 +35,8 @@ const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const scrollToTopBtn = document.createElement('button'); // Created dynamically
 
-// Slider Elements (No longer explicitly needed for controlling movement, but kept for general reference if styling is complex)
-const menuContainer = document.getElementById('menu-container'); // Renamed from quickActionsContainer
+// Element-Referenzen für Menü und Bookmarks, auch wenn jetzt Flexbox verwendet wird
+const menuContainer = document.getElementById('menu-container');
 const bookmarksContainer = document.getElementById('bookmarks-container');
 
 
@@ -53,9 +53,9 @@ const updateThemeToggleButton = () => {
 
 themeToggleBtn.addEventListener('click', () => {
     settings.theme = (settings.theme === 'dark' ? 'light' : 'dark');
-    document.documentElement.setAttribute('data-theme', settings.theme); // Update theme on html
-    saveSettings(); // Save the new theme
-    updateThemeToggleButton(); // Update button text
+    document.documentElement.setAttribute('data-theme', settings.theme); // Korrekte Anwendung auf das html-Element
+    saveSettings(); // Speichern des neuen Themes
+    updateThemeToggleButton(); // Aktualisiere den Button-Text
 });
 
 // Initial update of the theme toggle button text
@@ -113,7 +113,7 @@ searchInput.addEventListener('keypress', (e) => {
                 case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
                 case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
                 case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Korrigierte YouTube URL
                 case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
                 default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
