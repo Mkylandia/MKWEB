@@ -16,7 +16,7 @@
   --saturate-intensity: 180%; /* Slightly more vibrant saturation */
   --content-max-width: 1400px; /* Increased max width for larger screens */
   --inner-shadow-strength: inset 0 0 10px rgba(0,0,0,0.06); /* Refined inner shadow */
-  --card-min-width: 280px; /* Mindestbreite für Karten im horizontalen Menü */
+  --card-min-width: 200px; /* Mindestbreite für Karten, damit sie schön umbrechen */
   --card-gap: 2.5rem; /* Abstand zwischen Karten */
 }
 
@@ -479,14 +479,14 @@ button:hover::after {
   letter-spacing: 5px; /* More letter spacing */
 }
 
-/* --- NEW: Horizontal Scroll Container for Quick Actions & Bookmarks --- */
-.quick-actions-section, .bookmark-section {
+/* --- MENÜ (ehemals QUICK ACTIONS) - FLEXBOX LAYOUT --- */
+.menu-section, .bookmark-section {
   width: 100%;
   max-width: var(--content-max-width);
-  padding: 2rem; /* Padding for the entire section, including cards */
+  padding: 2rem;
 }
 
-.quick-actions-section h2, .bookmark-section h2 {
+.menu-section h2, .bookmark-section h2 {
   margin-bottom: 3rem;
   font-size: 3.2rem;
   font-weight: 900;
@@ -496,37 +496,27 @@ button:hover::after {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
-  padding: 0 0; /* No horizontal padding here, handled by section */
+  padding: 0 0;
 }
 
-.horizontal-scroll-container {
+/* FLEXBOX für Menü-Items (Quick Actions) */
+.action-card-container {
   display: flex;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  padding: 1.5rem 0; /* Vertical padding for cards inside, no horizontal padding */
-  gap: var(--card-gap); /* Gap between items */
-  width: 100%;
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
-  -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+  flex-wrap: wrap; /* Elemente umbrechen, wenn nicht genug Platz ist */
+  justify-content: center; /* Zentriert die Elemente horizontal */
+  gap: var(--card-gap); /* Abstand zwischen den Karten */
+  padding: 1.5rem 0;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.horizontal-scroll-container::-webkit-scrollbar {
-  display: none;
-}
-
-.action-card, .bookmark-card {
-  flex-shrink: 0; /* Prevent items from shrinking */
-  width: var(--card-min-width); /* Fixed width for consistency */
-  min-width: var(--card-min-width); /* Ensure min-width is applied */
-  max-width: var(--card-min-width); /* Ensure max-width is applied */
-
+.action-card {
+  flex: 1 1 var(--card-min-width); /* Flex-Item: Schrumpft, wächst, hat Mindestbreite */
+  max-width: 250px; /* Optional: Maximale Breite für die Karten, um sie nicht zu groß werden zu lassen */
+  
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   padding: 2.8rem 2rem;
-  text-align: center; /* Default for action-card */
+  text-align: center;
   text-decoration: none;
   color: var(--fg);
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
@@ -536,16 +526,7 @@ button:hover::after {
   will-change: transform, box-shadow, border-color;
 }
 
-/* Override text-align for bookmark-card */
-.bookmark-card {
-    text-align: left; /* Align bookmark content left */
-    display: flex; /* Use flex for icon and text beside each other */
-    align-items: center;
-    gap: 2rem; /* Gap between icon and text content */
-}
-
-
-.action-card::before, .bookmark-card::before { /* Optimized shimmer effect on hover */
+.action-card::before { /* Optimized shimmer effect on hover */
   content: '';
   position: absolute;
   top: 0;
@@ -560,11 +541,11 @@ button:hover::after {
   will-change: left;
 }
 
-.action-card:hover::before, .bookmark-card:hover::before {
+.action-card:hover::before {
   left: 200%; /* Wider travel distance */
 }
 
-.action-card:hover, .bookmark-card:hover {
+.action-card:hover {
   transform: translateY(-12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
   border-color: var(--acc);
   box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger glow */
@@ -599,6 +580,63 @@ button:hover::after {
 .action-card:hover .label {
   transform: translateY(-10px);
   opacity: 1;
+}
+
+
+/* FLEXBOX für Bookmark-Items */
+.bookmark-card-container {
+  display: flex;
+  flex-wrap: wrap; /* Elemente umbrechen, wenn nicht genug Platz ist */
+  justify-content: center; /* Zentriert die Elemente horizontal */
+  gap: var(--card-gap); /* Abstand zwischen den Karten */
+  padding: 1.5rem 0;
+}
+
+.bookmark-card {
+  flex: 1 1 300px; /* Flex-Item: Schrumpft, wächst, Mindestbreite 300px */
+  max-width: 450px; /* Optional: Maximale Breite für Bookmarks */
+
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  padding: 2.8rem 2rem;
+  text-align: left; /* Überschreibt text-align: center von action-card */
+  text-decoration: none;
+  color: var(--fg);
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--s), var(--inner-shadow);
+  will-change: transform, box-shadow, border-color;
+  display: flex; /* Für Icon und Text nebeneinander */
+  align-items: center;
+  gap: 2rem;
+}
+
+
+.bookmark-card::before { /* Optimized shimmer effect on hover */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -200%; /* Wider travel distance */
+  width: 60%; /* Wider shimmer */
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); /* Stronger opacity */
+  transition: left 0.4s ease-out; /* Slightly faster shimmer */
+  z-index: 1;
+  transform: skewX(-25deg); /* More skew */
+  pointer-events: none;
+  will-change: left;
+}
+
+.bookmark-card:hover::before {
+  left: 200%; /* Wider travel distance */
+}
+
+.bookmark-card:hover {
+  transform: translateY(-12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
+  border-color: var(--acc);
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger glow */
 }
 
 /* Icon styling for bookmark-card */
@@ -724,6 +762,7 @@ button:hover::after {
 }
 
 /* --- Scrollbar Styling (Optimized customization) --- */
+/* For overall body scrolling, leave this if you want the custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px; /* Wider scrollbar */
   background-color: transparent;
@@ -800,10 +839,11 @@ button:hover::after {
   .header { padding: 2.5rem 3.5rem; }
   .logo { font-size: 3.8rem; }
   #time { font-size: 7rem; }
-  .quick-actions-section h2, .bookmark-section h2 { font-size: 3rem; }
-  .action-card, .bookmark-card { width: var(--card-min-width); min-width: var(--card-min-width); }
+  .menu-section h2, .bookmark-section h2 { font-size: 3rem; }
+  .action-card { max-width: 220px; } /* max-width anpassen */
+  .bookmark-card { max-width: 400px; } /* max-width anpassen */
   .news-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-  .search-section, .time-display, .news-section, .quick-actions-section, .bookmark-section { padding: 3rem; }
+  .search-section, .time-display, .news-section, .menu-section, .bookmark-section { padding: 3rem; }
   .glass { backdrop-filter: blur(20px) saturate(var(--saturate-intensity)); }
   .icon { font-size: 4.5rem; }
   button { padding: 1rem 2.2rem; font-size: 1rem; }
@@ -817,11 +857,12 @@ button:hover::after {
   .logo { font-size: 3.5rem; }
   #time { font-size: 6.5rem; }
   #date { font-size: 1.8rem; letter-spacing: 4px; }
-  .quick-actions-section h2, .bookmark-section h2 { font-size: 2.8rem; }
-  .action-card, .bookmark-card { width: 250px; min-width: 250px; max-width: 250px; } /* Adjust card size */
-  --card-min-width: 250px;
+  .menu-section h2, .bookmark-section h2 { font-size: 2.8rem; }
+  --card-min-width: 180px; /* Adjust min width for cards in flex */
   --card-gap: 2rem;
-  .search-section, .time-display, .news-section, .quick-actions-section, .bookmark-section { padding: 2.5rem; }
+  .action-card { max-width: 200px; }
+  .bookmark-card { flex: 1 1 280px; max-width: 380px; }
+  .search-section, .time-display, .news-section, .menu-section, .bookmark-section { padding: 2.5rem; }
   .search-box { padding: 1.8rem 2.5rem; }
   #search { font-size: 1.3rem; }
   .glass { backdrop-filter: blur(18px) saturate(var(--saturate-intensity)); }
@@ -841,11 +882,12 @@ button:hover::after {
   .logo { font-size: 3rem; }
   #time { font-size: 5.5rem; }
   #date { font-size: 1.6rem; letter-spacing: 3px; }
-  .quick-actions-section h2, .bookmark-section h2 { font-size: 2.5rem; }
-  .action-card, .bookmark-card { width: 220px; min-width: 220px; max-width: 220px; } /* Adjust card size */
-  --card-min-width: 220px;
+  .menu-section h2, .bookmark-section h2 { font-size: 2.5rem; }
+  --card-min-width: 150px; /* Adjust min width for cards in flex */
   --card-gap: 1.8rem;
-  .search-section, .time-display, .news-section, .quick-actions-section, .bookmark-section { padding: 2rem; }
+  .action-card { max-width: 180px; }
+  .bookmark-card { flex: 1 1 240px; max-width: 340px; }
+  .search-section, .time-display, .news-section, .menu-section, .bookmark-section { padding: 2rem; }
   .search-box { padding: 1.5rem 2.2rem; }
   #search { font-size: 1.2rem; }
   .glass { backdrop-filter: blur(15px) saturate(var(--saturate-intensity)); }
@@ -871,11 +913,11 @@ button:hover::after {
   #search { font-size: 1.1rem; margin-left: 1rem; }
   #time { font-size: 4.8rem; margin-bottom: 1.2rem;}
   #date { font-size: 1.4rem; letter-spacing: 2.5px; }
-  .quick-actions-section h2, .bookmark-section h2 { font-size: 2.2rem; }
-  .action-card, .bookmark-card { width: 200px; min-width: 200px; max-width: 200px; } /* Adjust card size */
-  --card-min-width: 200px;
+  .menu-section h2, .bookmark-section h2 { font-size: 2.2rem; }
+  --card-min-width: 120px; /* Adjust min width for cards in flex */
   --card-gap: 1.5rem;
-  .action-card { padding: 1.8rem 1rem; }
+  .action-card { padding: 1.8rem 1rem; max-width: 160px; }
+  .bookmark-card { flex: 1 1 200px; max-width: 300px; }
   .icon { font-size: 3rem; margin-bottom: 0.9rem; }
   .news-section { padding: 1.8rem; }
   .news-section h2 { font-size: 2rem; margin-bottom: 2rem;}
@@ -901,11 +943,11 @@ button:hover::after {
   #search { font-size: 0.9rem; margin-left: 0.7rem; }
   #time { font-size: 3.2rem; margin-bottom: 0.7rem;}
   #date { font-size: 0.9rem; letter-spacing: 1.2px; }
-  .quick-actions-section h2, .bookmark-section h2 { font-size: 1.8rem; }
-  .action-card, .bookmark-card { width: 180px; min-width: 180px; max-width: 180px; } /* Adjust card size */
-  --card-min-width: 180px;
-  --card-gap: 1rem;
-  .action-card { padding: 1.2rem 0.5rem; }
+  .menu-section h2, .bookmark-section h2 { font-size: 1.8rem; }
+  --card-min-width: 100px; /* Adjust min width for cards in flex, even smaller on mobile */
+  --card-gap: 0.8rem;
+  .action-card { padding: 1.2rem 0.5rem; max-width: 140px; }
+  .bookmark-card { flex: 1 1 180px; max-width: 250px; }
   .icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
   .news-section { padding: 1.2rem; }
   .news-section h2 { font-size: 1.6rem; margin-bottom: 1.5rem;}
