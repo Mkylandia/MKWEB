@@ -1,54 +1,55 @@
-/* styles.css - MKWEB OS 7: Performance Optimized Polish & Dynamic Animations */
+/* styles.css - MKWEB OS 7: Ultimate Aesthetic & Performance Optimization */
+
+/* --- Global Design Variables - Refined for OS 7 --- */
 :root {
-  /* Global Design Variables - Tuned for balanced polish and performance (MKWEB OS 7 Refinements) */
-  --t: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slightly faster, still smooth transitions */
-  --r: 22px; /* Slightly less rounded, still soft */
-  --s: 0 12px 35px rgba(0,0,0,0.18); /* Moderate depth shadow */
-  --sh: 0 20px 60px rgba(0,0,0,0.35); /* Prominent but optimized hover shadow */
-  --s-light: 0 6px 15px rgba(0,0,0,0.09); /* Lighter shadow for subtle lift */
-  --border-width: 1.2px; /* Slightly thinner borders for crispness */
-  --text-gradient-angle: 60deg;
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 55%, rgba(255, 255, 255, 0.02) 100%); /* Slightly less opaque reflection */
-  --glow-strength: 0 0 12px; /* Reduced base glow strength for performance */
+  --t: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly more responsive cubic-bezier */
+  --r: 20px; /* Modern, clean rounded corners */
+  --s: 0 8px 25px rgba(0,0,0,0.15); /* Balanced shadow for lift */
+  --sh: 0 16px 45px rgba(0,0,0,0.3); /* Deeper shadow on hover */
+  --s-light: 0 4px 12px rgba(0,0,0,0.07); /* Subtle lift for lighter elements */
+  --border-width: 1.5px; /* Slightly more defined borders for crispness */
+  --text-gradient-angle: 65deg; /* Optimized angle for text readability */
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%, rgba(255, 255, 255, 0.01) 100%); /* Enhanced subtle reflection */
+  --glow-strength: 0 0 10px; /* Base glow strength */
   --glow-color: var(--acc);
-  --blur-intensity: 20px; /* Main backdrop-filter blur value - slightly reduced */
-  --saturate-intensity: 170%; /* Slightly reduced saturate for glass effect */
-  --content-max-width: 1300px; /* Slightly narrower max width */
-  --inner-shadow-strength: inset 0 0 8px rgba(0,0,0,0.08); /* Slightly less prominent inner shadow */
+  --blur-intensity: 22px; /* Key blur value for glass effect - balanced */
+  --saturate-intensity: 180%; /* Slightly more vibrant saturation */
+  --content-max-width: 1400px; /* Increased max width for larger screens */
+  --inner-shadow-strength: inset 0 0 10px rgba(0,0,0,0.06); /* Refined inner shadow */
 }
 
-/* Themed Variables - no change here for performance */
+/* --- Themed Variables --- */
 [data-theme="dark"] {
-  --bg: linear-gradient(135deg, #050505 0%, #0e0e0e 100%);
-  --fg: #e8e8e8;
-  --dim: rgba(232,232,232,0.55);
-  --acc: #a56ddf;
-  --ah: #c08cff;
-  --gl: rgba(255,255,255,0.05); /* Slightly less opaque glass background */
-  --gb: rgba(255,255,255,0.18); /* Slightly less opaque, defined glass border */
+  --bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); /* Deeper dark background */
+  --fg: #e0e0e0; /* Softer foreground color */
+  --dim: rgba(224,224,224,0.65); /* More legible dim text */
+  --acc: #8a4ed4; /* A slightly richer, deeper purple */
+  --ah: #b080ff; /* Brighter, more vibrant hover accent */
+  --gl: rgba(255,255,255,0.08); /* More opaque glass background */
+  --gb: rgba(255,255,255,0.25); /* Stronger, more visible glass border */
   --inner-shadow: var(--inner-shadow-strength);
-  --acc-rgb: 165, 109, 223;
-  --fg-rgb: 232, 232, 232;
-  --ah-rgb: 192, 140, 255;
+  --acc-rgb: 138, 78, 212; /* RGB values for accents */
+  --fg-rgb: 224, 224, 224;
+  --ah-rgb: 176, 128, 255;
   --gb-rgb: 255, 255, 255;
 }
 
 [data-theme="light"] {
-  --bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  --fg: #212529;
-  --dim: rgba(33,37,41,0.55);
+  --bg: linear-gradient(135deg, #eff3f6 0%, #d8e0e7 100%); /* Lighter, subtle light background */
+  --fg: #343a40; /* Stronger foreground color */
+  --dim: rgba(52,58,64,0.65);
   --acc: #007bff;
   --ah: #3399ff;
-  --gl: rgba(0,0,0,0.05); /* Slightly less opaque glass background */
-  --gb: rgba(0,0,0,0.13); /* Slightly less opaque, defined glass border */
+  --gl: rgba(0,0,0,0.06); /* Slightly more opaque glass background */
+  --gb: rgba(0,0,0,0.2); /* Stronger, more visible glass border */
   --inner-shadow: var(--inner-shadow-strength);
   --acc-rgb: 0, 123, 255;
-  --fg-rgb: 33, 37, 41;
+  --fg-rgb: 52, 58, 64;
   --ah-rgb: 51, 153, 255;
   --gb-rgb: 0, 0, 0;
 }
 
-/* Base Styles */
+/* --- Base Styles --- */
 html {
   scroll-behavior: smooth;
 }
@@ -71,39 +72,37 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  perspective: 1200px; /* REDUCED: Still 3D, but less extreme for better performance */
+  perspective: 1000px; /* Balanced perspective for subtle 3D */
 }
 
-/* Animated Background Elements - OPTIMIZED for performance */
+/* --- Animated Background Elements (Highly Optimized) --- */
 .background-shape {
   content: '';
   position: fixed;
   border-radius: 50%;
-  opacity: 0.04; /* Slightly lower opacity */
-  filter: blur(60px); /* REDUCED blur for performance */
+  opacity: 0.03; /* Further reduced opacity for subtlety and performance */
+  filter: blur(50px); /* Reduced blur for performance */
   z-index: -1;
   pointer-events: none;
-  width: 450px; /* Slightly smaller base size */
-  height: 450px; /* Slightly smaller base size */
-  background: var(--acc);
-  /* Slower animations for reduced CPU/GPU load */
-  animation: floatEffect 60s ease-in-out infinite alternate, pulseOpacity 8s infinite alternate;
-  will-change: transform, opacity, filter;
+  /* Size is now set by JS for more control */
+  background: var(--acc); /* Default, overridden by JS for alternating colors */
+  /* Slower and optimized animations */
+  animation: floatEffect 65s ease-in-out infinite alternate, pulseOpacity 9s infinite alternate;
+  will-change: transform, opacity, filter; /* Explicit will-change */
 }
 
 @keyframes floatEffect {
   0% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-  20% { transform: translate3d(25px, 30px, -70px) scale(1.03) rotateX(4deg) rotateY(3deg) rotateZ(1.5deg); } /* Slightly less aggressive 3D movements */
-  40% { transform: translate3d(-20px, -25px, 40px) scale(0.97) rotateX(-3deg) rotateY(-4deg) rotateZ(-2deg); }
-  60% { transform: translate3d(18px, -20px, -60px) scale(1.02) rotateX(3deg) rotateY(3deg) rotateZ(1.2deg); }
-  80% { transform: translate3d(-8px, 12px, 15px) scale(0.99) rotateX(-1deg) rotateY(-2deg) rotateZ(-0.7deg); }
+  25% { transform: translate3d(30px, 35px, -80px) scale(1.05) rotateX(5deg) rotateY(4deg) rotateZ(2deg); } /* Slightly larger movement, but still subtle */
+  50% { transform: translate3d(-25px, -30px, 50px) scale(0.96) rotateX(-4deg) rotateY(-5deg) rotateZ(-3deg); }
+  75% { transform: translate3d(22px, -25px, -70px) scale(1.04) rotateX(4deg) rotateY(4deg) rotateZ(1.8deg); }
   100% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
 }
 
 @keyframes pulseOpacity {
-    0% { opacity: 0.04; }
-    50% { opacity: 0.06; } /* Reduced peak opacity */
-    100% { opacity: 0.04; }
+    0% { opacity: 0.03; }
+    50% { opacity: 0.05; }
+    100% { opacity: 0.03; }
 }
 
 .grain {
@@ -112,31 +111,31 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); /* Slightly less visible grain */
-  background-size: 80px 80px; /* Larger pattern for less dense, less frequent noise */
-  animation: grain 0.5s steps(1) infinite; /* Slower step animation for less energetic noise */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px); /* Even more subtle grain */
+  background-size: 100px 100px; /* Larger pattern for very sparse noise */
+  animation: grain 0.7s steps(1) infinite; /* Slower step animation */
   pointer-events: none;
   z-index: 0;
-  opacity: 0.2; /* Slightly lower opacity */
+  opacity: 0.15; /* Further reduced opacity */
 }
 
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.3%, 0.3%); } /* Smaller translation for more subtle movement */
+  50% { transform: translate(-0.2%, 0.2%); } /* Minimal translation for extremely subtle movement */
 }
 
 .container {
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding: 3.5rem; /* Slightly reduced padding */
+  padding: 4rem; /* Increased padding for more breathing room */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rem; /* Slightly reduced gap */
+  gap: 5rem; /* Increased gap for visual separation */
 }
 
-/* Glassmorphism Base Style with optimized reflection and 3D hover */
+/* --- Glassmorphism Base Style with Enhanced Visuals & Optimization --- */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
@@ -148,7 +147,7 @@ body {
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, backdrop-filter, filter;
 
-  &::after { /* Reflection optimization */
+  &::after { /* Enhanced reflection */
     content: '';
     position: absolute;
     top: 0;
@@ -157,38 +156,38 @@ body {
     height: 100%;
     background: var(--glass-reflection);
     pointer-events: none;
-    opacity: 0.8; /* Slightly less visible reflection */
+    opacity: 0.9; /* More visible reflection */
     transition: opacity var(--t);
   }
 
   &:hover {
-    transform: perspective(1000px) rotateX(1.5deg) rotateY(-1.5deg) translateY(-8px) scale(1.005); /* Slightly less intense 3D tilt and lift */
-    box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Reduced glow strength on hover */
+    transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) translateY(-10px) scale(1.008); /* Smoother, slightly more pronounced lift and tilt */
+    box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger, more defined glow on hover */
   }
 
-  &::before { /* Animated glowing border on hover - optimized */
+  &::before { /* Animated glowing border on hover - refined */
     content: '';
     position: absolute;
-    top: -2px; left: -2px; right: -2px; bottom: -2px; /* Thinner border for glow */
-    border-radius: calc(var(--r) + 2px);
+    top: -3px; left: -3px; right: -3px; bottom: -3px; /* Slightly thicker border for glow */
+    border-radius: calc(var(--r) + 3px);
     background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
     z-index: -1;
     opacity: 0;
     transition: opacity var(--t), filter var(--t);
-    filter: blur(8px); /* Reduced blur for performance */
+    filter: blur(10px); /* Slightly more prominent blur for glow */
   }
 
   &:hover::before {
     opacity: 1;
-    filter: blur(10px); /* Reduced blur on hover */
+    filter: blur(12px); /* Stronger blur on hover */
   }
 }
 
-/* Animation for elements appearing on scroll - optimized */
+/* --- Animation for elements appearing on scroll (Optimized) --- */
 .animate-in {
   opacity: 0;
-  transform: translateY(25px) scale(0.97) rotateX(3deg); /* Slightly less aggressive initial state */
-  animation: fadeInSlideUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly faster, still impactful animation */
+  transform: translateY(30px) scale(0.96) rotateX(4deg); /* Slightly more pronounced initial state */
+  animation: fadeInSlideUp 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly slower, smoother animation */
   will-change: opacity, transform;
 }
 
@@ -199,26 +198,26 @@ body {
   }
 }
 
-/* Header */
+/* --- Header --- */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   max-width: var(--content-max-width);
-  padding: 2.5rem 3rem; /* Slightly reduced padding */
+  padding: 3rem 4rem; /* Increased padding */
 }
 
 .logo {
-  font-size: 3.5rem; /* Slightly smaller logo */
+  font-size: 4rem; /* Larger, more impactful logo */
   font-weight: 900;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 400% 400%; /* Smaller gradient area for less calculation */
+  background-size: 400% 400%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 25s ease infinite alternate, logoGlowPulse 5s infinite alternate ease-in-out; /* Slower gradient, slower pulse */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced logo glow */
+  animation: gradient 30s ease infinite alternate, logoGlowPulse 6s infinite alternate ease-in-out; /* Slower, more majestic animations */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger logo glow */
   position: relative;
   will-change: background-position, text-shadow;
 }
@@ -228,29 +227,28 @@ body {
   100% { background-position: 100% 50%; }
 }
 
-/* Optimized breathing glow for logo */
 @keyframes logoGlowPulse {
-    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); } /* Reduced base glow */
-    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35); } /* Reduced peak glow */
+    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); }
+    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); } /* More dynamic pulse */
 }
 
 .controls {
   display: flex;
-  gap: 1.5rem; /* Slightly reduced gap */
+  gap: 2rem; /* Increased gap */
   align-items: center;
   flex-wrap: wrap;
 }
 
-/* Buttons Styling - Optimized */
+/* --- Buttons Styling (Optimized) --- */
 button {
-  padding: 1rem 2.2rem; /* Slightly smaller padding */
+  padding: 1.1rem 2.5rem; /* Slightly more padding */
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
-  font-size: 1rem;
+  font-size: 1.05rem; /* Slightly larger font */
   font-weight: 600;
   outline: none;
   box-shadow: var(--s-light);
@@ -259,25 +257,24 @@ button {
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, color;
 
-  &:active { /* Optimized press effect */
-    transform: translateY(3px) scale(0.97); /* Slightly less aggressive press */
-    box-shadow: var(--s-light), inset 0 4px 10px rgba(0,0,0,0.2); /* Slightly less intense inner shadow */
-    background: rgba(var(--gl-rgb), 0.08);
+  &:active {
+    transform: translateY(2px) scale(0.98); /* Smoother, less aggressive press */
+    box-shadow: var(--s-light), inset 0 3px 8px rgba(0,0,0,0.25); /* More refined inner shadow */
+    background: rgba(var(--gl-rgb), 0.1);
   }
 }
 
 button:hover {
   border-color: var(--acc);
-  transform: translateY(-7px) scale(1.02); /* Slightly less pronounced lift and scale */
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Reduced glow on hover */
+  transform: translateY(-9px) scale(1.03); /* More pronounced lift and scale */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger glow on hover */
 }
 
-/* Animated hover glow border for buttons - optimized */
-button::after {
+button::after { /* Animated hover glow border for buttons - refined */
   content: '';
   position: absolute;
-  top: -3px; bottom: -3px; left: -3px; right: -3px; /* Slightly thinner border for glow */
-  border-radius: calc(var(--r) + 3px);
+  top: -4px; bottom: -4px; left: -4px; right: -4px; /* Thicker border for glow */
+  border-radius: calc(var(--r) + 4px);
   background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc)) border-box;
   -webkit-mask:
     linear-gradient(#fff 0 0) padding-box,
@@ -288,51 +285,34 @@ button::after {
   transition: opacity var(--t), filter var(--t);
   z-index: -1;
   will-change: opacity;
-  filter: blur(8px); /* Reduced blur for performance */
+  filter: blur(10px); /* More blur for performance */
 }
 
 button:hover::after {
   opacity: 1;
-  filter: blur(10px); /* Reduced blur on hover */
+  filter: blur(14px); /* Stronger blur on hover */
 }
 
-/* User Avatar Toggle & Avatar Itself - Optimized */
+/* --- User Avatar Toggle & Avatar Itself (Optimized) --- */
 .hidden-avatar {
   opacity: 0 !important;
-  transform: scale(0.5) !important; /* Slightly less aggressive scale */
+  transform: scale(0.4) !important; /* More aggressive scale for hide */
   pointer-events: none !important;
   transition: opacity var(--t), transform var(--t) !important;
 }
 
-#user-avatar-toggle {
-  padding: 1rem 2.2rem;
-  border-radius: var(--r);
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  color: var(--fg);
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
-  outline: none;
-  box-shadow: var(--s-light);
-  will-change: transform, box-shadow, border-color;
-}
-
-#user-avatar-toggle:hover {
-  border-color: var(--acc);
-  transform: translateY(-7px) scale(1.02);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+#user-avatar-toggle { /* Style inherited from general button */
+  padding: 1.1rem 2.5rem;
 }
 
 .user-avatar {
-  width: 55px; /* Slightly smaller avatar */
-  height: 55px;
+  width: 60px; /* Slightly larger avatar */
+  height: 60px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem; /* Slightly smaller icon */
+  font-size: 2.2rem; /* Larger icon */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -344,33 +324,33 @@ button:hover::after {
 }
 
 .user-avatar:hover {
-  transform: scale(1.15) rotate(3deg); /* Slightly less distinct scale and rotation */
+  transform: scale(1.2) rotate(5deg); /* More distinct scale and rotation */
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--sh);
 }
 
-/* Main Content Layout */
+/* --- Main Content Layout --- */
 .main {
   width: 100%;
   max-width: var(--content-max-width);
   display: flex;
   flex-direction: column;
-  gap: 4rem; /* Slightly reduced gap */
+  gap: 5rem; /* Increased gap */
 }
 
-.search-section { padding: 3rem; } /* Slightly less padding */
+.search-section { padding: 3.5rem; } /* Increased padding */
 
-/* Search Engines - Optimized */
+/* --- Search Engines (Optimized) --- */
 .search-engines {
   display: flex;
-  gap: 1.5rem; /* Slightly reduced gap */
-  margin-bottom: 3rem; /* Slightly reduced margin */
+  gap: 1.8rem; /* Increased gap */
+  margin-bottom: 3.5rem; /* Increased margin */
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: 1rem 2.5rem; /* Slightly smaller padding */
+  padding: 1.1rem 2.8rem; /* Slightly more padding */
   border-radius: 50px;
   font-weight: 700;
   border: var(--border-width) solid transparent;
@@ -384,32 +364,32 @@ button:hover::after {
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: scale(1.04) translateY(-5px); /* Slightly less distinct pop-out effect */
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); /* Reduced glow when active */
+    transform: scale(1.05) translateY(-6px); /* More pronounced pop-out effect */
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* Stronger glow when active */
     border-color: var(--acc);
-    animation: activeEnginePulse 2.5s infinite alternate ease-in-out; /* Slower, more subtle pulse when active */
+    animation: activeEnginePulse 2.8s infinite alternate ease-in-out; /* Slower, more impactful pulse */
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-3px) scale(1.01); /* Slightly less pronounced hover */
-    box-shadow: inset 0 0 12px rgba(var(--acc-rgb), 0.15), var(--s-light); /* Lighter inner glow, reduced outer shadow */
+    transform: translateY(-4px) scale(1.02); /* More noticeable hover */
+    box-shadow: inset 0 0 15px rgba(var(--acc-rgb), 0.2), var(--s-light); /* Stronger inner glow */
   }
 }
 
 @keyframes activeEnginePulse {
-  0% { transform: scale(1.04) translateY(-5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25), var(--s); }
-  100% { transform: scale(1.045) translateY(-5.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); }
+  0% { transform: scale(1.05) translateY(-6px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35), var(--s); }
+  100% { transform: scale(1.055) translateY(-6.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); }
 }
 
-/* Search Box - Optimized */
+/* --- Search Box (Optimized) --- */
 .search-box {
   display: flex;
   align-items: center;
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: 50px;
-  padding: 1.8rem 2.5rem; /* Slightly less padding */
+  padding: 2rem 3rem; /* Increased padding */
   transition: border-color var(--t), transform var(--t), box-shadow var(--t);
   position: relative;
   overflow: hidden;
@@ -419,8 +399,8 @@ button:hover::after {
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.005); /* Even more subtle scale on focus */
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* Reduced glow on focus */
+  transform: scale(1.008); /* Subtle scale on focus */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); /* Stronger glow on focus */
 }
 
 /* Optimized search box focus animation */
@@ -430,9 +410,9 @@ button:hover::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 4px; /* Thinner animated border */
+    height: 5px; /* Thicker animated border */
     background: linear-gradient(90deg, transparent, var(--acc), transparent);
-    animation: borderScan 1.2s infinite linear; /* Slower, less prominent continuous scanline animation */
+    animation: borderScan 1s infinite linear; /* Faster, more prominent scanline */
     will-change: transform;
     border-radius: 0 0 50px 50px;
 }
@@ -447,70 +427,69 @@ button:hover::after {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: 1.3rem; /* Slightly smaller */
+  font-size: 1.4rem; /* Larger font */
   outline: none;
-  margin-left: 1.2rem; /* Slightly less margin */
-  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.1); /* Reduced text shadow */
+  margin-left: 1.5rem; /* More margin */
+  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.15); /* More prominent text shadow */
 }
 
 #search::placeholder {
   color: var(--dim);
-  opacity: 0.65;
+  opacity: 0.7;
   transition: opacity 0.2s ease;
 }
 
 #search:focus::placeholder {
-  opacity: 0.25;
+  opacity: 0.3;
 }
 
-/* Time Display - Optimized */
+/* --- Time Display (Optimized) --- */
 .time-display {
   text-align: center;
-  padding: 4rem; /* Slightly less padding */
+  padding: 4.5rem; /* Increased padding */
 }
 
 #time {
-  font-size: 6.5rem; /* Slightly smaller time display */
+  font-size: 7.5rem; /* Larger, more dominant time display */
   font-weight: 900;
-  margin-bottom: 1.5rem; /* Slightly less margin */
+  margin-bottom: 1.8rem; /* More margin */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 500% 500%; /* Reduced gradient area */
+  background-size: 500% 500%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 20s ease infinite alternate, pulseText 5s infinite alternate; /* Slower pulse, slower gradient */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced text glow */
+  animation: gradient 25s ease infinite alternate, pulseText 6s infinite alternate; /* Slower, more majestic animations */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Stronger text glow */
   will-change: background-position, text-shadow;
 }
 
-/* Optimized pulse for time display */
 @keyframes pulseText {
-  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 10px rgba(var(--fg-rgb), 0.08); }
-  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35), 0 0 15px rgba(var(--fg-rgb), 0.12); }
-  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 10px rgba(var(--fg-rgb), 0.08); }
+  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 12px rgba(var(--fg-rgb), 0.1); }
+  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), 0 0 18px rgba(var(--fg-rgb), 0.15); }
+  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 12px rgba(var(--fg-rgb), 0.1); }
 }
 
 #date {
-  font-size: 1.8rem; /* Slightly smaller */
+  font-size: 2rem; /* Larger font */
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 4px; /* Slightly less letter spacing */
+  letter-spacing: 5px; /* More letter spacing */
 }
 
-/* Quick Actions - Optimized */
+/* --- Quick Actions (Optimized) --- */
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Slightly smaller min width */
-  gap: 2.5rem; /* Slightly reduced gap */
-  padding: 0 2.5rem; /* Slightly reduced padding */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Larger min width for cards */
+  gap: 3rem; /* Increased gap */
+  padding: 0 3rem; /* Increased padding */
 }
 
 .action-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 2.5rem 1.8rem; /* Slightly less padding */
+  padding: 2.8rem 2rem; /* More padding */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
@@ -525,25 +504,25 @@ button:hover::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -180%; /* Slightly less travel distance */
-  width: 50%; /* Slightly thinner shimmer */
+  left: -200%; /* Wider travel distance */
+  width: 60%; /* Wider shimmer */
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); /* Reduced opacity */
-  transition: left var(--t) ease-out;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); /* Stronger opacity */
+  transition: left 0.4s ease-out; /* Slightly faster shimmer */
   z-index: 1;
-  transform: skewX(-20deg); /* Slightly less skew */
+  transform: skewX(-25deg); /* More skew */
   pointer-events: none;
   will-change: left;
 }
 
 .action-card:hover::before {
-  left: 180%; /* Slightly less travel distance */
+  left: 200%; /* Wider travel distance */
 }
 
 .action-card:hover {
-  transform: translateY(-10px) scale(1.03) rotateX(1deg); /* Slightly less intense lift, scale and subtle 3D tilt */
+  transform: translateY(-12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
   border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Reduced glow */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger glow */
 }
 
 .action-card .icon, .action-card .label {
@@ -552,57 +531,56 @@ button:hover::after {
 }
 
 .icon {
-  font-size: 4.5rem; /* Slightly smaller icon */
-  margin-bottom: 1.5rem; /* Slightly less margin */
+  font-size: 5rem; /* Larger icon */
+  margin-bottom: 1.8rem; /* More margin */
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced icon glow */
-  transition: transform 0.2s ease-out, text-shadow 0.2s ease-out; /* Slightly faster transition */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger icon glow */
+  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out; /* Slightly slower transition */
   will-change: transform;
 }
 
 .action-card:hover .icon {
-  transform: scale(1.15) rotate(3deg); /* Slightly less intense icon rotation and scale on hover */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Reduced glow on hover */
+  transform: scale(1.2) rotate(5deg); /* More intense icon rotation and scale on hover */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger glow on hover */
 }
 
-/* Label animation on hover - optimized */
 .action-card .label {
-  transition: transform 0.2s ease-out, opacity 0.2s ease-out; /* Slightly faster transition */
+  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
   will-change: transform, opacity;
 }
 
 .action-card:hover .label {
-  transform: translateY(-8px); /* Slide up slightly less */
-  opacity: 0.98;
+  transform: translateY(-10px); /* Slide up more */
+  opacity: 1;
 }
 
-/* News and Bookmark Sections - Optimized */
+/* --- News and Bookmark Sections (Optimized) --- */
 .news-section, .bookmark-section {
-  padding: 3.5rem; /* Slightly less padding */
+  padding: 4rem; /* Increased padding */
 }
 
 .news-section h2, .bookmark-section h2 {
-  margin-bottom: 2.5rem; /* Slightly less margin */
-  font-size: 2.8rem; /* Slightly smaller */
+  margin-bottom: 3rem; /* Increased margin */
+  font-size: 3.2rem; /* Larger font */
   font-weight: 900;
   text-align: center;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced heading glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Stronger heading glow */
 }
 
-/* News Section Button Styling - Optimized */
+/* News Section Button Styling (Optimized) */
 .news-section.button-style {
-  font-size: 1.3rem; /* Slightly smaller text */
-  padding: 2rem 3rem; /* Adjusted padding */
+  font-size: 1.4rem; /* Larger text */
+  padding: 2.2rem 3.5rem; /* More padding */
   text-align: center;
   color: var(--fg);
-  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.1); /* Slightly reduced text shadow */
+  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.15); /* Stronger text shadow */
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
   display: block;
-  margin-top: 1.8rem; /* Slightly less space from heading */
+  margin-top: 2rem; /* More space from heading */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
@@ -612,22 +590,22 @@ button:hover::after {
 }
 
 .news-section.button-style:hover {
-  transform: translateY(-10px) scale(1.02); /* Slightly less stronger lift and scale */
+  transform: translateY(-12px) scale(1.03); /* More pronounced lift and scale */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced glow */
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger glow */
 }
 
 .news-grid, .bookmark-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly smaller min width for cards */
-  gap: 2.5rem; /* Slightly reduced gap */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Larger min width for cards */
+  gap: 3rem; /* Increased gap */
 }
 
 .news-card, .bookmark-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 2.5rem; /* Slightly less padding */
+  padding: 2.8rem; /* More padding */
   text-decoration: none;
   color: var(--fg);
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
@@ -638,66 +616,66 @@ button:hover::after {
 }
 
 .news-card:hover, .bookmark-card:hover {
-  transform: translateY(-10px) scale(1.02) rotateX(0.5deg); /* Slightly less intense lift, scale, slight X-axis tilt */
+  transform: translateY(-12px) scale(1.03) rotateX(1deg); /* More intense lift, scale, subtle X-axis tilt */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced glow */
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger glow */
 }
 
 .news-card h3 {
-  margin-bottom: 1.2rem; /* Slightly less margin */
-  font-size: 1.7rem; /* Slightly smaller */
+  margin-bottom: 1.5rem; /* More margin */
+  font-size: 1.8rem; /* Larger font */
   font-weight: 700;
-  text-shadow: 0 0 6px rgba(var(--fg-rgb), 0.15); /* Slightly less visible text shadow */
+  text-shadow: 0 0 8px rgba(var(--fg-rgb), 0.2); /* More visible text shadow */
 }
 
 .news-card p {
   color: var(--dim);
-  margin-bottom: 1.8rem; /* Slightly less margin */
-  line-height: 1.6;
-  font-size: 1.1rem; /* Slightly smaller */
+  margin-bottom: 2rem; /* More margin */
+  line-height: 1.7;
+  font-size: 1.15rem; /* Slightly larger font */
 }
 
 .news-source {
-  font-size: 1rem; /* Slightly smaller */
+  font-size: 1.05rem; /* Slightly larger font */
   color: var(--acc);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.2px; /* Slightly less letter spacing */
+  letter-spacing: 1.5px; /* More letter spacing */
 }
 
 .bookmark-card {
   display: flex;
   align-items: center;
-  gap: 1.8rem; /* Slightly less gap */
+  gap: 2rem; /* More gap */
   transition: all var(--t);
 }
 
 .bookmark-card span:first-child {
-  font-size: 2.8rem; /* Slightly smaller */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
-  transition: transform 0.2s ease-out, text-shadow 0.2s ease-out; /* Slightly faster transition */
+  font-size: 3rem; /* Larger icon */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out;
 }
 
 .bookmark-card:hover span:first-child {
-    transform: scale(1.15) rotate(-3deg); /* Slightly less distinct scale and rotation on hover */
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Reduced glow on hover */
+    transform: scale(1.2) rotate(-5deg); /* More distinct scale and rotation on hover */
+    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger glow on hover */
 }
 
-.bookmark-card > div > div:first-child {
+.bookmark-title { /* New class */
   font-weight: 700;
-  font-size: 1.3rem; /* Slightly smaller */
+  font-size: 1.4rem; /* Larger font */
 }
 
-.bookmark-card > div > div:last-child {
-  font-size: 1rem; /* Slightly smaller */
+.bookmark-description { /* New class */
+  font-size: 1.05rem; /* Slightly larger font */
   color: var(--dim);
 }
 
-/* Scrollbar Styling (Optimized customization) */
+/* --- Scrollbar Styling (Optimized customization) --- */
 ::-webkit-scrollbar {
-  width: 8px; /* Thinner scrollbar */
+  width: 10px; /* Wider scrollbar */
   background-color: transparent;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -705,17 +683,17 @@ button:hover::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--acc-rgb), 0.6); /* Slightly less opaque accent */
-  border-radius: 4px;
-  border: 1px solid rgba(var(--gb-rgb), 0.1); /* Slightly less visible border */
+  background-color: rgba(var(--acc-rgb), 0.7); /* More opaque accent */
+  border-radius: 5px;
+  border: 1.5px solid rgba(var(--gb-rgb), 0.15); /* More visible border */
   transition: background-color var(--t);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--ah-rgb), 0.75); /* Slightly less opaque on hover */
+  background-color: rgba(var(--ah-rgb), 0.85); /* More opaque on hover */
 }
 
-/* SR-Only class for accessibility - no change */
+/* --- SR-Only class for accessibility --- */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -728,27 +706,27 @@ button:hover::after {
   border-width: 0;
 }
 
-/* Scroll-to-top button styles - Optimized */
+/* --- Scroll-to-top button styles (Optimized) --- */
 .scroll-to-top {
     position: fixed;
-    bottom: 30px; /* Slightly lower */
-    right: 30px; /* Slightly less right */
+    bottom: 35px; /* Slightly lower */
+    right: 35px; /* Slightly more right */
     background: var(--acc);
     color: #fff;
     border: none;
     border-radius: 50%;
-    width: 55px; /* Slightly smaller */
-    height: 55px; /* Slightly smaller */
-    font-size: 1.8rem; /* Slightly smaller icon */
+    width: 60px; /* Slightly larger */
+    height: 60px; /* Slightly larger */
+    font-size: 2rem; /* Larger icon */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px); /* Slightly less initial displacement */
+    transform: translateY(25px); /* More initial displacement */
     transition: opacity var(--t), transform var(--t), visibility var(--t), background var(--t);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Reduced glow */
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Stronger glow */
     z-index: 1000;
 }
 
@@ -760,49 +738,76 @@ button:hover::after {
 
 .scroll-to-top:hover {
     background: var(--ah);
-    transform: translateY(-8px) rotate(8deg); /* Slightly less pronounced lift and rotation */
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Reduced glow */
+    transform: translateY(-10px) rotate(10deg); /* More pronounced lift and rotation */
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Stronger glow */
 }
 
-/* Media Queries for Responsiveness - adjusted to new sizes */
+/* --- Media Queries for Responsiveness (Adjusted for new sizes) --- */
+@media (max-width: 1400px) {
+  .container { padding: 3.5rem; gap: 4.5rem; }
+  .header { padding: 2.5rem 3.5rem; }
+  .logo { font-size: 3.8rem; }
+  #time { font-size: 7rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .search-section, .time-display, .news-section, .bookmark-section { padding: 3rem; }
+  .glass { backdrop-filter: blur(20px) saturate(var(--saturate-intensity)); }
+  .action-card { padding: 2.5rem 1.8rem; }
+  .icon { font-size: 4.5rem; }
+  button { padding: 1rem 2.2rem; font-size: 1rem; }
+  .user-avatar { width: 55px; height: 55px; font-size: 2rem; }
+}
+
 @media (max-width: 1200px) {
-  .logo { font-size: 3rem; }
-  #time { font-size: 6rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-  .header { padding: 2rem 2.5rem; }
+  .container { padding: 3rem; gap: 4rem; }
+  .header { flex-direction: row; gap: 1.8rem; padding: 2.2rem; }
+  .controls { justify-content: flex-end; gap: 1.5rem; } /* Keep controls to the right if possible */
+  .logo { font-size: 3.5rem; }
+  #time { font-size: 6.5rem; }
+  #date { font-size: 1.8rem; letter-spacing: 4px; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); padding: 0 2.5rem; gap: 2.5rem;}
   .search-section, .time-display, .news-section, .bookmark-section { padding: 2.5rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 3rem; }
+  .search-box { padding: 1.8rem 2.5rem; }
+  #search { font-size: 1.3rem; }
   .glass { backdrop-filter: blur(18px) saturate(var(--saturate-intensity)); }
-  .action-card { padding: 2.2rem 1.2rem; }
+  .user-avatar, #user-avatar-toggle { width: 50px; height: 50px; font-size: 1.8rem; }
+  .action-card { padding: 2.2rem 1.5rem; }
   .icon { font-size: 4rem; }
-  button { padding: 0.9rem 1.8rem; font-size: 0.95rem; }
-  .user-avatar { width: 50px; height: 50px; font-size: 1.8rem; }
+  button { padding: 0.95rem 1.8rem; font-size: 0.98rem; }
+  .bookmark-card span:first-child { font-size: 2.8rem; }
+  .bookmark-title { font-size: 1.3rem; }
+  .bookmark-description { font-size: 1rem; }
 }
 
 @media (max-width: 992px) {
-  .container { padding: 3rem; gap: 3.5rem; }
-  .header { flex-direction: column; gap: 1.5rem; padding: 1.8rem; }
+  .container { padding: 2.5rem; gap: 3.5rem; }
+  .header { flex-direction: column; gap: 1.5rem; padding: 1.8rem; } /* Stack header elements */
   .controls { justify-content: center; gap: 1.2rem; }
-  .logo { font-size: 2.8rem; }
+  .logo { font-size: 3rem; }
   #time { font-size: 5.5rem; }
   #date { font-size: 1.6rem; letter-spacing: 3px; }
   .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); padding: 0 2rem; gap: 2rem;}
   .search-section, .time-display, .news-section, .bookmark-section { padding: 2rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.5rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2.8rem; }
   .search-box { padding: 1.5rem 2.2rem; }
   #search { font-size: 1.2rem; }
   .glass { backdrop-filter: blur(15px) saturate(var(--saturate-intensity)); }
   .user-avatar, #user-avatar-toggle { width: 45px; height: 45px; font-size: 1.6rem; }
-  .action-card { padding: 2rem 1rem; }
+  .action-card { padding: 2rem 1.2rem; }
   .icon { font-size: 3.5rem; }
-  button { padding: 0.8rem 1.5rem; font-size: 0.9rem; }
+  button { padding: 0.85rem 1.5rem; font-size: 0.95rem; }
+  .bookmark-card span:first-child { font-size: 2.5rem; }
+  .bookmark-title { font-size: 1.2rem; }
+  .bookmark-description { font-size: 0.95rem; }
+  .scroll-to-top { bottom: 25px; right: 25px; width: 50px; height: 50px; font-size: 1.6rem; }
 }
 
 @media (max-width: 768px) {
-  .container { padding: 2.5rem; gap: 3rem; }
+  .container { padding: 2rem; gap: 3rem; }
   .header { padding: 1.5rem; }
-  .logo { font-size: 2.5rem; }
-  button { padding: 0.7rem 1.2rem; font-size: 0.85rem; border-radius: 18px; }
+  .logo { font-size: 2.8rem; }
+  button { padding: 0.8rem 1.3rem; font-size: 0.85rem; border-radius: 18px; }
   .user-avatar, #user-avatar-toggle { width: 40px; height: 40px; font-size: 1.4rem; }
   .search-section { padding: 1.8rem; }
   .search-engine { padding: 0.9rem 1.8rem; font-size: 0.85rem; border-radius: 35px; }
@@ -811,56 +816,57 @@ button:hover::after {
   #time { font-size: 4.8rem; margin-bottom: 1.2rem;}
   #date { font-size: 1.4rem; letter-spacing: 2.5px; }
   .quick-actions { grid-template-columns: 1fr; padding: 0 1.8rem; gap: 1.8rem; }
-  .action-card { padding: 1.8rem 0.8rem; }
+  .action-card { padding: 1.8rem 1rem; }
   .icon { font-size: 3rem; margin-bottom: 0.9rem; }
   .news-section, .bookmark-section { padding: 1.8rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.2rem; margin-bottom: 2rem;}
+  .news-section h2, .bookmark-section h2 { font-size: 2.5rem; margin-bottom: 2rem;}
   .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 2rem; }
   .news-card, .bookmark-card { padding: 2rem; }
   .news-card h3 { font-size: 1.5rem; }
   .news-card p { font-size: 1.05rem; margin-bottom: 1.3rem;}
-  .bookmark-card span:first-child { font-size: 2.5rem; }
-  .bookmark-card > div > div:first-child { font-size: 1.2rem; }
-  .bookmark-card > div > div:last-child { font-size: 0.95rem; }
+  .bookmark-card span:first-child { font-size: 2.2rem; }
+  .bookmark-title { font-size: 1.15rem; }
+  .bookmark-description { font-size: 0.9rem; }
   .glass { backdrop-filter: blur(12px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 480px) {
-  .container { padding: 2rem; gap: 2.5rem; }
-  .header { padding: 1.5rem; gap: 0.8rem; }
-  .logo { font-size: 2rem; }
-  button { padding: 0.6rem 1rem; font-size: 0.75rem; border-radius: 15px; }
-  .user-avatar, #user-avatar-toggle { width: 35px; height: 35px; font-size: 1.2rem; }
-  .search-section { padding: 1.5rem; }
-  .search-engine { padding: 0.7rem 1.3rem; font-size: 0.75rem; border-radius: 30px; }
-  .search-box { padding: 1rem 1.3rem; border-radius: 30px; }
-  #search { font-size: 0.95rem; margin-left: 0.8rem; }
-  #time { font-size: 3.5rem; margin-bottom: 0.8rem;}
-  #date { font-size: 1rem; letter-spacing: 1.5px; }
-  .quick-actions { padding: 0 1.2rem; gap: 1.2rem; }
-  .action-card { padding: 1.5rem 0.6rem; }
-  .icon { font-size: 2.5rem; margin-bottom: 0.7rem; }
-  .news-section, .bookmark-section { padding: 1.5rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 1.8rem; margin-bottom: 1.8rem;}
-  .news-card, .bookmark-card { padding: 1.8rem; }
-  .news-card h3 { font-size: 1.3rem; }
-  .news-card p { font-size: 0.95rem; margin-bottom: 1rem;}
-  .bookmark-card span:first-child { font-size: 2rem; }
-  .bookmark-card > div > div:first-child { font-size: 1.1rem; }
-  .bookmark-card > div > div:last-child { font-size: 0.9rem; }
+  .container { padding: 1.8rem; gap: 2rem; }
+  .header { padding: 1.2rem; gap: 0.6rem; }
+  .logo { font-size: 2.2rem; }
+  button { padding: 0.65rem 1rem; font-size: 0.8rem; border-radius: 15px; }
+  .user-avatar, #user-avatar-toggle { width: 32px; height: 32px; font-size: 1.1rem; }
+  .search-section { padding: 1.2rem; }
+  .search-engine { padding: 0.75rem 1.2rem; font-size: 0.8rem; border-radius: 28px; }
+  .search-box { padding: 0.9rem 1.2rem; border-radius: 28px; }
+  #search { font-size: 0.9rem; margin-left: 0.7rem; }
+  #time { font-size: 3.2rem; margin-bottom: 0.7rem;}
+  #date { font-size: 0.9rem; letter-spacing: 1.2px; }
+  .quick-actions { padding: 0 1rem; gap: 1rem; }
+  .action-card { padding: 1.2rem 0.5rem; }
+  .icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
+  .news-section, .bookmark-section { padding: 1.2rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2rem; margin-bottom: 1.5rem;}
+  .news-card, .bookmark-card { padding: 1.5rem; }
+  .news-card h3 { font-size: 1.2rem; }
+  .news-card p { font-size: 0.85rem; margin-bottom: 0.9rem;}
+  .bookmark-card span:first-child { font-size: 1.8rem; }
+  .bookmark-title { font-size: 1.05rem; }
+  .bookmark-description { font-size: 0.85rem; }
   .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); }
+  .scroll-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; font-size: 1.4rem; }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.2); /* Slightly less opaque background without blur for fallback */
+    background: rgba(var(--fg-rgb), 0.25); /* Slightly more prominent background without blur for fallback */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
 }
 
-/* Optional: Class to remove all animations for extreme performance needs - no change */
+/* Optional: Class to remove all animations for extreme performance needs */
 body.no-animations * {
     animation: none !important;
     transition: none !important;
