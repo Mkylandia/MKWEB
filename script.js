@@ -2,18 +2,18 @@
 const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
 const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
 
-// Only 'dark' and 'light' themes allowed
+// Nur noch 'dark' und 'light' als erlaubte Themes
 const allowedThemes = ['dark', 'light'];
 if (!allowedThemes.includes(settings.theme)) {
-    settings.theme = 'dark'; // Fallback to 'dark' if an invalid theme was saved
+    settings.theme = 'dark'; // Fallback auf 'dark', falls 'deep-dark' oder ein ungültiges Theme gespeichert war
     save();
 }
 
 document.body.dataset.theme = settings.theme;
 const themePicker = document.getElementById('theme-picker');
 
-// Only 'dark' and 'light' options added
-themePicker.innerHTML = ''; // Clear existing options
+// Nur 'dark' und 'light' Optionen hinzufügen
+themePicker.innerHTML = ''; // Vorhandene Optionen löschen
 const themes = [
     { value: 'dark', text: 'Dark Theme' },
     { value: 'light', text: 'Light Theme' }
@@ -26,7 +26,7 @@ themes.forEach(theme => {
     themePicker.appendChild(option);
 });
 
-themePicker.value = settings.theme; // Select the current theme
+themePicker.value = settings.theme; // Aktuelles Theme auswählen
 
 // User Avatar & Toggle Logic
 const userAvatar = document.getElementById('user-avatar');
@@ -81,7 +81,6 @@ if (initialEngineButton) {
 
 engines.forEach(btn => {
     btn.onclick = () => {
-        // Remove active class from all and add to clicked button
         engines.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         activeEngine = btn.dataset.engine;
@@ -97,12 +96,12 @@ const doSearch = query => {
         google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
         bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
         duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
-        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Corrected Youtube URL for MKWEB 6.2
+        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Korrigierte Youtube URL
         github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
         yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
     };
     window.open(urls[activeEngine], '_blank');
-    // Removed updateStats('search')
+    updateStats('search');
     searchInput.value = '';
 };
 
@@ -113,12 +112,14 @@ searchInput.onkeydown = e => {
     }
 };
 
+// Verbesserte Uhrzeit-Anzeige
 const updateClock = () => {
     const now = new Date();
-    document.getElementById('time').textContent = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-    document.getElementById('date').textContent = now.toLocaleDateString('de-DE', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }; // Sekunden hinzugefügt
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    document.getElementById('time').textContent = now.toLocaleTimeString('de-DE', timeOptions);
+    document.getElementById('date').textContent = now.toLocaleDateString('de-DE', dateOptions);
 };
 setInterval(updateClock, 1000);
 updateClock();
@@ -170,14 +171,14 @@ const fetchWeather = async () => {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            let errorMessage = `Wetterdaten nicht gefunden oder API-Fehler: ${response.statusText}`;
             if (response.status === 401) {
-                errorMessage = 'Fehler: Ungültiger API-Schlüssel für OpenWeatherMap. Bitte einen gültigen Schlüssel eingeben.';
+                console.error('Error: Invalid API key for OpenWeatherMap. Please get a valid key.');
+                weatherText.textContent = 'N/A';
+                weatherIcon.textContent = '❓';
+                weatherLocation.textContent = 'API Fehler';
+            } else {
+                throw new Error(`Weather data not found or API error: ${response.statusText}`);
             }
-            console.error(errorMessage);
-            weatherText.textContent = 'N/A';
-            weatherIcon.textContent = '❓';
-            weatherLocation.textContent = 'API-Fehler';
             return;
         }
         const data = await response.json();
@@ -186,7 +187,7 @@ const fetchWeather = async () => {
         weatherIcon.textContent = getWeatherEmoji(iconCode);
         weatherLocation.textContent = data.name;
     } catch (error) {
-        console.error('Fehler beim Abrufen des Wetters:', error);
+        console.error('Error fetching weather:', error);
         weatherText.textContent = 'N/A';
         weatherIcon.textContent = '❓';
         weatherLocation.textContent = 'Ort unbekannt';
@@ -203,47 +204,66 @@ const quoteAuthor = document.getElementById('quote-author');
 const fetchQuote = async () => {
     try {
         const response = await fetch('https://api.quotable.io/random');
-        if (!response.ok) throw new Error('Zitate-Daten nicht gefunden');
+        if (!response.ok) throw new Error('Quote data not found');
         const data = await response.json();
 
-        // Animate out current quote
-        quoteText.style.opacity = '0';
-        quoteText.style.transform = 'translateY(-10px)';
-        quoteAuthor.style.opacity = '0';
-        quoteAuthor.style.transform = 'translateY(-10px)';
+        // Apply fade-out before setting new text, then fade-in
+        // Resetting animations by reading offsetWidth forces reflow
+        quoteText.style.animation = 'none';
+        quoteAuthor.style.animation = 'none';
+        void quoteText.offsetWidth;
+        void quoteAuthor.offsetWidth;
 
-        // Wait for the fade-out transition to complete, then update text and fade-in
-        setTimeout(() => {
-            quoteText.textContent = `"${data.content}"`;
-            quoteAuthor.textContent = `- ${data.author}`;
-            quoteText.style.opacity = '1';
-            quoteText.style.transform = 'translateY(0)';
-            quoteAuthor.style.opacity = '1';
-            quoteAuthor.style.transform = 'translateY(0)';
-        }, 300); // Match this with your CSS transition time for opacity/transform
-        
+        quoteText.style.animation = '';
+        quoteAuthor.style.animation = '';
+
+        quoteText.textContent = `"${data.content}"`;
+        quoteAuthor.textContent = `- ${data.author}`;
     } catch (error) {
-        console.error('Fehler beim Abrufen des Zitats:', error);
+        console.error('Error fetching quote:', error);
         quoteText.textContent = '"Sei die Veränderung, die du in der Welt sehen möchtest."';
         quoteAuthor.textContent = '- Mahatma Gandhi';
-        quoteText.style.opacity = '1'; // Ensure fallback is visible
-        quoteText.style.transform = 'translateY(0)';
-        quoteAuthor.style.opacity = '1';
-        quoteAuthor.style.transform = 'translateY(0)';
     }
 };
 
 fetchQuote();
 setInterval(fetchQuote, 86400000); // Fetch a new quote every 24 hours
 
-// Removed all stats tracking related code as requested.
+// Stats Tracking
+let stats = {searches: 0, clicks: 0, startTime: Date.now()};
+
+const savedStats = JSON.parse(localStorage?.getItem('mkweb-stats'));
+if (savedStats) {
+    stats = savedStats;
+    stats.startTime = Date.now() - (savedStats.timeSpentMinutes * 60000 || 0);
+}
+
+const updateStats = type => {
+    if (type === 'search') stats.searches++;
+    if (type === 'click') stats.clicks++;
+
+    const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
+    stats.timeSpentMinutes = timeSpentMinutes;
+
+    document.getElementById('search-count').textContent = stats.searches;
+    document.getElementById('click-count').textContent = stats.clicks;
+    document.getElementById('time-spent').textContent = timeSpentMinutes;
+
+    localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
+};
+
+updateStats();
+
+document.querySelectorAll('a[target="_blank"]').forEach(link => {
+    link.onclick = () => updateStats('click');
+});
 
 // Animate elements on scroll/load
 const animateOnScroll = () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.08 // Slightly increased threshold for earlier animation trigger
+        threshold: 0.05 // Reduced threshold for earlier animation trigger
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -256,7 +276,7 @@ const animateOnScroll = () => {
     }, observerOptions);
 
     // Select all sections and cards that should animate in
-    document.querySelectorAll('.search-section, .time-display, .quote-of-the-day, .action-card, .news-section, .bookmark-section').forEach(element => {
+    document.querySelectorAll('.glass, .action-card').forEach(element => {
         observer.observe(element);
     });
 };
