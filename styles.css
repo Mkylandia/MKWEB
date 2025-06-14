@@ -18,10 +18,8 @@
   --inner-shadow-strength: inset 0 0 10px rgba(0,0,0,0.06); /* Refined inner shadow */
   --card-min-width: 200px; /* Mindestbreite für Karten, damit sie schön umbrechen */
   --card-gap: 2.5rem; /* Abstand zwischen Karten */
-}
 
-/* --- Themed Variables --- */
-[data-theme="dark"] {
+  /* --- Themed Variables (Nur noch Dark Theme) --- */
   --bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); /* Deeper dark background */
   --fg: #e0e0e0; /* Softer foreground color */
   --dim: rgba(224,224,224,0.65); /* More legible dim text */
@@ -36,20 +34,6 @@
   --gb-rgb: 255, 255, 255;
 }
 
-[data-theme="light"] {
-  --bg: linear-gradient(135deg, #eff3f6 0%, #d8e0e7 100%); /* Lighter, subtle light background */
-  --fg: #343a40; /* Stronger foreground color */
-  --dim: rgba(52,58,64,0.65);
-  --acc: #007bff;
-  --ah: #3399ff;
-  --gl: rgba(0,0,0,0.06); /* Slightly more opaque glass background */
-  --gb: rgba(0,0,0,0.2); /* Stronger, more visible glass border */
-  --inner-shadow: var(--inner-shadow-strength);
-  --acc-rgb: 0, 123, 255;
-  --fg-rgb: 52, 58, 64;
-  --ah-rgb: 51, 153, 255;
-  --gb-rgb: 0, 0, 0;
-}
 
 /* --- Base Styles --- */
 html {
@@ -74,7 +58,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  perspective: 1000px; /* Balanced perspective for subtle 3D */
+  perspective: 1000px; /* HIER: Perspektive für subtile 3D-Effekte */
 }
 
 /* --- Animated Background Elements (Highly Optimized) --- */
@@ -149,6 +133,9 @@ body {
   overflow: hidden; /* For inner content not to spill */
   will-change: transform, box-shadow, border-color, background, backdrop-filter, filter;
 
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+
   &::after { /* Enhanced reflection */
     content: '';
     position: absolute;
@@ -163,7 +150,8 @@ body {
   }
 
   &:hover {
-    transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) translateY(-10px) scale(1.008); /* Smoother, slightly more pronounced lift and tilt */
+    /* HIER: Subtiler 3D-Effekt beim Hover */
+    transform: translate3d(0, -10px, 10px) rotateX(1deg) rotateY(-1deg) scale(1.008); /* Leichter Lift und Kippen */
     box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger, more defined glow on hover */
   }
 
@@ -259,6 +247,9 @@ button {
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, color;
 
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Buttons */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+
   &:active {
     transform: translateY(2px) scale(0.98); /* Smoother, less aggressive press */
     box-shadow: var(--s-light), inset 0 3px 8px rgba(0,0,0,0.25); /* More refined inner shadow */
@@ -267,8 +258,9 @@ button {
 }
 
 button:hover {
+  /* HIER: Subtiler 3D-Effekt beim Hover für Buttons */
+  transform: translate3d(0, -9px, 8px) scale(1.03) rotateX(1deg) rotateY(-0.5deg); /* More pronounced lift and subtle tilt */
   border-color: var(--acc);
-  transform: translateY(-9px) scale(1.03); /* More pronounced lift and scale */
   box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger glow on hover */
 }
 
@@ -323,10 +315,14 @@ button:hover::after {
   box-shadow: var(--s-light);
   overflow: hidden;
   will-change: transform, box-shadow, border-color;
+  
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Avatar */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
 }
 
 .user-avatar:hover {
-  transform: scale(1.2) rotate(5deg); /* More distinct scale and rotation */
+  /* HIER: Subtiler 3D-Effekt beim Hover für Avatar */
+  transform: translate3d(0, -5px, 5px) scale(1.2) rotate(5deg); /* More distinct scale and rotation */
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--sh);
 }
@@ -363,10 +359,14 @@ button:hover::after {
   overflow: hidden;
   will-change: transform, box-shadow, background-color, border-color, color;
 
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Search Engine Buttons */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: scale(1.05) translateY(-6px); /* More pronounced pop-out effect */
+    /* HIER: Subtiler 3D-Effekt für aktiven Search Engine Button */
+    transform: translate3d(0, -6px, 6px) scale(1.05); /* More pronounced pop-out effect */
     box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* Stronger glow when active */
     border-color: var(--acc);
     animation: activeEnginePulse 2.8s infinite alternate ease-in-out; /* Slower, more impactful pulse */
@@ -374,14 +374,15 @@ button:hover::after {
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-4px) scale(1.02); /* More noticeable hover */
+    /* HIER: Subtiler 3D-Effekt beim Hover für Search Engine Buttons (nicht aktiv) */
+    transform: translate3d(0, -4px, 4px) scale(1.02); /* More noticeable hover */
     box-shadow: inset 0 0 15px rgba(var(--acc-rgb), 0.2), var(--s-light); /* Stronger inner glow */
   }
 }
 
 @keyframes activeEnginePulse {
-  0% { transform: scale(1.05) translateY(-6px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35), var(--s); }
-  100% { transform: scale(1.055) translateY(-6.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); }
+  0% { transform: translate3d(0, -6px, 6px) scale(1.05); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35), var(--s); }
+  100% { transform: translate3d(0, -6.5px, 6.5px) scale(1.055); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); }
 }
 
 /* --- Search Box (Optimized) --- */
@@ -397,11 +398,15 @@ button:hover::after {
   overflow: hidden;
   box-shadow: var(--s), var(--inner-shadow);
   will-change: transform, box-shadow, border-color;
+
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Search Box */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
 }
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.008); /* Subtle scale on focus */
+  /* HIER: Subtiler 3D-Effekt beim Fokus für Search Box */
+  transform: translate3d(0, -2px, 2px) scale(1.008); /* Subtle scale on focus */
   box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); /* Stronger glow on focus */
 }
 
@@ -524,6 +529,9 @@ button:hover::after {
   overflow: hidden;
   box-shadow: var(--s), var(--inner-shadow);
   will-change: transform, box-shadow, border-color;
+
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Action Cards */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
 }
 
 .action-card::before { /* Optimized shimmer effect on hover */
@@ -546,7 +554,8 @@ button:hover::after {
 }
 
 .action-card:hover {
-  transform: translateY(-12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
+  /* HIER: Subtiler 3D-Effekt beim Hover für Action Cards */
+  transform: translate3d(0, -12px, 12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
   border-color: var(--acc);
   box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger glow */
 }
@@ -611,6 +620,9 @@ button:hover::after {
   display: flex; /* Für Icon und Text nebeneinander */
   align-items: center;
   gap: 2rem;
+
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Bookmark Cards */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
 }
 
 
@@ -634,7 +646,8 @@ button:hover::after {
 }
 
 .bookmark-card:hover {
-  transform: translateY(-12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
+  /* HIER: Subtiler 3D-Effekt beim Hover für Bookmark Cards */
+  transform: translate3d(0, -12px, 12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
   border-color: var(--acc);
   box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger glow */
 }
@@ -674,6 +687,9 @@ button:hover::after {
 /* --- News Section --- */
 .news-section {
   padding: 4rem; /* Increased padding */
+  
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für News Section */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
 }
 
 .news-section h2 {
@@ -707,7 +723,8 @@ button:hover::after {
 }
 
 .news-section.button-style:hover {
-  transform: translateY(-12px) scale(1.03); /* More pronounced lift and scale */
+  /* HIER: Subtiler 3D-Effekt beim Hover für News Section Button */
+  transform: translate3d(0, -12px, 12px) scale(1.03); /* More pronounced lift and scale */
   border-color: var(--acc);
   box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger glow */
 }
@@ -731,10 +748,14 @@ button:hover::after {
   overflow: hidden;
   box-shadow: var(--s), var(--inner-shadow);
   will-change: transform, box-shadow, border-color;
+
+  /* HIER: Subtiler 3D-Effekt im Ruhezustand für News Card */
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
 }
 
 .news-card:hover {
-  transform: translateY(-12px) scale(1.03) rotateX(1deg); /* More intense lift, scale, subtle X-axis tilt */
+  /* HIER: Subtiler 3D-Effekt beim Hover für News Card */
+  transform: translate3d(0, -12px, 12px) scale(1.03) rotateX(1deg); /* More intense lift, scale, subtle X-axis tilt */
   border-color: var(--acc);
   box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger glow */
 }
