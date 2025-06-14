@@ -1,18 +1,18 @@
-// script.js - MKWEB 6.3: Enhanced Functionality & Animations
+// script.js - MKWEB OS 7: Enhanced Functionality & Animations
 const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
 const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
 
-// Nur noch 'dark' und 'light' als erlaubte Themes
+// Only 'dark' and 'light' are allowed themes
 const allowedThemes = ['dark', 'light'];
 if (!allowedThemes.includes(settings.theme)) {
-    settings.theme = 'dark'; // Fallback, falls ein ungültiges Theme gespeichert war
+    settings.theme = 'dark'; // Fallback if an invalid theme was saved
     save();
 }
 
 document.body.dataset.theme = settings.theme;
 const themePicker = document.getElementById('theme-picker');
 
-// Nur 'dark' und 'light' Optionen hinzufügen und aktuelles Theme auswählen
+// Add only 'dark' and 'light' options and select current theme
 themePicker.innerHTML = '';
 const themes = [
     { value: 'dark', text: 'Dark Theme' },
@@ -28,6 +28,14 @@ themes.forEach(theme => {
 
 themePicker.value = settings.theme;
 
+themePicker.addEventListener('change', (e) => {
+    settings.theme = e.target.value;
+    document.body.dataset.theme = settings.theme;
+    save();
+    // Update weather widget theme if it relies on CSS variables
+    fetchWeather(); // Re-fetch weather to update icon and colors if theme affects them
+});
+
 // User Avatar & Toggle Logic
 const userAvatar = document.getElementById('user-avatar');
 const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
@@ -40,122 +48,91 @@ const applyAvatarVisibility = () => {
     } else {
         userAvatar.classList.add('hidden-avatar');
         userAvatar.setAttribute('aria-hidden', 'true');
-        userAvatarToggleBtn.textContent = '👁️ Avatar anzeigen';
+        userAvatarToggleBtn.textContent = '🐵 Avatar einblenden';
     }
 };
 
-userAvatarToggleBtn.onclick = () => {
+userAvatarToggleBtn.addEventListener('click', () => {
     settings.showAvatar = !settings.showAvatar;
+    save();
     applyAvatarVisibility();
-    save();
-};
-
-applyAvatarVisibility(); // Initial application
-
-themePicker.onchange = e => {
-    settings.theme = e.target.value;
-    document.body.dataset.theme = e.target.value;
-    save();
-};
-
-document.getElementById('fullscreen-btn').onclick = () => {
-    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
-};
-
-const searchInput = document.getElementById('search');
-const engines = document.querySelectorAll('.search-engine');
-let activeEngine = settings.lastActiveEngine;
-
-// Set initial active engine button
-const initialEngineButton = document.querySelector(`.search-engine[data-engine="${activeEngine}"]`);
-if (initialEngineButton) {
-    initialEngineButton.classList.add('active');
-} else {
-    activeEngine = 'google'; // Fallback
-    document.querySelector('.search-engine[data-engine="google"]').classList.add('active');
-    settings.lastActiveEngine = activeEngine;
-    save();
-}
-
-engines.forEach(btn => {
-    btn.onclick = () => {
-        engines.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeEngine = btn.dataset.engine;
-        settings.lastActiveEngine = activeEngine;
-        save();
-        searchInput.focus();
-    };
 });
 
-const doSearch = query => {
-    if (!query || query.trim() === '') return;
-    const urls = {
-        google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
-        bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
-        duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
-        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Korrigierte YouTube URL
-        github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
-        yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
-    };
+// Apply initial visibility
+applyAvatarVisibility();
 
-    const searchIcon = document.querySelector('.search-box .search-icon-magnify');
-    searchIcon.style.animation = 'none';
-    void searchIcon.offsetWidth; // Trigger reflow
-    searchIcon.style.animation = 'pulseSearch 0.4s ease-out'; // Kürzere, prägnantere Animation
 
-    searchInput.classList.add('searching');
-    setTimeout(() => {
-        searchInput.classList.remove('searching');
-    }, 400);
+// Search Functionality
+const searchInput = document.getElementById('search');
+const searchEngines = document.querySelectorAll('.search-engine');
+let activeEngine = settings.lastActiveEngine || 'google'; // Default or last active
 
-    window.open(urls[activeEngine], '_blank');
-    updateStats('search');
-    searchInput.value = '';
-};
-
-searchInput.onkeydown = e => {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        doSearch(searchInput.value);
-    }
-};
-
-// Keyframe for search icon pulse (Ensures it's always there)
-if (!document.querySelector('style#dynamic-search-pulse')) {
-    const style = document.createElement('style');
-    style.id = 'dynamic-search-pulse';
-    style.innerHTML = `
-        @keyframes pulseSearch {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.08); opacity: 0.9; } /* Sanfterer Puls */
-            100% { transform: scale(1); opacity: 1; }
+const activateEngine = (engine) => {
+    searchEngines.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.engine === engine) {
+            btn.classList.add('active');
+            activeEngine = engine;
+            settings.lastActiveEngine = engine; // Save last active engine
+            save();
         }
-    `;
-    document.head.appendChild(style);
-}
+    });
+};
 
+searchEngines.forEach(btn => {
+    btn.addEventListener('click', () => activateEngine(btn.dataset.engine));
+});
 
-// Verbesserte Uhrzeit-Anzeige
-const updateClock = () => {
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const query = searchInput.value.trim();
+        if (query) {
+            let url = '';
+            switch (activeEngine) {
+                case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
+                case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break;
+                case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
+                default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            }
+            window.open(url, '_blank');
+        }
+    }
+});
+
+// Initialize active engine
+activateEngine(activeEngine);
+
+// Time and Date Display
+const timeElement = document.getElementById('time');
+const dateElement = document.getElementById('date');
+
+const updateDateTime = () => {
     const now = new Date();
-    // Stellen Sie sicher, dass 'de-DE' für deutsche Ausgabe verwendet wird
-    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-    document.getElementById('time').textContent = now.toLocaleTimeString('de-DE', timeOptions);
-    document.getElementById('date').textContent = now.toLocaleDateString('de-DE', dateOptions);
+    timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
+    dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
 };
-setInterval(updateClock, 1000);
-updateClock(); // Initialer Aufruf
 
-// Weather Widget functionality
+// Update every second
+setInterval(updateDateTime, 1000);
+updateDateTime(); // Initial call
+
+// Weather Widget
 const weatherText = document.getElementById('weather-text');
-const weatherIcon = document.querySelector('.weather-widget .weather-icon');
 const weatherLocation = document.getElementById('weather-location');
+const weatherIcon = document.querySelector('.weather-icon');
 
-// Helper function to map OpenWeatherMap icon codes to emojis
-const getWeatherEmoji = (iconCode) => {
+// This API key is for demonstration only. Please replace with a real one or use a proxy.
+const WEATHER_API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual API key
+const DEFAULT_CITY = 'Heidenheim'; // Default city for weather
+
+const getWeatherIcon = (iconCode) => {
+    // Map OpenWeatherMap icon codes to simple emojis
     switch (iconCode) {
         case '01d': return '☀️'; // clear sky day
         case '01n': return '🌙'; // clear sky night
@@ -172,178 +149,100 @@ const getWeatherEmoji = (iconCode) => {
         case '11d':
         case '11n': return '⛈️'; // thunderstorm
         case '13d':
-        case '13n': return '🌨️'; // snow
+        case '13n': return '❄️'; // snow
         case '50d':
         case '50n': return '🌫️'; // mist
-        default: return '❓';
+        default: return '❓'; // unknown
     }
 };
 
 const fetchWeather = async () => {
-    weatherText.textContent = 'Lädt...';
-    weatherIcon.textContent = '🔄';
-    weatherLocation.textContent = '';
-
-    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // ERSETZE DIES MIT DEINEM ECHTEN API KEY!
-    const city = 'Heidenheim'; // Standardstadt
-
-    if (apiKey === 'YOUR_OPENWEATHERMAP_API_KEY' || !apiKey || apiKey.length < 30) {
-        console.warn("OpenWeatherMap API Key ist nicht gesetzt oder ungültig. Es werden Platzhalter-Wetterdaten verwendet.");
-        weatherText.textContent = '22°C';
-        weatherIcon.textContent = '☀️';
-        weatherLocation.textContent = 'Heidenheim';
+    if (!WEATHER_API_KEY || WEATHER_API_KEY === 'YOUR_OPENWEATHERMAP_API_KEY') {
+        weatherText.textContent = 'Wetter API Key fehlt!';
+        weatherLocation.textContent = '';
+        weatherIcon.textContent = '⚠️';
+        console.warn('OpenWeatherMap API Key is missing. Please replace "YOUR_OPENWEATHERMAP_API_KEY" in script.js.');
         return;
     }
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
     try {
-        const response = await fetch(url);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${DEFAULT_CITY}&appid=${WEATHER_API_KEY}&units=metric&lang=de`);
         if (!response.ok) {
-            if (response.status === 401) {
-                console.error('Fehler: Ungültiger API-Schlüssel für OpenWeatherMap.');
-            } else {
-                throw new Error(`Wetterdaten nicht gefunden oder API-Fehler: ${response.statusText}`);
-            }
-            weatherText.textContent = 'N/A';
-            weatherIcon.textContent = '❓';
-            weatherLocation.textContent = 'API Fehler';
-            return;
+            throw new Error(`Wetterdaten konnten nicht geladen werden: ${response.statusText}`);
         }
         const data = await response.json();
-        weatherText.textContent = `${Math.round(data.main.temp)}°C`;
+        const temperature = Math.round(data.main.temp);
+        const description = data.weather[0].description;
         const iconCode = data.weather[0].icon;
-        weatherIcon.textContent = getWeatherEmoji(iconCode);
+
+        weatherText.textContent = `${temperature}°C, ${description}`;
         weatherLocation.textContent = data.name;
+        weatherIcon.textContent = getWeatherIcon(iconCode);
     } catch (error) {
         console.error('Fehler beim Abrufen der Wetterdaten:', error);
-        weatherText.textContent = 'N/A';
-        weatherIcon.textContent = '❓';
-        weatherLocation.textContent = 'Ort unbekannt';
+        weatherText.textContent = 'Wetter nicht verfügbar';
+        weatherLocation.textContent = DEFAULT_CITY;
+        weatherIcon.textContent = '🚫';
     }
 };
 
+// Fetch weather data on load and every 10 minutes
 fetchWeather();
-setInterval(fetchWeather, 3600000); // Aktualisiere jede Stunde
+setInterval(fetchWeather, 10 * 60 * 1000);
 
-// Inspirational Quote of the Day
+// Quote of the Day
 const quoteText = document.getElementById('quote-text');
 const quoteAuthor = document.getElementById('quote-author');
-const quoteSection = document.querySelector('.quote-of-the-day');
 
 const fetchQuote = async () => {
-    quoteText.textContent = 'Lade Zitat...';
-    quoteAuthor.textContent = '';
-    quoteSection.classList.add('loading-quote');
-
     try {
-        const response = await fetch('https://api.quotable.io/random');
-        if (!response.ok) throw new Error('Zitatdaten nicht gefunden');
+        const response = await fetch('https://api.quotable.io/random?maxLength=100'); // Shorter quotes
+        if (!response.ok) {
+            throw new Error(`Zitat konnte nicht geladen werden: ${response.statusText}`);
+        }
         const data = await response.json();
-
-        // Animationen zurücksetzen und neu starten
-        quoteText.style.animation = 'none';
-        quoteAuthor.style.animation = 'none';
-        void quoteText.offsetWidth; // Erzwingt Reflow
-        void quoteAuthor.offsetWidth;
-
-        quoteText.style.animation = 'quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards';
-        quoteAuthor.style.animation = 'quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.1s';
-
         quoteText.textContent = `"${data.content}"`;
         quoteAuthor.textContent = `- ${data.author}`;
+
+        // Re-apply the animation class to trigger it for new quotes
+        quoteText.classList.remove('quoteFadeIn'); // Remove to allow re-trigger
+        quoteAuthor.classList.remove('quoteFadeIn'); // Remove to allow re-trigger
+        void quoteText.offsetWidth; // Trigger reflow
+        void quoteAuthor.offsetWidth; // Trigger reflow
+        quoteText.classList.add('animate-in'); // Use the general animate-in for simplicity
+        quoteAuthor.classList.add('animate-in'); // Use the general animate-in for simplicity
     } catch (error) {
         console.error('Fehler beim Abrufen des Zitats:', error);
-        quoteText.textContent = '"Sei die Veränderung, die du in der Welt sehen möchtest."';
-        quoteAuthor.textContent = '- Mahatma Gandhi';
-    } finally {
-        quoteSection.classList.remove('loading-quote');
+        quoteText.textContent = 'Manchmal muss man einfach schweigen und das Chaos genießen.';
+        quoteAuthor.textContent = '- Unbekannt';
     }
 };
 
+// Fetch a new quote every 24 hours (or on page load)
 fetchQuote();
-setInterval(fetchQuote, 86400000); // Aktualisiere alle 24 Stunden
+setInterval(fetchQuote, 24 * 60 * 60 * 1000);
 
-// Füge einen Button zum manuellen Aktualisieren des Zitats hinzu (nur einmal)
-if (!document.getElementById('refresh-quote-btn')) {
-    const refreshQuoteBtn = document.createElement('button');
-    refreshQuoteBtn.id = 'refresh-quote-btn'; // ID für eindeutigkeit
-    refreshQuoteBtn.textContent = '🔄 Neues Zitat';
-    refreshQuoteBtn.classList.add('glass'); // Nutzt den Glass-Style
-    refreshQuoteBtn.style.marginTop = '1.5rem'; // Bessere vertikale Ausrichtung
-    refreshQuoteBtn.onclick = fetchQuote;
-    quoteSection.appendChild(refreshQuoteBtn);
-}
-
-
-// Stats Tracking (wie zuvor)
-let stats = {searches: 0, clicks: 0, startTime: Date.now()};
-
-const savedStats = JSON.parse(localStorage?.getItem('mkweb-stats'));
-if (savedStats) {
-    stats = savedStats;
-    stats.startTime = Date.now() - (savedStats.timeSpentMinutes * 60000 || 0);
-}
-
-const updateStats = type => {
-    if (type === 'search') stats.searches++;
-    if (type === 'click') stats.clicks++;
-
-    const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
-    stats.timeSpentMinutes = timeSpentMinutes;
-
-    // Optional: Stats in HTML anzeigen, falls du Elemente dafür hast
-    // document.getElementById('search-count').textContent = stats.searches;
-    // document.getElementById('click-count').textContent = stats.clicks;
-    // document.getElementById('time-spent').textContent = timeSpentMinutes;
-
-    localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
-};
-
-updateStats();
-
-document.querySelectorAll('a[target="_blank"]').forEach(link => {
-    link.onclick = () => updateStats('click');
-});
-
-// Animate elements on scroll/load
-const animateOnScroll = () => {
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.03 // Reduzierter Schwellenwert für früheres Auslösen
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.glass').forEach(element => { // Alle Glass-Elemente animieren
-        observer.observe(element);
-    });
-};
-
-document.addEventListener('DOMContentLoaded', animateOnScroll);
-
-// Dynamic Background Shapes
-const createBackgroundShapes = (count) => {
-    const container = document.body;
-    document.querySelectorAll('.background-shape').forEach(shape => shape.remove()); // Entfernt bestehende
-
-    for (let i = 0; i < count; i++) {
+// Background Shapes Creation - Enhanced for more 3D variety
+const createBackgroundShapes = (numShapes) => {
+    const container = document.body; // Or a specific container if you want them limited
+    for (let i = 0; i < numShapes; i++) {
         const shape = document.createElement('div');
         shape.classList.add('background-shape');
-        const size = Math.random() * (350 - 150) + 150; // Größe zwischen 150px und 350px
-        const top = Math.random() * 100 - 10; // -10% bis 90%
-        const left = Math.random() * 100 - 10; // -10% bis 90%
-        const delay = Math.random() * 15; // Animation delay bis 15s
-        const duration = Math.random() * (40 - 25) + 25; // Animation duration zwischen 25s und 40s
-        const opacity = Math.random() * (0.04 - 0.01) + 0.01; // Opacity zwischen 0.01 und 0.04
+
+        const size = Math.random() * (400 - 200) + 200; // Size between 200px and 400px
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        const delay = Math.random() * 20; // Animation delay up to 20s
+        const duration = Math.random() * (45 - 30) + 30; // Animation duration between 30s and 45s
+        const opacity = Math.random() * (0.05 - 0.01) + 0.01; // Opacity between 0.01 and 0.05
+
+        // Introduce random initial 3D transforms for more variety
+        const initialTranslateX = (Math.random() - 0.5) * 100; // -50 to 50px
+        const initialTranslateY = (Math.random() - 0.5) * 100;
+        const initialTranslateZ = (Math.random() - 0.5) * 100; // Depth
+        const initialRotateX = (Math.random() - 0.5) * 10; // -5 to 5 degrees
+        const initialRotateY = (Math.random() - 0.5) * 10;
+        const initialScale = Math.random() * (1.1 - 0.9) + 0.9; // 0.9 to 1.1
 
         shape.style.width = `${size}px`;
         shape.style.height = `${size}px`;
@@ -352,11 +251,13 @@ const createBackgroundShapes = (count) => {
         shape.style.animationDelay = `${delay}s`;
         shape.style.animationDuration = `${duration}s`;
         shape.style.opacity = opacity;
-        
+        shape.style.transform = `translate3d(${initialTranslateX}px, ${initialTranslateY}px, ${initialTranslateZ}px) scale(${initialScale}) rotateX(${initialRotateX}deg) rotateY(${initialRotateY}deg)`;
+
+
         if (i % 2 === 0) {
             shape.style.backgroundColor = 'var(--acc)';
         } else {
-            shape.style.backgroundColor = 'rgba(var(--fg-rgb), 0.08)'; // Etwas mehr Farbe
+            shape.style.backgroundColor = 'rgba(var(--fg-rgb), 0.08)'; // Slightly more color variation
         }
         shape.style.opacity = opacity;
 
@@ -364,7 +265,7 @@ const createBackgroundShapes = (count) => {
     }
 };
 
-createBackgroundShapes(4); // Erstelle 4 dynamische Hintergrundformen
+createBackgroundShapes(5); // Create 5 dynamic background shapes (increased from 4)
 
 
 // Scroll to top button logic
@@ -382,7 +283,46 @@ window.onscroll = () => {
     }
 };
 
-scrollToTopBtn.onclick = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Animate-in elements on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animate-in');
+    animatedElements.forEach((el, index) => {
+        // Apply a staggered animation delay based on index for a cascading effect
+        el.style.animationDelay = `${index * 0.08}s`; // Staggered by 80ms
+        el.style.animationFillMode = 'forwards'; // Keep the final state of the animation
+    });
+});
+
+// Mouse parallax effect (optional, more advanced 3D interaction)
+// This is a more complex addition and can impact performance if not optimized.
+// I will provide a basic structure.
+/*
+const applyParallax = () => {
+    const parallaxTargets = document.querySelectorAll('.glass'); // Apply to all glass elements
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const mouseY = e.clientY / window.innerHeight - 0.5;
+
+        parallaxTargets.forEach((target, index) => {
+            const depth = parseFloat(target.dataset.parallaxDepth || 0.05) + (index * 0.01); // Vary depth slightly
+            const translateX = -mouseX * depth * 50; // Adjust multiplier for effect strength
+            const translateY = -mouseY * depth * 50;
+            const rotateX = mouseY * depth * 5; // Subtle rotation
+            const rotateY = -mouseX * depth * 5;
+
+            // Preserve existing transforms if any
+            const currentTransform = target.style.transform.replace(/translate3d\(.*?\)|rotateX\(.*?\)|rotateY\(.*?\)/g, '').trim();
+            target.style.transform = `${currentTransform} translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+    });
 };
+// Uncomment the line below to enable parallax effect if desired.
+// applyParallax();
+*/
