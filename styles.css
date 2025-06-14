@@ -90,6 +90,26 @@ body {
   will-change: transform, opacity;
 }
 
+/* Multiple background shapes for more depth */
+.background-shape:nth-child(2) {
+    width: 250px;
+    height: 250px;
+    top: auto;
+    bottom: -50px;
+    left: 20%;
+    background: rgba(var(--fg-rgb), 0.05);
+    animation: floatEffect 40s ease-in-out infinite alternate-reverse;
+}
+
+.background-shape:nth-child(3) {
+    width: 400px;
+    height: 400px;
+    top: 10%;
+    right: -100px;
+    background: rgba(var(--acc-rgb), 0.07);
+    animation: floatEffect 45s ease-in-out infinite;
+}
+
 @keyframes floatEffect {
   0% { transform: translate(0, 0) scale(1); }
   25% { transform: translate(10px, 15px) scale(1.005); } /* Even smaller movements */
@@ -157,6 +177,26 @@ body {
   &:hover {
     transform: perspective(1000px) rotateX(1deg) rotateY(-1deg); /* Very slight 3D effect */
   }
+
+    /* New: Animated border on hover for glass elements */
+    &::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: calc(var(--r) + 2px); /* Match border radius */
+        background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
+        z-index: -1;
+        opacity: 0;
+        transition: opacity var(--t);
+        filter: blur(5px); /* Subtle blur for the glow */
+    }
+
+    &:hover::before {
+        opacity: 0.7; /* Make the glowing border visible on hover */
+    }
 }
 
 /* Animation for elements appearing on scroll */
@@ -188,11 +228,11 @@ body {
   font-size: 3rem; /* Slightly larger logo */
   font-weight: 900;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 200% 200%; /* Smaller gradient area for potentially smoother animation */
+  background-size: 400% 400%; /* Larger gradient area for smoother animation */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 10s ease infinite alternate; /* Slower, more subtle gradient animation */
+  animation: gradient 15s ease infinite alternate, logoGlowPulse 3s infinite alternate ease-in-out; /* Slower, more subtle gradient animation */
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced logo glow */
   position: relative;
   will-change: background-position, text-shadow;
@@ -204,9 +244,6 @@ body {
 }
 
 /* New: Subtle breathing glow for logo */
-.logo {
-    animation: gradient 10s ease infinite alternate, logoGlowPulse 3s infinite alternate ease-in-out;
-}
 @keyframes logoGlowPulse {
     0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); }
     100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); }
@@ -446,21 +483,23 @@ select:hover::after, button:hover::after {
   box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* Reduced glow on focus */
 }
 
+/* Enhanced search box focus animation */
 .search-box:focus-within::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px; /* Slightly thicker animated border */
+    height: 4px; /* Thicker animated border */
     background: linear-gradient(90deg, transparent, var(--acc), transparent);
-    animation: borderGrow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Slightly slower, smoother animation */
+    animation: borderScan 1s infinite linear; /* Continuous scanline animation */
     will-change: transform;
+    border-radius: 0 0 50px 50px; /* Match bottom border radius */
 }
 
-@keyframes borderGrow {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+@keyframes borderScan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
 #search {
@@ -495,10 +534,11 @@ select:hover::after, button:hover::after {
   font-weight: 900;
   margin-bottom: 1.5rem; /* More margin */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
+  background-size: 300% 300%; /* Larger gradient for smoother animation */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 9s ease infinite alternate, pulseText 4s infinite alternate; /* Slower pulse, slightly slower gradient */
+  animation: gradient 12s ease infinite alternate, pulseText 4s infinite alternate; /* Slower pulse, slightly slower gradient */
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18); /* Reduced text glow */
   will-change: background-position, text-shadow;
 }
@@ -799,6 +839,42 @@ select:hover::after, button:hover::after {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Scroll-to-top button styles */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--acc);
+    color: var(--bg);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity var(--t), transform var(--t), visibility var(--t), background var(--t), color var(--t);
+    box-shadow: var(--s);
+    z-index: 1000;
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background: var(--ah);
+    transform: translateY(-5px);
+    box-shadow: var(--sh);
 }
 
 /* Media Queries for Responsiveness - Aggressively Optimized for Performance (MKWEB 6.2) */
