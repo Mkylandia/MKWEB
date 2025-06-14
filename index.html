@@ -1,158 +1,394 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MKWEB 6.2 - Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
-  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, zitat, minimalistisch, animiert, performance, mkweb">
-  <meta name="author" content="Ihr Name/MKWEB">
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourwebsite.com/"> <meta property="og:title" content="MKWEB 6.2 - Das Ultimative Animierte Dashboard">
-  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
-  <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg"> <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://yourwebsite.com/"> <meta property="twitter:title" content="MKWEB 6.2 - Das Ultimative Animierte Dashboard">
-  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
-  <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg"> <title>MKWEB 6.2 - Das Ultimative Animierte Dashboard</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Startseite</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
 </head>
 <body data-theme="dark">
-  <div class="grain"></div>
-  <div class="container">
-    <header class="header glass">
-      <h1 class="logo">MKWEB 6.2</h1>
-      <div class="controls">
-        <div class="theme-control">
-          <label for="theme-picker" class="sr-only">Wähle ein Design</label>
-          <select id="theme-picker" aria-label="Wähle ein Design">
-            </select>
-        </div>
-        <button id="fullscreen-btn" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
-        <button id="user-avatar-toggle" title="Avatar ein-/ausblenden" aria-label="Avatar ein- oder ausblenden">🙈 Avatar ausblenden</button>
-        <div class="weather-widget glass" aria-live="polite">
-          <span class="weather-icon" role="img" aria-label="Aktuelles Wetter Icon">🌤️</span>
-          <div class="weather-info">
-            <span id="weather-text">Lädt...</span>
-            <span id="weather-location"></span>
-          </div>
-        </div>
-        <div id="user-avatar" class="user-avatar glass" role="img" aria-label="Benutzerprofil-Platzhalter">
-          <span aria-hidden="true">👤</span>
-        </div>
-      </div>
-    </header>
+    <div class="background-shape"></div>
+    <div class="grain"></div>
 
-    <main class="main">
-      <section class="search-section glass animate-in">
-        <h2 class="sr-only">Suchmaschinen Auswahl und Suchfeld</h2>
-        <div class="search-engines">
-          <button class="search-engine" data-engine="google" aria-label="Google Suche">🔍 Google</button>
-          <button class="search-engine" data-engine="yandex" aria-label="Yandex Suche">⚙️ Yandex</button>
-          <button class="search-engine" data-engine="bing" aria-label="Bing Suche">🅱️ Bing</button>
-          <button class="search-engine" data-engine="duckduckgo" aria-label="DuckDuckGo Suche">🦆 DuckDuckGo</button>
-          <button class="search-engine" data-engine="youtube" aria-label="YouTube Suche">📺 YouTube</button>
-          <button class="search-engine" data-engine="github" aria-label="GitHub Suche">💻 GitHub</button>
-        </div>
-        <div class="search-container">
-          <div class="search-box">
-            <span class="search-icon-magnify" aria-hidden="true">🔍</span>
-            <input id="search" type="text" placeholder="Suche im Web..." autocomplete="off" aria-label="Websuche">
-          </div>
-        </div>
-      </section>
+    <div class="main-container">
+        <header class="header">
+            <div class="avatar-widget">
+                <img id="user-avatar" src="https://via.placeholder.com/60" alt="Benutzer Avatar">
+            </div>
+            <div class="logo">MK<span>Web</span></div>
+            <div class="controls">
+                <select id="theme-picker" class="glass">
+                    </select>
+                <button id="fullscreen-btn" class="glass">⛶ Vollbild</button>
+                <button id="user-avatar-toggle" class="glass">🙈 Avatar ausblenden</button>
+            </div>
+        </header>
 
-      <section class="time-display glass animate-in">
-        <h2 class="sr-only">Aktuelle Uhrzeit und Datum</h2>
-        <div id="time" aria-live="polite" aria-label="Aktuelle Uhrzeit"></div>
-        <div id="date" aria-label="Aktuelles Datum"></div>
-      </section>
-
-      <section class="quote-of-the-day glass animate-in" aria-labelledby="quote-heading">
-        <h2 id="quote-heading">✨ Zitat des Tages</h2>
-        <p id="quote-text" aria-live="polite"></p>
-        <p id="quote-author"></p>
+        <section class="search-area">
+            <input type="text" id="search" placeholder="Suchen...">
+            <div class="search-engines">
+                <button class="search-engine glass active" data-engine="google">Google</button>
+                <button class="search-engine glass" data-engine="bing">Bing</button>
+                <button class="search-engine glass" data-engine="duckduckgo">DuckDuckGo</button>
+                <button class="search-engine glass" data-engine="youtube">YouTube</button>
+                <button class="search-engine glass" data-engine="github">GitHub</button>
+                <button class="search-engine glass" data-engine="yandex">Yandex</button>
+            </div>
         </section>
 
-      <section class="quick-actions" aria-labelledby="quick-actions-heading">
-        <h2 id="quick-actions-heading" class="sr-only">Schnellzugriffe</h2>
-        <a class="action-card glass animate-in" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" title="Zu Google Gemini">
-          <span class="icon" aria-hidden="true">♊</span>
-          <span class="label">Gemini AI</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" title="Zu YouTube">
-          <span class="icon" aria-hidden="true">📺</span>
-          <span class="label">YouTube</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub">
-          <span class="icon" aria-hidden="true">💻</span>
-          <span class="label">GitHub</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail">
-          <span class="icon" aria-hidden="true">📧</span>
-          <span class="label">Gmail</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://discord.com" target="_blank" rel="noopener noreferrer" title="Zu Discord">
-          <span class="icon" aria-hidden="true">💬</span>
-          <span class="label">Discord</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://www.netflix.com" target="_blank" rel="noopener noreferrer" title="Zu Netflix">
-          <span class="icon" aria-hidden="true">🎬</span>
-          <span class="label">Netflix</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
-          <span class="icon" aria-hidden="true">🎵</span>
-          <span class="label">Spotify</span>
-        </a>
-        <a class="action-card glass animate-in" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
-          <span class="icon" aria-hidden="true">🗨️</span>
-          <span class="label">ChatGPT</span>
-        </a>
-      </section>
-
-      <section class="bookmark-section glass animate-in" aria-labelledby="bookmark-heading">
-        <h2 id="bookmark-heading">🔖 Favoriten</h2>
-        <div class="bookmark-grid">
-          <a class="bookmark-card glass" href="https://www.reddit.com" target="_blank" rel="noopener noreferrer" title="Zu Reddit">
-            <span style="font-size: 2rem;" aria-hidden="true">📱</span>
-            <div>
-              <div style="font-weight: 600; font-size: 1.2rem;">Reddit</div>
-              <div style="font-size: 0.9rem; color: var(--dim);">Social News</div>
+        <section class="time-weather-quote">
+            <div class="time-widget glass animate-in" style="--delay: 0s;">
+                <h1 id="time"></h1>
+                <p id="date"></p>
             </div>
-          </a>
-          <a class="bookmark-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow">
-            <span style="font-size: 2rem;" aria-hidden="true">💡</span>
-            <div>
-              <div style="font-weight: 600; font-size: 1.2rem;">Stack Overflow</div>
-              <div style="font-size: 0.9rem; color: var(--dim);">Developer Q&A</div>
+            <div class="weather-widget glass animate-in" style="--delay: 0.1s;">
+                <span class="weather-icon"></span>
+                <p class="weather-text"></p>
+                <p class="weather-location"></p>
             </div>
-          </a>
-          <a class="bookmark-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" title="Zu CodePen">
-            <span style="font-size: 2rem;" aria-hidden="true">🎨</span>
-            <div>
-              <div style="font-weight: 600; font-size: 1.2rem;">CodePen</div>
-              <div style="font-size: 0.9rem; color: var(--dim);">Code Playground</div>
+            <div class="quote-widget glass animate-in" style="--delay: 0.2s;">
+                <p id="quote-text" class="quote-text"></p>
+                <p id="quote-author" class="quote-author"></p>
             </div>
-          </a>
-          <a class="bookmark-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" title="Zu Unsplash">
-            <span style="font-size: 2rem;" aria-hidden="true">📸</span>
-            <div>
-              <div style="font-weight: 600; font-size: 1.2rem;">Unsplash</div>
-              <div style="font-size: 0.9rem; color: var(--dim);">Stock Photos</div>
+        </section>
+
+        <section class="card-group">
+            <a href="https://chatgpt.com/" target="_blank" class="action-card glass animate-in" style="--delay: 0.3s;">
+                <h3>ChatGPT</h3>
+                <p>KI-basierter Chatbot.</p>
+            </a>
+            <a href="https://github.com/m-k-de" target="_blank" class="action-card glass animate-in" style="--delay: 0.4s;">
+                <h3>GitHub</h3>
+                <p>Meine Projekte ansehen.</p>
+            </a>
+            <a href="https://www.google.com/calendar" target="_blank" class="action-card glass animate-in" style="--delay: 0.5s;">
+                <h3>Kalender</h3>
+                <p>Termine verwalten.</p>
+            </a>
+        </section>
+        
+        <section class="card-group">
+            <a href="https://heidenheim.de/aktuelles" target="_blank" class="news-card glass animate-in" style="--delay: 0.6s;">
+                <h3>Lokale Nachrichten</h3>
+                <p>Aktuelles aus Heidenheim.</p>
+            </a>
+            <a href="https://developer.mozilla.org/de/" target="_blank" class="bookmark-card glass animate-in" style="--delay: 0.7s;">
+                <h3>MDN Web Docs</h3>
+                <p>Wichtige Web-Dokumentation.</p>
+            </a>
+            <a href="https://www.youtube.com/feed/subscriptions" target="_blank" class="bookmark-card glass animate-in" style="--delay: 0.8s;">
+                <h3>YouTube Abos</h3>
+                <p>Neueste Videos meiner Abos.</p>
+            </a>
+        </section>
+
+        <section class="stats-card glass animate-in" style="--delay: 0.9s;">
+            <div class="stat-item">
+                <p class="value" id="search-count">0</p>
+                <p class="label">Suchen</p>
             </div>
-          </a>
-        </div>
-      </section>
+            <div class="stat-item">
+                <p class="value" id="click-count">0</p>
+                <p class="label">Klicks auf Links</p>
+            </div>
+            <div class="stat-item">
+                <p class="value" id="time-spent">0</p>
+                <p class="label">Minuten online</p>
+            </div>
+        </section>
 
-      <a class="news-section glass animate-in" href="https://mkwebnews.vercel.app" target="_blank" rel="noopener noreferrer" title="Zu den aktuellen Nachrichten">
-        <h2 id="news-heading">📰 News</h2>
-        <p>Klicken Sie hier, um die neuesten Nachrichten zu lesen!</p>
-      </a>
-
-    </main>
-
+        <footer class="footer">
+            <p>&copy; 2025 MKWeb. Alle Rechte vorbehalten.</p>
+        </footer>
     </div>
 
-  <script src="script.js"></script>
+    <script>
+        // script.js Inhalt hier eingefügt
+        const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
+        const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
+
+        // Nur noch 'dark' und 'light' als erlaubte Themes
+        const allowedThemes = ['dark', 'light'];
+        if (!allowedThemes.includes(settings.theme)) {
+            settings.theme = 'dark'; // Fallback auf 'dark', falls 'deep-dark' oder ein ungültiges Theme gespeichert war
+            save();
+        }
+
+        document.body.dataset.theme = settings.theme;
+        const themePicker = document.getElementById('theme-picker');
+
+        // Nur 'dark' und 'light' Optionen hinzufügen
+        themePicker.innerHTML = ''; // Vorhandene Optionen löschen
+        const themes = [
+            { value: 'dark', text: 'Dark Theme' },
+            { value: 'light', text: 'Light Theme' }
+        ];
+
+        themes.forEach(theme => {
+            const option = document.createElement('option');
+            option.value = theme.value;
+            option.textContent = theme.text;
+            themePicker.appendChild(option);
+        });
+
+        themePicker.value = settings.theme; // Aktuelles Theme auswählen
+
+        // User Avatar & Toggle Logic
+        const userAvatar = document.getElementById('user-avatar');
+        const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
+
+        const applyAvatarVisibility = () => {
+            if (settings.showAvatar) {
+                userAvatar.classList.remove('hidden-avatar');
+                userAvatar.setAttribute('aria-hidden', 'false'); // For accessibility
+                userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
+            } else {
+                userAvatar.classList.add('hidden-avatar');
+                userAvatar.setAttribute('aria-hidden', 'true'); // For accessibility
+                userAvatarToggleBtn.textContent = '👁️ Avatar anzeigen';
+            }
+        };
+
+        userAvatarToggleBtn.onclick = () => {
+            settings.showAvatar = !settings.showAvatar;
+            applyAvatarVisibility();
+            save();
+        };
+
+        // Initial application of avatar visibility
+        applyAvatarVisibility();
+
+
+        themePicker.onchange = e => {
+            settings.theme = e.target.value;
+            document.body.dataset.theme = e.target.value;
+            save();
+        };
+
+        document.getElementById('fullscreen-btn').onclick = () => {
+            document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+        };
+
+        const searchInput = document.getElementById('search');
+        const engines = document.querySelectorAll('.search-engine');
+        let activeEngine = settings.lastActiveEngine;
+
+        // Set initial active engine button
+        const initialEngineButton = document.querySelector(`.search-engine[data-engine="${activeEngine}"]`);
+        if (initialEngineButton) {
+            initialEngineButton.classList.add('active');
+        } else {
+            activeEngine = 'google'; // Fallback
+            document.querySelector('.search-engine[data-engine="google"]').classList.add('active');
+            settings.lastActiveEngine = activeEngine;
+            save();
+        }
+
+        engines.forEach(btn => {
+            btn.onclick = () => {
+                engines.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeEngine = btn.dataset.engine;
+                settings.lastActiveEngine = activeEngine;
+                save();
+                searchInput.focus();
+            };
+        });
+
+        const doSearch = query => {
+            if (!query || query.trim() === '') return;
+            const urls = {
+                google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
+                bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
+                duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
+                youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Korrigierte Youtube URL
+                github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
+                yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
+            };
+            window.open(urls[activeEngine], '_blank');
+            updateStats('search');
+            searchInput.value = '';
+        };
+
+        searchInput.onkeydown = e => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                doSearch(searchInput.value);
+            }
+        };
+
+        // Verbesserte Uhrzeit-Anzeige
+        const updateClock = () => {
+            const now = new Date();
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }; // Sekunden hinzugefügt
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+            document.getElementById('time').textContent = now.toLocaleTimeString('de-DE', timeOptions);
+            document.getElementById('date').textContent = now.toLocaleDateString('de-DE', dateOptions);
+        };
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Weather Widget functionality
+        const weatherText = document.getElementById('weather-text');
+        const weatherIcon = document.querySelector('.weather-widget .weather-icon');
+        const weatherLocation = document.getElementById('weather-location');
+
+        // Helper function to map OpenWeatherMap icon codes to emojis
+        const getWeatherEmoji = (iconCode) => {
+            switch (iconCode) {
+                case '01d': return '☀️'; // clear sky day
+                case '01n': return '🌙'; // clear sky night
+                case '02d': return '🌤️'; // few clouds day
+                case '02n': return '☁️'; // few clouds night
+                case '03d':
+                case '03n': return '☁️'; // scattered clouds
+                case '04d':
+                case '04n': return '☁️'; // broken clouds
+                case '09d':
+                case '09n': return '🌧️'; // shower rain
+                case '10d': return '🌦️'; // rain day
+                case '10n': return '🌧️'; // rain night
+                case '11d':
+                case '11n': return '⛈️'; // thunderstorm
+                case '13d':
+                case '13n': return '🌨️'; // snow
+                case '50d':
+                case '50n': return '🌫️'; // mist
+                default: return '❓';
+            }
+        };
+
+        const fetchWeather = async () => {
+            const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual key
+            const city = 'Heidenheim';
+
+            if (apiKey === 'YOUR_OPENWEATHERMAP_API_KEY' || !apiKey || apiKey.length < 30) {
+                console.warn("OpenWeatherMap API Key not set or invalid. Using placeholder weather data.");
+                weatherText.textContent = '22°C';
+                weatherIcon.textContent = '☀️';
+                weatherLocation.textContent = 'Heidenheim';
+                return;
+            }
+
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        console.error('Error: Invalid API key for OpenWeatherMap. Please get a valid key.');
+                        weatherText.textContent = 'N/A';
+                        weatherIcon.textContent = '❓';
+                        weatherLocation.textContent = 'API Fehler';
+                    } else {
+                        throw new Error(`Weather data not found or API error: ${response.statusText}`);
+                    }
+                    return;
+                }
+                const data = await response.json();
+                weatherText.textContent = `${Math.round(data.main.temp)}°C`;
+                const iconCode = data.weather[0].icon;
+                weatherIcon.textContent = getWeatherEmoji(iconCode);
+                weatherLocation.textContent = data.name;
+            } catch (error) {
+                console.error('Error fetching weather:', error);
+                weatherText.textContent = 'N/A';
+                weatherIcon.textContent = '❓';
+                weatherLocation.textContent = 'Ort unbekannt';
+            }
+        };
+
+        fetchWeather();
+        setInterval(fetchWeather, 3600000); // Update every hour
+
+        // Inspirational Quote of the Day
+        const quoteText = document.getElementById('quote-text');
+        const quoteAuthor = document.getElementById('quote-author');
+
+        const fetchQuote = async () => {
+            try {
+                const response = await fetch('https://api.quotable.io/random');
+                if (!response.ok) throw new Error('Quote data not found');
+                const data = await response.json();
+
+                // Apply fade-out before setting new text, then fade-in
+                // Resetting animations by reading offsetWidth forces reflow
+                quoteText.style.animation = 'none';
+                quoteAuthor.style.animation = 'none';
+                void quoteText.offsetWidth;
+                void quoteAuthor.offsetWidth;
+
+                quoteText.style.animation = '';
+                quoteAuthor.style.animation = '';
+
+                quoteText.textContent = `"${data.content}"`;
+                quoteAuthor.textContent = `- ${data.author}`;
+            } catch (error) {
+                console.error('Error fetching quote:', error);
+                quoteText.textContent = '"Sei die Veränderung, die du in der Welt sehen möchtest."';
+                quoteAuthor.textContent = '- Mahatma Gandhi';
+            }
+        };
+
+        fetchQuote();
+        setInterval(fetchQuote, 86400000); // Fetch a new quote every 24 hours
+
+        // Stats Tracking
+        let stats = {searches: 0, clicks: 0, startTime: Date.now()};
+
+        const savedStats = JSON.parse(localStorage?.getItem('mkweb-stats'));
+        if (savedStats) {
+            stats = savedStats;
+            stats.startTime = Date.now() - (savedStats.timeSpentMinutes * 60000 || 0);
+        }
+
+        const updateStats = type => {
+            if (type === 'search') stats.searches++;
+            if (type === 'click') stats.clicks++;
+
+            const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
+            stats.timeSpentMinutes = timeSpentMinutes;
+
+            document.getElementById('search-count').textContent = stats.searches;
+            document.getElementById('click-count').textContent = stats.clicks;
+            document.getElementById('time-spent').textContent = timeSpentMinutes;
+
+            localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
+        };
+
+        updateStats();
+
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.onclick = () => updateStats('click');
+        });
+
+        // Animate elements on scroll/load
+        const animateOnScroll = () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.05 // Reduced threshold for earlier animation trigger
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Select all sections and cards that should animate in
+            document.querySelectorAll('.glass, .action-card, .news-card, .bookmark-card, .stats-card').forEach(element => {
+                observer.observe(element);
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', animateOnScroll);
+    </script>
 </body>
 </html>
