@@ -1,7 +1,7 @@
 /* styles.css - Extreme Performance Optimization & MKWEB 6.2 Enhancements */
 :root {
   /* Global Design Variables - Tuned for ultimate polish and realism (MKWEB 6.2 Refinements) */
-  --t: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly faster, still elegant transitions */
+  --t: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly faster, snappier transitions */
   --r: 20px; /* Refined border-radius for softness, slightly reduced */
   --s: 0 8px 25px rgba(0,0,0,0.18); /* Reduced, more focused shadow, slightly softer */
   --sh: 0 15px 50px rgba(0,0,0,0.35); /* Reduced prominent shadow for hover, softer */
@@ -73,7 +73,6 @@ body {
 }
 
 /* Animated Background Elements (Drastically Optimized for MKWEB 6.2) */
-/* Reduced to one very subtle shape, less blur, slower animation */
 .background-shape {
   content: '';
   position: fixed;
@@ -136,7 +135,7 @@ body {
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t), backdrop-filter var(--t), filter var(--t); /* Explicit transition properties, added filter */
+  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t), backdrop-filter var(--t), filter var(--t), background-color var(--t); /* Added background-color */
   position: relative;
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, backdrop-filter, filter;
@@ -152,6 +151,11 @@ body {
     pointer-events: none;
     opacity: 0.5; /* Slightly less visible reflection */
     transition: opacity var(--t);
+  }
+
+  /* New: Subtle tilt on hover for most glass elements */
+  &:hover {
+    transform: perspective(1000px) rotateX(1deg) rotateY(-1deg); /* Very slight 3D effect */
   }
 }
 
@@ -199,6 +203,16 @@ body {
   100% { background-position: 100% 50%; }
 }
 
+/* New: Subtle breathing glow for logo */
+.logo {
+    animation: gradient 10s ease infinite alternate, logoGlowPulse 3s infinite alternate ease-in-out;
+}
+@keyframes logoGlowPulse {
+    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); }
+    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); }
+}
+
+
 .controls {
   display: flex;
   gap: 1.5rem; /* Increased gap */
@@ -223,6 +237,12 @@ select, button {
   z-index: 1;
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, color;
+
+  /* New: Active state animation */
+  &:active {
+    transform: translateY(1px) scale(0.98); /* Subtle press effect */
+    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.1); /* Slight inset shadow */
+  }
 }
 
 select:hover, button:hover {
@@ -380,22 +400,30 @@ select:hover::after, button:hover::after {
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
   position: relative;
   overflow: hidden;
-  will-change: transform, box-shadow, background-color, border-color;
+  will-change: transform, box-shadow, background-color, border-color, color;
+
+  /* New: Active state animation for search engines */
+  &.active {
+    background: var(--acc);
+    color: var(--bg);
+    transform: scale(1.03) translateY(-3px); /* Less strong pop-out effect */
+    box-shadow: var(--glow-strength) var(--acc), var(--s);
+    border-color: var(--acc);
+    animation: activeEnginePulse 1.5s infinite alternate ease-in-out; /* Subtle pulse when active */
+  }
+
+  &:not(.active):hover {
+    border-color: var(--acc);
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 8px rgba(var(--acc-rgb), 0.08), var(--s-light); /* Lighter inner glow, reduced outer shadow */
+  }
 }
 
-.search-engine.active {
-  background: var(--acc);
-  color: var(--bg);
-  transform: scale(1.03) translateY(-3px); /* Less strong pop-out effect */
-  box-shadow: var(--glow-strength) var(--acc), var(--s);
-  border-color: var(--acc);
+@keyframes activeEnginePulse {
+  0% { transform: scale(1.03) translateY(-3px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); }
+  100% { transform: scale(1.035) translateY(-4px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); }
 }
 
-.search-engine:not(.active):hover {
-  border-color: var(--acc);
-  transform: translateY(-2px);
-  box-shadow: inset 0 0 8px rgba(var(--acc-rgb), 0.08), var(--s-light); /* Lighter inner glow, reduced outer shadow */
-}
 
 /* Search Box */
 .search-box {
@@ -475,10 +503,11 @@ select:hover::after, button:hover::after {
   will-change: background-position, text-shadow;
 }
 
+/* New: More subtle pulse for time display */
 @keyframes pulseText {
-  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.12), 0 0 12px rgba(var(--fg-rgb), 0.06); }
-  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25), 0 0 18px rgba(var(--fg-rgb), 0.1); }
-  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.12), 0 0 12px rgba(var(--fg-rgb), 0.06); }
+  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1), 0 0 8px rgba(var(--fg-rgb), 0.04); }
+  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 12px rgba(var(--fg-rgb), 0.06); }
+  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1), 0 0 8px rgba(var(--fg-rgb), 0.04); }
 }
 
 #date {
@@ -518,28 +547,28 @@ select:hover::after, button:hover::after {
   margin-bottom: 1rem; /* More margin */
   font-style: italic;
   max-width: 750px; /* Wider max width */
-  animation: textFadeIn 0.8s ease-out forwards; /* Slightly slower fade in */
+  animation: quoteFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Custom animation for quote */
   transform: translateY(8px); /* Slightly more vertical displacement */
   opacity: 0;
   will-change: opacity, transform;
-}
-
-@keyframes textFadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .quote-of-the-day #quote-author {
   font-size: 1.05rem; /* Slightly larger */
   color: var(--dim);
   font-weight: 400;
-  animation: textFadeIn 0.8s ease-out forwards 0.15s; /* Slightly delayed fade for author, slower */
+  animation: quoteFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.15s; /* Slightly delayed fade for author, slower */
   transform: translateY(8px);
   opacity: 0;
   will-change: opacity, transform;
 }
+
+/* New: Separate animation for quote text to re-trigger on new quote */
+@keyframes quoteFadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 /* Quick Actions */
 .quick-actions {
@@ -575,6 +604,7 @@ select:hover::after, button:hover::after {
   transition: left var(--t) ease-out; /* Only transition 'left', added ease-out */
   z-index: 1;
   transform: skewX(-15deg);
+  pointer-events: none; /* Ensure it doesn't block clicks */
   will-change: left;
 }
 
@@ -598,20 +628,26 @@ select:hover::after, button:hover::after {
   margin-bottom: 1.5rem; /* More margin */
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced icon glow */
-  transition: transform 0.25s ease-out; /* Slightly slower transition */
+  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out; /* Added text-shadow transition */
   will-change: transform;
 }
 
 .action-card:hover .icon {
-  transform: scale(1.06) rotate(1deg); /* Less icon rotation on hover, slightly larger scale */
+  transform: scale(1.08) rotate(2deg); /* Slightly stronger icon rotation and scale on hover */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Stronger glow on hover */
 }
 
-.label {
-  font-weight: 700;
-  font-size: 1.25rem; /* Slightly larger */
-  text-transform: uppercase;
-  letter-spacing: 2px; /* Slightly more letter spacing */
+/* New: Label animation on hover */
+.action-card .label {
+  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+  will-change: transform, opacity;
 }
+
+.action-card:hover .label {
+  transform: translateY(-5px); /* Slide up slightly */
+  opacity: 0.9;
+}
+
 
 /* News and Bookmark Sections */
 .news-section, .bookmark-section {
@@ -706,11 +742,18 @@ select:hover::after, button:hover::after {
   display: flex;
   align-items: center;
   gap: 1.8rem; /* More gap */
+  transition: all var(--t); /* Ensure all properties transition */
 }
 
 .bookmark-card span:first-child {
   font-size: 2.8rem; /* Slightly larger */
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out; /* Add transition */
+}
+
+.bookmark-card:hover span:first-child {
+    transform: scale(1.1) rotate(-3deg); /* Slight scale and rotation on hover */
+    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 }
 
 .bookmark-card > div > div:first-child {
@@ -721,33 +764,6 @@ select:hover::after, button:hover::after {
 .bookmark-card > div > div:last-child {
   font-size: 0.95rem; /* Slightly larger */
   color: var(--dim);
-}
-
-/* Stats Panel */
-.stats-panel {
-  position: fixed;
-  bottom: 2.5rem; right: 2.5rem; /* More offset */
-  padding: 1.8rem 2.8rem; /* More padding */
-  display: flex;
-  gap: 3.5rem; /* More gap */
-  font-weight: 600;
-  z-index: 100;
-  border-radius: 40px;
-  box-shadow: var(--s), var(--inner-shadow);
-  animation: floatPanel 12s ease-in-out infinite alternate; /* Slower, more elegant float */
-  will-change: transform, box-shadow;
-}
-
-@keyframes floatPanel {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); } /* Subtle float, no tilt */
-}
-
-.stats-panel div {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; /* Slightly more gap */
-  font-size: 1.1rem; /* Slightly larger */
 }
 
 /* Scrollbar Styling (Subtle customization) */
@@ -793,7 +809,6 @@ select:hover::after, button:hover::after {
   .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
   .header { padding: 1.8rem 2.2rem; }
   .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.5rem; }
-  .stats-panel { bottom: 2rem; right: 2rem; padding: 1.6rem 2.5rem; gap: 3rem; font-size: 1rem;}
   .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
 }
 
@@ -811,12 +826,6 @@ select:hover::after, button:hover::after {
   .news-section h2, .bookmark-section h2 { font-size: 2.5rem; }
   .search-box { padding: 1.5rem 2rem; }
   #search { font-size: 1.2rem; }
-  .stats-panel {
-    bottom: 1.5rem; right: 1.5rem;
-    padding: 1.2rem 2rem;
-    gap: 2.5rem;
-    font-size: 0.95rem;
-  }
   .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
 }
 
@@ -848,19 +857,6 @@ select:hover::after, button:hover::after {
   .bookmark-card span:first-child { font-size: 2.2rem; }
   .bookmark-card > div > div:first-child { font-size: 1.15rem; }
   .bookmark-card > div > div:last-child { font-size: 0.9rem; }
-  .stats-panel {
-    position: static;
-    margin-top: 2.5rem;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: var(--r);
-    animation: none; /* Disable float animation on mobile */
-  }
-  .stats-panel div { justify-content: center; }
   .glass { backdrop-filter: blur(6px) saturate(var(--saturate-intensity)); } /* Very low blur for tablets */
 }
 
@@ -891,7 +887,6 @@ select:hover::after, button:hover::after {
   .bookmark-card span:first-child { font-size: 1.8rem; }
   .bookmark-card > div > div:first-child { font-size: 1.05rem; }
   .bookmark-card > div > div:last-child { font-size: 0.85rem; }
-  .stats-panel { padding: 0.8rem 1.2rem; gap: 1.2rem; font-size: 0.85rem; }
   .glass { backdrop-filter: blur(4px) saturate(var(--saturate-intensity)); } /* Minimum blur for mobile */
 }
 
