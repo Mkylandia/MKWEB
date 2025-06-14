@@ -498,51 +498,6 @@ button:hover::after {
   letter-spacing: 4px; /* Slightly less letter spacing */
 }
 
-/* Quote of the Day Section - Optimized */
-.quote-of-the-day {
-  text-align: center;
-  padding: 3.5rem; /* Slightly less padding */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 220px; /* Slightly shorter */
-}
-
-.quote-of-the-day h2 {
-  margin-bottom: 1.8rem; /* Slightly less margin */
-  font-size: 2.5rem; /* Slightly smaller */
-  font-weight: 800;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced heading glow */
-}
-
-.quote-of-the-day #quote-text {
-  font-size: 1.5rem; /* Slightly smaller */
-  line-height: 1.6;
-  color: var(--fg);
-  margin-bottom: 1rem; /* Slightly less margin */
-  font-style: italic;
-  max-width: 700px; /* Slightly narrower max width */
-  animation: quoteFadeIn 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly faster, still smooth animation */
-  transform: translateY(12px);
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-.quote-of-the-day #quote-author {
-  font-size: 1.1rem; /* Slightly smaller */
-  color: var(--dim);
-  font-weight: 400;
-  animation: quoteFadeIn 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.15s; /* Slightly delayed fade for author, slightly faster */
-  transform: translateY(12px);
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
 /* Quick Actions - Optimized */
 .quick-actions {
   display: grid;
@@ -816,7 +771,7 @@ button:hover::after {
   .quick-actions { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
   .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
   .header { padding: 2rem 2.5rem; }
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.5rem; }
+  .search-section, .time-display, .news-section, .bookmark-section { padding: 2.5rem; }
   .glass { backdrop-filter: blur(18px) saturate(var(--saturate-intensity)); }
   .action-card { padding: 2.2rem 1.2rem; }
   .icon { font-size: 4rem; }
@@ -831,10 +786,8 @@ button:hover::after {
   .logo { font-size: 2.8rem; }
   #time { font-size: 5.5rem; }
   #date { font-size: 1.6rem; letter-spacing: 3px; }
-  .quote-of-the-day h2 { font-size: 2.2rem; }
-  .quote-of-the-day #quote-text { font-size: 1.3rem; }
   .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); padding: 0 2rem; gap: 2rem;}
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2rem; }
+  .search-section, .time-display, .news-section, .bookmark-section { padding: 2rem; }
   .news-section h2, .bookmark-section h2 { font-size: 2.5rem; }
   .search-box { padding: 1.5rem 2.2rem; }
   #search { font-size: 1.2rem; }
@@ -857,9 +810,6 @@ button:hover::after {
   #search { font-size: 1.1rem; margin-left: 1rem; }
   #time { font-size: 4.8rem; margin-bottom: 1.2rem;}
   #date { font-size: 1.4rem; letter-spacing: 2.5px; }
-  .quote-of-the-day h2 { font-size: 2rem; margin-bottom: 1.3rem;}
-  .quote-of-the-day #quote-text { font-size: 1.2rem; }
-  .quote-of-the-day #quote-author { font-size: 1rem; }
   .quick-actions { grid-template-columns: 1fr; padding: 0 1.8rem; gap: 1.8rem; }
   .action-card { padding: 1.8rem 0.8rem; }
   .icon { font-size: 3rem; margin-bottom: 0.9rem; }
@@ -887,9 +837,6 @@ button:hover::after {
   #search { font-size: 0.95rem; margin-left: 0.8rem; }
   #time { font-size: 3.5rem; margin-bottom: 0.8rem;}
   #date { font-size: 1rem; letter-spacing: 1.5px; }
-  .quote-of-the-day h2 { font-size: 1.8rem; margin-bottom: 1rem;}
-  .quote-of-the-day #quote-text { font-size: 1rem; }
-  .quote-of-the-day #quote-author { font-size: 0.8rem; }
   .quick-actions { padding: 0 1.2rem; gap: 1.2rem; }
   .action-card { padding: 1.5rem 0.6rem; }
   .icon { font-size: 2.5rem; margin-bottom: 0.7rem; }
