@@ -1,19 +1,19 @@
-// script.js
+// script.js - MKWEB 6.3: Enhanced Functionality & Animations
 const settings = JSON.parse(localStorage?.getItem('mkweb-settings')) || {theme: 'dark', showAvatar: true, lastActiveEngine: 'google'};
 const save = () => localStorage?.setItem('mkweb-settings', JSON.stringify(settings));
 
 // Nur noch 'dark' und 'light' als erlaubte Themes
 const allowedThemes = ['dark', 'light'];
 if (!allowedThemes.includes(settings.theme)) {
-    settings.theme = 'dark'; // Fallback auf 'dark', falls 'deep-dark' oder ein ungültiges Theme gespeichert war
+    settings.theme = 'dark'; // Fallback, falls ein ungültiges Theme gespeichert war
     save();
 }
 
 document.body.dataset.theme = settings.theme;
 const themePicker = document.getElementById('theme-picker');
 
-// Nur 'dark' und 'light' Optionen hinzufügen
-themePicker.innerHTML = ''; // Vorhandene Optionen löschen
+// Nur 'dark' und 'light' Optionen hinzufügen und aktuelles Theme auswählen
+themePicker.innerHTML = '';
 const themes = [
     { value: 'dark', text: 'Dark Theme' },
     { value: 'light', text: 'Light Theme' }
@@ -26,7 +26,7 @@ themes.forEach(theme => {
     themePicker.appendChild(option);
 });
 
-themePicker.value = settings.theme; // Aktuelles Theme auswählen
+themePicker.value = settings.theme;
 
 // User Avatar & Toggle Logic
 const userAvatar = document.getElementById('user-avatar');
@@ -35,11 +35,11 @@ const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
 const applyAvatarVisibility = () => {
     if (settings.showAvatar) {
         userAvatar.classList.remove('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'false'); // For accessibility
+        userAvatar.setAttribute('aria-hidden', 'false');
         userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
     } else {
         userAvatar.classList.add('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'true'); // For accessibility
+        userAvatar.setAttribute('aria-hidden', 'true');
         userAvatarToggleBtn.textContent = '👁️ Avatar anzeigen';
     }
 };
@@ -50,9 +50,7 @@ userAvatarToggleBtn.onclick = () => {
     save();
 };
 
-// Initial application of avatar visibility
-applyAvatarVisibility();
-
+applyAvatarVisibility(); // Initial application
 
 themePicker.onchange = e => {
     settings.theme = e.target.value;
@@ -96,23 +94,20 @@ const doSearch = query => {
         google: `https://google.com/search?q=${encodeURIComponent(query.trim())}`,
         bing: `https://bing.com/search?q=${encodeURIComponent(query.trim())}`,
         duckduckgo: `https://duckduckgo.com/?q=${encodeURIComponent(query.trim())}`,
-        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Corrected Youtube URL
+        youtube: `https://www.youtube.com/results?search_query=${encodeURIComponent(query.trim())}`, // Korrigierte YouTube URL
         github: `https://github.com/search?q=${encodeURIComponent(query.trim())}`,
         yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
     };
 
-    // Animate search icon on search
     const searchIcon = document.querySelector('.search-box .search-icon-magnify');
     searchIcon.style.animation = 'none';
     void searchIcon.offsetWidth; // Trigger reflow
-    searchIcon.style.animation = 'pulseSearch 0.5s ease-out';
+    searchIcon.style.animation = 'pulseSearch 0.4s ease-out'; // Kürzere, prägnantere Animation
 
-    // Optional: add a temporary class for a brief input animation
     searchInput.classList.add('searching');
     setTimeout(() => {
         searchInput.classList.remove('searching');
-    }, 500);
-
+    }, 400);
 
     window.open(urls[activeEngine], '_blank');
     updateStats('search');
@@ -126,28 +121,33 @@ searchInput.onkeydown = e => {
     }
 };
 
-// Keyframe for search icon pulse
-const styleSheet = document.styleSheets[0];
-styleSheet.insertRule(`
-    @keyframes pulseSearch {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.1); opacity: 0.8; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-`, styleSheet.cssRules.length);
+// Keyframe for search icon pulse (Ensures it's always there)
+if (!document.querySelector('style#dynamic-search-pulse')) {
+    const style = document.createElement('style');
+    style.id = 'dynamic-search-pulse';
+    style.innerHTML = `
+        @keyframes pulseSearch {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.9; } /* Sanfterer Puls */
+            100% { transform: scale(1); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 
 // Verbesserte Uhrzeit-Anzeige
 const updateClock = () => {
     const now = new Date();
-    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' }; // Sekunden hinzugefügt
+    // Stellen Sie sicher, dass 'de-DE' für deutsche Ausgabe verwendet wird
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     document.getElementById('time').textContent = now.toLocaleTimeString('de-DE', timeOptions);
     document.getElementById('date').textContent = now.toLocaleDateString('de-DE', dateOptions);
 };
 setInterval(updateClock, 1000);
-updateClock();
+updateClock(); // Initialer Aufruf
 
 // Weather Widget functionality
 const weatherText = document.getElementById('weather-text');
@@ -180,15 +180,15 @@ const getWeatherEmoji = (iconCode) => {
 };
 
 const fetchWeather = async () => {
-    weatherText.textContent = 'Lädt...'; // Loading state
+    weatherText.textContent = 'Lädt...';
     weatherIcon.textContent = '🔄';
     weatherLocation.textContent = '';
 
-    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual key
-    const city = 'Heidenheim';
+    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // ERSETZE DIES MIT DEINEM ECHTEN API KEY!
+    const city = 'Heidenheim'; // Standardstadt
 
     if (apiKey === 'YOUR_OPENWEATHERMAP_API_KEY' || !apiKey || apiKey.length < 30) {
-        console.warn("OpenWeatherMap API Key not set or invalid. Using placeholder weather data.");
+        console.warn("OpenWeatherMap API Key ist nicht gesetzt oder ungültig. Es werden Platzhalter-Wetterdaten verwendet.");
         weatherText.textContent = '22°C';
         weatherIcon.textContent = '☀️';
         weatherLocation.textContent = 'Heidenheim';
@@ -201,13 +201,13 @@ const fetchWeather = async () => {
         const response = await fetch(url);
         if (!response.ok) {
             if (response.status === 401) {
-                console.error('Error: Invalid API key for OpenWeatherMap. Please get a valid key.');
-                weatherText.textContent = 'N/A';
-                weatherIcon.textContent = '❓';
-                weatherLocation.textContent = 'API Fehler';
+                console.error('Fehler: Ungültiger API-Schlüssel für OpenWeatherMap.');
             } else {
-                throw new Error(`Weather data not found or API error: ${response.statusText}`);
+                throw new Error(`Wetterdaten nicht gefunden oder API-Fehler: ${response.statusText}`);
             }
+            weatherText.textContent = 'N/A';
+            weatherIcon.textContent = '❓';
+            weatherLocation.textContent = 'API Fehler';
             return;
         }
         const data = await response.json();
@@ -216,7 +216,7 @@ const fetchWeather = async () => {
         weatherIcon.textContent = getWeatherEmoji(iconCode);
         weatherLocation.textContent = data.name;
     } catch (error) {
-        console.error('Error fetching weather:', error);
+        console.error('Fehler beim Abrufen der Wetterdaten:', error);
         weatherText.textContent = 'N/A';
         weatherIcon.textContent = '❓';
         weatherLocation.textContent = 'Ort unbekannt';
@@ -224,7 +224,7 @@ const fetchWeather = async () => {
 };
 
 fetchWeather();
-setInterval(fetchWeather, 3600000); // Update every hour
+setInterval(fetchWeather, 3600000); // Aktualisiere jede Stunde
 
 // Inspirational Quote of the Day
 const quoteText = document.getElementById('quote-text');
@@ -232,29 +232,28 @@ const quoteAuthor = document.getElementById('quote-author');
 const quoteSection = document.querySelector('.quote-of-the-day');
 
 const fetchQuote = async () => {
-    quoteText.textContent = 'Lade Zitat...'; // Loading state
+    quoteText.textContent = 'Lade Zitat...';
     quoteAuthor.textContent = '';
-    quoteSection.classList.add('loading-quote'); // Add a class for potential loading animation
+    quoteSection.classList.add('loading-quote');
 
     try {
         const response = await fetch('https://api.quotable.io/random');
-        if (!response.ok) throw new Error('Quote data not found');
+        if (!response.ok) throw new Error('Zitatdaten nicht gefunden');
         const data = await response.json();
 
-        // Apply fade-out before setting new text, then fade-in
-        // Resetting animations by reading offsetWidth forces reflow
+        // Animationen zurücksetzen und neu starten
         quoteText.style.animation = 'none';
         quoteAuthor.style.animation = 'none';
-        void quoteText.offsetWidth;
+        void quoteText.offsetWidth; // Erzwingt Reflow
         void quoteAuthor.offsetWidth;
 
-        quoteText.style.animation = '';
-        quoteAuthor.style.animation = '';
+        quoteText.style.animation = 'quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards';
+        quoteAuthor.style.animation = 'quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.1s';
 
         quoteText.textContent = `"${data.content}"`;
         quoteAuthor.textContent = `- ${data.author}`;
     } catch (error) {
-        console.error('Error fetching quote:', error);
+        console.error('Fehler beim Abrufen des Zitats:', error);
         quoteText.textContent = '"Sei die Veränderung, die du in der Welt sehen möchtest."';
         quoteAuthor.textContent = '- Mahatma Gandhi';
     } finally {
@@ -263,18 +262,21 @@ const fetchQuote = async () => {
 };
 
 fetchQuote();
-setInterval(fetchQuote, 86400000); // Fetch a new quote every 24 hours
+setInterval(fetchQuote, 86400000); // Aktualisiere alle 24 Stunden
 
-// Add a button to manually refresh the quote
-const refreshQuoteBtn = document.createElement('button');
-refreshQuoteBtn.textContent = '🔄 Neues Zitat';
-refreshQuoteBtn.classList.add('glass');
-refreshQuoteBtn.style.marginTop = '20px';
-refreshQuoteBtn.onclick = fetchQuote;
-quoteSection.appendChild(refreshQuoteBtn);
+// Füge einen Button zum manuellen Aktualisieren des Zitats hinzu (nur einmal)
+if (!document.getElementById('refresh-quote-btn')) {
+    const refreshQuoteBtn = document.createElement('button');
+    refreshQuoteBtn.id = 'refresh-quote-btn'; // ID für eindeutigkeit
+    refreshQuoteBtn.textContent = '🔄 Neues Zitat';
+    refreshQuoteBtn.classList.add('glass'); // Nutzt den Glass-Style
+    refreshQuoteBtn.style.marginTop = '1.5rem'; // Bessere vertikale Ausrichtung
+    refreshQuoteBtn.onclick = fetchQuote;
+    quoteSection.appendChild(refreshQuoteBtn);
+}
 
 
-// Stats Tracking
+// Stats Tracking (wie zuvor)
 let stats = {searches: 0, clicks: 0, startTime: Date.now()};
 
 const savedStats = JSON.parse(localStorage?.getItem('mkweb-stats'));
@@ -290,7 +292,7 @@ const updateStats = type => {
     const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
     stats.timeSpentMinutes = timeSpentMinutes;
 
-    // You might want to display these stats somewhere in your HTML
+    // Optional: Stats in HTML anzeigen, falls du Elemente dafür hast
     // document.getElementById('search-count').textContent = stats.searches;
     // document.getElementById('click-count').textContent = stats.clicks;
     // document.getElementById('time-spent').textContent = timeSpentMinutes;
@@ -309,7 +311,7 @@ const animateOnScroll = () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.05 // Reduced threshold for earlier animation trigger
+        threshold: 0.03 // Reduzierter Schwellenwert für früheres Auslösen
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -321,29 +323,27 @@ const animateOnScroll = () => {
         });
     }, observerOptions);
 
-    // Select all sections and cards that should animate in
-    document.querySelectorAll('.glass, .action-card').forEach(element => {
+    document.querySelectorAll('.glass').forEach(element => { // Alle Glass-Elemente animieren
         observer.observe(element);
     });
 };
 
 document.addEventListener('DOMContentLoaded', animateOnScroll);
 
-// Dynamic Background Shapes (More advanced, remove static shapes from HTML)
+// Dynamic Background Shapes
 const createBackgroundShapes = (count) => {
     const container = document.body;
-    // Remove existing static shapes if any
-    document.querySelectorAll('.background-shape').forEach(shape => shape.remove());
+    document.querySelectorAll('.background-shape').forEach(shape => shape.remove()); // Entfernt bestehende
 
     for (let i = 0; i < count; i++) {
         const shape = document.createElement('div');
         shape.classList.add('background-shape');
-        const size = Math.random() * (400 - 200) + 200; // Size between 200px and 400px
-        const top = Math.random() * 100 - 20; // -20% to 80%
-        const left = Math.random() * 100 - 20; // -20% to 80%
-        const delay = Math.random() * 20; // Animation delay up to 20s
-        const duration = Math.random() * (50 - 30) + 30; // Animation duration between 30s and 50s
-        const opacity = Math.random() * (0.05 - 0.01) + 0.01; // Opacity between 0.01 and 0.05
+        const size = Math.random() * (350 - 150) + 150; // Größe zwischen 150px und 350px
+        const top = Math.random() * 100 - 10; // -10% bis 90%
+        const left = Math.random() * 100 - 10; // -10% bis 90%
+        const delay = Math.random() * 15; // Animation delay bis 15s
+        const duration = Math.random() * (40 - 25) + 25; // Animation duration zwischen 25s und 40s
+        const opacity = Math.random() * (0.04 - 0.01) + 0.01; // Opacity zwischen 0.01 und 0.04
 
         shape.style.width = `${size}px`;
         shape.style.height = `${size}px`;
@@ -353,23 +353,18 @@ const createBackgroundShapes = (count) => {
         shape.style.animationDuration = `${duration}s`;
         shape.style.opacity = opacity;
         
-        // Ensure color is theme-aware by using CSS variables.
-        // This will allow the color to switch with theme.
-        // The opacity is set directly here as it's random.
         if (i % 2 === 0) {
             shape.style.backgroundColor = 'var(--acc)';
         } else {
-            // Use a slightly desaturated version of foreground or background for variety
-            shape.style.backgroundColor = 'rgba(var(--fg-rgb), 0.1)'; 
+            shape.style.backgroundColor = 'rgba(var(--fg-rgb), 0.08)'; // Etwas mehr Farbe
         }
-        shape.style.opacity = opacity; // Reapply opacity, it might be overridden by background-color if not careful
+        shape.style.opacity = opacity;
 
         container.appendChild(shape);
     }
 };
 
-// Call this to generate shapes on load
-createBackgroundShapes(3); // You can adjust the number of shapes
+createBackgroundShapes(4); // Erstelle 4 dynamische Hintergrundformen
 
 
 // Scroll to top button logic
@@ -388,6 +383,6 @@ window.onscroll = () => {
 };
 
 scrollToTopBtn.onclick = () => {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
 };
