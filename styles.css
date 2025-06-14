@@ -1,49 +1,49 @@
-/* styles.css - Extreme Performance Optimization & MKWEB 6.2 Enhancements */
+/* styles.css - MKWEB 6.3: Refined Aesthetics & Performance */
 :root {
-  /* Global Design Variables - Tuned for ultimate polish and realism (MKWEB 6.2 Refinements) */
-  --t: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly faster, snappier transitions */
-  --r: 20px; /* Refined border-radius for softness, slightly reduced */
-  --s: 0 8px 25px rgba(0,0,0,0.18); /* Reduced, more focused shadow, slightly softer */
-  --sh: 0 15px 50px rgba(0,0,0,0.35); /* Reduced prominent shadow for hover, softer */
-  --s-light: 0 4px 10px rgba(0,0,0,0.08); /* New: Lighter shadow for subtle lift */
+  /* Global Design Variables - Tuned for ultimate polish and realism (MKWEB 6.3 Refinements) */
+  --t: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slightly smoother, more elegant transitions */
+  --r: 18px; /* Slightly reduced border-radius for modern feel */
+  --s: 0 6px 20px rgba(0,0,0,0.12); /* Softer, more diffuse shadow */
+  --sh: 0 12px 40px rgba(0,0,0,0.28); /* More prominent but still soft hover shadow */
+  --s-light: 0 3px 8px rgba(0,0,0,0.06); /* Even lighter shadow for subtle lift */
   --border-width: 1px; /* Thinner borders */
-  --text-gradient-angle: 45deg; /* Angle for text gradients, slightly adjusted */
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%, rgba(255, 255, 255, 0.01) 100%); /* Even more subtle reflection on glass */
-  --glow-strength: 0 0 12px; /* Base glow strength - significantly reduced */
+  --text-gradient-angle: 45deg; /* Angle for text gradients, consistent */
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, transparent 50%, rgba(255, 255, 255, 0.005) 100%); /* More subtle reflection */
+  --glow-strength: 0 0 8px; /* Base glow strength - further reduced for subtlety */
   --glow-color: var(--acc); /* Base glow color */
-  --blur-intensity: 12px; /* Main backdrop-filter blur value - drastically reduced for performance */
-  --saturate-intensity: 140%; /* Slightly reduced saturate for glass effect */
-  --content-max-width: 1400px; /* New: Max width for main content */
+  --blur-intensity: 10px; /* Main backdrop-filter blur value - very subtle */
+  --saturate-intensity: 130%; /* Slightly reduced saturate for glass effect */
+  --content-max-width: 1300px; /* Max width for main content, slightly smaller for focus */
 }
 
 /* Themed Variables */
 [data-theme="dark"] {
-  --bg: linear-gradient(135deg, #121212 0%, #202020 100%);
-  --fg: #e0e0e0;
-  --dim: rgba(224,224,224,0.5); /* Slightly more dimmed */
-  --acc: #a370e0; /* Etwas dunkleres Lila für Auswahl/Akzent */
-  --ah: #8a4ad1; /* Angepasster Hover-Zustand für dunkleres Lila */
-  --gl: rgba(255,255,255,0.03); /* Very subtle glass background, more transparent */
-  --gb: rgba(255,255,255,0.1); /* Very subtle glass border, more transparent */
-  --inner-shadow: inset 0 0 5px rgba(0,0,0,0.03); /* Lighter inner shadow */
-  --acc-rgb: 163, 112, 224; /* Angepasster RGB-Wert für --acc */
-  --fg-rgb: 224, 224, 224;
-  --ah-rgb: 138, 74, 209; /* Angepasster RGB-Wert für --ah */
+  --bg: linear-gradient(135deg, #101010 0%, #1a1a1a 100%); /* Deeper dark background */
+  --fg: #e8e8e8; /* Brighter foreground text */
+  --dim: rgba(224,224,224,0.6); /* Slightly less dim for better readability */
+  --acc: #9a65d6; /* Slightly softer purple accent */
+  --ah: #7e4ab8; /* Matching hover state for softer purple */
+  --gl: rgba(255,255,255,0.025); /* Very subtle glass background, more transparent */
+  --gb: rgba(255,255,255,0.09); /* Very subtle glass border, more transparent */
+  --inner-shadow: inset 0 0 4px rgba(0,0,0,0.02); /* Lighter inner shadow */
+  --acc-rgb: 154, 101, 214; /* Adjusted RGB for --acc */
+  --fg-rgb: 232, 232, 232; /* Adjusted RGB for --fg */
+  --ah-rgb: 126, 74, 184; /* Adjusted RGB for --ah */
   --gb-rgb: 255, 255, 255;
 }
 
 [data-theme="light"] {
-  --bg: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
-  --fg: #333333;
-  --dim: rgba(51,51,51,0.5); /* Slightly more dimmed */
-  --acc: #007bff;
-  --ah: #0056b3; /* Blue accent */
-  --gl: rgba(0,0,0,0.02); /* Very subtle glass background, more transparent */
-  --gb: rgba(0,0,0,0.08); /* Very subtle glass border, more transparent */
-  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.03); /* Lighter inner shadow */
-  --acc-rgb: 0, 123, 255;
-  --fg-rgb: 51, 51, 51;
-  --ah-rgb: 0, 86, 179;
+  --bg: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%); /* Lighter background */
+  --fg: #2c2c2c; /* Darker foreground for contrast */
+  --dim: rgba(44,44,44,0.6); /* Slightly less dim */
+  --acc: #0069d9; /* Slightly darker blue accent */
+  --ah: #004d9c; /* Matching hover state */
+  --gl: rgba(0,0,0,0.02); /* Very subtle glass background */
+  --gb: rgba(0,0,0,0.07); /* Very subtle glass border */
+  --inner-shadow: inset 0 0 4px rgba(255,255,255,0.02); /* Lighter inner shadow */
+  --acc-rgb: 0, 105, 217;
+  --fg-rgb: 44, 44, 44;
+  --ah-rgb: 0, 77, 156;
   --gb-rgb: 0, 0, 0;
 }
 
@@ -72,49 +72,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Animated Background Elements (Drastically Optimized for MKWEB 6.2) */
+/* Animated Background Elements */
 .background-shape {
   content: '';
   position: fixed;
   border-radius: 50%;
-  opacity: 0.03; /* Even more subtle */
-  filter: blur(50px); /* Reduced blur for performance */
+  opacity: 0.03; /* Very subtle */
+  filter: blur(40px); /* Reduced blur for performance */
   z-index: -1;
   pointer-events: none;
-  width: 350px; /* Slightly smaller */
-  height: 350px; /* Slightly smaller */
-  background: var(--acc);
-  top: -70px;
-  left: -70px; /* Consistent positioning */
-  animation: floatEffect 35s ease-in-out infinite alternate; /* Slower animation for more elegance */
+  width: 300px; /* Slightly smaller base size */
+  height: 300px; /* Slightly smaller base size */
+  background: var(--acc); /* Theme-aware color */
+  animation: floatEffect 30s ease-in-out infinite alternate; /* Slower animation for more elegance */
   will-change: transform, opacity;
-}
-
-/* Multiple background shapes for more depth */
-.background-shape:nth-child(2) {
-    width: 250px;
-    height: 250px;
-    top: auto;
-    bottom: -50px;
-    left: 20%;
-    background: rgba(var(--fg-rgb), 0.05);
-    animation: floatEffect 40s ease-in-out infinite alternate-reverse;
-}
-
-.background-shape:nth-child(3) {
-    width: 400px;
-    height: 400px;
-    top: 10%;
-    right: -100px;
-    background: rgba(var(--acc-rgb), 0.07);
-    animation: floatEffect 45s ease-in-out infinite;
 }
 
 @keyframes floatEffect {
   0% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(10px, 15px) scale(1.005); } /* Even smaller movements */
-  50% { transform: translate(-8px, -12px) scale(0.995); }
-  75% { transform: translate(4px, -4px) scale(1.002); }
+  25% { transform: translate(8px, 12px) scale(1.002); } /* Even smaller movements */
+  50% { transform: translate(-6px, -10px) scale(0.998); }
+  75% { transform: translate(3px, -3px) scale(1.001); }
   100% { transform: translate(0, 0) scale(1); }
 }
 
@@ -124,43 +102,43 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px); /* Even lower opacity */
-  background-size: 70px 70px; /* Larger pattern for less density */
-  animation: grain 0.4s steps(1) infinite; /* Slower step animation for less flicker */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.015) 1px, transparent 1px); /* Even lower opacity */
+  background-size: 80px 80px; /* Larger pattern for less density */
+  animation: grain 0.5s steps(1) infinite; /* Slower step animation for less flicker */
   pointer-events: none;
   z-index: 0;
-  opacity: 0.2; /* Minimal opacity */
+  opacity: 0.15; /* Minimal opacity */
 }
 
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.2%, 0.2%); } /* Smaller translation */
+  50% { transform: translate(-0.15%, 0.15%); } /* Smaller translation */
 }
 
 .container {
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding: 2.5rem; /* Slightly more padding */
+  padding: 3rem; /* Slightly more padding */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3.5rem; /* Increased gap for better spacing */
+  gap: 4rem; /* Increased gap for better spacing */
 }
 
-/* Glassmorphism Base Style with subtle reflection - Drastically Optimized Blur (MKWEB 6.2) */
+/* Glassmorphism Base Style with subtle reflection */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t), backdrop-filter var(--t), filter var(--t), background-color var(--t); /* Added background-color */
+  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t), backdrop-filter var(--t), filter var(--t);
   position: relative;
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, backdrop-filter, filter;
 
-  &::after {
+  &::after { /* Subtle reflection */
     content: '';
     position: absolute;
     top: 0;
@@ -169,41 +147,36 @@ body {
     height: 100%;
     background: var(--glass-reflection);
     pointer-events: none;
-    opacity: 0.5; /* Slightly less visible reflection */
+    opacity: 0.6; /* Slightly more visible reflection */
     transition: opacity var(--t);
   }
 
-  /* New: Subtle tilt on hover for most glass elements */
   &:hover {
-    transform: perspective(1000px) rotateX(1deg) rotateY(-1deg); /* Very slight 3D effect */
+    transform: perspective(1000px) rotateX(0.5deg) rotateY(-0.5deg); /* Very slight 3D effect on hover */
   }
 
-    /* New: Animated border on hover for glass elements */
-    &::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        border-radius: calc(var(--r) + 2px); /* Match border radius */
-        background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
-        z-index: -1;
-        opacity: 0;
-        transition: opacity var(--t);
-        filter: blur(5px); /* Subtle blur for the glow */
-    }
+  &::before { /* Animated border on hover */
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px; /* Thinner border for glow */
+    border-radius: calc(var(--r) + 1px);
+    background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--t);
+    filter: blur(4px); /* Subtle blur for the glow */
+  }
 
-    &:hover::before {
-        opacity: 0.7; /* Make the glowing border visible on hover */
-    }
+  &:hover::before {
+    opacity: 0.8; /* Make the glowing border visible on hover */
+  }
 }
 
 /* Animation for elements appearing on scroll */
 .animate-in {
   opacity: 0;
-  transform: translateY(15px) scale(0.99); /* Even less aggressive initial state */
-  animation: fadeInSlideUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Slightly slower, smoother animation */
+  transform: translateY(10px) scale(0.995); /* Even less aggressive initial state */
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly faster, smoother animation */
   will-change: opacity, transform;
 }
 
@@ -220,20 +193,20 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: var(--content-max-width); /* Controlled by new variable */
-  padding: 2rem 2.5rem; /* Slightly more padding */
+  max-width: var(--content-max-width);
+  padding: 2.2rem 2.8rem; /* Increased padding */
 }
 
 .logo {
-  font-size: 3rem; /* Slightly larger logo */
+  font-size: 3.2rem; /* Slightly larger logo */
   font-weight: 900;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 500% 500%; /* Larger gradient area for smoother animation */
+  background-size: 400% 400%; /* Larger gradient area for smoother animation */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate, logoGlowPulse 3s infinite alternate ease-in-out; /* Slower, more subtle gradient animation */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced logo glow */
+  animation: gradient 12s ease infinite alternate, logoGlowPulse 2.5s infinite alternate ease-in-out; /* Slower, more subtle gradient animation */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Reduced logo glow */
   position: relative;
   will-change: background-position, text-shadow;
 }
@@ -243,58 +216,56 @@ body {
   100% { background-position: 100% 50%; }
 }
 
-/* New: Subtle breathing glow for logo */
+/* Subtle breathing glow for logo */
 @keyframes logoGlowPulse {
-    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); }
-    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); }
+    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1); }
+    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); }
 }
-
 
 .controls {
   display: flex;
-  gap: 1.5rem; /* Increased gap */
+  gap: 1.2rem; /* Increased gap */
   align-items: center;
   flex-wrap: wrap;
 }
 
 /* Buttons and Selects */
 select, button {
-  padding: 1rem 2rem; /* Slightly more padding */
+  padding: 0.9rem 1.8rem; /* Slightly more padding */
   border: var(--border-width) solid var(--gb);
-  border-radius: 20px; /* Slightly larger radius */
+  border-radius: 18px; /* Slightly larger radius */
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t); /* Explicit transition properties */
-  font-size: 1rem; /* Slightly larger font */
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
+  font-size: 0.95rem; /* Slightly larger font */
   font-weight: 500;
   outline: none;
-  box-shadow: var(--s-light); /* Using new lighter shadow */
+  box-shadow: var(--s-light);
   position: relative;
   z-index: 1;
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, color;
 
-  /* New: Active state animation */
-  &:active {
-    transform: translateY(1px) scale(0.98); /* Subtle press effect */
-    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.1); /* Slight inset shadow */
+  &:active { /* Subtle press effect */
+    transform: translateY(0.5px) scale(0.99);
+    box-shadow: var(--s-light), inset 0 1px 3px rgba(0,0,0,0.08);
   }
 }
 
 select:hover, button:hover {
   border-color: var(--acc);
-  transform: translateY(-4px) scale(1.02); /* Less pronounced lift and scale */
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.35); /* Using defined --acc-rgb, slightly more glow on hover */
+  transform: translateY(-3px) scale(1.01); /* Less pronounced lift and scale */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Slightly more glow on hover */
 }
 
-select::after, button::after { /* Animated hover glow border */
+/* Animated hover glow border for buttons/selects */
+select::after, button::after {
   content: '';
   position: absolute;
-  top: -2px; bottom: -2px; /* Even thinner border */
-  left: -2px; right: -2px;
-  border-radius: 22px;
-  border: 2px solid transparent; /* Slightly thicker border for definition */
+  top: -1px; bottom: -1px; left: -1px; right: -1px;
+  border-radius: 19px;
+  border: 1px solid transparent;
   background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc)) border-box;
   -webkit-mask:
     linear-gradient(#fff 0 0) padding-box,
@@ -315,29 +286,29 @@ select:hover::after, button:hover::after {
 .weather-widget {
   display: flex;
   align-items: center;
-  gap: 0.8rem; /* Slightly more gap */
-  padding: 1rem 2rem; /* Slightly more padding */
+  gap: 0.7rem; /* Slightly more gap */
+  padding: 0.9rem 1.8rem; /* Slightly more padding */
   border: var(--border-width) solid var(--gb);
-  border-radius: 20px;
+  border-radius: 18px;
   background: var(--gl);
   color: var(--fg);
   font-weight: 500;
-  font-size: 1rem;
-  box-shadow: var(--s-light); /* Using lighter shadow */
+  font-size: 0.95rem;
+  box-shadow: var(--s-light);
   transition: all var(--t);
   cursor: default;
 }
 
 .weather-widget .weather-icon {
-  font-size: 1.5rem; /* Slightly larger icon */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-  animation: pulseIcon 4s infinite alternate ease-in-out; /* Slower, more subtle pulse on icon */
+  font-size: 1.4rem; /* Slightly larger icon */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+  animation: pulseIcon 3s infinite alternate ease-in-out; /* Slower, more subtle pulse on icon */
   will-change: transform, opacity;
 }
 
 @keyframes pulseIcon {
   0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.005); opacity: 0.99; } /* Even smaller pulse */
+  100% { transform: scale(1.003); opacity: 0.99; } /* Even smaller pulse */
 }
 
 .weather-info {
@@ -347,29 +318,29 @@ select:hover::after, button:hover::after {
 }
 .weather-info #weather-text {
   font-weight: 700;
-  font-size: 1.15rem; /* Slightly larger */
+  font-size: 1.05rem; /* Slightly larger */
 }
 .weather-info #weather-location {
-  font-size: 0.9rem; /* Slightly larger */
+  font-size: 0.85rem; /* Slightly larger */
   color: var(--dim);
 }
 
 /* User Avatar Toggle & Avatar Itself */
 .hidden-avatar {
   opacity: 0 !important;
-  transform: scale(0.5) !important; /* Slightly less aggressive scale */
+  transform: scale(0.6) !important; /* Slightly less aggressive scale */
   pointer-events: none !important;
   transition: opacity var(--t), transform var(--t) !important;
 }
 
 #user-avatar-toggle {
-  padding: 1rem 2rem;
-  border-radius: 20px;
+  padding: 0.9rem 1.8rem;
+  border-radius: 18px;
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--fg);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
   outline: none;
@@ -379,18 +350,18 @@ select:hover::after, button:hover::after {
 
 #user-avatar-toggle:hover {
   border-color: var(--acc);
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(-3px) scale(1.005);
   box-shadow: var(--sh);
 }
 
 .user-avatar {
-  width: 48px; /* Slightly larger avatar */
-  height: 48px;
+  width: 44px; /* Slightly larger avatar */
+  height: 44px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem; /* Slightly larger icon */
+  font-size: 1.6rem; /* Slightly larger icon */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -402,7 +373,7 @@ select:hover::after, button:hover::after {
 }
 
 .user-avatar:hover {
-  transform: scale(1.06) rotate(2deg); /* Less strong effect */
+  transform: scale(1.05) rotate(1deg); /* Less strong effect */
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--sh);
 }
@@ -413,22 +384,22 @@ select:hover::after, button:hover::after {
   max-width: var(--content-max-width);
   display: flex;
   flex-direction: column;
-  gap: 4rem; /* Increased gap */
+  gap: 3.5rem; /* Increased gap */
 }
 
-.search-section { padding: 3rem; } /* Slightly more padding */
+.search-section { padding: 2.8rem; } /* Slightly more padding */
 
 /* Search Engines */
 .search-engines {
   display: flex;
-  gap: 1.5rem; /* Increased gap */
-  margin-bottom: 3rem; /* Increased margin */
+  gap: 1.2rem; /* Increased gap */
+  margin-bottom: 2.5rem; /* Increased margin */
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: 1rem 2.5rem; /* Slightly more padding */
+  padding: 0.9rem 2.2rem; /* Slightly more padding */
   border-radius: 50px;
   font-weight: 600;
   border: var(--border-width) solid transparent;
@@ -439,28 +410,26 @@ select:hover::after, button:hover::after {
   overflow: hidden;
   will-change: transform, box-shadow, background-color, border-color, color;
 
-  /* New: Active state animation for search engines */
   &.active {
     background: var(--acc);
-    color: var(--bg);
-    transform: scale(1.03) translateY(-3px); /* Less strong pop-out effect */
+    color: #fff; /* White text on active accent */
+    transform: scale(1.02) translateY(-2px); /* Less strong pop-out effect */
     box-shadow: var(--glow-strength) var(--acc), var(--s);
     border-color: var(--acc);
-    animation: activeEnginePulse 1.5s infinite alternate ease-in-out; /* Subtle pulse when active */
+    animation: activeEnginePulse 1.2s infinite alternate ease-in-out; /* Subtle pulse when active */
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-2px);
-    box-shadow: inset 0 0 8px rgba(var(--acc-rgb), 0.08), var(--s-light); /* Lighter inner glow, reduced outer shadow */
+    transform: translateY(-1.5px);
+    box-shadow: inset 0 0 6px rgba(var(--acc-rgb), 0.07), var(--s-light); /* Lighter inner glow, reduced outer shadow */
   }
 }
 
 @keyframes activeEnginePulse {
-  0% { transform: scale(1.03) translateY(-3px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); }
-  100% { transform: scale(1.035) translateY(-4px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); }
+  0% { transform: scale(1.02) translateY(-2px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), var(--s); }
+  100% { transform: scale(1.025) translateY(-2.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); }
 }
-
 
 /* Search Box */
 .search-box {
@@ -469,18 +438,18 @@ select:hover::after, button:hover::after {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: 50px;
-  padding: 1.8rem 2.5rem; /* Slightly more padding */
+  padding: 1.6rem 2.2rem; /* Slightly more padding */
   transition: border-color var(--t), transform var(--t), box-shadow var(--t);
   position: relative;
   overflow: hidden;
-  box-shadow: var(--s), var(--inner-shadow); /* Using main shadow */
+  box-shadow: var(--s), var(--inner-shadow);
   will-change: transform, box-shadow, border-color;
 }
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.005); /* Very subtle scale on focus */
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* Reduced glow on focus */
+  transform: scale(1.002); /* Very subtle scale on focus */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); /* Reduced glow on focus */
 }
 
 /* Enhanced search box focus animation */
@@ -490,9 +459,9 @@ select:hover::after, button:hover::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 4px; /* Thicker animated border */
+    height: 3px; /* Thicker animated border */
     background: linear-gradient(90deg, transparent, var(--acc), transparent);
-    animation: borderScan 1s infinite linear; /* Continuous scanline animation */
+    animation: borderScan 0.8s infinite linear; /* Continuous scanline animation */
     will-change: transform;
     border-radius: 0 0 50px 50px; /* Match bottom border radius */
 }
@@ -507,122 +476,125 @@ select:hover::after, button:hover::after {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: 1.3rem; /* Slightly larger */
+  font-size: 1.2rem; /* Slightly larger */
   outline: none;
-  margin-left: 1.2rem; /* Slightly more margin */
-  text-shadow: 0 0 3px rgba(var(--fg-rgb), 0.08); /* Subtler text shadow */
+  margin-left: 1rem; /* Slightly more margin */
+  text-shadow: 0 0 2px rgba(var(--fg-rgb), 0.05); /* Subtler text shadow */
 }
 
 #search::placeholder {
   color: var(--dim);
-  opacity: 0.8; /* Slightly less opaque */
-  transition: opacity 0.15s ease; /* Slightly slower transition */
+  opacity: 0.7; /* Slightly less opaque */
+  transition: opacity 0.1s ease; /* Slightly slower transition */
 }
 
 #search:focus::placeholder {
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 /* Time Display */
 .time-display {
   text-align: center;
-  padding: 4rem; /* More padding */
+  padding: 3.5rem; /* More padding */
 }
 
 #time {
-  font-size: 6.5rem; /* Slightly larger time display */
+  font-size: 6rem; /* Slightly larger time display */
   font-weight: 900;
-  margin-bottom: 1.5rem; /* More margin */
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
-  background-size: 400% 400%; /* Larger gradient for smoother animation - angepaßt */
+  margin-bottom: 1.2rem; /* More margin */
+  /* --- WICHTIG FÜR SICHTBARKEIT DER UHRZEIT --- */
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc)); /* Full gradient cycle */
+  background-size: 500% 500%; /* Erhöht für bessere Sichtbarkeit und Animation des Gradienten */
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 12s ease infinite alternate, pulseText 4s infinite alternate; /* Slower pulse, slightly slower gradient */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18); /* Reduced text glow */
+  -webkit-text-fill-color: transparent; /* Macht den Text transparent, um den Hintergrund sichtbar zu machen */
+  /* --- ENDE WICHTIG --- */
+  animation: gradient 10s ease infinite alternate, pulseText 3.5s infinite alternate; /* Slower pulse, slightly slower gradient */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.12); /* Reduced text glow */
   will-change: background-position, text-shadow;
 }
 
 /* New: More subtle pulse for time display */
 @keyframes pulseText {
-  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1), 0 0 8px rgba(var(--fg-rgb), 0.04); }
-  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 12px rgba(var(--fg-rgb), 0.06); }
-  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1), 0 0 8px rgba(var(--fg-rgb), 0.04); }
+  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08), 0 0 6px rgba(var(--fg-rgb), 0.03); }
+  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 10px rgba(var(--fg-rgb), 0.05); }
+  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08), 0 0 6px rgba(var(--fg-rgb), 0.03); }
 }
 
 #date {
-  font-size: 1.7rem; /* Slightly larger */
+  font-size: 1.6rem; /* Slightly larger */
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 3.5px; /* Slightly more letter spacing */
+  letter-spacing: 3px; /* Slightly more letter spacing */
 }
 
 /* Quote of the Day Section */
 .quote-of-the-day {
   text-align: center;
-  padding: 3.5rem; /* More padding */
+  padding: 3rem; /* More padding */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 220px; /* Slightly taller */
+  min-height: 200px; /* Slightly taller */
 }
 
 .quote-of-the-day h2 {
-  margin-bottom: 1.8rem; /* More margin */
-  font-size: 2.4rem; /* Slightly larger */
+  margin-bottom: 1.5rem; /* More margin */
+  font-size: 2.2rem; /* Slightly larger */
   font-weight: 800;
+  /* --- WICHTIG FÜR SICHTBARKEIT DES ZITAT-TITELS --- */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18); /* Reduced heading glow */
+  -webkit-text-fill-color: transparent; /* Macht den Text transparent, um den Verlauf zu zeigen */
+  /* --- ENDE WICHTIG --- */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Reduced heading glow */
 }
 
 .quote-of-the-day #quote-text {
-  font-size: 1.5rem; /* Slightly larger */
-  line-height: 1.6;
+  font-size: 1.4rem; /* Slightly larger */
+  line-height: 1.5;
   color: var(--fg);
-  margin-bottom: 1rem; /* More margin */
+  margin-bottom: 0.8rem; /* More margin */
   font-style: italic;
-  max-width: 750px; /* Wider max width */
-  animation: quoteFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; /* Custom animation for quote */
-  transform: translateY(8px); /* Slightly more vertical displacement */
+  max-width: 700px; /* Wider max width */
+  animation: quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Custom animation for quote */
+  transform: translateY(6px); /* Slightly more vertical displacement */
   opacity: 0;
   will-change: opacity, transform;
 }
 
 .quote-of-the-day #quote-author {
-  font-size: 1.05rem; /* Slightly larger */
+  font-size: 1rem; /* Slightly larger */
   color: var(--dim);
   font-weight: 400;
-  animation: quoteFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.15s; /* Slightly delayed fade for author, slower */
-  transform: translateY(8px);
+  animation: quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.1s; /* Slightly delayed fade for author, slower */
+  transform: translateY(6px);
   opacity: 0;
   will-change: opacity, transform;
 }
 
 /* New: Separate animation for quote text to re-trigger on new quote */
 @keyframes quoteFadeIn {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 
 /* Quick Actions */
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); /* Slightly larger min width */
-  gap: 2.5rem; /* More gap */
-  padding: 0 2.5rem; /* More padding */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Slightly larger min width */
+  gap: 2rem; /* More gap */
+  padding: 0 2rem; /* More padding */
 }
 
 .action-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 2.8rem 1.8rem; /* More padding */
+  padding: 2.5rem 1.5rem; /* More padding */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
@@ -637,23 +609,23 @@ select:hover::after, button:hover::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -120%; /* Slightly more travel distance */
-  width: 40%; /* Thinner shimmer */
+  left: -110%; /* Slightly more travel distance */
+  width: 35%; /* Thinner shimmer */
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); /* Reduced opacity */
-  transition: left var(--t) ease-out; /* Only transition 'left', added ease-out */
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); /* Reduced opacity */
+  transition: left var(--t) ease-out;
   z-index: 1;
-  transform: skewX(-15deg);
-  pointer-events: none; /* Ensure it doesn't block clicks */
+  transform: skewX(-12deg);
+  pointer-events: none;
   will-change: left;
 }
 
 .action-card:hover::before {
-  left: 120%; /* Slightly more travel distance */
+  left: 110%; /* Slightly more travel distance */
 }
 
 .action-card:hover {
-  transform: translateY(-10px) scale(1.03); /* Slightly stronger lift and scale */
+  transform: translateY(-8px) scale(1.025); /* Slightly stronger lift and scale */
   border-color: var(--acc);
   box-shadow: var(--sh), var(--glow-strength) var(--acc);
 }
@@ -664,58 +636,57 @@ select:hover::after, button:hover::after {
 }
 
 .icon {
-  font-size: 4.2rem; /* Slightly larger icon */
-  margin-bottom: 1.5rem; /* More margin */
+  font-size: 4rem; /* Slightly larger icon */
+  margin-bottom: 1.2rem; /* More margin */
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Reduced icon glow */
-  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out; /* Added text-shadow transition */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced icon glow */
+  transition: transform 0.2s ease-out, text-shadow 0.2s ease-out;
   will-change: transform;
 }
 
 .action-card:hover .icon {
-  transform: scale(1.08) rotate(2deg); /* Slightly stronger icon rotation and scale on hover */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Stronger glow on hover */
+  transform: scale(1.07) rotate(1.5deg); /* Slightly stronger icon rotation and scale on hover */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35); /* Stronger glow on hover */
 }
 
-/* New: Label animation on hover */
+/* Label animation on hover */
 .action-card .label {
-  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
   will-change: transform, opacity;
 }
 
 .action-card:hover .label {
-  transform: translateY(-5px); /* Slide up slightly */
-  opacity: 0.9;
+  transform: translateY(-4px); /* Slide up slightly */
+  opacity: 0.95;
 }
-
 
 /* News and Bookmark Sections */
 .news-section, .bookmark-section {
-  padding: 3.5rem; /* More padding */
+  padding: 3rem; /* More padding */
 }
 
 .news-section h2, .bookmark-section h2 {
-  margin-bottom: 2.5rem; /* More margin */
-  font-size: 2.8rem; /* Slightly larger */
+  margin-bottom: 2.2rem; /* More margin */
+  font-size: 2.6rem; /* Slightly larger */
   font-weight: 900;
   text-align: center;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced heading glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18); /* Reduced heading glow */
 }
 
-/* News Section Button Styling (Previously 'p' tag) */
-.news-section.button-style { /* Added a class for clarity if it's acting as a button/link */
-  font-size: 1.3rem; /* Larger text */
-  padding: 2rem 2.8rem; /* Adjusted padding */
+/* News Section Button Styling */
+.news-section.button-style {
+  font-size: 1.2rem; /* Larger text */
+  padding: 1.8rem 2.5rem; /* Adjusted padding */
   text-align: center;
   color: var(--fg);
-  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.08); /* Subtle text shadow */
+  text-shadow: 0 0 3px rgba(var(--fg-rgb), 0.06); /* Subtle text shadow */
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
   display: block;
-  margin-top: 1.5rem; /* Space from heading */
+  margin-top: 1.2rem; /* Space from heading */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
@@ -725,22 +696,22 @@ select:hover::after, button:hover::after {
 }
 
 .news-section.button-style:hover {
-  transform: translateY(-8px) scale(1.015); /* Slightly stronger lift and scale */
+  transform: translateY(-7px) scale(1.01); /* Slightly stronger lift and scale */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.18);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
 }
 
 .news-grid, .bookmark-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly larger min width for cards */
-  gap: 2.5rem; /* More gap */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly larger min width for cards */
+  gap: 2.2rem; /* More gap */
 }
 
 .news-card, .bookmark-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 2.2rem; /* More padding */
+  padding: 2rem; /* More padding */
   text-decoration: none;
   color: var(--fg);
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
@@ -751,66 +722,66 @@ select:hover::after, button:hover::after {
 }
 
 .news-card:hover, .bookmark-card:hover {
-  transform: translateY(-8px) scale(1.015); /* Lift, subtle scale, no tilt */
+  transform: translateY(-7px) scale(1.01); /* Lift, subtle scale, no tilt */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.18);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
 }
 
 .news-card h3 {
-  margin-bottom: 1.2rem; /* More margin */
-  font-size: 1.6rem; /* Slightly larger */
+  margin-bottom: 1rem; /* More margin */
+  font-size: 1.5rem; /* Slightly larger */
   font-weight: 700;
-  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.06); /* Subtler text shadow */
+  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.05); /* Subtler text shadow */
 }
 
 .news-card p {
   color: var(--dim);
-  margin-bottom: 1.8rem; /* More margin */
-  line-height: 1.6;
-  font-size: 1.05rem; /* Slightly larger */
+  margin-bottom: 1.5rem; /* More margin */
+  line-height: 1.5;
+  font-size: 1rem; /* Slightly larger */
 }
 
 .news-source {
-  font-size: 1rem; /* Slightly larger */
+  font-size: 0.95rem; /* Slightly larger */
   color: var(--acc);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.2px; /* Slightly more letter spacing */
+  letter-spacing: 1px; /* Slightly more letter spacing */
 }
 
 .bookmark-card {
   display: flex;
   align-items: center;
-  gap: 1.8rem; /* More gap */
-  transition: all var(--t); /* Ensure all properties transition */
+  gap: 1.5rem; /* More gap */
+  transition: all var(--t);
 }
 
 .bookmark-card span:first-child {
-  font-size: 2.8rem; /* Slightly larger */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out; /* Add transition */
+  font-size: 2.5rem; /* Slightly larger */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18);
+  transition: transform 0.2s ease-out, text-shadow 0.2s ease-out;
 }
 
 .bookmark-card:hover span:first-child {
-    transform: scale(1.1) rotate(-3deg); /* Slight scale and rotation on hover */
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    transform: scale(1.08) rotate(-2deg); /* Slight scale and rotation on hover */
+    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 }
 
 .bookmark-card > div > div:first-child {
   font-weight: 700;
-  font-size: 1.3rem; /* Slightly larger */
+  font-size: 1.2rem; /* Slightly larger */
 }
 
 .bookmark-card > div > div:last-child {
-  font-size: 0.95rem; /* Slightly larger */
+  font-size: 0.9rem; /* Slightly larger */
   color: var(--dim);
 }
 
 /* Scrollbar Styling (Subtle customization) */
 ::-webkit-scrollbar {
-  width: 6px; /* Even thinner scrollbar */
+  width: 5px; /* Even thinner scrollbar */
   background-color: transparent;
-  border-radius: 3px;
+  border-radius: 2.5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -818,14 +789,14 @@ select:hover::after, button:hover::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--acc-rgb), 0.5); /* Semi-transparent accent, slightly less opaque */
-  border-radius: 3px;
-  border: 1px solid rgba(var(--gb-rgb), 0.08); /* Very subtle border */
+  background-color: rgba(var(--acc-rgb), 0.45); /* Semi-transparent accent, slightly less opaque */
+  border-radius: 2.5px;
+  border: 1px solid rgba(var(--gb-rgb), 0.07); /* Very subtle border */
   transition: background-color var(--t);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--ah-rgb), 0.7); /* Slightly more opaque on hover */
+  background-color: rgba(var(--ah-rgb), 0.6); /* Slightly more opaque on hover */
 }
 
 /* SR-Only class for accessibility */
@@ -844,22 +815,22 @@ select:hover::after, button:hover::after {
 /* Scroll-to-top button styles */
 .scroll-to-top {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 25px;
+    right: 25px;
     background: var(--acc);
     color: var(--bg);
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
+    width: 48px;
+    height: 48px;
+    font-size: 1.4rem;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
+    transform: translateY(15px);
     transition: opacity var(--t), transform var(--t), visibility var(--t), background var(--t), color var(--t);
     box-shadow: var(--s);
     z-index: 1000;
@@ -873,103 +844,103 @@ select:hover::after, button:hover::after {
 
 .scroll-to-top:hover {
     background: var(--ah);
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     box-shadow: var(--sh);
 }
 
-/* Media Queries for Responsiveness - Aggressively Optimized for Performance (MKWEB 6.2) */
+/* Media Queries for Responsiveness */
 @media (max-width: 1200px) {
-  .logo { font-size: 2.8rem; }
-  #time { font-size: 6rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
-  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-  .header { padding: 1.8rem 2.2rem; }
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.5rem; }
-  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
+  .logo { font-size: 3rem; }
+  #time { font-size: 5.5rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .header { padding: 2rem 2.5rem; }
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.2rem; }
+  .glass { backdrop-filter: blur(9px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 992px) {
-  .container { padding: 2rem; gap: 3rem; }
-  .header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
-  .controls { justify-content: center; gap: 0.8rem; }
-  .logo { font-size: 2.4rem; }
-  #time { font-size: 5rem; }
-  #date { font-size: 1.5rem; letter-spacing: 2.5px; }
-  .quote-of-the-day h2 { font-size: 2.2rem; }
-  .quote-of-the-day #quote-text { font-size: 1.3rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); padding: 0 1rem; gap: 2rem;}
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.5rem; }
-  .search-box { padding: 1.5rem 2rem; }
-  #search { font-size: 1.2rem; }
-  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); } /* Further reduced blur */
+  .container { padding: 2.5rem; gap: 3.5rem; }
+  .header { flex-direction: column; gap: 1.2rem; padding: 1.8rem; }
+  .controls { justify-content: center; gap: 0.7rem; }
+  .logo { font-size: 2.6rem; }
+  #time { font-size: 4.8rem; }
+  #date { font-size: 1.4rem; letter-spacing: 2px; }
+  .quote-of-the-day h2 { font-size: 2rem; }
+  .quote-of-the-day #quote-text { font-size: 1.2rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 0 1.5rem; gap: 1.8rem;}
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 1.8rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2.3rem; }
+  .search-box { padding: 1.4rem 2rem; }
+  #search { font-size: 1.1rem; }
+  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 768px) {
-  .container { padding: 1.5rem; gap: 2.5rem; }
-  .header { padding: 1.2rem; }
-  .logo { font-size: 2rem; }
-  select, button, .weather-widget { padding: 0.8rem 1.5rem; font-size: 0.95rem; border-radius: 16px; }
-  .user-avatar, #user-avatar-toggle { width: 42px; height: 42px; font-size: 1.6rem; }
+  .container { padding: 2rem; gap: 3rem; }
+  .header { padding: 1.5rem; }
+  .logo { font-size: 2.2rem; }
+  select, button, .weather-widget { padding: 0.8rem 1.4rem; font-size: 0.9rem; border-radius: 14px; }
+  .user-avatar, #user-avatar-toggle { width: 40px; height: 40px; font-size: 1.5rem; }
   .search-section { padding: 1.5rem; }
-  .search-engine { padding: 0.9rem 1.8rem; font-size: 0.95rem; border-radius: 45px; }
-  .search-box { padding: 1.2rem 1.8rem; border-radius: 45px; }
-  #search { font-size: 1.1rem; margin-left: 0.8rem; }
-  #time { font-size: 4rem; margin-bottom: 1rem;}
-  #date { font-size: 1.2rem; letter-spacing: 1.5px; }
-  .quote-of-the-day h2 { font-size: 2rem; margin-bottom: 1.2rem;}
-  .quote-of-the-day #quote-text { font-size: 1.1rem; }
-  .quote-of-the-day #quote-author { font-size: 0.9rem; }
-  .quick-actions { grid-template-columns: 1fr; padding: 0 0.8rem; gap: 1.8rem; }
-  .action-card { padding: 2.2rem 1.2rem; }
-  .icon { font-size: 3.8rem; margin-bottom: 1rem; }
-  .label { font-size: 1.1rem; letter-spacing: 1.5px; }
+  .search-engine { padding: 0.8rem 1.6rem; font-size: 0.9rem; border-radius: 40px; }
+  .search-box { padding: 1.1rem 1.6rem; border-radius: 40px; }
+  #search { font-size: 1rem; margin-left: 0.7rem; }
+  #time { font-size: 3.8rem; margin-bottom: 0.9rem;}
+  #date { font-size: 1.1rem; letter-spacing: 1.2px; }
+  .quote-of-the-day h2 { font-size: 1.8rem; margin-bottom: 1rem;}
+  .quote-of-the-day #quote-text { font-size: 1.05rem; }
+  .quote-of-the-day #quote-author { font-size: 0.85rem; }
+  .quick-actions { grid-template-columns: 1fr; padding: 0 1rem; gap: 1.5rem; }
+  .action-card { padding: 2rem 1rem; }
+  .icon { font-size: 3.5rem; margin-bottom: 0.9rem; }
+  .label { font-size: 1.05rem; letter-spacing: 1.2px; }
   .news-section, .bookmark-section { padding: 1.5rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.2rem; margin-bottom: 2rem;}
-  .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .news-card, .bookmark-card { padding: 2rem; }
-  .news-card h3 { font-size: 1.4rem; }
-  .news-card p { font-size: 0.95rem; margin-bottom: 1.2rem;}
+  .news-section h2, .bookmark-section h2 { font-size: 2rem; margin-bottom: 1.8rem;}
+  .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+  .news-card, .bookmark-card { padding: 1.8rem; }
+  .news-card h3 { font-size: 1.3rem; }
+  .news-card p { font-size: 0.9rem; margin-bottom: 1rem;}
   .bookmark-card span:first-child { font-size: 2.2rem; }
-  .bookmark-card > div > div:first-child { font-size: 1.15rem; }
-  .bookmark-card > div > div:last-child { font-size: 0.9rem; }
-  .glass { backdrop-filter: blur(6px) saturate(var(--saturate-intensity)); } /* Very low blur for tablets */
+  .bookmark-card > div > div:first-child { font-size: 1.1rem; }
+  .bookmark-card > div > div:last-child { font-size: 0.88rem; }
+  .glass { backdrop-filter: blur(6px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 480px) {
-  .container { padding: 1rem; gap: 1.5rem; }
-  .header { padding: 1rem; gap: 1.2rem; }
-  .logo { font-size: 1.5rem; }
-  select, button, .weather-widget { padding: 0.7rem 1.2rem; font-size: 0.85rem; border-radius: 10px; }
-  .user-avatar, #user-avatar-toggle { width: 36px; height: 36px; font-size: 1.4rem; }
+  .container { padding: 1.5rem; gap: 2rem; }
+  .header { padding: 1.2rem; gap: 1rem; }
+  .logo { font-size: 1.8rem; }
+  select, button, .weather-widget { padding: 0.6rem 1rem; font-size: 0.8rem; border-radius: 10px; }
+  .user-avatar, #user-avatar-toggle { width: 34px; height: 34px; font-size: 1.2rem; }
   .search-section { padding: 1.2rem; }
-  .search-engine { padding: 0.7rem 1.2rem; font-size: 0.85rem; border-radius: 25px; }
-  .search-box { padding: 0.8rem 1.2rem; border-radius: 35px; }
-  #search { font-size: 0.9rem; margin-left: 0.5rem; }
-  #time { font-size: 3rem; margin-bottom: 0.6rem;}
-  #date { font-size: 1rem; letter-spacing: 1.2px; }
-  .quote-of-the-day h2 { font-size: 1.6rem; margin-bottom: 1rem;}
-  .quote-of-the-day #quote-text { font-size: 0.95rem; }
-  .quote-of-the-day #quote-author { font-size: 0.8rem; }
-  .quick-actions { padding: 0 0.6rem; gap: 1.2rem; }
-  .action-card { padding: 1.8rem 0.8rem; }
-  .icon { font-size: 3rem; margin-bottom: 0.6rem; }
-  .label { font-size: 1rem; letter-spacing: 1.2px; }
+  .search-engine { padding: 0.7rem 1.2rem; font-size: 0.8rem; border-radius: 20px; }
+  .search-box { padding: 0.9rem 1.2rem; border-radius: 30px; }
+  #search { font-size: 0.85rem; margin-left: 0.5rem; }
+  #time { font-size: 3rem; margin-bottom: 0.5rem;}
+  #date { font-size: 0.9rem; letter-spacing: 1px; }
+  .quote-of-the-day h2 { font-size: 1.5rem; margin-bottom: 0.8rem;}
+  .quote-of-the-day #quote-text { font-size: 0.9rem; }
+  .quote-of-the-day #quote-author { font-size: 0.75rem; }
+  .quick-actions { padding: 0 0.8rem; gap: 1rem; }
+  .action-card { padding: 1.5rem 0.6rem; }
+  .icon { font-size: 2.8rem; margin-bottom: 0.5rem; }
+  .label { font-size: 0.95rem; letter-spacing: 1px; }
   .news-section, .bookmark-section { padding: 1.2rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem;}
-  .news-card, .bookmark-card { padding: 1.8rem; }
-  .news-card h3 { font-size: 1.15rem; }
-  .news-card p { font-size: 0.85rem; margin-bottom: 1rem;}
-  .bookmark-card span:first-child { font-size: 1.8rem; }
-  .bookmark-card > div > div:first-child { font-size: 1.05rem; }
-  .bookmark-card > div > div:last-child { font-size: 0.85rem; }
-  .glass { backdrop-filter: blur(4px) saturate(var(--saturate-intensity)); } /* Minimum blur for mobile */
+  .news-section h2, .bookmark-section h2 { font-size: 1.6rem; margin-bottom: 1.2rem;}
+  .news-card, .bookmark-card { padding: 1.5rem; }
+  .news-card h3 { font-size: 1.1rem; }
+  .news-card p { font-size: 0.8rem; margin-bottom: 0.8rem;}
+  .bookmark-card span:first-child { font-size: 1.6rem; }
+  .bookmark-card > div > div:first-child { font-size: 1rem; }
+  .bookmark-card > div > div:last-child { font-size: 0.8rem; }
+  .glass { backdrop-filter: blur(4px) saturate(var(--saturate-intensity)); }
 }
 
-/* Fallback for browsers that don't support backdrop-filter or for extreme performance mode */
+/* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.18); /* More opaque background without blur, slightly adjusted */
+    background: rgba(var(--fg-rgb), 0.15); /* More opaque background without blur */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
