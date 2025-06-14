@@ -183,7 +183,7 @@ body {
   }
 }
 
-/* --- Animation for elements appearing on scroll (Optimized) --- */
+/* --- Animation for elements appearing on page load (Optimized) --- */
 .animate-in {
   opacity: 0;
   transform: translateY(30px) scale(0.96) rotateX(4deg); /* Slightly more pronounced initial state */
@@ -531,12 +531,18 @@ button:hover::after {
 }
 
 .icon {
+  font-family: 'Material Symbols Outlined'; /* Ensure Material Symbols font is used for icons */
   font-size: 5rem; /* Larger icon */
   margin-bottom: 1.8rem; /* More margin */
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger icon glow */
   transition: transform 0.25s ease-out, text-shadow 0.25s ease-out; /* Slightly slower transition */
   will-change: transform;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48; /* Default Material Symbols settings for crispness */
 }
 
 .action-card:hover .icon {
@@ -651,9 +657,15 @@ button:hover::after {
 }
 
 .bookmark-card span:first-child {
+  font-family: 'Material Symbols Outlined'; /* Ensure Material Symbols font is used for icons */
   font-size: 3rem; /* Larger icon */
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
   transition: transform 0.25s ease-out, text-shadow 0.25s ease-out;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48; /* Default Material Symbols settings for crispness */
 }
 
 .bookmark-card:hover span:first-child {
