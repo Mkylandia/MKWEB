@@ -7,13 +7,17 @@ const settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     showAvatar: true,
     lastActiveEngine: 'google'
 };
-const saveSettings = () => localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
+
+// Function to save settings
+const saveSettings = () => {
+    localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
+};
 
 // Ensure theme is valid, fallback to 'dark'
 const allowedThemes = ['dark', 'light'];
 if (!allowedThemes.includes(settings.theme)) {
     settings.theme = 'dark';
-    saveSettings();
+    saveSettings(); // Save if theme was corrected
 }
 
 // Apply initial theme immediately to html element for broader CSS scope
@@ -32,7 +36,7 @@ const dateElement = document.getElementById('date');
 const scrollToTopBtn = document.createElement('button'); // Created dynamically
 
 // Slider Elements (No longer explicitly needed for controlling movement, but kept for general reference if styling is complex)
-const quickActionsContainer = document.getElementById('quick-actions-container');
+const menuContainer = document.getElementById('menu-container'); // Renamed from quickActionsContainer
 const bookmarksContainer = document.getElementById('bookmarks-container');
 
 
@@ -50,8 +54,8 @@ const updateThemeToggleButton = () => {
 themeToggleBtn.addEventListener('click', () => {
     settings.theme = (settings.theme === 'dark' ? 'light' : 'dark');
     document.documentElement.setAttribute('data-theme', settings.theme); // Update theme on html
-    saveSettings();
-    updateThemeToggleButton();
+    saveSettings(); // Save the new theme
+    updateThemeToggleButton(); // Update button text
 });
 
 // Initial update of the theme toggle button text
@@ -300,6 +304,3 @@ const applyParallax = () => {
 };
 
 applyParallax(); // Enable the optimized mouse parallax effect
-
-// No slider initialization needed anymore as buttons are removed.
-// The `horizontal-scroll-container` now relies purely on CSS for scrolling.
