@@ -1,49 +1,49 @@
-/* styles.css - MKWEB 6.3: Refined Aesthetics & Performance */
+/* styles.css - MKWEB OS 7: Refined Aesthetics & Performance */
 :root {
-  /* Global Design Variables - Tuned for ultimate polish and realism (MKWEB 6.3 Refinements) */
+  /* Global Design Variables - Tuned for ultimate polish and realism (MKWEB OS 7 Refinements) */
   --t: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slightly smoother, more elegant transitions */
   --r: 18px; /* Slightly reduced border-radius for modern feel */
-  --s: 0 6px 20px rgba(0,0,0,0.12); /* Softer, more diffuse shadow */
-  --sh: 0 12px 40px rgba(0,0,0,0.28); /* More prominent but still soft hover shadow */
-  --s-light: 0 3px 8px rgba(0,0,0,0.06); /* Even lighter shadow for subtle lift */
+  --s: 0 8px 25px rgba(0,0,0,0.18); /* Softer, more diffuse shadow with more depth */
+  --sh: 0 16px 50px rgba(0,0,0,0.35); /* More prominent but still soft hover shadow */
+  --s-light: 0 4px 10px rgba(0,0,0,0.09); /* Even lighter shadow for subtle lift */
   --border-width: 1px; /* Thinner borders */
   --text-gradient-angle: 45deg; /* Angle for text gradients, consistent */
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, transparent 50%, rgba(255, 255, 255, 0.005) 100%); /* More subtle reflection */
-  --glow-strength: 0 0 8px; /* Base glow strength - further reduced for subtlety */
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 50%, rgba(255, 255, 255, 0.01) 100%); /* Slightly more visible reflection */
+  --glow-strength: 0 0 10px; /* Base glow strength - slightly increased for effect */
   --glow-color: var(--acc); /* Base glow color */
-  --blur-intensity: 10px; /* Main backdrop-filter blur value - very subtle */
-  --saturate-intensity: 130%; /* Slightly reduced saturate for glass effect */
+  --blur-intensity: 12px; /* Main backdrop-filter blur value - slightly increased */
+  --saturate-intensity: 140%; /* Slightly increased saturate for glass effect */
   --content-max-width: 1300px; /* Max width for main content, slightly smaller for focus */
 }
 
 /* Themed Variables */
 [data-theme="dark"] {
-  --bg: linear-gradient(135deg, #101010 0%, #1a1a1a 100%); /* Deeper dark background */
-  --fg: #e8e8e8; /* Brighter foreground text */
-  --dim: rgba(224,224,224,0.6); /* Slightly less dim for better readability */
-  --acc: #9a65d6; /* Slightly softer purple accent */
-  --ah: #7e4ab8; /* Matching hover state for softer purple */
-  --gl: rgba(255,255,255,0.025); /* Very subtle glass background, more transparent */
-  --gb: rgba(255,255,255,0.09); /* Very subtle glass border, more transparent */
-  --inner-shadow: inset 0 0 4px rgba(0,0,0,0.02); /* Lighter inner shadow */
-  --acc-rgb: 154, 101, 214; /* Adjusted RGB for --acc */
-  --fg-rgb: 232, 232, 232; /* Adjusted RGB for --fg */
-  --ah-rgb: 126, 74, 184; /* Adjusted RGB for --ah */
+  --bg: linear-gradient(135deg, #0d0d0d 0%, #151515 100%); /* Deeper, richer dark background */
+  --fg: #f0f0f0; /* Brighter foreground text */
+  --dim: rgba(240,240,240,0.65); /* Slightly less dim for better readability */
+  --acc: #a56ddf; /* Slightly more vibrant purple accent */
+  --ah: #8a57c5; /* Matching hover state for softer purple */
+  --gl: rgba(255,255,255,0.035); /* Slightly more opaque glass background */
+  --gb: rgba(255,255,255,0.12); /* Slightly more opaque glass border */
+  --inner-shadow: inset 0 0 5px rgba(0,0,0,0.03); /* Lighter inner shadow */
+  --acc-rgb: 165, 109, 223; /* Adjusted RGB for --acc */
+  --fg-rgb: 240, 240, 240; /* Adjusted RGB for --fg */
+  --ah-rgb: 138, 87, 197; /* Adjusted RGB for --ah */
   --gb-rgb: 255, 255, 255;
 }
 
 [data-theme="light"] {
-  --bg: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%); /* Lighter background */
-  --fg: #2c2c2c; /* Darker foreground for contrast */
-  --dim: rgba(44,44,44,0.6); /* Slightly less dim */
-  --acc: #0069d9; /* Slightly darker blue accent */
-  --ah: #004d9c; /* Matching hover state */
-  --gl: rgba(0,0,0,0.02); /* Very subtle glass background */
-  --gb: rgba(0,0,0,0.07); /* Very subtle glass border */
-  --inner-shadow: inset 0 0 4px rgba(255,255,255,0.02); /* Lighter inner shadow */
-  --acc-rgb: 0, 105, 217;
-  --fg-rgb: 44, 44, 44;
-  --ah-rgb: 0, 77, 156;
+  --bg: linear-gradient(135deg, #fcfcfc 0%, #ebedef 100%); /* Lighter, subtle background */
+  --fg: #333333; /* Darker foreground for contrast */
+  --dim: rgba(51,51,51,0.65); /* Slightly less dim */
+  --acc: #007bff; /* Vibrant blue accent */
+  --ah: #0056b3; /* Matching hover state */
+  --gl: rgba(0,0,0,0.03); /* Slightly more opaque glass background */
+  --gb: rgba(0,0,0,0.1); /* Slightly more opaque glass border */
+  --inner-shadow: inset 0 0 5px rgba(255,255,255,0.03); /* Lighter inner shadow */
+  --acc-rgb: 0, 123, 255;
+  --fg-rgb: 51, 51, 51;
+  --ah-rgb: 0, 86, 179;
   --gb-rgb: 0, 0, 0;
 }
 
@@ -70,30 +70,31 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  perspective: 1000px; /* Enable 3D context */
 }
 
-/* Animated Background Elements */
+/* Animated Background Elements - Enhanced 3D Movement */
 .background-shape {
   content: '';
   position: fixed;
   border-radius: 50%;
-  opacity: 0.03; /* Very subtle */
-  filter: blur(40px); /* Reduced blur for performance */
+  opacity: 0.04; /* Slightly more visible */
+  filter: blur(50px); /* Increased blur for more ethereal look */
   z-index: -1;
   pointer-events: none;
-  width: 300px; /* Slightly smaller base size */
-  height: 300px; /* Slightly smaller base size */
+  width: 350px; /* Slightly larger base size */
+  height: 350px; /* Slightly larger base size */
   background: var(--acc); /* Theme-aware color */
-  animation: floatEffect 30s ease-in-out infinite alternate; /* Slower animation for more elegance */
+  animation: floatEffect 35s ease-in-out infinite alternate; /* Slower, smoother animation */
   will-change: transform, opacity;
 }
 
 @keyframes floatEffect {
-  0% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(8px, 12px) scale(1.002); } /* Even smaller movements */
-  50% { transform: translate(-6px, -10px) scale(0.998); }
-  75% { transform: translate(3px, -3px) scale(1.001); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg); }
+  25% { transform: translate3d(15px, 20px, -50px) scale(1.02) rotateX(2deg) rotateY(1deg); } /* Subtle 3D movements */
+  50% { transform: translate3d(-10px, -18px, 20px) scale(0.98) rotateX(-1deg) rotateY(-2deg); }
+  75% { transform: translate3d(8px, -10px, -30px) scale(1.01) rotateX(1deg) rotateY(0.5deg); }
+  100% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg); }
 }
 
 .grain {
@@ -102,17 +103,17 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.015) 1px, transparent 1px); /* Even lower opacity */
-  background-size: 80px 80px; /* Larger pattern for less density */
-  animation: grain 0.5s steps(1) infinite; /* Slower step animation for less flicker */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px); /* Even lower opacity */
+  background-size: 70px 70px; /* Larger pattern for less density */
+  animation: grain 0.4s steps(1) infinite; /* Slower step animation for less flicker */
   pointer-events: none;
   z-index: 0;
-  opacity: 0.15; /* Minimal opacity */
+  opacity: 0.18; /* Minimal opacity */
 }
 
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.15%, 0.15%); } /* Smaller translation */
+  50% { transform: translate(-0.2%, 0.2%); } /* Smaller translation */
 }
 
 .container {
@@ -126,7 +127,7 @@ body {
   gap: 4rem; /* Increased gap for better spacing */
 }
 
-/* Glassmorphism Base Style with subtle reflection */
+/* Glassmorphism Base Style with subtle reflection and 3D hover */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
@@ -147,12 +148,13 @@ body {
     height: 100%;
     background: var(--glass-reflection);
     pointer-events: none;
-    opacity: 0.6; /* Slightly more visible reflection */
+    opacity: 0.7; /* Slightly more visible reflection */
     transition: opacity var(--t);
   }
 
   &:hover {
-    transform: perspective(1000px) rotateX(0.5deg) rotateY(-0.5deg); /* Very slight 3D effect on hover */
+    transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) translateY(-5px) scale(1.005); /* Distinct 3D tilt and lift */
+    box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Enhanced hover shadow with subtle glow */
   }
 
   &::before { /* Animated border on hover */
@@ -163,20 +165,21 @@ body {
     background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
     z-index: -1;
     opacity: 0;
-    transition: opacity var(--t);
-    filter: blur(4px); /* Subtle blur for the glow */
+    transition: opacity var(--t), filter var(--t);
+    filter: blur(6px); /* Subtle blur for the glow */
   }
 
   &:hover::before {
-    opacity: 0.8; /* Make the glowing border visible on hover */
+    opacity: 1; /* Make the glowing border visible on hover */
+    filter: blur(8px); /* Slightly stronger blur on hover */
   }
 }
 
 /* Animation for elements appearing on scroll */
 .animate-in {
   opacity: 0;
-  transform: translateY(10px) scale(0.995); /* Even less aggressive initial state */
-  animation: fadeInSlideUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly faster, smoother animation */
+  transform: translateY(15px) scale(0.98); /* Slightly more aggressive initial state for a better animate-in feel */
+  animation: fadeInSlideUp 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly faster, smoother animation */
   will-change: opacity, transform;
 }
 
@@ -206,7 +209,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 12s ease infinite alternate, logoGlowPulse 2.5s infinite alternate ease-in-out; /* Slower, more subtle gradient animation */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Reduced logo glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Slightly increased logo glow */
   position: relative;
   will-change: background-position, text-shadow;
 }
@@ -218,8 +221,8 @@ body {
 
 /* Subtle breathing glow for logo */
 @keyframes logoGlowPulse {
-    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1); }
-    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); }
+    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); }
+    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); }
 }
 
 .controls {
@@ -248,15 +251,15 @@ select, button {
   will-change: transform, box-shadow, border-color, background, color;
 
   &:active { /* Subtle press effect */
-    transform: translateY(0.5px) scale(0.99);
-    box-shadow: var(--s-light), inset 0 1px 3px rgba(0,0,0,0.08);
+    transform: translateY(1px) scale(0.98);
+    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.1); /* More distinct inner shadow on press */
   }
 }
 
 select:hover, button:hover {
   border-color: var(--acc);
-  transform: translateY(-3px) scale(1.01); /* Less pronounced lift and scale */
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Slightly more glow on hover */
+  transform: translateY(-4px) scale(1.02); /* More pronounced lift and scale */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Stronger glow on hover */
 }
 
 /* Animated hover glow border for buttons/selects */
@@ -273,13 +276,15 @@ select::after, button::after {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
-  transition: opacity var(--t);
+  transition: opacity var(--t), filter var(--t);
   z-index: -1;
   will-change: opacity;
+  filter: blur(5px); /* Added blur for glow effect */
 }
 
 select:hover::after, button:hover::after {
   opacity: 1;
+  filter: blur(7px); /* Slightly stronger blur on hover */
 }
 
 /* Weather Widget */
@@ -301,14 +306,14 @@ select:hover::after, button:hover::after {
 
 .weather-widget .weather-icon {
   font-size: 1.4rem; /* Slightly larger icon */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
   animation: pulseIcon 3s infinite alternate ease-in-out; /* Slower, more subtle pulse on icon */
   will-change: transform, opacity;
 }
 
 @keyframes pulseIcon {
   0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.003); opacity: 0.99; } /* Even smaller pulse */
+  100% { transform: scale(1.005); opacity: 0.98; } /* Even smaller pulse */
 }
 
 .weather-info {
@@ -328,7 +333,7 @@ select:hover::after, button:hover::after {
 /* User Avatar Toggle & Avatar Itself */
 .hidden-avatar {
   opacity: 0 !important;
-  transform: scale(0.6) !important; /* Slightly less aggressive scale */
+  transform: scale(0.5) !important; /* Slightly more aggressive scale */
   pointer-events: none !important;
   transition: opacity var(--t), transform var(--t) !important;
 }
@@ -350,8 +355,8 @@ select:hover::after, button:hover::after {
 
 #user-avatar-toggle:hover {
   border-color: var(--acc);
-  transform: translateY(-3px) scale(1.005);
-  box-shadow: var(--sh);
+  transform: translateY(-4px) scale(1.01); /* More pronounced lift */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
 
 .user-avatar {
@@ -373,7 +378,7 @@ select:hover::after, button:hover::after {
 }
 
 .user-avatar:hover {
-  transform: scale(1.05) rotate(1deg); /* Less strong effect */
+  transform: scale(1.1) rotate(2deg); /* More distinct scale and rotation */
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--sh);
 }
@@ -413,7 +418,7 @@ select:hover::after, button:hover::after {
   &.active {
     background: var(--acc);
     color: #fff; /* White text on active accent */
-    transform: scale(1.02) translateY(-2px); /* Less strong pop-out effect */
+    transform: scale(1.03) translateY(-3px); /* More distinct pop-out effect */
     box-shadow: var(--glow-strength) var(--acc), var(--s);
     border-color: var(--acc);
     animation: activeEnginePulse 1.2s infinite alternate ease-in-out; /* Subtle pulse when active */
@@ -421,14 +426,14 @@ select:hover::after, button:hover::after {
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-1.5px);
-    box-shadow: inset 0 0 6px rgba(var(--acc-rgb), 0.07), var(--s-light); /* Lighter inner glow, reduced outer shadow */
+    transform: translateY(-2px) scale(1.005); /* Slightly more pronounced hover */
+    box-shadow: inset 0 0 8px rgba(var(--acc-rgb), 0.1), var(--s-light); /* Lighter inner glow, reduced outer shadow */
   }
 }
 
 @keyframes activeEnginePulse {
-  0% { transform: scale(1.02) translateY(-2px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), var(--s); }
-  100% { transform: scale(1.025) translateY(-2.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); }
+  0% { transform: scale(1.03) translateY(-3px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); }
+  100% { transform: scale(1.035) translateY(-3.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); }
 }
 
 /* Search Box */
@@ -448,8 +453,8 @@ select:hover::after, button:hover::after {
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.002); /* Very subtle scale on focus */
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); /* Reduced glow on focus */
+  transform: scale(1.005); /* Slightly more subtle scale on focus */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* Increased glow on focus */
 }
 
 /* Enhanced search box focus animation */
@@ -459,9 +464,9 @@ select:hover::after, button:hover::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px; /* Thicker animated border */
+    height: 4px; /* Thicker animated border */
     background: linear-gradient(90deg, transparent, var(--acc), transparent);
-    animation: borderScan 0.8s infinite linear; /* Continuous scanline animation */
+    animation: borderScan 0.7s infinite linear; /* Continuous scanline animation */
     will-change: transform;
     border-radius: 0 0 50px 50px; /* Match bottom border radius */
 }
@@ -479,7 +484,7 @@ select:hover::after, button:hover::after {
   font-size: 1.2rem; /* Slightly larger */
   outline: none;
   margin-left: 1rem; /* Slightly more margin */
-  text-shadow: 0 0 2px rgba(var(--fg-rgb), 0.05); /* Subtler text shadow */
+  text-shadow: 0 0 3px rgba(var(--fg-rgb), 0.08); /* More visible text shadow */
 }
 
 #search::placeholder {
@@ -509,16 +514,16 @@ select:hover::after, button:hover::after {
   background-clip: text;
   -webkit-text-fill-color: transparent; /* Macht den Text transparent, um den Hintergrund sichtbar zu machen */
   /* --- ENDE WICHTIG --- */
-  animation: gradient 10s ease infinite alternate, pulseText 3.5s infinite alternate; /* Slower pulse, slightly slower gradient */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.12); /* Reduced text glow */
+  animation: gradient 10s ease infinite alternate, pulseText 3s infinite alternate; /* Slightly faster pulse, slightly slower gradient */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Slightly increased text glow */
   will-change: background-position, text-shadow;
 }
 
 /* New: More subtle pulse for time display */
 @keyframes pulseText {
-  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08), 0 0 6px rgba(var(--fg-rgb), 0.03); }
-  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 10px rgba(var(--fg-rgb), 0.05); }
-  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08), 0 0 6px rgba(var(--fg-rgb), 0.03); }
+  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1), 0 0 8px rgba(var(--fg-rgb), 0.05); }
+  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 12px rgba(var(--fg-rgb), 0.07); }
+  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1), 0 0 8px rgba(var(--fg-rgb), 0.05); }
 }
 
 #date {
@@ -550,7 +555,7 @@ select:hover::after, button:hover::after {
   background-clip: text;
   -webkit-text-fill-color: transparent; /* Macht den Text transparent, um den Verlauf zu zeigen */
   /* --- ENDE WICHTIG --- */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Reduced heading glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Slightly increased heading glow */
 }
 
 .quote-of-the-day #quote-text {
@@ -561,7 +566,7 @@ select:hover::after, button:hover::after {
   font-style: italic;
   max-width: 700px; /* Wider max width */
   animation: quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Custom animation for quote */
-  transform: translateY(6px); /* Slightly more vertical displacement */
+  transform: translateY(8px); /* Slightly more vertical displacement */
   opacity: 0;
   will-change: opacity, transform;
 }
@@ -571,14 +576,14 @@ select:hover::after, button:hover::after {
   color: var(--dim);
   font-weight: 400;
   animation: quoteFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.1s; /* Slightly delayed fade for author, slower */
-  transform: translateY(6px);
+  transform: translateY(8px);
   opacity: 0;
   will-change: opacity, transform;
 }
 
 /* New: Separate animation for quote text to re-trigger on new quote */
 @keyframes quoteFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -609,23 +614,23 @@ select:hover::after, button:hover::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -110%; /* Slightly more travel distance */
-  width: 35%; /* Thinner shimmer */
+  left: -120%; /* Slightly more travel distance */
+  width: 40%; /* Slightly thicker shimmer */
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); /* Reduced opacity */
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); /* Slightly increased opacity */
   transition: left var(--t) ease-out;
   z-index: 1;
-  transform: skewX(-12deg);
+  transform: skewX(-15deg); /* Slightly more skew */
   pointer-events: none;
   will-change: left;
 }
 
 .action-card:hover::before {
-  left: 110%; /* Slightly more travel distance */
+  left: 120%; /* Slightly more travel distance */
 }
 
 .action-card:hover {
-  transform: translateY(-8px) scale(1.025); /* Slightly stronger lift and scale */
+  transform: translateY(-10px) scale(1.03) rotateX(1deg); /* Stronger lift, scale and subtle 3D tilt */
   border-color: var(--acc);
   box-shadow: var(--sh), var(--glow-strength) var(--acc);
 }
@@ -639,14 +644,14 @@ select:hover::after, button:hover::after {
   font-size: 4rem; /* Slightly larger icon */
   margin-bottom: 1.2rem; /* More margin */
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Reduced icon glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Slightly increased icon glow */
   transition: transform 0.2s ease-out, text-shadow 0.2s ease-out;
   will-change: transform;
 }
 
 .action-card:hover .icon {
-  transform: scale(1.07) rotate(1.5deg); /* Slightly stronger icon rotation and scale on hover */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35); /* Stronger glow on hover */
+  transform: scale(1.1) rotate(2deg); /* Stronger icon rotation and scale on hover */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Stronger glow on hover */
 }
 
 /* Label animation on hover */
@@ -656,8 +661,8 @@ select:hover::after, button:hover::after {
 }
 
 .action-card:hover .label {
-  transform: translateY(-4px); /* Slide up slightly */
-  opacity: 0.95;
+  transform: translateY(-5px); /* Slide up slightly */
+  opacity: 0.98;
 }
 
 /* News and Bookmark Sections */
@@ -674,7 +679,7 @@ select:hover::after, button:hover::after {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18); /* Reduced heading glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.22); /* Slightly increased heading glow */
 }
 
 /* News Section Button Styling */
@@ -683,7 +688,7 @@ select:hover::after, button:hover::after {
   padding: 1.8rem 2.5rem; /* Adjusted padding */
   text-align: center;
   color: var(--fg);
-  text-shadow: 0 0 3px rgba(var(--fg-rgb), 0.06); /* Subtle text shadow */
+  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.08); /* Slightly stronger text shadow */
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
   display: block;
   margin-top: 1.2rem; /* Space from heading */
@@ -696,9 +701,9 @@ select:hover::after, button:hover::after {
 }
 
 .news-section.button-style:hover {
-  transform: translateY(-7px) scale(1.01); /* Slightly stronger lift and scale */
+  transform: translateY(-8px) scale(1.015); /* Slightly stronger lift and scale */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
 }
 
 .news-grid, .bookmark-grid {
@@ -722,16 +727,16 @@ select:hover::after, button:hover::after {
 }
 
 .news-card:hover, .bookmark-card:hover {
-  transform: translateY(-7px) scale(1.01); /* Lift, subtle scale, no tilt */
+  transform: translateY(-8px) scale(1.015) rotateX(0.5deg); /* Lift, subtle scale, slight X-axis tilt */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
 }
 
 .news-card h3 {
   margin-bottom: 1rem; /* More margin */
   font-size: 1.5rem; /* Slightly larger */
   font-weight: 700;
-  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.05); /* Subtler text shadow */
+  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.08); /* More visible text shadow */
 }
 
 .news-card p {
@@ -758,13 +763,13 @@ select:hover::after, button:hover::after {
 
 .bookmark-card span:first-child {
   font-size: 2.5rem; /* Slightly larger */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18);
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.22);
   transition: transform 0.2s ease-out, text-shadow 0.2s ease-out;
 }
 
 .bookmark-card:hover span:first-child {
-    transform: scale(1.08) rotate(-2deg); /* Slight scale and rotation on hover */
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    transform: scale(1.1) rotate(-3deg); /* More distinct scale and rotation on hover */
+    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35);
 }
 
 .bookmark-card > div > div:first-child {
@@ -779,9 +784,9 @@ select:hover::after, button:hover::after {
 
 /* Scrollbar Styling (Subtle customization) */
 ::-webkit-scrollbar {
-  width: 5px; /* Even thinner scrollbar */
+  width: 6px; /* Slightly thicker scrollbar */
   background-color: transparent;
-  border-radius: 2.5px;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-track {
@@ -789,14 +794,14 @@ select:hover::after, button:hover::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--acc-rgb), 0.45); /* Semi-transparent accent, slightly less opaque */
-  border-radius: 2.5px;
-  border: 1px solid rgba(var(--gb-rgb), 0.07); /* Very subtle border */
+  background-color: rgba(var(--acc-rgb), 0.55); /* Slightly more opaque accent */
+  border-radius: 3px;
+  border: 1px solid rgba(var(--gb-rgb), 0.09); /* Slightly more visible border */
   transition: background-color var(--t);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--ah-rgb), 0.6); /* Slightly more opaque on hover */
+  background-color: rgba(var(--ah-rgb), 0.7); /* More opaque on hover */
 }
 
 /* SR-Only class for accessibility */
@@ -821,16 +826,16 @@ select:hover::after, button:hover::after {
     color: var(--bg);
     border: none;
     border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    font-size: 1.4rem;
+    width: 50px; /* Slightly larger */
+    height: 50px; /* Slightly larger */
+    font-size: 1.5rem; /* Slightly larger icon */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(15px);
+    transform: translateY(20px); /* Slightly more initial displacement */
     transition: opacity var(--t), transform var(--t), visibility var(--t), background var(--t), color var(--t);
     box-shadow: var(--s);
     z-index: 1000;
@@ -844,7 +849,7 @@ select:hover::after, button:hover::after {
 
 .scroll-to-top:hover {
     background: var(--ah);
-    transform: translateY(-4px);
+    transform: translateY(-5px) rotate(5deg); /* More pronounced lift and rotation */
     box-shadow: var(--sh);
 }
 
@@ -856,7 +861,7 @@ select:hover::after, button:hover::after {
   .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
   .header { padding: 2rem 2.5rem; }
   .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.2rem; }
-  .glass { backdrop-filter: blur(9px) saturate(var(--saturate-intensity)); }
+  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 992px) {
@@ -873,7 +878,7 @@ select:hover::after, button:hover::after {
   .news-section h2, .bookmark-section h2 { font-size: 2.3rem; }
   .search-box { padding: 1.4rem 2rem; }
   #search { font-size: 1.1rem; }
-  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); }
+  .glass { backdrop-filter: blur(9px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 768px) {
@@ -904,7 +909,7 @@ select:hover::after, button:hover::after {
   .bookmark-card span:first-child { font-size: 2.2rem; }
   .bookmark-card > div > div:first-child { font-size: 1.1rem; }
   .bookmark-card > div > div:last-child { font-size: 0.88rem; }
-  .glass { backdrop-filter: blur(6px) saturate(var(--saturate-intensity)); }
+  .glass { backdrop-filter: blur(7px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 480px) {
@@ -934,13 +939,13 @@ select:hover::after, button:hover::after {
   .bookmark-card span:first-child { font-size: 1.6rem; }
   .bookmark-card > div > div:first-child { font-size: 1rem; }
   .bookmark-card > div > div:last-child { font-size: 0.8rem; }
-  .glass { backdrop-filter: blur(4px) saturate(var(--saturate-intensity)); }
+  .glass { backdrop-filter: blur(5px) saturate(var(--saturate-intensity)); }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.15); /* More opaque background without blur */
+    background: rgba(var(--fg-rgb), 0.18); /* More opaque background without blur */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
