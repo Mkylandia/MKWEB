@@ -3,106 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Startseite</title>
+    <title>MKWEB Downloads</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body data-theme="dark">
-    <div class="background-shape"></div>
-    <div class="grain"></div>
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <div class="container">
+            <h1><span class="logo-mk">MK</span>WEB Downloads <span class="sparkle">✨</span></h1>
+            <p class="tagline">Schnell, Sicher, Innovativ – Ihre Dateien warten!</p>
+        </div>
+    </header>
 
-    <div class="main-container">
-        <header class="header">
-            <div class="avatar-widget">
-                <img id="user-avatar" src="https://via.placeholder.com/60" alt="Benutzer Avatar">
-            </div>
-            <div class="logo">MK<span>Web</span></div>
-            <div class="controls">
-                <select id="theme-picker" class="glass">
-                    </select>
-                <button id="fullscreen-btn" class="glass">⛶ Vollbild</button>
-                <button id="user-avatar-toggle" class="glass">🙈 Avatar ausblenden</button>
-            </div>
-        </header>
+    <main>
+        <div class="container">
+            <section class="download-grid">
+                <div class="download-card" data-file="MK WEB 6.2.zip" data-size="ca. 180 MB">
+                    <div class="card-icon">💻</div>
+                    <h2>MKWEB Browser Setup (ZIP)</h2>
+                    <p class="file-info">Größe: ca. 180 MB | Typ: ZIP-Archiv</p>
+                    <p class="description">
+                        Laden Sie die neueste Version des MKWEB Browsers herunter. Schnell, sicher und mit integriertem KI-Assistenten.<br><br>
+                        <strong style="color: var(--accent-blue);">Wichtige Installationshinweise:</strong><br>
+                        1. Nach dem Download, entpacken Sie die "MK WEB 6.2.zip"-Datei. Verwenden Sie hierfür ein Programm wie WinRAR oder 7-Zip.<br>
+                        2. Verschieben Sie den extrahierten Ordner (z.B. "MK WEB 6.2") auf Ihren Desktop.<br>
+                        3. Verschieben Sie anschließend den *gesamten Inhalt* dieses Ordners (z.B. die `MKWEB6.2.exe` oder `MKWEB6.py` Datei und zugehörige Ordner) direkt auf Ihren Desktop. Der leere Ordner "MK WEB 6.2" kann danach gelöscht werden.
+                    </p>
+                    <button class="download-btn" data-url="https://www.mediafire.com/file/9jerdchmwmyv5t0/MKWEB+6.2.zip/file">Download über MediaFire</button>
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                        <span class="progress-text">Bereit</span>
+                    </div>
+                </div>
 
-        <section class="search-area">
-            <input type="text" id="search" placeholder="Suchen...">
-            <div class="search-engines">
-                <button class="search-engine glass active" data-engine="google">Google</button>
-                <button class="search-engine glass" data-engine="bing">Bing</button>
-                <button class="search-engine glass" data-engine="duckduckgo">DuckDuckGo</button>
-                <button class="search-engine glass" data-engine="youtube">YouTube</button>
-                <button class="search-engine glass" data-engine="github">GitHub</button>
-                <button class="search-engine glass" data-engine="yandex">Yandex</button>
-            </div>
-        </section>
+                <div class="download-card" data-file="mkweb_features_guide.pdf" data-size="5.8 MB">
+                    <div class="card-icon">📚</div>
+                    <h2>MKWEB Features Guide</h2>
+                    <p class="file-info">Größe: 5.8 MB | Typ: PDF</p>
+                    <p class="description">Ein umfassender Leitfaden zu allen Funktionen und zur Nutzung des MKWEB Browsers.</p>
+                    <button class="download-btn" data-url="/downloads/mkweb_features_guide.pdf">Download</button>
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                        <span class="progress-text">Bereit</span>
+                    </div>
+                </div>
 
-        <section class="time-weather-quote">
-            <div class="time-widget glass animate-in" style="--delay: 0s;">
-                <h1 id="time"></h1>
-                <p id="date"></p>
-            </div>
-            <div class="weather-widget glass animate-in" style="--delay: 0.1s;">
-                <span class="weather-icon"></span>
-                <p class="weather-text"></p>
-                <p class="weather-location"></p>
-            </div>
-            <div class="quote-widget glass animate-in" style="--delay: 0.2s;">
-                <p id="quote-text" class="quote-text"></p>
-                <p id="quote-author" class="quote-author"></p>
-            </div>
-        </section>
+                <div class="download-card" data-file="mkweb_adblock_list.zip" data-size="1.1 MB">
+                    <div class="card-icon">🛡️</div>
+                    <h2>Erweiterte AdBlock Liste</h2>
+                    <p class="file-info">Größe: 1.1 MB | Typ: ZIP</p>
+                    <p class="description">Manuelle Liste für erweiterten Werbeblocker-Schutz im MKWEB Browser.</p>
+                    <button class="download-btn" data-url="/downloads/mkweb_adblock_list.zip">Download</button>
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                        <span class="progress-text">Bereit</span>
+                    </div>
+                </div>
 
-        <section class="card-group">
-            <a href="https://chatgpt.com/" target="_blank" class="action-card glass animate-in" style="--delay: 0.3s;">
-                <h3>ChatGPT</h3>
-                <p>KI-basierter Chatbot.</p>
-            </a>
-            <a href="https://github.com/m-k-de" target="_blank" class="action-card glass animate-in" style="--delay: 0.4s;">
-                <h3>GitHub</h3>
-                <p>Meine Projekte ansehen.</p>
-            </a>
-            <a href="https://www.google.com/calendar" target="_blank" class="action-card glass animate-in" style="--delay: 0.5s;">
-                <h3>Kalender</h3>
-                <p>Termine verwalten.</p>
-            </a>
-        </section>
+            </section>
 
-        <section class="card-group">
-            <a href="https://heidenheim.de/aktuelles" target="_blank" class="news-card glass animate-in" style="--delay: 0.6s;">
-                <h3>Lokale Nachrichten</h3>
-                <p>Aktuelles aus Heidenheim.</p>
-            </a>
-            <a href="https://developer.mozilla.org/de/" target="_blank" class="bookmark-card glass animate-in" style="--delay: 0.7s;">
-                <h3>MDN Web Docs</h3>
-                <p>Wichtige Web-Dokumentation.</p>
-            </a>
-            <a href="https://www.youtube.com/feed/subscriptions" target="_blank" class="bookmark-card glass animate-in" style="--delay: 0.8s;">
-                <h3>YouTube Abos</h3>
-                <p>Neueste Videos meiner Abos.</p>
-            </a>
-        </section>
+            <section class="info-section">
+                <h2>Warum MKWEB Downloads nutzen?</h2>
+                <ul>
+                    <li><span class="bullet-icon">⚡</span> Blitzschnelle Downloads, optimiert für MKWEB Browser.</li>
+                    <li><span class="bullet-icon">🔒</span> Gesicherte Verbindungen für Ihre Sicherheit.</li>
+                    <li><span class="bullet-icon">✨</span> Ästhetisches Design und einfache Bedienung.</li>
+                    <li><span class="bullet-icon">🖥️</span> Vollbild-Modus gefixt für nahtloses Surfen.</li>
+                    <li><span class="bullet-icon">🎨</span> Design-Verbesserungen für eine moderne Benutzeroberfläche.</li>
+                    <li><span class="bullet-icon">➕</span> Viele neue Features hinzugefügt.</li>
+                    <li><span class="bullet-icon">🌐</span> Download-Website aktualisiert für bessere Übersicht.</li>
+                    <li><span class="bullet-icon">🚫</span> Erweiterter Ad Blocker integriert.</li>
+                    <li><span class="bullet-icon">🧠</span> KI-Upgrade für intelligentere Interaktionen.</li>
+                    <li><span class="bullet-icon">🤖</span> Multi-KI-Auswahl für personalisierte Assistenten.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
 
-        <section class="stats-card glass animate-in" style="--delay: 0.9s;">
-            <div class="stat-item">
-                <p class="value" id="search-count">0</p>
-                <p class="label">Suchen</p>
-            </div>
-            <div class="stat-item">
-                <p class="value" id="click-count">0</p>
-                <p class="label">Klicks auf Links</p>
-            </div>
-            <div class="stat-item">
-                <p class="value" id="time-spent">0</p>
-                <p class="label">Minuten online</p>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <p>© 2025 MKWeb. Alle Rechte vorbehalten.</p>
-        </footer>
-    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 MKWEB. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
