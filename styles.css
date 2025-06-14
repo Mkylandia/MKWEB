@@ -1,49 +1,50 @@
-/* styles.css - MKWEB OS 7: Refined Aesthetics & Performance (No Weather) */
+/* styles.css - MKWEB OS 7: ULTIMATE Polish & Dynamic Animations */
 :root {
   /* Global Design Variables - Tuned for ultimate polish and realism (MKWEB OS 7 Refinements) */
-  --t: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slightly slower, more deliberate transitions */
-  --r: 20px; /* Slightly more rounded border-radius for softer feel */
-  --s: 0 10px 30px rgba(0,0,0,0.18); /* Deeper, more diffuse shadow with more depth */
-  --sh: 0 20px 60px rgba(0,0,0,0.38); /* More prominent and deep hover shadow */
-  --s-light: 0 5px 12px rgba(0,0,0,0.1); /* Even lighter shadow for subtle lift */
-  --border-width: 1px; /* Thinner borders */
-  --text-gradient-angle: 45deg; /* Angle for text gradients, consistent */
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%, rgba(255, 255, 255, 0.02) 100%); /* More visible reflection */
-  --glow-strength: 0 0 12px; /* Base glow strength - slightly increased for effect */
+  --t: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slower, more deliberate, luxurious transitions */
+  --r: 25px; /* Even more rounded border-radius for softer, fluid feel */
+  --s: 0 15px 45px rgba(0,0,0,0.22); /* Deeper, more diffuse shadow with more depth */
+  --sh: 0 30px 80px rgba(0,0,0,0.45); /* EVEN more prominent and deep hover shadow */
+  --s-light: 0 8px 18px rgba(0,0,0,0.12); /* Lighter shadow for subtle lift, but more spread */
+  --border-width: 1.5px; /* Slightly thicker borders for definition */
+  --text-gradient-angle: 60deg; /* Steeper angle for more dynamic text gradients */
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 55%, rgba(255, 255, 255, 0.03) 100%); /* Stronger, more defined reflection */
+  --glow-strength: 0 0 16px; /* Increased base glow strength for ethereal feel */
   --glow-color: var(--acc); /* Base glow color */
-  --blur-intensity: 15px; /* Main backdrop-filter blur value - increased for stronger glass */
-  --saturate-intensity: 150%; /* Increased saturate for stronger glass effect */
-  --content-max-width: 1350px; /* Slightly wider max width for main content */
+  --blur-intensity: 25px; /* Main backdrop-filter blur value - SIGNIFICANTLY increased for stronger glass */
+  --saturate-intensity: 180%; /* Increased saturate for STRONGER glass effect */
+  --content-max-width: 1400px; /* Slightly wider max width for main content */
+  --inner-shadow-strength: inset 0 0 10px rgba(0,0,0,0.1); /* Stronger inner shadow for depth */
 }
 
 /* Themed Variables */
 [data-theme="dark"] {
-  --bg: linear-gradient(135deg, #0a0a0a 0%, #121212 100%); /* Even deeper, richer dark background */
-  --fg: #e0e0e0; /* Softer white foreground text */
-  --dim: rgba(224,224,224,0.6); /* Slightly less bright dim for better harmony */
+  --bg: linear-gradient(135deg, #050505 0%, #0e0e0e 100%); /* Deepest, richest black background */
+  --fg: #e8e8e8; /* Bright, crisp white foreground text */
+  --dim: rgba(232,232,232,0.55); /* Softer dim for better harmony */
   --acc: #a56ddf; /* Vibrant purple accent - unchanged as requested */
-  --ah: #8a57c5; /* Matching hover state for softer purple */
-  --gl: rgba(255,255,255,0.04); /* More opaque glass background */
-  --gb: rgba(255,255,255,0.15); /* More opaque glass border */
-  --inner-shadow: inset 0 0 7px rgba(0,0,0,0.05); /* Stronger inner shadow */
-  --acc-rgb: 165, 109, 223; /* Adjusted RGB for --acc */
-  --fg-rgb: 224, 224, 224; /* Adjusted RGB for --fg */
-  --ah-rgb: 138, 87, 197; /* Adjusted RGB for --ah */
+  --ah: #c08cff; /* Lighter, more energetic hover state for purple */
+  --gl: rgba(255,255,255,0.06); /* More opaque glass background */
+  --gb: rgba(255,255,255,0.2); /* More opaque, defined glass border */
+  --inner-shadow: var(--inner-shadow-strength);
+  --acc-rgb: 165, 109, 223;
+  --fg-rgb: 232, 232, 232;
+  --ah-rgb: 192, 140, 255;
   --gb-rgb: 255, 255, 255;
 }
 
 [data-theme="light"] {
-  --bg: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%); /* Lighter, subtle background */
-  --fg: #2c2c2c; /* Darker foreground for contrast */
-  --dim: rgba(44,44,44,0.6); /* Slightly less dim */
+  --bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); /* Ultra-light, subtle background */
+  --fg: #212529; /* Deep, rich dark foreground for contrast */
+  --dim: rgba(33,37,41,0.55); /* Softer dim for better harmony */
   --acc: #007bff; /* Vibrant blue accent - unchanged */
-  --ah: #0056b3; /* Matching hover state */
-  --gl: rgba(0,0,0,0.04); /* More opaque glass background */
-  --gb: rgba(0,0,0,0.12); /* More opaque glass border */
-  --inner-shadow: inset 0 0 7px rgba(255,255,255,0.05); /* Stronger inner shadow */
+  --ah: #3399ff; /* Lighter, more energetic hover state for blue */
+  --gl: rgba(0,0,0,0.06); /* More opaque glass background */
+  --gb: rgba(0,0,0,0.15); /* More opaque, defined glass border */
+  --inner-shadow: var(--inner-shadow-strength);
   --acc-rgb: 0, 123, 255;
-  --fg-rgb: 44, 44, 44;
-  --ah-rgb: 0, 86, 179;
+  --fg-rgb: 33, 37, 41;
+  --ah-rgb: 51, 153, 255;
   --gb-rgb: 0, 0, 0;
 }
 
@@ -70,31 +71,38 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  perspective: 1000px; /* Enable 3D context */
+  perspective: 1500px; /* INCREASED: Stronger 3D context for more immersive effects */
 }
 
-/* Animated Background Elements - Enhanced 3D Movement */
+/* Animated Background Elements - MAXIMIZED 3D Movement */
 .background-shape {
   content: '';
   position: fixed;
   border-radius: 50%;
-  opacity: 0.05; /* Slightly more visible */
-  filter: blur(60px); /* Increased blur for more ethereal look */
+  opacity: 0.06; /* Slightly more visible and impactful */
+  filter: blur(80px); /* SIGNIFICANTLY increased blur for more ethereal, nebulous look */
   z-index: -1;
   pointer-events: none;
-  width: 400px; /* Slightly larger base size */
-  height: 400px; /* Slightly larger base size */
+  width: 500px; /* Larger base size for more presence */
+  height: 500px; /* Larger base size */
   background: var(--acc); /* Theme-aware color */
-  animation: floatEffect 40s ease-in-out infinite alternate; /* Slower, smoother animation */
-  will-change: transform, opacity;
+  animation: floatEffect 50s ease-in-out infinite alternate, pulseOpacity 7s infinite alternate; /* Slower, smoother, and now also pulsing opacity */
+  will-change: transform, opacity, filter;
 }
 
 @keyframes floatEffect {
   0% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-  25% { transform: translate3d(20px, 25px, -60px) scale(1.03) rotateX(3deg) rotateY(2deg) rotateZ(1deg); } /* More pronounced 3D movements */
-  50% { transform: translate3d(-15px, -22px, 30px) scale(0.97) rotateX(-2deg) rotateY(-3deg) rotateZ(-1.5deg); }
-  75% { transform: translate3d(10px, -15px, -40px) scale(1.02) rotateX(2deg) rotateY(1.5deg) rotateZ(0.5deg); }
+  20% { transform: translate3d(30px, 35px, -80px) scale(1.05) rotateX(5deg) rotateY(4deg) rotateZ(2deg); } /* More aggressive 3D movements */
+  40% { transform: translate3d(-25px, -30px, 50px) scale(0.95) rotateX(-4deg) rotateY(-5deg) rotateZ(-2.5deg); }
+  60% { transform: translate3d(20px, -25px, -70px) scale(1.03) rotateX(4deg) rotateY(3.5deg) rotateZ(1.5deg); }
+  80% { transform: translate3d(-10px, 15px, 20px) scale(0.98) rotateX(-1.5deg) rotateY(-2.5deg) rotateZ(-0.8deg); }
   100% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+}
+
+@keyframes pulseOpacity {
+    0% { opacity: 0.06; }
+    50% { opacity: 0.08; }
+    100% { opacity: 0.06; }
 }
 
 .grain {
@@ -103,31 +111,31 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); /* Even lower opacity */
-  background-size: 80px 80px; /* Larger pattern for less density */
-  animation: grain 0.5s steps(1) infinite; /* Slower step animation for less flicker */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px); /* Slightly more visible grain */
+  background-size: 70px 70px; /* Smaller pattern for denser noise */
+  animation: grain 0.3s steps(1) infinite; /* Faster step animation for more energetic noise */
   pointer-events: none;
   z-index: 0;
-  opacity: 0.2; /* Minimal opacity, but slightly more visible */
+  opacity: 0.25; /* Slightly higher opacity */
 }
 
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.3%, 0.3%); } /* Smaller translation */
+  50% { transform: translate(-0.5%, 0.5%); } /* Larger translation for more noticeable movement */
 }
 
 .container {
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding: 3.5rem; /* Increased padding */
+  padding: 4rem; /* SIGNIFICANTLY increased padding for spacious layout */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4.5rem; /* Increased gap for better spacing */
+  gap: 5rem; /* SIGNIFICANTLY increased gap for extreme visual separation */
 }
 
-/* Glassmorphism Base Style with subtle reflection and 3D hover */
+/* Glassmorphism Base Style with stunning reflection and 3D hover */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
@@ -139,7 +147,7 @@ body {
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, backdrop-filter, filter;
 
-  &::after { /* Subtle reflection */
+  &::after { /* STUNNING Reflection */
     content: '';
     position: absolute;
     top: 0;
@@ -148,45 +156,45 @@ body {
     height: 100%;
     background: var(--glass-reflection);
     pointer-events: none;
-    opacity: 0.8; /* More visible reflection */
+    opacity: 0.9; /* Very visible reflection */
     transition: opacity var(--t);
   }
 
   &:hover {
-    transform: perspective(1000px) rotateX(1.5deg) rotateY(-1.5deg) translateY(-8px) scale(1.008); /* More distinct 3D tilt and lift */
-    box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Enhanced hover shadow with subtle glow */
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-12px) scale(1.01); /* EVEN MORE distinct 3D tilt and lift */
+    box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Enhanced hover shadow with strong glow */
   }
 
-  &::before { /* Animated border on hover */
+  &::before { /* Animated glowing border on hover */
     content: '';
     position: absolute;
-    top: -2px; left: -2px; right: -2px; bottom: -2px; /* Thicker border for glow */
-    border-radius: calc(var(--r) + 2px);
+    top: -3px; left: -3px; right: -3px; bottom: -3px; /* THICKER border for intense glow */
+    border-radius: calc(var(--r) + 3px);
     background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
     z-index: -1;
     opacity: 0;
     transition: opacity var(--t), filter var(--t);
-    filter: blur(8px); /* Subtle blur for the glow */
+    filter: blur(10px); /* Stronger blur for more ethereal glow */
   }
 
   &:hover::before {
     opacity: 1; /* Make the glowing border visible on hover */
-    filter: blur(10px); /* Slightly stronger blur on hover */
+    filter: blur(14px); /* EVEN STRONGER blur on hover */
   }
 }
 
 /* Animation for elements appearing on scroll */
 .animate-in {
   opacity: 0;
-  transform: translateY(20px) scale(0.97); /* Slightly more aggressive initial state for a better animate-in feel */
-  animation: fadeInSlideUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly slower, smoother animation */
+  transform: translateY(30px) scale(0.95) rotateX(5deg); /* More aggressive initial state for a powerful animate-in feel */
+  animation: fadeInSlideUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slower, more impactful animation */
   will-change: opacity, transform;
 }
 
 @keyframes fadeInSlideUp {
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0) scale(1) rotateX(0deg);
   }
 }
 
@@ -197,19 +205,19 @@ body {
   align-items: center;
   width: 100%;
   max-width: var(--content-max-width);
-  padding: 2.5rem 3rem; /* Increased padding */
+  padding: 3rem 3.5rem; /* Increased padding */
 }
 
 .logo {
-  font-size: 3.5rem; /* Larger logo */
+  font-size: 4rem; /* LARGER logo */
   font-weight: 900;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 400% 400%; /* Larger gradient area for smoother animation */
+  background-size: 500% 500%; /* Larger gradient area for super smooth animation */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate, logoGlowPulse 3s infinite alternate ease-in-out; /* Slower, more subtle gradient animation */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Slightly increased logo glow */
+  animation: gradient 20s ease infinite alternate, logoGlowPulse 4s infinite alternate ease-in-out; /* Slower, more majestic gradient, stronger pulse */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35); /* Increased logo glow */
   position: relative;
   will-change: background-position, text-shadow;
 }
@@ -219,30 +227,30 @@ body {
   100% { background-position: 100% 50%; }
 }
 
-/* Subtle breathing glow for logo */
+/* Stronger breathing glow for logo */
 @keyframes logoGlowPulse {
-    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); }
-    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); }
+    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); }
+    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); }
 }
 
 .controls {
   display: flex;
-  gap: 1.5rem; /* Increased gap */
+  gap: 2rem; /* Increased gap */
   align-items: center;
   flex-wrap: wrap;
 }
 
-/* Buttons and Selects */
-select, button {
-  padding: 1rem 2rem; /* Slightly more padding */
+/* Buttons Styling - Reimagined for single Theme Toggle Button */
+button {
+  padding: 1.2rem 2.5rem; /* Larger padding for a more substantial feel */
   border: var(--border-width) solid var(--gb);
-  border-radius: 20px; /* Slightly larger radius */
+  border-radius: var(--r);
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
-  font-size: 1rem; /* Slightly larger font */
-  font-weight: 500;
+  font-size: 1.1rem; /* Slightly larger font */
+  font-weight: 600; /* Bolder text */
   outline: none;
   box-shadow: var(--s-light);
   position: relative;
@@ -250,25 +258,25 @@ select, button {
   overflow: hidden;
   will-change: transform, box-shadow, border-color, background, color;
 
-  &:active { /* Subtle press effect */
-    transform: translateY(2px) scale(0.97);
-    box-shadow: var(--s-light), inset 0 3px 8px rgba(0,0,0,0.15); /* More distinct inner shadow on press */
+  &:active { /* VERY distinct press effect */
+    transform: translateY(4px) scale(0.96); /* More aggressive press */
+    box-shadow: var(--s-light), inset 0 5px 12px rgba(0,0,0,0.25); /* Stronger inner shadow on press */
+    background: rgba(var(--gl-rgb), 0.1); /* Slightly darker on press */
   }
 }
 
-select:hover, button:hover {
+button:hover {
   border-color: var(--acc);
-  transform: translateY(-6px) scale(1.03); /* More pronounced lift and scale */
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger glow on hover */
+  transform: translateY(-10px) scale(1.04); /* VERY pronounced lift and scale */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.6); /* MUCH Stronger glow on hover */
 }
 
-/* Animated hover glow border for buttons/selects */
-select::after, button::after {
+/* Animated hover glow border for buttons */
+button::after {
   content: '';
   position: absolute;
-  top: -2px; bottom: -2px; left: -2px; right: -2px;
-  border-radius: 22px;
-  border: 2px solid transparent; /* Thicker border for glow */
+  top: -4px; bottom: -4px; left: -4px; right: -4px; /* Even THICKER border for intense glow */
+  border-radius: calc(var(--r) + 4px);
   background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc)) border-box;
   -webkit-mask:
     linear-gradient(#fff 0 0) padding-box,
@@ -279,33 +287,31 @@ select::after, button::after {
   transition: opacity var(--t), filter var(--t);
   z-index: -1;
   will-change: opacity;
-  filter: blur(7px); /* Added blur for glow effect */
+  filter: blur(12px); /* Increased blur for more ethereal glow effect */
 }
 
-select:hover::after, button:hover::after {
+button:hover::after {
   opacity: 1;
-  filter: blur(10px); /* Slightly stronger blur on hover */
+  filter: blur(16px); /* EVEN STRONGER blur on hover */
 }
-
-/* REMOVED WEATHER WIDGET STYLES */
 
 /* User Avatar Toggle & Avatar Itself */
 .hidden-avatar {
   opacity: 0 !important;
-  transform: scale(0.4) !important; /* Slightly more aggressive scale */
+  transform: scale(0.3) !important; /* VERY aggressive scale */
   pointer-events: none !important;
   transition: opacity var(--t), transform var(--t) !important;
 }
 
 #user-avatar-toggle {
-  padding: 1rem 2rem;
-  border-radius: 20px;
+  padding: 1.2rem 2.5rem;
+  border-radius: var(--r);
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--fg);
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
   outline: none;
   box-shadow: var(--s-light);
@@ -314,18 +320,18 @@ select:hover::after, button:hover::after {
 
 #user-avatar-toggle:hover {
   border-color: var(--acc);
-  transform: translateY(-6px) scale(1.02); /* More pronounced lift */
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.35);
+  transform: translateY(-10px) scale(1.03); /* More pronounced lift */
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 }
 
 .user-avatar {
-  width: 50px; /* Larger avatar */
-  height: 50px;
+  width: 60px; /* MUCH Larger avatar */
+  height: 60px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem; /* Larger icon */
+  font-size: 2.2rem; /* LARGER icon */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -337,7 +343,7 @@ select:hover::after, button:hover::after {
 }
 
 .user-avatar:hover {
-  transform: scale(1.15) rotate(3deg); /* More distinct scale and rotation */
+  transform: scale(1.25) rotate(5deg); /* VERY distinct scale and rotation */
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--sh);
 }
@@ -348,24 +354,24 @@ select:hover::after, button:hover::after {
   max-width: var(--content-max-width);
   display: flex;
   flex-direction: column;
-  gap: 4rem; /* Increased gap */
+  gap: 5rem; /* INCREASED gap */
 }
 
-.search-section { padding: 3rem; } /* Slightly more padding */
+.search-section { padding: 3.5rem; } /* Slightly more padding */
 
 /* Search Engines */
 .search-engines {
   display: flex;
-  gap: 1.5rem; /* Increased gap */
-  margin-bottom: 3rem; /* Increased margin */
+  gap: 2rem; /* Increased gap */
+  margin-bottom: 3.5rem; /* Increased margin */
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: 1rem 2.5rem; /* Slightly more padding */
+  padding: 1.2rem 2.8rem; /* Larger padding */
   border-radius: 50px;
-  font-weight: 600;
+  font-weight: 700; /* Bolder text */
   border: var(--border-width) solid transparent;
   background: var(--gl);
   box-shadow: inset 0 0 0 transparent;
@@ -377,22 +383,22 @@ select:hover::after, button:hover::after {
   &.active {
     background: var(--acc);
     color: #fff; /* White text on active accent */
-    transform: scale(1.04) translateY(-4px); /* More distinct pop-out effect */
+    transform: scale(1.06) translateY(-6px); /* More distinct pop-out effect */
     box-shadow: var(--glow-strength) var(--acc), var(--s);
     border-color: var(--acc);
-    animation: activeEnginePulse 1.5s infinite alternate ease-in-out; /* Slower, more subtle pulse when active */
+    animation: activeEnginePulse 2s infinite alternate ease-in-out; /* Slower, more subtle pulse when active */
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-3px) scale(1.01); /* Slightly more pronounced hover */
-    box-shadow: inset 0 0 10px rgba(var(--acc-rgb), 0.15), var(--s-light); /* Lighter inner glow, reduced outer shadow */
+    transform: translateY(-4px) scale(1.02); /* Slightly more pronounced hover */
+    box-shadow: inset 0 0 15px rgba(var(--acc-rgb), 0.2), var(--s-light); /* Lighter inner glow, reduced outer shadow */
   }
 }
 
 @keyframes activeEnginePulse {
-  0% { transform: scale(1.04) translateY(-4px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); }
-  100% { transform: scale(1.045) translateY(-4.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); }
+  0% { transform: scale(1.06) translateY(-6px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); }
+  100% { transform: scale(1.065) translateY(-6.5px); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.6), var(--s); }
 }
 
 /* Search Box */
@@ -402,7 +408,7 @@ select:hover::after, button:hover::after {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: 50px;
-  padding: 1.8rem 2.5rem; /* Slightly more padding */
+  padding: 2rem 2.8rem; /* SIGNIFICANTLY more padding */
   transition: border-color var(--t), transform var(--t), box-shadow var(--t);
   position: relative;
   overflow: hidden;
@@ -412,8 +418,8 @@ select:hover::after, button:hover::after {
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.008); /* Slightly more subtle scale on focus */
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); /* Increased glow on focus */
+  transform: scale(1.01); /* Slightly more subtle scale on focus */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.6), var(--s); /* Increased glow on focus */
 }
 
 /* Enhanced search box focus animation */
@@ -423,9 +429,9 @@ select:hover::after, button:hover::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 5px; /* Thicker animated border */
+    height: 6px; /* Thicker animated border */
     background: linear-gradient(90deg, transparent, var(--acc), transparent);
-    animation: borderScan 0.8s infinite linear; /* Continuous scanline animation */
+    animation: borderScan 1s infinite linear; /* Slower, more prominent continuous scanline animation */
     will-change: transform;
     border-radius: 0 0 50px 50px; /* Match bottom border radius */
 }
@@ -440,121 +446,121 @@ select:hover::after, button:hover::after {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: 1.3rem; /* Slightly larger */
+  font-size: 1.4rem; /* Slightly larger */
   outline: none;
-  margin-left: 1.2rem; /* Slightly more margin */
-  text-shadow: 0 0 4px rgba(var(--fg-rgb), 0.1); /* More visible text shadow */
+  margin-left: 1.5rem; /* Slightly more margin */
+  text-shadow: 0 0 6px rgba(var(--fg-rgb), 0.15); /* More visible text shadow */
 }
 
 #search::placeholder {
   color: var(--dim);
-  opacity: 0.6; /* Slightly less opaque */
-  transition: opacity 0.15s ease; /* Slightly slower transition */
+  opacity: 0.7; /* Slightly less opaque */
+  transition: opacity 0.2s ease; /* Slightly slower transition */
 }
 
 #search:focus::placeholder {
-  opacity: 0.2;
+  opacity: 0.3;
 }
 
 /* Time Display */
 .time-display {
   text-align: center;
-  padding: 4rem; /* More padding */
+  padding: 5rem; /* MUCH More padding */
 }
 
 #time {
-  font-size: 6.5rem; /* Slightly larger time display */
+  font-size: 7.5rem; /* MUCH Larger time display */
   font-weight: 900;
-  margin-bottom: 1.5rem; /* More margin */
+  margin-bottom: 2rem; /* More margin */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 500% 500%;
+  background-size: 600% 600%; /* HUGE gradient area for super smooth animation */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 12s ease infinite alternate, pulseText 3.5s infinite alternate; /* Slower pulse, slightly faster gradient */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Slightly increased text glow */
+  animation: gradient 15s ease infinite alternate, pulseText 4s infinite alternate; /* Slower pulse, slightly faster gradient */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Increased text glow */
   will-change: background-position, text-shadow;
 }
 
-/* New: More subtle pulse for time display */
+/* More prominent pulse for time display */
 @keyframes pulseText {
-  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 10px rgba(var(--fg-rgb), 0.07); }
-  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), 0 0 15px rgba(var(--fg-rgb), 0.1); }
-  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15), 0 0 10px rgba(var(--fg-rgb), 0.07); }
+  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 15px rgba(var(--fg-rgb), 0.1); }
+  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.45), 0 0 20px rgba(var(--fg-rgb), 0.15); }
+  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 15px rgba(var(--fg-rgb), 0.1); }
 }
 
 #date {
-  font-size: 1.8rem; /* Slightly larger */
+  font-size: 2rem; /* Larger */
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 4px; /* More letter spacing */
+  letter-spacing: 5px; /* More letter spacing */
 }
 
 /* Quote of the Day Section */
 .quote-of-the-day {
   text-align: center;
-  padding: 3.5rem; /* More padding */
+  padding: 4rem; /* More padding */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 220px; /* Taller */
+  min-height: 250px; /* Taller */
 }
 
 .quote-of-the-day h2 {
-  margin-bottom: 1.8rem; /* More margin */
-  font-size: 2.5rem; /* Larger */
+  margin-bottom: 2rem; /* More margin */
+  font-size: 2.8rem; /* Larger */
   font-weight: 800;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Increased heading glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Increased heading glow */
 }
 
 .quote-of-the-day #quote-text {
-  font-size: 1.5rem; /* Larger */
-  line-height: 1.6;
+  font-size: 1.6rem; /* Larger */
+  line-height: 1.7;
   color: var(--fg);
-  margin-bottom: 1rem; /* More margin */
+  margin-bottom: 1.2rem; /* More margin */
   font-style: italic;
-  max-width: 750px; /* Wider max width */
-  animation: quoteFadeIn 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-  transform: translateY(10px);
+  max-width: 800px; /* Wider max width */
+  animation: quoteFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slower, smoother animation */
+  transform: translateY(15px);
   opacity: 0;
   will-change: opacity, transform;
 }
 
 .quote-of-the-day #quote-author {
-  font-size: 1.1rem; /* Larger */
+  font-size: 1.2rem; /* Larger */
   color: var(--dim);
   font-weight: 400;
-  animation: quoteFadeIn 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.15s; /* Slightly delayed fade for author, slower */
-  transform: translateY(10px);
+  animation: quoteFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.2s; /* Slightly delayed fade for author, slower */
+  transform: translateY(15px);
   opacity: 0;
   will-change: opacity, transform;
 }
 
 /* New: Separate animation for quote text to re-trigger on new quote */
 @keyframes quoteFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(25px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 /* Quick Actions */
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Larger min width */
-  gap: 2.5rem; /* More gap */
-  padding: 0 2.5rem; /* More padding */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Larger min width */
+  gap: 3rem; /* More gap */
+  padding: 0 3rem; /* More padding */
 }
 
 .action-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 2.8rem 1.8rem; /* More padding */
+  padding: 3rem 2rem; /* More padding */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
@@ -565,27 +571,27 @@ select:hover::after, button:hover::after {
   will-change: transform, box-shadow, border-color;
 }
 
-.action-card::before { /* Simplified shimmer effect on hover */
+.action-card::before { /* Intense shimmer effect on hover */
   content: '';
   position: absolute;
   top: 0;
-  left: -150%; /* More travel distance */
-  width: 50%; /* Thicker shimmer */
+  left: -200%; /* Even more travel distance */
+  width: 60%; /* THICKER shimmer */
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); /* Increased opacity */
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); /* Increased opacity */
   transition: left var(--t) ease-out;
   z-index: 1;
-  transform: skewX(-20deg); /* More skew */
+  transform: skewX(-25deg); /* More skew */
   pointer-events: none;
   will-change: left;
 }
 
 .action-card:hover::before {
-  left: 150%; /* More travel distance */
+  left: 200%; /* Even more travel distance */
 }
 
 .action-card:hover {
-  transform: translateY(-12px) scale(1.04) rotateX(1.5deg); /* Stronger lift, scale and subtle 3D tilt */
+  transform: translateY(-15px) scale(1.05) rotateX(2deg); /* STRONGER lift, scale and subtle 3D tilt */
   border-color: var(--acc);
   box-shadow: var(--sh), var(--glow-strength) var(--acc);
 }
@@ -596,57 +602,57 @@ select:hover::after, button:hover::after {
 }
 
 .icon {
-  font-size: 4.5rem; /* Larger icon */
-  margin-bottom: 1.5rem; /* More margin */
+  font-size: 5rem; /* MUCH Larger icon */
+  margin-bottom: 1.8rem; /* More margin */
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Increased icon glow */
-  transition: transform 0.2s ease-out, text-shadow 0.2s ease-out;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Increased icon glow */
+  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out;
   will-change: transform;
 }
 
 .action-card:hover .icon {
-  transform: scale(1.15) rotate(3deg); /* Stronger icon rotation and scale on hover */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger glow on hover */
+  transform: scale(1.2) rotate(5deg); /* STRONGER icon rotation and scale on hover */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.6); /* STRONGER glow on hover */
 }
 
 /* Label animation on hover */
 .action-card .label {
-  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
   will-change: transform, opacity;
 }
 
 .action-card:hover .label {
-  transform: translateY(-8px); /* Slide up slightly more */
+  transform: translateY(-10px); /* Slide up slightly more */
   opacity: 0.98;
 }
 
 /* News and Bookmark Sections */
 .news-section, .bookmark-section {
-  padding: 3.5rem; /* More padding */
+  padding: 4rem; /* More padding */
 }
 
 .news-section h2, .bookmark-section h2 {
-  margin-bottom: 2.5rem; /* More margin */
-  font-size: 2.8rem; /* Larger */
+  margin-bottom: 3rem; /* More margin */
+  font-size: 3rem; /* Larger */
   font-weight: 900;
   text-align: center;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.28); /* Increased heading glow */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35); /* Increased heading glow */
 }
 
 /* News Section Button Styling */
 .news-section.button-style {
-  font-size: 1.3rem; /* Larger text */
-  padding: 2rem 3rem; /* Adjusted padding */
+  font-size: 1.4rem; /* Larger text */
+  padding: 2.2rem 3.5rem; /* Adjusted padding */
   text-align: center;
   color: var(--fg);
-  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.1); /* Slightly stronger text shadow */
+  text-shadow: 0 0 6px rgba(var(--fg-rgb), 0.15); /* Slightly stronger text shadow */
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
   display: block;
-  margin-top: 1.5rem; /* Space from heading */
+  margin-top: 2rem; /* Space from heading */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
@@ -656,22 +662,22 @@ select:hover::after, button:hover::after {
 }
 
 .news-section.button-style:hover {
-  transform: translateY(-10px) scale(1.02); /* Slightly stronger lift and scale */
+  transform: translateY(-12px) scale(1.03); /* Slightly stronger lift and scale */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.35);
 }
 
 .news-grid, .bookmark-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Larger min width for cards */
-  gap: 2.5rem; /* More gap */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Larger min width for cards */
+  gap: 3rem; /* More gap */
 }
 
 .news-card, .bookmark-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 2.5rem; /* More padding */
+  padding: 2.8rem; /* More padding */
   text-decoration: none;
   color: var(--fg);
   transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
@@ -682,66 +688,66 @@ select:hover::after, button:hover::after {
 }
 
 .news-card:hover, .bookmark-card:hover {
-  transform: translateY(-10px) scale(1.02) rotateX(0.8deg); /* Lift, subtle scale, slight X-axis tilt */
+  transform: translateY(-12px) scale(1.03) rotateX(1deg); /* Lift, subtle scale, slight X-axis tilt */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.28);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.35);
 }
 
 .news-card h3 {
-  margin-bottom: 1.2rem; /* More margin */
-  font-size: 1.6rem; /* Larger */
+  margin-bottom: 1.5rem; /* More margin */
+  font-size: 1.8rem; /* Larger */
   font-weight: 700;
-  text-shadow: 0 0 6px rgba(var(--fg-rgb), 0.1); /* More visible text shadow */
+  text-shadow: 0 0 8px rgba(var(--fg-rgb), 0.2); /* More visible text shadow */
 }
 
 .news-card p {
   color: var(--dim);
-  margin-bottom: 1.8rem; /* More margin */
-  line-height: 1.6;
-  font-size: 1.1rem; /* Larger */
+  margin-bottom: 2rem; /* More margin */
+  line-height: 1.7;
+  font-size: 1.2rem; /* Larger */
 }
 
 .news-source {
-  font-size: 1rem; /* Larger */
+  font-size: 1.1rem; /* Larger */
   color: var(--acc);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.2px; /* More letter spacing */
+  letter-spacing: 1.5px; /* More letter spacing */
 }
 
 .bookmark-card {
   display: flex;
   align-items: center;
-  gap: 1.8rem; /* More gap */
+  gap: 2rem; /* More gap */
   transition: all var(--t);
 }
 
 .bookmark-card span:first-child {
-  font-size: 2.8rem; /* Larger */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.28);
-  transition: transform 0.2s ease-out, text-shadow 0.2s ease-out;
+  font-size: 3.2rem; /* Larger */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35);
+  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out;
 }
 
 .bookmark-card:hover span:first-child {
-    transform: scale(1.18) rotate(-4deg); /* More distinct scale and rotation on hover */
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    transform: scale(1.25) rotate(-5deg); /* More distinct scale and rotation on hover */
+    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.55);
 }
 
 .bookmark-card > div > div:first-child {
   font-weight: 700;
-  font-size: 1.3rem; /* Larger */
+  font-size: 1.4rem; /* Larger */
 }
 
 .bookmark-card > div > div:last-child {
-  font-size: 1rem; /* Larger */
+  font-size: 1.1rem; /* Larger */
   color: var(--dim);
 }
 
-/* Scrollbar Styling (Subtle customization) */
+/* Scrollbar Styling (Polished customization) */
 ::-webkit-scrollbar {
-  width: 8px; /* Slightly thicker scrollbar */
+  width: 10px; /* Thicker scrollbar */
   background-color: transparent;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -749,14 +755,14 @@ select:hover::after, button:hover::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--acc-rgb), 0.65); /* More opaque accent */
-  border-radius: 4px;
-  border: 1px solid rgba(var(--gb-rgb), 0.1); /* Slightly more visible border */
+  background-color: rgba(var(--acc-rgb), 0.75); /* More opaque accent */
+  border-radius: 5px;
+  border: 1px solid rgba(var(--gb-rgb), 0.15); /* Slightly more visible border */
   transition: background-color var(--t);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--ah-rgb), 0.8); /* More opaque on hover */
+  background-color: rgba(var(--ah-rgb), 0.9); /* More opaque on hover */
 }
 
 /* SR-Only class for accessibility */
@@ -772,27 +778,27 @@ select:hover::after, button:hover::after {
   border-width: 0;
 }
 
-/* Scroll-to-top button styles */
+/* Scroll-to-top button styles - Polished */
 .scroll-to-top {
     position: fixed;
-    bottom: 30px; /* Slightly higher */
-    right: 30px; /* Slightly further right */
+    bottom: 40px; /* Higher */
+    right: 40px; /* Further right */
     background: var(--acc);
     color: #fff; /* Always white for visibility */
     border: none;
     border-radius: 50%;
-    width: 55px; /* Larger */
-    height: 55px; /* Larger */
-    font-size: 1.8rem; /* Larger icon */
+    width: 60px; /* Larger */
+    height: 60px; /* Larger */
+    font-size: 2rem; /* Larger icon */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(25px); /* Slightly more initial displacement */
+    transform: translateY(30px); /* Slightly more initial displacement */
     transition: opacity var(--t), transform var(--t), visibility var(--t), background var(--t);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
     z-index: 1000;
 }
 
@@ -804,103 +810,109 @@ select:hover::after, button:hover::after {
 
 .scroll-to-top:hover {
     background: var(--ah);
-    transform: translateY(-8px) rotate(8deg); /* More pronounced lift and rotation */
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    transform: translateY(-10px) rotate(10deg); /* More pronounced lift and rotation */
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 1200px) {
-  .logo { font-size: 3.2rem; }
-  #time { font-size: 6rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-  .header { padding: 2.2rem 2.8rem; }
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.5rem; }
-  .glass { backdrop-filter: blur(12px) saturate(var(--saturate-intensity)); }
+  .logo { font-size: 3.5rem; }
+  #time { font-size: 7rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .news-grid, .bookmark-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .header { padding: 2.5rem 3rem; }
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 3rem; }
+  .glass { backdrop-filter: blur(20px) saturate(var(--saturate-intensity)); }
+  .action-card { padding: 2.5rem 1.5rem; }
+  .icon { font-size: 4.5rem; }
+  button { padding: 1rem 2rem; font-size: 1rem; }
+  .user-avatar { width: 55px; height: 55px; font-size: 2rem; }
 }
 
 @media (max-width: 992px) {
-  .container { padding: 3rem; gap: 4rem; }
-  .header { flex-direction: column; gap: 1.5rem; padding: 2rem; }
-  .controls { justify-content: center; gap: 1rem; }
-  .logo { font-size: 2.8rem; }
-  #time { font-size: 5rem; }
-  #date { font-size: 1.6rem; letter-spacing: 3px; }
-  .quote-of-the-day h2 { font-size: 2.2rem; }
-  .quote-of-the-day #quote-text { font-size: 1.3rem; }
-  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); padding: 0 2rem; gap: 2rem;}
-  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.5rem; }
-  .search-box { padding: 1.6rem 2.2rem; }
-  #search { font-size: 1.2rem; }
-  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); }
+  .container { padding: 3.5rem; gap: 4.5rem; }
+  .header { flex-direction: column; gap: 1.8rem; padding: 2.2rem; }
+  .controls { justify-content: center; gap: 1.5rem; }
+  .logo { font-size: 3rem; }
+  #time { font-size: 6rem; }
+  #date { font-size: 1.8rem; letter-spacing: 4px; }
+  .quote-of-the-day h2 { font-size: 2.5rem; }
+  .quote-of-the-day #quote-text { font-size: 1.4rem; }
+  .quick-actions { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); padding: 0 2.5rem; gap: 2.5rem;}
+  .search-section, .time-display, .quote-of-the-day, .news-section, .bookmark-section { padding: 2.5rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2.8rem; }
+  .search-box { padding: 1.8rem 2.5rem; }
+  #search { font-size: 1.3rem; }
+  .glass { backdrop-filter: blur(18px) saturate(var(--saturate-intensity)); }
+  .user-avatar, #user-avatar-toggle { width: 50px; height: 50px; font-size: 1.8rem; }
+  .action-card { padding: 2.2rem 1.2rem; }
+  .icon { font-size: 4rem; }
+  button { padding: 0.9rem 1.8rem; font-size: 0.95rem; }
 }
 
 @media (max-width: 768px) {
-  .container { padding: 2.5rem; gap: 3.5rem; }
-  .header { padding: 1.8rem; }
-  .logo { font-size: 2.5rem; }
-  select, button { padding: 0.9rem 1.6rem; font-size: 0.95rem; border-radius: 16px; }
+  .container { padding: 3rem; gap: 4rem; }
+  .header { padding: 2rem; }
+  .logo { font-size: 2.8rem; }
+  button { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 20px; }
   .user-avatar, #user-avatar-toggle { width: 45px; height: 45px; font-size: 1.6rem; }
-  .search-section { padding: 1.8rem; }
-  .search-engine { padding: 0.9rem 1.8rem; font-size: 0.95rem; border-radius: 45px; }
-  .search-box { padding: 1.3rem 1.8rem; border-radius: 45px; }
-  #search { font-size: 1.1rem; margin-left: 1rem; }
-  #time { font-size: 4.2rem; margin-bottom: 1.2rem;}
-  #date { font-size: 1.3rem; letter-spacing: 2px; }
-  .quote-of-the-day h2 { font-size: 2rem; margin-bottom: 1.2rem;}
-  .quote-of-the-day #quote-text { font-size: 1.2rem; }
-  .quote-of-the-day #quote-author { font-size: 0.95rem; }
-  .quick-actions { grid-template-columns: 1fr; padding: 0 1.5rem; gap: 1.8rem; }
-  .action-card { padding: 2.2rem 1.2rem; }
-  .icon { font-size: 4rem; margin-bottom: 1.2rem; }
-  .label { font-size: 1.1rem; letter-spacing: 1.5px; }
-  .news-section, .bookmark-section { padding: 1.8rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 2.2rem; margin-bottom: 2rem;}
-  .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .news-card, .bookmark-card { padding: 2rem; }
-  .news-card h3 { font-size: 1.4rem; }
-  .news-card p { font-size: 1rem; margin-bottom: 1.2rem;}
-  .bookmark-card span:first-child { font-size: 2.5rem; }
-  .bookmark-card > div > div:first-child { font-size: 1.2rem; }
-  .bookmark-card > div > div:last-child { font-size: 0.95rem; }
-  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); }
+  .search-section { padding: 2rem; }
+  .search-engine { padding: 1rem 2rem; font-size: 0.9rem; border-radius: 40px; }
+  .search-box { padding: 1.5rem 2rem; border-radius: 40px; }
+  #search { font-size: 1.2rem; margin-left: 1.2rem; }
+  #time { font-size: 5.5rem; margin-bottom: 1.5rem;}
+  #date { font-size: 1.5rem; letter-spacing: 3px; }
+  .quote-of-the-day h2 { font-size: 2.2rem; margin-bottom: 1.5rem;}
+  .quote-of-the-day #quote-text { font-size: 1.3rem; }
+  .quote-of-the-day #quote-author { font-size: 1.05rem; }
+  .quick-actions { grid-template-columns: 1fr; padding: 0 2rem; gap: 2rem; }
+  .action-card { padding: 2rem 1rem; }
+  .icon { font-size: 3.5rem; margin-bottom: 1rem; }
+  .news-section, .bookmark-section { padding: 2rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2.5rem; margin-bottom: 2.5rem;}
+  .news-grid, .bookmark-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .news-card, .bookmark-card { padding: 2.2rem; }
+  .news-card h3 { font-size: 1.6rem; }
+  .news-card p { font-size: 1.1rem; margin-bottom: 1.5rem;}
+  .bookmark-card span:first-child { font-size: 2.8rem; }
+  .bookmark-card > div > div:first-child { font-size: 1.3rem; }
+  .bookmark-card > div > div:last-child { font-size: 1rem; }
+  .glass { backdrop-filter: blur(15px) saturate(var(--saturate-intensity)); }
 }
 
 @media (max-width: 480px) {
-  .container { padding: 2rem; gap: 2.5rem; }
-  .header { padding: 1.5rem; gap: 1.2rem; }
-  .logo { font-size: 2rem; }
-  select, button { padding: 0.8rem 1.2rem; font-size: 0.85rem; border-radius: 12px; }
-  .user-avatar, #user-avatar-toggle { width: 38px; height: 38px; font-size: 1.4rem; }
-  .search-section { padding: 1.5rem; }
-  .search-engine { padding: 0.8rem 1.4rem; font-size: 0.85rem; border-radius: 30px; }
-  .search-box { padding: 1rem 1.4rem; border-radius: 35px; }
-  #search { font-size: 0.95rem; margin-left: 0.8rem; }
-  #time { font-size: 3.5rem; margin-bottom: 0.8rem;}
-  #date { font-size: 1.1rem; letter-spacing: 1.5px; }
-  .quote-of-the-day h2 { font-size: 1.8rem; margin-bottom: 1rem;}
-  .quote-of-the-day #quote-text { font-size: 1.05rem; }
-  .quote-of-the-day #quote-author { font-size: 0.85rem; }
-  .quick-actions { padding: 0 1rem; gap: 1.2rem; }
+  .container { padding: 2.5rem; gap: 3rem; }
+  .header { padding: 1.8rem; gap: 1rem; }
+  .logo { font-size: 2.2rem; }
+  button { padding: 0.7rem 1.2rem; font-size: 0.8rem; border-radius: 18px; }
+  .user-avatar, #user-avatar-toggle { width: 40px; height: 40px; font-size: 1.4rem; }
+  .search-section { padding: 1.8rem; }
+  .search-engine { padding: 0.8rem 1.5rem; font-size: 0.8rem; border-radius: 35px; }
+  .search-box { padding: 1.2rem 1.5rem; border-radius: 35px; }
+  #search { font-size: 1rem; margin-left: 1rem; }
+  #time { font-size: 4rem; margin-bottom: 1rem;}
+  #date { font-size: 1.2rem; letter-spacing: 2px; }
+  .quote-of-the-day h2 { font-size: 2rem; margin-bottom: 1.2rem;}
+  .quote-of-the-day #quote-text { font-size: 1.1rem; }
+  .quote-of-the-day #quote-author { font-size: 0.9rem; }
+  .quick-actions { padding: 0 1.5rem; gap: 1.5rem; }
   .action-card { padding: 1.8rem 0.8rem; }
-  .icon { font-size: 3.2rem; margin-bottom: 0.8rem; }
-  .label { font-size: 1.05rem; letter-spacing: 1.2px; }
-  .news-section, .bookmark-section { padding: 1.5rem; }
-  .news-section h2, .bookmark-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem;}
-  .news-card, .bookmark-card { padding: 1.8rem; }
-  .news-card h3 { font-size: 1.2rem; }
-  .news-card p { font-size: 0.9rem; margin-bottom: 1rem;}
-  .bookmark-card span:first-child { font-size: 2rem; }
-  .bookmark-card > div > div:first-child { font-size: 1.1rem; }
-  .bookmark-card > div > div:last-child { font-size: 0.9rem; }
-  .glass { backdrop-filter: blur(6px) saturate(var(--saturate-intensity)); }
+  .icon { font-size: 3rem; margin-bottom: 0.8rem; }
+  .news-section, .bookmark-section { padding: 1.8rem; }
+  .news-section h2, .bookmark-section h2 { font-size: 2rem; margin-bottom: 2rem;}
+  .news-card, .bookmark-card { padding: 2rem; }
+  .news-card h3 { font-size: 1.4rem; }
+  .news-card p { font-size: 1rem; margin-bottom: 1.2rem;}
+  .bookmark-card span:first-child { font-size: 2.2rem; }
+  .bookmark-card > div > div:first-child { font-size: 1.2rem; }
+  .bookmark-card > div > div:last-child { font-size: 0.95rem; }
+  .glass { backdrop-filter: blur(10px) saturate(var(--saturate-intensity)); }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.22); /* More opaque background without blur */
+    background: rgba(var(--fg-rgb), 0.25); /* More opaque background without blur */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
