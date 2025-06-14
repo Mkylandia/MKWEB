@@ -81,6 +81,7 @@ if (initialEngineButton) {
 
 engines.forEach(btn => {
     btn.onclick = () => {
+        // Remove active class from all and add to clicked button
         engines.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         activeEngine = btn.dataset.engine;
@@ -101,7 +102,7 @@ const doSearch = query => {
         yandex: `https://yandex.com/search/?text=${encodeURIComponent(query.trim())}`
     };
     window.open(urls[activeEngine], '_blank');
-    updateStats('search');
+    // Removed updateStats('search')
     searchInput.value = '';
 };
 
@@ -169,14 +170,14 @@ const fetchWeather = async () => {
     try {
         const response = await fetch(url);
         if (!response.ok) {
+            let errorMessage = `Wetterdaten nicht gefunden oder API-Fehler: ${response.statusText}`;
             if (response.status === 401) {
-                console.error('Error: Invalid API key for OpenWeatherMap. Please get a valid key.');
-                weatherText.textContent = 'N/A';
-                weatherIcon.textContent = '❓';
-                weatherLocation.textContent = 'API Fehler';
-            } else {
-                throw new Error(`Weather data not found or API error: ${response.statusText}`);
+                errorMessage = 'Fehler: Ungültiger API-Schlüssel für OpenWeatherMap. Bitte einen gültigen Schlüssel eingeben.';
             }
+            console.error(errorMessage);
+            weatherText.textContent = 'N/A';
+            weatherIcon.textContent = '❓';
+            weatherLocation.textContent = 'API-Fehler';
             return;
         }
         const data = await response.json();
@@ -185,7 +186,7 @@ const fetchWeather = async () => {
         weatherIcon.textContent = getWeatherEmoji(iconCode);
         weatherLocation.textContent = data.name;
     } catch (error) {
-        console.error('Error fetching weather:', error);
+        console.error('Fehler beim Abrufen des Wetters:', error);
         weatherText.textContent = 'N/A';
         weatherIcon.textContent = '❓';
         weatherLocation.textContent = 'Ort unbekannt';
@@ -202,60 +203,40 @@ const quoteAuthor = document.getElementById('quote-author');
 const fetchQuote = async () => {
     try {
         const response = await fetch('https://api.quotable.io/random');
-        if (!response.ok) throw new Error('Quote data not found');
+        if (!response.ok) throw new Error('Zitate-Daten nicht gefunden');
         const data = await response.json();
 
-        // Apply fade-out before setting new text, then fade-in
-        // Resetting animations by reading offsetWidth forces reflow
-        quoteText.style.animation = 'none';
-        quoteAuthor.style.animation = 'none';
-        void quoteText.offsetWidth; // Trigger reflow
-        void quoteAuthor.offsetWidth; // Trigger reflow
+        // Animate out current quote
+        quoteText.style.opacity = '0';
+        quoteText.style.transform = 'translateY(-10px)';
+        quoteAuthor.style.opacity = '0';
+        quoteAuthor.style.transform = 'translateY(-10px)';
 
-        quoteText.style.animation = ''; // Re-apply animation
-        quoteAuthor.style.animation = ''; // Re-apply animation
-
-        quoteText.textContent = `"${data.content}"`;
-        quoteAuthor.textContent = `- ${data.author}`;
+        // Wait for the fade-out transition to complete, then update text and fade-in
+        setTimeout(() => {
+            quoteText.textContent = `"${data.content}"`;
+            quoteAuthor.textContent = `- ${data.author}`;
+            quoteText.style.opacity = '1';
+            quoteText.style.transform = 'translateY(0)';
+            quoteAuthor.style.opacity = '1';
+            quoteAuthor.style.transform = 'translateY(0)';
+        }, 300); // Match this with your CSS transition time for opacity/transform
+        
     } catch (error) {
-        console.error('Error fetching quote:', error);
+        console.error('Fehler beim Abrufen des Zitats:', error);
         quoteText.textContent = '"Sei die Veränderung, die du in der Welt sehen möchtest."';
         quoteAuthor.textContent = '- Mahatma Gandhi';
+        quoteText.style.opacity = '1'; // Ensure fallback is visible
+        quoteText.style.transform = 'translateY(0)';
+        quoteAuthor.style.opacity = '1';
+        quoteAuthor.style.transform = 'translateY(0)';
     }
 };
 
 fetchQuote();
 setInterval(fetchQuote, 86400000); // Fetch a new quote every 24 hours
 
-// Stats Tracking
-let stats = {searches: 0, clicks: 0, startTime: Date.now()};
-
-const savedStats = JSON.parse(localStorage?.getItem('mkweb-stats'));
-if (savedStats) {
-    stats = savedStats;
-    // Calculate startTime based on saved timeSpentMinutes to maintain session duration
-    stats.startTime = Date.now() - (savedStats.timeSpentMinutes * 60000 || 0);
-}
-
-const updateStats = type => {
-    if (type === 'search') stats.searches++;
-    if (type === 'click') stats.clicks++;
-
-    const timeSpentMinutes = Math.round((Date.now() - stats.startTime) / 60000);
-    stats.timeSpentMinutes = timeSpentMinutes;
-
-    document.getElementById('search-count').textContent = stats.searches;
-    document.getElementById('click-count').textContent = stats.clicks;
-    document.getElementById('time-spent').textContent = timeSpentMinutes;
-
-    localStorage?.setItem('mkweb-stats', JSON.stringify(stats));
-};
-
-updateStats(); // Initial update to display saved stats
-
-document.querySelectorAll('a[target="_blank"]').forEach(link => {
-    link.onclick = () => updateStats('click');
-});
+// Removed all stats tracking related code as requested.
 
 // Animate elements on scroll/load
 const animateOnScroll = () => {
@@ -275,7 +256,6 @@ const animateOnScroll = () => {
     }, observerOptions);
 
     // Select all sections and cards that should animate in
-    // Ensure the header and stats panel are always visible and don't need animation
     document.querySelectorAll('.search-section, .time-display, .quote-of-the-day, .action-card, .news-section, .bookmark-section').forEach(element => {
         observer.observe(element);
     });
