@@ -2,810 +2,98 @@
 
 /* --- Global Design Variables - Refined for OS 7 --- */
 :root {
-  --t: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); /* Slightly more responsive cubic-bezier */
-  --r: 20px; /* Modern, clean rounded corners */
-  --s: 0 8px 25px rgba(0,0,0,0.15); /* Balanced shadow for lift */
-  --sh: 0 16px 45px rgba(0,0,0,0.3); /* Deeper shadow on hover */
-  --s-light: 0 4px 12px rgba(0,0,0,0.07); /* Subtle lift for lighter elements */
-  --border-width: 1.5px; /* Slightly more defined borders for crispness */
-  --text-gradient-angle: 65deg; /* Optimized angle for text readability */
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%, rgba(255, 255, 255, 0.01) 100%); /* Enhanced subtle reflection */
-  --glow-strength: 0 0 10px; /* Base glow strength */
+  --t: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --r: 20px;
+  --s: 0 8px 25px rgba(0,0,0,0.15);
+  --sh: 0 16px 45px rgba(0,0,0,0.3);
+  --s-light: 0 4px 12px rgba(0,0,0,0.07);
+  --border-width: 1.5px;
+  --text-gradient-angle: 65deg;
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%, rgba(255, 255, 255, 0.01) 100%);
+  --glow-strength: 0 0 10px;
   --glow-color: var(--acc);
-  --blur-intensity: 22px; /* Key blur value for glass effect - balanced */
-  --saturate-intensity: 180%; /* Slightly more vibrant saturation */
-  --content-max-width: 1400px; /* Increased max width for larger screens */
-  --inner-shadow-strength: inset 0 0 10px rgba(0,0,0,0.06); /* Refined inner shadow */
-  --card-min-width: 200px; /* Mindestbreite für Karten, damit sie schön umbrechen */
-  --card-gap: 2.5rem; /* Abstand zwischen Karten */
+  --blur-intensity: 22px;
+  --saturate-intensity: 180%;
 
-  /* --- Themed Variables (Nur noch Dark Theme) --- */
-  --bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); /* Deeper dark background */
-  --fg: #e0e0e0; /* Softer foreground color */
-  --dim: rgba(224,224,224,0.65); /* More legible dim text */
-  --acc: #8a4ed4; /* A slightly richer, deeper purple */
-  --ah: #b080ff; /* Brighter, more vibrant hover accent */
-  --gl: rgba(255,255,255,0.08); /* More opaque glass background */
-  --gb: rgba(255,255,255,0.25); /* Stronger, more visible glass border */
-  --inner-shadow: var(--inner-shadow-strength);
-  --acc-rgb: 138, 78, 212; /* RGB values for accents */
-  --fg-rgb: 224, 224, 224;
-  --ah-rgb: 176, 128, 255;
-  --gb-rgb: 255, 255, 255;
+  /* Color Palette - Streamlined for Dark Theme */
+  --bg-p: #101014; /* Primary background */
+  --bg-s: #18181d; /* Secondary background, darker for contrast */
+  --bg-t: #202027; /* Tertiary background, even darker */
+  --text-p: #e0e0e0; /* Primary text */
+  --text-s: #b0b0b0; /* Secondary text */
+  --text-gradient-start: #a879ff;
+  --text-gradient-end: #6ac5fe;
+  --acc: #8a2be2; /* Accent color - vibrant purple */
+  --acc-hover: #9c47ff;
+  --border-c: rgba(255, 255, 255, 0.08); /* Subtle border */
+  --glass-border: rgba(255, 255, 255, 0.15); /* More defined glass border */
 }
 
+/* --- Base & Typography --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-/* --- Base Styles --- */
 html {
+  font-size: 16px;
   scroll-behavior: smooth;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
-  -webkit-tap-highlight-color: transparent;
-}
-
 body {
-  background: var(--bg);
-  color: var(--fg);
-  min-height: 100vh;
-  transition: background var(--t), color var(--t);
-  overflow-x: hidden;
-  position: relative;
-  text-rendering: optimizeLegibility;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  color: var(--text-p);
+  background-color: var(--bg-p);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  perspective: 1000px; /* HIER: Perspektive für subtile 3D-Effekte */
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* --- Animated Background Elements (Highly Optimized) --- */
-.background-shape {
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-p);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* --- Utilities --- */
+.text-gradient {
+  background: linear-gradient(var(--text-gradient-angle), var(--text-gradient-start), var(--text-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background-color: rgba(24, 24, 29, 0.7);
+  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
+  border: var(--border-width) solid var(--glass-border);
+  box-shadow: var(--s);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--r);
+}
+
+.glass::before {
   content: '';
-  position: fixed;
-  border-radius: 50%;
-  opacity: 0.03; /* Further reduced opacity for subtlety and performance */
-  filter: blur(50px); /* Reduced blur for performance */
-  z-index: -1;
-  pointer-events: none;
-  /* Size is now set by JS for more control */
-  background: var(--acc); /* Default, overridden by JS for alternating colors */
-  /* Slower and optimized animations */
-  animation: floatEffect 65s ease-in-out infinite alternate, pulseOpacity 9s infinite alternate;
-  will-change: transform, opacity, filter; /* Explicit will-change */
-}
-
-@keyframes floatEffect {
-  0% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-  25% { transform: translate3d(30px, 35px, -80px) scale(1.05) rotateX(5deg) rotateY(4deg) rotateZ(2deg); } /* Slightly larger movement, but still subtle */
-  50% { transform: translate3d(-25px, -30px, 50px) scale(0.96) rotateX(-4deg) rotateY(-5deg) rotateZ(-3deg); }
-  75% { transform: translate3d(22px, -25px, -70px) scale(1.04) rotateX(4deg) rotateY(4deg) rotateZ(1.8deg); }
-  100% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-}
-
-@keyframes pulseOpacity {
-    0% { opacity: 0.03; }
-    50% { opacity: 0.05; }
-    100% { opacity: 0.03; }
-}
-
-.grain {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px); /* Even more subtle grain */
-  background-size: 100px 100px; /* Larger pattern for very sparse noise */
-  animation: grain 0.7s steps(1) infinite; /* Slower step animation */
+  background: var(--glass-reflection);
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.15; /* Further reduced opacity */
-}
-
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.2%, 0.2%); } /* Minimal translation for extremely subtle movement */
-}
-
-.container {
-  position: relative;
-  z-index: 2;
-  min-height: 100vh;
-  padding: 4rem; /* Increased padding for more breathing room */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5rem; /* Increased gap for visual separation */
-}
-
-/* --- Glassmorphism Base Style with Enhanced Visuals & Optimization --- */
-.glass {
-  background: var(--gl);
-  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  box-shadow: var(--s), var(--inner-shadow);
-  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t), backdrop-filter var(--t), filter var(--t);
-  position: relative;
-  overflow: hidden; /* For inner content not to spill */
-  will-change: transform, box-shadow, border-color, background, backdrop-filter, filter;
-
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-
-  &::after { /* Enhanced reflection */
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--glass-reflection);
-    pointer-events: none;
-    opacity: 0.9; /* More visible reflection */
-    transition: opacity var(--t);
-  }
-
-  &:hover {
-    /* HIER: Subtiler 3D-Effekt beim Hover */
-    transform: translate3d(0, -10px, 10px) rotateX(1deg) rotateY(-1deg) scale(1.008); /* Leichter Lift und Kippen */
-    box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger, more defined glow on hover */
-  }
-
-  &::before { /* Animated glowing border on hover - refined */
-    content: '';
-    position: absolute;
-    top: -3px; left: -3px; right: -3px; bottom: -3px; /* Slightly thicker border for glow */
-    border-radius: calc(var(--r) + 3px);
-    background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
-    z-index: -1;
-    opacity: 0;
-    transition: opacity var(--t), filter var(--t);
-    filter: blur(10px); /* Slightly more prominent blur for glow */
-  }
-
-  &:hover::before {
-    opacity: 1;
-    filter: blur(12px); /* Stronger blur on hover */
-  }
-}
-
-/* --- Animation for elements appearing on page load (Optimized) --- */
-.animate-in {
-  opacity: 0;
-  transform: translateY(30px) scale(0.96) rotateX(4deg); /* Slightly more pronounced initial state */
-  animation: fadeInSlideUp 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slightly slower, smoother animation */
-  will-change: opacity, transform;
-}
-
-@keyframes fadeInSlideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
-  }
-}
-
-/* --- Header --- */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: var(--content-max-width);
-  padding: 3rem 4rem; /* Increased padding */
-}
-
-.logo {
-  font-size: 4rem; /* Larger, more impactful logo */
-  font-weight: 900;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 400% 400%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 30s ease infinite alternate, logoGlowPulse 6s infinite alternate ease-in-out; /* Slower, more majestic animations */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger logo glow */
-  position: relative;
-  will-change: background-position, text-shadow;
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-@keyframes logoGlowPulse {
-    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); }
-    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); } /* More dynamic pulse */
-}
-
-.controls {
-  display: flex;
-  gap: 2rem; /* Increased gap */
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* --- Buttons Styling (Optimized) --- */
-button {
-  padding: 1.1rem 2.5rem; /* Slightly more padding */
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  background: var(--gl);
-  color: var(--fg);
-  cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
-  font-size: 1.05rem; /* Slightly larger font */
-  font-weight: 600;
-  outline: none;
-  box-shadow: var(--s-light);
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  will-change: transform, box-shadow, border-color, background, color;
-
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Buttons */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-
-  &:active {
-    transform: translateY(2px) scale(0.98); /* Smoother, less aggressive press */
-    box-shadow: var(--s-light), inset 0 3px 8px rgba(0,0,0,0.25); /* More refined inner shadow */
-    background: rgba(var(--gl-rgb), 0.1);
-  }
-}
-
-button:hover {
-  /* HIER: Subtiler 3D-Effekt beim Hover für Buttons */
-  transform: translate3d(0, -9px, 8px) scale(1.03) rotateX(1deg) rotateY(-0.5deg); /* More pronounced lift and subtle tilt */
-  border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5); /* Stronger glow on hover */
-}
-
-button::after { /* Animated hover glow border for buttons - refined */
-  content: '';
-  position: absolute;
-  top: -4px; bottom: -4px; left: -4px; right: -4px; /* Thicker border for glow */
-  border-radius: calc(var(--r) + 4px);
-  background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc)) border-box;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity var(--t), filter var(--t);
   z-index: -1;
-  will-change: opacity;
-  filter: blur(10px); /* More blur for performance */
 }
 
-button:hover::after {
-  opacity: 1;
-  filter: blur(14px); /* Stronger blur on hover */
-}
-
-/* --- User Avatar Toggle & Avatar Itself (Optimized) --- */
-.hidden-avatar {
-  opacity: 0 !important;
-  transform: scale(0.4) !important; /* More aggressive scale for hide */
-  pointer-events: none !important;
-  transition: opacity var(--t), transform var(--t) !important;
-}
-
-#user-avatar-toggle { /* Style inherited from general button */
-  padding: 1.1rem 2.5rem;
-}
-
-.user-avatar {
-  width: 60px; /* Slightly larger avatar */
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.2rem; /* Larger icon */
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  color: var(--acc);
-  cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
-  box-shadow: var(--s-light);
-  overflow: hidden;
-  will-change: transform, box-shadow, border-color;
-  
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Avatar */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-}
-
-.user-avatar:hover {
-  /* HIER: Subtiler 3D-Effekt beim Hover für Avatar */
-  transform: translate3d(0, -5px, 5px) scale(1.2) rotate(5deg); /* More distinct scale and rotation */
-  border-color: var(--acc);
-  box-shadow: var(--glow-strength) var(--acc), var(--sh);
-}
-
-/* --- Main Content Layout --- */
-.main {
-  width: 100%;
-  max-width: var(--content-max-width);
-  display: flex;
-  flex-direction: column;
-  gap: 5rem; /* Increased gap */
-}
-
-.search-section { padding: 3.5rem; } /* Increased padding */
-
-/* --- Search Engines (Optimized) --- */
-.search-engines {
-  display: flex;
-  gap: 1.8rem; /* Increased gap */
-  margin-bottom: 3.5rem; /* Increased margin */
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.search-engine {
-  padding: 1.1rem 2.8rem; /* Slightly more padding */
-  border-radius: 50px;
-  font-weight: 700;
-  border: var(--border-width) solid transparent;
-  background: var(--gl);
-  box-shadow: inset 0 0 0 transparent;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
-  position: relative;
-  overflow: hidden;
-  will-change: transform, box-shadow, background-color, border-color, color;
-
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Search Engine Buttons */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-
-  &.active {
-    background: var(--acc);
-    color: #fff;
-    /* HIER: Subtiler 3D-Effekt für aktiven Search Engine Button */
-    transform: translate3d(0, -6px, 6px) scale(1.05); /* More pronounced pop-out effect */
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* Stronger glow when active */
-    border-color: var(--acc);
-    animation: activeEnginePulse 2.8s infinite alternate ease-in-out; /* Slower, more impactful pulse */
-  }
-
-  &:not(.active):hover {
-    border-color: var(--acc);
-    /* HIER: Subtiler 3D-Effekt beim Hover für Search Engine Buttons (nicht aktiv) */
-    transform: translate3d(0, -4px, 4px) scale(1.02); /* More noticeable hover */
-    box-shadow: inset 0 0 15px rgba(var(--acc-rgb), 0.2), var(--s-light); /* Stronger inner glow */
-  }
-}
-
-@keyframes activeEnginePulse {
-  0% { transform: translate3d(0, -6px, 6px) scale(1.05); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35), var(--s); }
-  100% { transform: translate3d(0, -6.5px, 6.5px) scale(1.055); box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); }
-}
-
-/* --- Search Box (Optimized) --- */
-.search-box {
-  display: flex;
-  align-items: center;
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: 50px;
-  padding: 2rem 3rem; /* Increased padding */
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--s), var(--inner-shadow);
-  will-change: transform, box-shadow, border-color;
-
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Search Box */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-}
-
-.search-box:focus-within {
-  border-color: var(--acc);
-  /* HIER: Subtiler 3D-Effekt beim Fokus für Search Box */
-  transform: translate3d(0, -2px, 2px) scale(1.008); /* Subtle scale on focus */
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s); /* Stronger glow on focus */
-}
-
-/* Optimized search box focus animation */
-.search-box:focus-within::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 5px; /* Thicker animated border */
-    background: linear-gradient(90deg, transparent, var(--acc), transparent);
-    animation: borderScan 1s infinite linear; /* Faster, more prominent scanline */
-    will-change: transform;
-    border-radius: 0 0 50px 50px;
-}
-
-@keyframes borderScan {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
-#search {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--fg);
-  font-size: 1.4rem; /* Larger font */
-  outline: none;
-  margin-left: 1.5rem; /* More margin */
-  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.15); /* More prominent text shadow */
-}
-
-#search::placeholder {
-  color: var(--dim);
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
-}
-
-#search:focus::placeholder {
-  opacity: 0.3;
-}
-
-/* --- Time Display (Optimized) --- */
-.time-display {
-  text-align: center;
-  padding: 4.5rem; /* Increased padding */
-}
-
-#time {
-  font-size: 7.5rem; /* Larger, more dominant time display */
-  font-weight: 900;
-  margin-bottom: 1.8rem; /* More margin */
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 500% 500%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 25s ease infinite alternate, pulseText 6s infinite alternate; /* Slower, more majestic animations */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Stronger text glow */
-  will-change: background-position, text-shadow;
-}
-
-@keyframes pulseText {
-  0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 12px rgba(var(--fg-rgb), 0.1); }
-  50% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), 0 0 18px rgba(var(--fg-rgb), 0.15); }
-  100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), 0 0 12px rgba(var(--fg-rgb), 0.1); }
-}
-
-#date {
-  font-size: 2rem; /* Larger font */
-  color: var(--dim);
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 5px; /* More letter spacing */
-}
-
-/* --- MENÜ (ehemals QUICK ACTIONS) - FLEXBOX LAYOUT --- */
-.menu-section, .bookmark-section {
-  width: 100%;
-  max-width: var(--content-max-width);
-  padding: 2rem;
-}
-
-.menu-section h2, .bookmark-section h2 {
-  margin-bottom: 3rem;
-  font-size: 3.2rem;
-  font-weight: 900;
-  text-align: center;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
-  padding: 0 0;
-}
-
-/* FLEXBOX für Menü-Items (Quick Actions) */
-.action-card-container {
-  display: flex;
-  flex-wrap: wrap; /* Elemente umbrechen, wenn nicht genug Platz ist */
-  justify-content: center; /* Zentriert die Elemente horizontal */
-  gap: var(--card-gap); /* Abstand zwischen den Karten */
-  padding: 1.5rem 0;
-}
-
-.action-card {
-  flex: 1 1 var(--card-min-width); /* Flex-Item: Schrumpft, wächst, hat Mindestbreite */
-  max-width: 250px; /* Optional: Maximale Breite für die Karten, um sie nicht zu groß werden zu lassen */
-  
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  padding: 2.8rem 2rem;
-  text-align: center;
-  text-decoration: none;
-  color: var(--fg);
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--s), var(--inner-shadow);
-  will-change: transform, box-shadow, border-color;
-
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Action Cards */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-}
-
-.action-card::before { /* Optimized shimmer effect on hover */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -200%; /* Wider travel distance */
-  width: 60%; /* Wider shimmer */
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); /* Stronger opacity */
-  transition: left 0.4s ease-out; /* Slightly faster shimmer */
-  z-index: 1;
-  transform: skewX(-25deg); /* More skew */
-  pointer-events: none;
-  will-change: left;
-}
-
-.action-card:hover::before {
-  left: 200%; /* Wider travel distance */
-}
-
-.action-card:hover {
-  /* HIER: Subtiler 3D-Effekt beim Hover für Action Cards */
-  transform: translate3d(0, -12px, 12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
-  border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger glow */
-}
-
-/* Icon styling for action-card */
-.action-card .icon {
-  font-family: 'Material Symbols Outlined';
-  font-size: 5rem;
-  margin-bottom: 1.8rem;
-  display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out;
-  will-change: transform;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-  position: relative; /* Ensure it respects parent's z-index */
-  z-index: 2; /* Bring icon above shimmer */
-}
-
-.action-card:hover .icon {
-  transform: scale(1.2) rotate(5deg);
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5);
-}
-
-.action-card .label {
-  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
-  will-change: transform, opacity;
-  position: relative; /* Ensure it respects parent's z-index */
-  z-index: 2; /* Bring label above shimmer */
-}
-
-.action-card:hover .label {
-  transform: translateY(-10px);
-  opacity: 1;
-}
-
-
-/* FLEXBOX für Bookmark-Items */
-.bookmark-card-container {
-  display: flex;
-  flex-wrap: wrap; /* Elemente umbrechen, wenn nicht genug Platz ist */
-  justify-content: center; /* Zentriert die Elemente horizontal */
-  gap: var(--card-gap); /* Abstand zwischen den Karten */
-  padding: 1.5rem 0;
-}
-
-.bookmark-card {
-  flex: 1 1 300px; /* Flex-Item: Schrumpft, wächst, Mindestbreite 300px */
-  max-width: 450px; /* Optional: Maximale Breite für Bookmarks */
-
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  padding: 2.8rem 2rem;
-  text-align: left; /* Überschreibt text-align: center von action-card */
-  text-decoration: none;
-  color: var(--fg);
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--s), var(--inner-shadow);
-  will-change: transform, box-shadow, border-color;
-  display: flex; /* Für Icon und Text nebeneinander */
-  align-items: center;
-  gap: 2rem;
-
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für Bookmark Cards */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-}
-
-
-.bookmark-card::before { /* Optimized shimmer effect on hover */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -200%; /* Wider travel distance */
-  width: 60%; /* Wider shimmer */
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); /* Stronger opacity */
-  transition: left 0.4s ease-out; /* Slightly faster shimmer */
-  z-index: 1;
-  transform: skewX(-25deg); /* More skew */
-  pointer-events: none;
-  will-change: left;
-}
-
-.bookmark-card:hover::before {
-  left: 200%; /* Wider travel distance */
-}
-
-.bookmark-card:hover {
-  /* HIER: Subtiler 3D-Effekt beim Hover für Bookmark Cards */
-  transform: translate3d(0, -12px, 12px) scale(1.04) rotateX(1.5deg); /* More intense lift, scale and 3D tilt */
-  border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45); /* Stronger glow */
-}
-
-/* Icon styling for bookmark-card */
-.bookmark-card span:first-child {
-  font-family: 'Material Symbols Outlined';
-  font-size: 3rem;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-  transition: transform 0.25s ease-out, text-shadow 0.25s ease-out;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-  flex-shrink: 0; /* Prevent icon from shrinking */
-  position: relative;
-  z-index: 2;
-}
-
-.bookmark-card:hover span:first-child {
-    transform: scale(1.2) rotate(-5deg);
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5);
-}
-
-.bookmark-title {
-  font-weight: 700;
-  font-size: 1.4rem;
-  position: relative;
-  z-index: 2;
-}
-
-.bookmark-description {
-  font-size: 1.05rem;
-  color: var(--dim);
-  position: relative;
-  z-index: 2;
-}
-
-
-/* --- News Section --- */
-.news-section {
-  padding: 4rem; /* Increased padding */
-  
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für News Section */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-}
-
-.news-section h2 {
-  margin-bottom: 3rem; /* Increased margin */
-  font-size: 3.2rem; /* Larger font */
-  font-weight: 900;
-  text-align: center;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Stronger heading glow */
-}
-
-/* News Section Button Styling (Optimized) */
-.news-section.button-style { /* Class will be added dynamically if needed, not currently used */
-  font-size: 1.4rem; /* Larger text */
-  padding: 2.2rem 3.5rem; /* More padding */
-  text-align: center;
-  color: var(--fg);
-  text-shadow: 0 0 5px rgba(var(--fg-rgb), 0.15); /* Stronger text shadow */
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
-  display: block;
-  margin-top: 2rem; /* More space from heading */
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  box-shadow: var(--s), var(--inner-shadow);
-  text-decoration: none;
-  will-change: transform, box-shadow, border-color;
-}
-
-.news-section.button-style:hover {
-  /* HIER: Subtiler 3D-Effekt beim Hover für News Section Button */
-  transform: translate3d(0, -12px, 12px) scale(1.03); /* More pronounced lift and scale */
-  border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger glow */
-}
-
-/* Old grid styles, potentially remove if not used for news */
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Larger min width for cards */
-  gap: 3rem; /* Increased gap */
-}
-
-.news-card {
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  padding: 2.8rem; /* More padding */
-  text-decoration: none;
-  color: var(--fg);
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--s), var(--inner-shadow);
-  will-change: transform, box-shadow, border-color;
-
-  /* HIER: Subtiler 3D-Effekt im Ruhezustand für News Card */
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-}
-
-.news-card:hover {
-  /* HIER: Subtiler 3D-Effekt beim Hover für News Card */
-  transform: translate3d(0, -12px, 12px) scale(1.03) rotateX(1deg); /* More intense lift, scale, subtle X-axis tilt */
-  border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger glow */
-}
-
-.news-card h3 {
-  margin-bottom: 1.5rem; /* More margin */
-  font-size: 1.8rem; /* Larger font */
-  font-weight: 700;
-  text-shadow: 0 0 8px rgba(var(--fg-rgb), 0.2); /* More visible text shadow */
-}
-
-.news-card p {
-  color: var(--dim);
-  margin-bottom: 2rem; /* More margin */
-  line-height: 1.7;
-  font-size: 1.15rem; /* Slightly larger font */
-}
-
-.news-source {
-  font-size: 1.05rem; /* Slightly larger font */
-  color: var(--acc);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px; /* More letter spacing */
-}
-
-/* --- Scrollbar Styling (Optimized customization) --- */
-/* For overall body scrolling, leave this if you want the custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px; /* Wider scrollbar */
-  background-color: transparent;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(var(--acc-rgb), 0.7); /* More opaque accent */
-  border-radius: 5px;
-  border: 1.5px solid rgba(var(--gb-rgb), 0.15); /* More visible border */
-  transition: background-color var(--t);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(var(--ah-rgb), 0.85); /* More opaque on hover */
-}
-
-/* --- SR-Only class for accessibility --- */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -818,184 +106,411 @@ button:hover::after {
   border-width: 0;
 }
 
-/* --- Scroll-to-top button styles (Optimized) --- */
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  color: var(--acc);
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  color: var(--text-s);
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color var(--t), color var(--t);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--acc-hover);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;
+}
+
+/* --- Layout --- */
+.os-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-radius: var(--r);
+  box-shadow: var(--s-light);
+  min-height: 60px;
+}
+
+.time-date {
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  gap: 0.8rem;
+  color: var(--text-s);
+}
+
+.header-right {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-content: start;
+}
+
+.user-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: url('https://source.unsplash.com/random/120x120?person,portrait') center/cover no-repeat;
+  border: 3px solid var(--acc);
+  box-shadow: var(--s);
+  margin: 1.5rem auto 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity var(--t), transform var(--t);
+  z-index: 10;
+}
+
+.user-avatar.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.search-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+#search {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid var(--border-c);
+  border-radius: var(--r);
+  background-color: var(--bg-s);
+  color: var(--text-p);
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color var(--t), box-shadow var(--t);
+  box-shadow: var(--s-light);
+}
+
+#search::placeholder {
+  color: var(--text-s);
+  opacity: 0.7;
+}
+
+#search:focus {
+  border-color: var(--acc-hover);
+  box-shadow: var(--glow-strength) var(--glow-color);
+}
+
+.search-engines {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-engine {
+  background-color: var(--bg-s);
+  border: 1px solid var(--border-c);
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-s);
+  transition: all var(--t);
+}
+
+.search-engine img {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.search-engine:hover,
+.search-engine.active {
+  background-color: var(--acc);
+  color: white;
+  border-color: var(--acc);
+  box-shadow: var(--glow-strength) var(--glow-color);
+}
+
+.search-engine.active {
+  background-color: var(--acc-hover);
+}
+
+.menu-section, .bookmark-section {
+  padding: 1.5rem;
+  border-radius: var(--r);
+  background-color: var(--bg-s);
+  box-shadow: var(--s-light);
+}
+
+.menu-section h2, .bookmark-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.8rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.menu-section h2::after, .bookmark-section h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--acc), transparent);
+  border-radius: 2px;
+}
+
+.action-grid, .bookmark-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--card-gap, 1.2rem);
+  justify-content: center;
+}
+
+.action-card {
+  flex: 1 1 var(--card-min-width, 120px);
+  max-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+}
+
+.action-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: var(--sh);
+  border-color: var(--acc);
+}
+
+.action-card span {
+  font-size: 2.8rem;
+  margin-bottom: 0.8rem;
+  color: var(--acc);
+  transition: color var(--t);
+}
+
+.action-card:hover span {
+  color: var(--acc-hover);
+}
+
+.action-card span:last-child {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-p);
+}
+
+.bookmark-card {
+  flex: 1 1 200px;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+}
+
+.bookmark-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: var(--sh);
+  border-color: var(--acc);
+}
+
+.bookmark-card span:first-child {
+  font-size: 2.2rem;
+  color: var(--acc);
+  transition: color var(--t);
+}
+
+.bookmark-card:hover span:first-child {
+  color: var(--acc-hover);
+}
+
+.bookmark-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: var(--text-p);
+}
+
+.bookmark-description {
+  font-size: 0.9rem;
+  color: var(--text-s);
+}
+
+.news-section {
+  padding: 2rem;
+  border-radius: var(--r);
+  text-align: center;
+  background-color: var(--bg-s);
+  box-shadow: var(--s-light);
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+  display: block;
+}
+
+.news-section:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: var(--sh);
+  border-color: var(--acc);
+}
+
+.news-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-p);
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.top-bar { animation-delay: 0.1s; }
+.user-avatar { animation-delay: 0.2s; }
+.search-section { animation-delay: 0.3s; }
+.menu-section { animation-delay: 0.4s; }
+.bookmark-section { animation-delay: 0.5s; }
+.news-section { animation-delay: 0.6s; }
+
+/* --- Scroll to Top Button --- */
 .scroll-to-top {
-    position: fixed;
-    bottom: 35px; /* Slightly lower */
-    right: 35px; /* Slightly more right */
-    background: var(--acc);
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 60px; /* Slightly larger */
-    height: 60px; /* Slightly larger */
-    font-size: 2rem; /* Larger icon */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(25px); /* More initial displacement */
-    transition: opacity var(--t), transform var(--t), visibility var(--t), background var(--t);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Stronger glow */
-    z-index: 1000;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--acc);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--t), visibility var(--t), transform var(--t);
+  box-shadow: var(--s);
+  z-index: 1000;
 }
 
 .scroll-to-top.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .scroll-to-top:hover {
-    background: var(--ah);
-    transform: translateY(-10px) rotate(10deg); /* More pronounced lift and rotation */
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Stronger glow */
+  background-color: var(--acc-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--sh);
 }
 
-/* --- Media Queries for Responsiveness (Adjusted for new sizes) --- */
-@media (max-width: 1400px) {
-  .container { padding: 3.5rem; gap: 4.5rem; }
-  .header { padding: 2.5rem 3.5rem; }
-  .logo { font-size: 3.8rem; }
-  #time { font-size: 7rem; }
-  .menu-section h2, .bookmark-section h2 { font-size: 3rem; }
-  .action-card { max-width: 220px; } /* max-width anpassen */
-  .bookmark-card { max-width: 400px; } /* max-width anpassen */
-  .news-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-  .search-section, .time-display, .news-section, .menu-section, .bookmark-section { padding: 3rem; }
-  .glass { backdrop-filter: blur(20px) saturate(var(--saturate-intensity)); }
-  .icon { font-size: 4.5rem; }
-  button { padding: 1rem 2.2rem; font-size: 1rem; }
-  .user-avatar { width: 55px; height: 55px; font-size: 2rem; }
+/* --- Media Queries for Responsiveness --- */
+@media (min-width: 768px) {
+  .main-content {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "search search"
+      "menu bookmarks"
+      "news news";
+  }
+
+  .search-section { grid-area: search; margin-bottom: 0; }
+  .menu-section { grid-area: menu; }
+  .bookmark-section { grid-area: bookmarks; }
+  .news-section { grid-area: news; }
+
+  .menu-section h2, .bookmark-section h2 { text-align: left; }
+  .menu-section h2::after, .bookmark-section h2::after { left: 0; transform: translateX(0); }
+
+  .action-grid { justify-content: flex-start; }
+  .bookmark-grid { justify-content: flex-start; }
 }
 
-@media (max-width: 1200px) {
-  .container { padding: 3rem; gap: 4rem; }
-  .header { flex-direction: row; gap: 1.8rem; padding: 2.2rem; }
-  .controls { justify-content: flex-end; gap: 1.5rem; }
-  .logo { font-size: 3.5rem; }
-  #time { font-size: 6.5rem; }
-  #date { font-size: 1.8rem; letter-spacing: 4px; }
-  .menu-section h2, .bookmark-section h2 { font-size: 2.8rem; }
-  --card-min-width: 180px; /* Adjust min width for cards in flex */
-  --card-gap: 2rem;
-  .action-card { max-width: 200px; }
-  .bookmark-card { flex: 1 1 280px; max-width: 380px; }
-  .search-section, .time-display, .news-section, .menu-section, .bookmark-section { padding: 2.5rem; }
-  .search-box { padding: 1.8rem 2.5rem; }
-  #search { font-size: 1.3rem; }
-  .glass { backdrop-filter: blur(18px) saturate(var(--saturate-intensity)); }
-  .user-avatar, #user-avatar-toggle { width: 50px; height: 50px; font-size: 1.8rem; }
-  .action-card { padding: 2.2rem 1.5rem; }
-  .icon { font-size: 4rem; }
-  button { padding: 0.95rem 1.8rem; font-size: 0.98rem; }
-  .bookmark-card span:first-child { font-size: 2.8rem; }
-  .bookmark-title { font-size: 1.3rem; }
-  .bookmark-description { font-size: 1rem; }
+@media (min-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-areas:
+      "search search search"
+      "menu menu bookmarks"
+      "news news bookmarks";
+  }
+
+  .user-avatar { margin-left: 0; }
 }
 
-@media (max-width: 992px) {
-  .container { padding: 2.5rem; gap: 3.5rem; }
-  .header { flex-direction: column; gap: 1.5rem; padding: 1.8rem; }
-  .controls { justify-content: center; gap: 1.2rem; }
-  .logo { font-size: 3rem; }
-  #time { font-size: 5.5rem; }
-  #date { font-size: 1.6rem; letter-spacing: 3px; }
-  .menu-section h2, .bookmark-section h2 { font-size: 2.5rem; }
-  --card-min-width: 150px; /* Adjust min width for cards in flex */
-  --card-gap: 1.8rem;
-  .action-card { max-width: 180px; }
-  .bookmark-card { flex: 1 1 240px; max-width: 340px; }
-  .search-section, .time-display, .news-section, .menu-section, .bookmark-section { padding: 2rem; }
-  .search-box { padding: 1.5rem 2.2rem; }
-  #search { font-size: 1.2rem; }
-  .glass { backdrop-filter: blur(15px) saturate(var(--saturate-intensity)); }
-  .user-avatar, #user-avatar-toggle { width: 45px; height: 45px; font-size: 1.6rem; }
-  .action-card { padding: 2rem 1.2rem; }
-  .icon { font-size: 3.5rem; }
-  button { padding: 0.85rem 1.5rem; font-size: 0.95rem; }
-  .bookmark-card span:first-child { font-size: 2.5rem; }
-  .bookmark-title { font-size: 1.2rem; }
-  .bookmark-description { font-size: 0.95rem; }
-  .scroll-to-top { bottom: 25px; right: 25px; width: 50px; height: 50px; font-size: 1.6rem; }
-}
-
-@media (max-width: 768px) {
-  .container { padding: 2rem; gap: 3rem; }
-  .header { padding: 1.5rem; }
-  .logo { font-size: 2.8rem; }
-  button { padding: 0.8rem 1.3rem; font-size: 0.85rem; border-radius: 18px; }
-  .user-avatar, #user-avatar-toggle { width: 40px; height: 40px; font-size: 1.4rem; }
-  .search-section { padding: 1.8rem; }
-  .search-engine { padding: 0.9rem 1.8rem; font-size: 0.85rem; border-radius: 35px; }
-  .search-box { padding: 1.3rem 1.8rem; border-radius: 35px; }
-  #search { font-size: 1.1rem; margin-left: 1rem; }
-  #time { font-size: 4.8rem; margin-bottom: 1.2rem;}
-  #date { font-size: 1.4rem; letter-spacing: 2.5px; }
-  .menu-section h2, .bookmark-section h2 { font-size: 2.2rem; }
-  --card-min-width: 120px; /* Adjust min width for cards in flex */
-  --card-gap: 1.5rem;
-  .action-card { padding: 1.8rem 1rem; max-width: 160px; }
-  .bookmark-card { flex: 1 1 200px; max-width: 300px; }
-  .icon { font-size: 3rem; margin-bottom: 0.9rem; }
-  .news-section { padding: 1.8rem; }
-  .news-section h2 { font-size: 2rem; margin-bottom: 2rem;}
-  .news-card { padding: 2rem; }
-  .news-card h3 { font-size: 1.5rem; }
-  .news-card p { font-size: 1.05rem; margin-bottom: 1.3rem;}
-  .bookmark-card span:first-child { font-size: 2.2rem; }
-  .bookmark-title { font-size: 1.15rem; }
-  .bookmark-description { font-size: 0.9rem; }
-  .glass { backdrop-filter: blur(12px) saturate(var(--saturate-intensity)); }
-  .scroll-to-top { bottom: 25px; right: 25px; width: 50px; height: 50px; font-size: 1.6rem; }
-}
-
-@media (max-width: 480px) {
-  .container { padding: 1.8rem; gap: 2rem; }
-  .header { padding: 1.2rem; gap: 0.6rem; }
-  .logo { font-size: 2.2rem; }
-  button { padding: 0.65rem 1rem; font-size: 0.8rem; border-radius: 15px; }
-  .user-avatar, #user-avatar-toggle { width: 32px; height: 32px; font-size: 1.1rem; }
-  .search-section { padding: 1.2rem; }
-  .search-engine { padding: 0.75rem 1.2rem; font-size: 0.8rem; border-radius: 28px; }
-  .search-box { padding: 0.9rem 1.2rem; border-radius: 28px; }
-  #search { font-size: 0.9rem; margin-left: 0.7rem; }
-  #time { font-size: 3.2rem; margin-bottom: 0.7rem;}
-  #date { font-size: 0.9rem; letter-spacing: 1.2px; }
-  .menu-section h2, .bookmark-section h2 { font-size: 1.8rem; }
-  --card-min-width: 100px; /* Adjust min width for cards in flex, even smaller on mobile */
-  --card-gap: 0.8rem;
+/* Mobile Specific Adjustments */
+@media (max-width: 767px) {
+  .os-container { padding: 1rem; gap: 1rem; }
+  .top-bar { padding: 0.8rem 1rem; }
+  .time-date { font-size: 1rem; gap: 0.5rem; }
+  .icon-button { font-size: 1.3rem; padding: 0.4rem; }
+  .user-avatar { width: 100px; height: 100px; margin-top: 1rem; }
+  .search-bar { gap: 0.8rem; }
+  #search { padding: 0.7rem 1rem; font-size: 1rem; }
+  .search-engine { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
+  .search-engine img { width: 18px; height: 18px; }
+  .menu-section, .bookmark-section { padding: 1.2rem; }
+  .menu-section h2, .bookmark-section h2 { font-size: 1.8rem; margin-bottom: 1.5rem;}
   .action-card { padding: 1.2rem 0.5rem; max-width: 140px; }
-  .bookmark-card { flex: 1 1 180px; max-width: 250px; }
-  .icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
-  .news-section { padding: 1.2rem; }
-  .news-section h2 { font-size: 1.6rem; margin-bottom: 1.5rem;}
-  .news-card { padding: 1.5rem; }
-  .news-card h3 { font-size: 1.2rem; }
-  .news-card p { font-size: 0.85rem; margin-bottom: 0.9rem;}
+  .action-card span { font-size: 2.2rem; margin-bottom: 0.6rem; }
+  .action-card span:last-child { font-size: 0.9rem; }
+  .bookmark-card { flex: 1 1 180px; max-width: 250px; padding: 1rem; }
   .bookmark-card span:first-child { font-size: 1.8rem; }
   .bookmark-title { font-size: 1.05rem; }
   .bookmark-description { font-size: 0.85rem; }
-  .glass { backdrop-filter: blur(8px) saturate(var(--saturate-intensity)); }
-  .scroll-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; font-size: 1.4rem; }
-}
-
-/* Fallback for browsers that don't support backdrop-filter */
-@supports not (backdrop-filter: blur(1px)) {
-  .glass {
-    background: rgba(var(--fg-rgb), 0.25); /* Slightly more prominent background without blur for fallback */
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-}
-
-/* Optional: Class to remove all animations for extreme performance needs */
-body.no-animations * {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-    will-change: auto !important;
-    filter: none !important;
+  .news-section { padding: 1.5rem; }
+  .news-section h2 { font-size: 1.6rem; margin-bottom: 0.8rem;}
 }
