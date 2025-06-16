@@ -43,6 +43,7 @@ updateTimeAndDate(); // Sofortige Initialanzeige beim Laden
 // --- Suchfunktionalität ---
 const searchEnginesMap = {
     google: 'https://www.google.com/search?q=',
+    yandex: 'https://yandex.com/search/?text=', // Yandex hinzugefügt
     duckduckgo: 'https://duckduckgo.com/?q=',
     youtube: 'https://www.youtube.com/results?search_query=', // Korrekte YouTube-Such-URL
     github: 'https://github.com/search?q='
@@ -83,7 +84,7 @@ const initialActiveButton = document.querySelector(`.search-engine[data-engine="
 if (initialActiveButton) {
     initialActiveButton.classList.add('active');
 } else {
-    // Fallback auf Google, falls die gespeicherte Engine ungültig ist
+    // Fallback auf Google, falls die gespeicherte Engine ungültig ist (oder z.B. Yandex noch nicht da war)
     document.querySelector('.search-engine[data-engine="google"]').classList.add('active');
     currentSearchEngine = 'google';
     settings.lastActiveEngine = 'google';
@@ -116,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Die CSS-Klasse 'animate-in' steuert die Animation mit Verzögerungen
     // Hier ist keine zusätzliche JS-Klasse notwendig, da die Animation direkt durch CSS getriggert wird
     // wenn die Elemente im DOM sind und die Verzögerungen greifen.
-    // (Der vorherige 'fade-in-active' classList.add war redundant zur CSS-Animation)
 });
 
 // --- Parallax-Effekt für Hintergrundformen (Optimiert für Design & Performance) ---
@@ -126,7 +126,6 @@ const applyParallax = () => {
 
     // Subtle, aber spürbare Tiefenwerte für die Parallax-Formen
     parallaxShapes.forEach((shape, index) => {
-        // Etwas größere Werte als im "ultra-optimierten" Zustand, um den Effekt sichtbarer zu machen
         depths.set(shape, 0.15 + (index * 0.05)); // Bereich z.B. 0.15, 0.20, 0.25
     });
 
@@ -146,11 +145,11 @@ const applyParallax = () => {
                 const depth = depths.get(shape);
 
                 // Moderater Bewegungskoeffizient für einen ansprechenden Parallax-Effekt
-                const translateX = -mouseX * depth * 20; // Reduziert von 30 (von Nutzer-Snippet), erhöht von 5 (von letztem Iteration)
+                const translateX = -mouseX * depth * 20;
                 const translateY = -mouseY * depth * 20;
-                const rotateX = mouseY * depth * 2; // Reduziert von 3, erhöht von 0.2
+                const rotateX = mouseY * depth * 2;
                 const rotateY = -mouseX * depth * 2;
-                const rotateZ = (mouseX + mouseY) * depth * 0.8; // Reduziert von 1, erhöht von 0.1
+                const rotateZ = (mouseX + mouseY) * depth * 0.8;
 
                 // translate3d für Hardware-Beschleunigung nutzen
                 shape.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
