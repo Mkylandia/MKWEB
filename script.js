@@ -1,32 +1,34 @@
-// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Refined Parallax
+// script.js - MKWEB OS 7: Ultra-Optimierte Funktionalität & Verbesserte Dynamik
 
-// --- Initial Setup & Settings Management ---
-const SETTINGS_KEY = 'mkweb-settings-os7'; // Unique key for OS7 settings
+// --- Initialisierung & Einstellungen ---
+const SETTINGS_KEY = 'mkweb-settings-os7'; // Eindeutiger Schlüssel für OS7-Einstellungen
 const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {
-    theme: 'dark', // Theme is fixed to 'dark' for simplicity
-    lastActiveEngine: 'google'
+    // Theme ist fest auf 'dark' gesetzt, kein Themenwechsel mehr
+    lastActiveEngine: 'google' // Letzte aktive Suchmaschine speichern
 };
 
-// Function to save settings - optimized with optional chaining
+// Funktion zum Speichern der Einstellungen (mit Fehlerbehandlung)
 const saveSettings = () => {
     try {
         localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
     } catch (e) {
-        console.error("Error saving settings to localStorage:", e);
+        console.error("Fehler beim Speichern der Einstellungen im localStorage:", e);
     }
 };
 
-// --- DOM Element Caching (Performance) ---
-// Fullscreen button removed as per request
+// --- DOM-Element-Caching (Für Performance) ---
+// Vollbild-Button wurde entfernt
+// Avatar- und Themenwechsel-Elemente wurden entfernt
 const searchInput = document.getElementById('search');
 const searchEngines = document.querySelectorAll('.search-engine');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
-const scrollToTopBtn = document.createElement('button'); // Created dynamically
+const scrollToTopBtn = document.createElement('button'); // Dynamisch erstellt
 
-// --- Time and Date Display ---
+// --- Zeit- und Datumsanzeige ---
 const updateTimeAndDate = () => {
     const now = new Date();
+    // 'de-DE' für deutsches Format
     const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: false };
     const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -34,15 +36,15 @@ const updateTimeAndDate = () => {
     dateElement.textContent = now.toLocaleDateString('de-DE', optionsDate);
 };
 
-// Update every second - critical functionality
+// Aktualisiert jede Sekunde (essenziell, bleibt beibehalten)
 setInterval(updateTimeAndDate, 1000);
-updateTimeAndDate(); // Initial call to display immediately
+updateTimeAndDate(); // Sofortige Initialanzeige beim Laden
 
-// --- Search Functionality ---
+// --- Suchfunktionalität ---
 const searchEnginesMap = {
     google: 'https://www.google.com/search?q=',
     duckduckgo: 'https://duckduckgo.com/?q=',
-    youtube: 'https://www.youtube.com/results?search_query=', // Corrected Youtube URL
+    youtube: 'https://www.youtube.com/results?search_query=', // Korrekte YouTube-Such-URL
     github: 'https://github.com/search?q='
 };
 
@@ -51,35 +53,37 @@ let currentSearchEngine = settings.lastActiveEngine;
 const performSearch = () => {
     const query = searchInput.value.trim();
     if (query) {
-        // Use _top or _self to stay in the same tab, which is typical for start pages
+        // _self verwenden, um im selben Tab zu bleiben, was typisch für Startseiten ist
         window.open(searchEnginesMap[currentSearchEngine] + encodeURIComponent(query), '_self');
     }
 };
 
+// Event-Listener für Enter-Taste im Suchfeld
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         performSearch();
     }
 });
 
+// Event-Listener für Suchmaschinen-Buttons
 searchEngines.forEach(button => {
     button.addEventListener('click', () => {
-        // Deactivate all, then activate clicked
+        // Alle Buttons deaktivieren, dann den geklickten aktivieren
         searchEngines.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
         currentSearchEngine = button.dataset.engine;
-        settings.lastActiveEngine = currentSearchEngine;
+        settings.lastActiveEngine = currentSearchEngine; // Aktive Engine speichern
         saveSettings();
-        searchInput.focus(); // Keep focus on search input for continuous typing
+        searchInput.focus(); // Fokus auf Suchfeld beibehalten
     });
 });
 
-// Set initial active search engine based on saved settings
+// Setze die anfängliche aktive Suchmaschine basierend auf den gespeicherten Einstellungen
 const initialActiveButton = document.querySelector(`.search-engine[data-engine="${settings.lastActiveEngine}"]`);
 if (initialActiveButton) {
     initialActiveButton.classList.add('active');
 } else {
-    // Fallback to Google if saved engine is invalid or not found
+    // Fallback auf Google, falls die gespeicherte Engine ungültig ist
     document.querySelector('.search-engine[data-engine="google"]').classList.add('active');
     currentSearchEngine = 'google';
     settings.lastActiveEngine = 'google';
@@ -92,8 +96,8 @@ scrollToTopBtn.innerHTML = 'arrow_upward';
 document.body.appendChild(scrollToTopBtn);
 
 const toggleScrollToTopButton = () => {
-    // Show after scrolling minimal amount (e.g., 100px) for quick access
-    if (window.scrollY > 100) {
+    // Zeigen, nachdem man eine moderate Menge gescrollt hat (z.B. 200px)
+    if (window.scrollY > 200) {
         scrollToTopBtn.classList.add('show');
     } else {
         scrollToTopBtn.classList.remove('show');
@@ -106,45 +110,49 @@ scrollToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// --- Element Animations on Load ---
+// --- Element-Animationen beim Laden ---
 document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.animate-in');
-    // Using a simpler class addition for animation trigger (already done in CSS)
-    animatedElements.forEach(el => el.classList.add('fade-in-active'));
+    // Die CSS-Klasse 'animate-in' steuert die Animation mit Verzögerungen
+    // Hier ist keine zusätzliche JS-Klasse notwendig, da die Animation direkt durch CSS getriggert wird
+    // wenn die Elemente im DOM sind und die Verzögerungen greifen.
+    // (Der vorherige 'fade-in-active' classList.add war redundant zur CSS-Animation)
 });
 
-// --- Parallax Effect for Background Shapes (Ultra-Optimized) ---
+// --- Parallax-Effekt für Hintergrundformen (Optimiert für Design & Performance) ---
 const applyParallax = () => {
     const parallaxShapes = document.querySelectorAll('.parallax-shape');
     const depths = new Map();
 
-    // Assign very subtle depth values
+    // Subtle, aber spürbare Tiefenwerte für die Parallax-Formen
     parallaxShapes.forEach((shape, index) => {
-        depths.set(shape, 0.05 + (index * 0.02)); // Range 0.05 to 0.09 for 3 shapes
+        // Etwas größere Werte als im "ultra-optimierten" Zustand, um den Effekt sichtbarer zu machen
+        depths.set(shape, 0.15 + (index * 0.05)); // Bereich z.B. 0.15, 0.20, 0.25
     });
 
     let animationFrameId = null;
 
     document.addEventListener('mousemove', (e) => {
+        // Vorherigen Animationsframe abbrechen, um Überlappungen zu vermeiden und Performance zu verbessern
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
 
         animationFrameId = requestAnimationFrame(() => {
-            const mouseX = e.clientX / window.innerWidth - 0.5;
-            const mouseY = e.clientY / window.innerHeight - 0.5;
+            const mouseX = e.clientX / window.innerWidth - 0.5; // Normalisiert auf -0.5 bis 0.5
+            const mouseY = e.clientY / window.innerHeight - 0.5; // Normalisiert auf -0.5 bis 0.5
 
             parallaxShapes.forEach((shape) => {
                 const depth = depths.get(shape);
 
-                // Extremely subtle movement intensity
-                const translateX = -mouseX * depth * 5; // Reduced from 10
-                const translateY = -mouseY * depth * 5; // Reduced from 10
-                const rotateX = mouseY * depth * 0.2; // Reduced from 0.5
-                const rotateY = -mouseX * depth * 0.2; // Reduced from 0.5
-                const rotateZ = (mouseX + mouseY) * depth * 0.1; // Reduced from 0.2
+                // Moderater Bewegungskoeffizient für einen ansprechenden Parallax-Effekt
+                const translateX = -mouseX * depth * 20; // Reduziert von 30 (von Nutzer-Snippet), erhöht von 5 (von letztem Iteration)
+                const translateY = -mouseY * depth * 20;
+                const rotateX = mouseY * depth * 2; // Reduziert von 3, erhöht von 0.2
+                const rotateY = -mouseX * depth * 2;
+                const rotateZ = (mouseX + mouseY) * depth * 0.8; // Reduziert von 1, erhöht von 0.1
 
-                // Using translate3d for hardware acceleration
+                // translate3d für Hardware-Beschleunigung nutzen
                 shape.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
             });
         });
@@ -154,18 +162,17 @@ const applyParallax = () => {
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
-        // Smoothly reset transforms
         parallaxShapes.forEach((shape) => {
-            shape.style.transition = 'transform 0.5s ease-out'; // Add transition for reset
+            shape.style.transition = 'transform 0.5s ease-out'; // Sanfter Übergang zurück zur Ruheposition
             shape.style.transform = 'none';
         });
-        // Remove transition after reset to allow immediate new movement
+        // Übergang nach dem Reset entfernen, um sofortige Reaktion auf neue Mausbewegung zu gewährleisten
         setTimeout(() => {
             parallaxShapes.forEach((shape) => {
                 shape.style.transition = 'none';
             });
-        }, 500); // Match this to the transition duration
+        }, 500); // Entspricht der Übergangsdauer
     });
 };
 
-applyParallax();
+applyParallax(); // Aktiviert den optimierten Maus-Parallax-Effekt
