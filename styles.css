@@ -1,44 +1,44 @@
-/* styles.css - MKWEB OS 7: Optimized for Lighter PC Start Page */
+/* styles.css - MKWEB OS 7: Ultra-Optimized & Elegant Design */
 
 /* --- Global Design Variables - Refined for OS 7 --- */
 :root {
-  --t: 0.25s ease-out; /* Slightly faster and simpler transition for lightness */
-  --r: 16px; /* Slightly smaller rounded corners for a snappier feel */
-  --s: 0 6px 20px rgba(0,0,0,0.1); /* Lighter shadow for less visual weight */
-  --sh: 0 12px 35px rgba(0,0,0,0.2); /* Still a nice lift on hover */
-  --s-light: 0 3px 10px rgba(0,0,0,0.05); /* Even subtler lift */
-  --border-width: 1px; /* Thinner borders */
+  --t: 0.2s ease-out; /* Even faster, snappier transitions */
+  --r: 14px; /* Slightly more compact rounded corners */
+  --s: 0 4px 15px rgba(0,0,0,0.08); /* Lighter, more subtle base shadow */
+  --sh: 0 8px 25px rgba(0,0,0,0.15); /* Moderate hover shadow */
+  --s-light: 0 2px 8px rgba(0,0,0,0.04); /* Very subtle light element shadow */
+  --border-width: 1px; /* Crisp, thin borders */
   --text-gradient-angle: 65deg;
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 65%, rgba(255, 255, 255, 0) 100%); /* Lighter reflection */
-  --glow-strength: 0 0 8px; /* Slightly reduced glow strength */
+  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 70%, rgba(255, 255, 255, 0) 100%); /* Minimal reflection */
+  --glow-strength: 0 0 6px; /* Very subtle glow */
   --glow-color: var(--acc);
-  --blur-intensity: 15px; /* Reduced blur for performance */
-  --saturate-intensity: 150%; /* Reduced saturation for lighter feel */
+  --blur-intensity: 12px; /* Further reduced blur for performance */
+  --saturate-intensity: 130%; /* Less aggressive saturation */
   --hue-rotate-intensity: 0deg;
-  --bg-alpha: 0.85; /* Slightly less transparent for stability */
-  --bg-dark-900: rgba(18, 18, 18, var(--bg-alpha));
-  --bg-dark-800: rgba(28, 28, 28, var(--bg-alpha));
-  --bg-dark-700: rgba(38, 38, 38, var(--bg-alpha));
-  --text-light-100: rgba(240, 240, 240, 0.95); /* Slightly less bright text */
-  --text-light-200: rgba(200, 200, 200, 0.9);
+  --bg-alpha: 0.9; /* More opaque background for better blend */
+  --bg-dark-900: rgba(15, 15, 15, var(--bg-alpha)); /* Slightly darker base */
+  --bg-dark-800: rgba(25, 25, 25, var(--bg-alpha));
+  --bg-dark-700: rgba(35, 35, 35, var(--bg-alpha));
+  --text-light-100: rgba(235, 235, 235, 0.95); /* Refined text colors */
+  --text-light-200: rgba(190, 190, 190, 0.9);
   --text-dark-900: rgba(30, 30, 30, 0.9);
   --text-dark-800: rgba(50, 50, 50, 0.85);
-  --border-color-dark: rgba(50, 50, 50, 0.7); /* Slightly lighter border */
-  --acc: #8a2be2;
-  --acc-hover: #9b4dff;
-  --acc-gradient: linear-gradient(45deg, #8a2be2, #4b0082);
+  --border-color-dark: rgba(45, 45, 45, 0.7); /* Refined border color */
+  --acc: #7b2cbf; /* Slightly deeper purple for elegance */
+  --acc-hover: #9c4dff; /* Brighter hover state */
+  --acc-gradient: linear-gradient(45deg, #7b2cbf, #4f1585); /* Deeper, more elegant gradient */
   --red: #e74c3c;
   --green: #2ecc71;
   --yellow: #f1c40f;
   --font-display: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
-  --max-content-width: 1200px; /* Slightly reduced max width for compactness */
+  --max-content-width: 1100px; /* More compact maximum content width */
 }
 
 /* Dark Theme Specifics - Consistent & Deep */
 [data-theme='dark'] {
-  --bg-main: #121212;
-  --bg-glass: rgba(28, 28, 28, 0.75);
+  --bg-main: #0e0e0e; /* Deep, rich black background */
+  --bg-glass: rgba(22, 22, 22, 0.7); /* Slightly more transparent, darker glass */
   --text-prime: var(--text-light-100);
   --text-secondary: var(--text-light-200);
   --card-bg: var(--bg-dark-800);
@@ -68,7 +68,7 @@ html {
 body {
   background-color: var(--bg-main);
   transition: background-color var(--t);
-  line-height: 1.6;
+  line-height: 1.5; /* Tighter line-height for compactness */
   font-size: 1.6rem;
   overflow-x: hidden;
   display: flex;
@@ -80,16 +80,16 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   color: var(--text-prime);
-  margin-bottom: 0.8rem; /* Slightly reduced margin */
+  margin-bottom: 0.7rem; /* Even tighter spacing */
   font-weight: 600;
 }
 
-h1 { font-size: 3.5rem; line-height: 1.1; } /* Slightly smaller */
-h2 { font-size: 2.8rem; line-height: 1.2; } /* Slightly smaller */
-h3 { font-size: 2.2rem; line-height: 1.3; }
+h1 { font-size: 3.2rem; line-height: 1.1; } /* More compact */
+h2 { font-size: 2.6rem; line-height: 1.2; }
+h3 { font-size: 2.0rem; line-height: 1.3; }
 
 p {
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.7rem;
   color: var(--text-secondary);
 }
 
@@ -101,18 +101,18 @@ a {
 
 a:hover {
   color: var(--acc-hover);
-  text-decoration: underline;
+  text-decoration: none; /* No underline on hover for cleaner look */
 }
 
 strong {
-  font-weight: 700;
+  font-weight: 600; /* Slightly lighter strong */
 }
 
 /* Utility Classes */
 .container {
   max-width: var(--max-content-width);
   margin: 0 auto;
-  padding: 0 2rem; /* Slightly reduced padding */
+  padding: 0 1.8rem; /* Tighter padding */
 }
 
 .glass {
@@ -141,8 +141,8 @@ strong {
 
 .glass:hover {
   box-shadow: var(--sh);
-  border-color: var(--acc-hover);
-  transform: translateY(-2px); /* Less pronounced lift */
+  border-color: var(--acc); /* Cleaner border hover */
+  transform: translateY(-1px); /* Very subtle lift */
 }
 
 /* Accessibility */
@@ -173,7 +173,7 @@ strong {
 
 .grid {
   display: grid;
-  gap: 1.5rem; /* Default grid gap */
+  gap: 1.2rem; /* Consistent, tighter grid gap */
 }
 
 /* Material Symbols Icons */
@@ -183,33 +183,32 @@ strong {
     'wght' 400,
     'GRAD' 0,
     'opsz' 24;
-  font-size: 2.4rem; /* Slightly smaller icons */
+  font-size: 2.2rem; /* Slightly smaller icons */
   display: block;
   text-align: center;
   color: var(--text-prime);
   transition: color var(--t);
 }
 
-/* Animations */
+/* Animations - Faster and less intrusive */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); } /* Smaller translateY */
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-in {
-  animation: fadeIn 0.7s ease-out forwards; /* Slightly faster animation */
+  animation: fadeIn 0.5s ease-out forwards; /* Much faster animation */
   opacity: 0;
 }
 
-.delay-1 { animation-delay: 0.05s; } /* Reduced delays */
-.delay-2 { animation-delay: 0.1s; }
-.delay-3 { animation-delay: 0.15s; }
-.delay-4 { animation-delay: 0.2s; }
-.delay-5 { animation-delay: 0.25s; }
+.delay-1 { animation-delay: 0.03s; } /* Minimal delays */
+.delay-2 { animation-delay: 0.06s; }
+.delay-3 { animation-delay: 0.09s; }
+.delay-4 { animation-delay: 0.12s; }
 
 /* --- Header & Search Section --- */
 header {
-  padding: 3rem 0 1.8rem; /* Reduced padding */
+  padding: 2.5rem 0 1.5rem; /* Reduced overall header padding */
   position: relative;
   z-index: 10;
   text-align: center;
@@ -219,7 +218,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem; /* Reduced gap */
+  gap: 1.8rem; /* Tighter gap */
 }
 
 .time-date {
@@ -229,9 +228,9 @@ header {
 
 #time {
   font-family: var(--font-display);
-  font-size: 6.5rem; /* Slightly smaller time */
+  font-size: 6rem; /* More compact time display */
   font-weight: 700;
-  letter-spacing: -1px; /* Slightly tighter */
+  letter-spacing: -0.8px;
   line-height: 1;
   background: var(--acc-gradient);
   -webkit-background-clip: text;
@@ -239,43 +238,43 @@ header {
   background-clip: text;
   text-fill-color: transparent;
   display: block;
-  animation: glow 1.2s ease-in-out infinite alternate; /* Faster glow animation */
+  animation: glow 1s ease-in-out infinite alternate; /* Faster, more subtle glow */
 }
 
 @keyframes glow {
-  from { text-shadow: var(--glow-strength) rgba(138, 43, 226, 0.3); } /* Lighter glow */
-  to { text-shadow: var(--glow-strength) rgba(138, 43, 226, 0.6); }
+  from { text-shadow: var(--glow-strength) rgba(123, 44, 191, 0.25); } /* Lighter glow effect */
+  to { text-shadow: var(--glow-strength) rgba(123, 44, 191, 0.5); }
 }
 
 #date {
-  font-size: 2rem; /* Slightly smaller date */
+  font-size: 1.9rem; /* More compact date */
   font-weight: 400;
-  opacity: 0.8; /* Slightly less opaque */
-  letter-spacing: 0.5px;
+  opacity: 0.85;
+  letter-spacing: 0.4px;
   display: block;
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
 }
 
 .search-container {
   display: flex;
   width: 100%;
-  max-width: 650px; /* Slightly narrower search bar */
+  max-width: 600px; /* Optimal search bar width */
   position: relative;
 }
 
 #search-icon {
-  left: 18px; /* Adjusted icon position */
-  font-size: 2.2rem;
+  left: 16px;
+  font-size: 2rem;
 }
 
 #search {
   width: 100%;
-  padding: 1.4rem 2.2rem 1.4rem 55px; /* Adjusted padding */
-  border-radius: 40px; /* Slightly less rounded */
+  padding: 1.3rem 2rem 1.3rem 50px; /* Optimized padding */
+  border-radius: 30px; /* More modern, slightly less rounded */
   border: var(--border-width) solid var(--input-border);
   background-color: var(--input-bg);
   color: var(--text-prime);
-  font-size: 1.7rem; /* Slightly smaller font */
+  font-size: 1.6rem;
   outline: none;
   transition: all var(--t);
   box-shadow: var(--s-light);
@@ -283,19 +282,19 @@ header {
 
 #search::placeholder {
   color: var(--text-secondary);
-  opacity: 0.6; /* Less opaque placeholder */
+  opacity: 0.5;
 }
 
 #search:focus {
   border-color: var(--acc);
-  box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2), var(--s); /* Lighter focus ring */
+  box-shadow: 0 0 0 1.5px rgba(123, 44, 191, 0.15), var(--s); /* Very subtle focus ring */
   background-color: var(--card-bg);
 }
 
 /* Search Engine Buttons */
 .search-engines {
   display: flex;
-  gap: 1rem; /* Reduced gap */
+  gap: 0.8rem; /* Tighter button spacing */
   margin-top: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
@@ -304,14 +303,14 @@ header {
 .search-engine {
   background-color: var(--card-bg);
   border: var(--border-width) solid var(--card-border);
-  border-radius: 25px; /* Slightly less rounded */
-  padding: 0.9rem 1.6rem; /* Reduced padding */
-  font-size: 1.5rem; /* Slightly smaller font */
+  border-radius: 20px; /* More compact rounded */
+  padding: 0.8rem 1.5rem; /* Reduced padding */
+  font-size: 1.4rem; /* Smaller font */
   cursor: pointer;
   transition: all var(--t);
   display: flex;
   align-items: center;
-  gap: 0.7rem; /* Reduced gap */
+  gap: 0.6rem;
   color: var(--text-secondary);
   box-shadow: var(--s-light);
 }
@@ -321,19 +320,19 @@ header {
   color: var(--button-text);
   border-color: var(--acc);
   box-shadow: var(--s);
-  transform: translateY(-1px); /* Less pronounced lift */
+  transform: translateY(-1px);
 }
 
 .search-engine:not(.active):hover {
   background-color: var(--bg-dark-700);
-  border-color: var(--acc-hover);
-  color: var(--acc-hover);
+  border-color: var(--acc); /* Hover border is accent */
+  color: var(--acc);
   box-shadow: var(--sh);
-  transform: translateY(0px); /* No lift on hover for non-active to differentiate */
+  transform: translateY(0px);
 }
 
 .search-engine span.material-symbols-outlined {
-  font-size: 1.8rem; /* Slightly smaller icon */
+  font-size: 1.7rem; /* Smaller icons for buttons */
   color: inherit;
   transition: none;
 }
@@ -341,21 +340,21 @@ header {
 /* --- Main Content Sections --- */
 main {
   flex-grow: 1;
-  padding: 2.5rem 0 4rem; /* Reduced padding */
+  padding: 2rem 0 3.5rem; /* Reduced overall main padding */
 }
 
 .main-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2.5rem; /* Reduced gap */
+  gap: 2rem; /* Reduced main grid gap */
   max-width: var(--max-content-width);
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.8rem;
 }
 
 /* Section Styling */
 .menu-section, .bookmark-section {
-  padding: 2rem; /* Reduced padding */
+  padding: 1.8rem; /* Reduced section padding */
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -363,22 +362,22 @@ main {
 }
 
 .menu-section h2, .bookmark-section h2 {
-  font-size: 2.8rem; /* Slightly smaller headings */
+  font-size: 2.4rem; /* More compact headings */
   background: var(--acc-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
-  margin-bottom: 2rem; /* Reduced margin */
+  margin-bottom: 1.8rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 /* Action Cards (Menu Section) */
 .action-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); /* Slightly smaller min-width */
-  gap: 1.2rem; /* Reduced gap */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Even smaller min-width */
+  gap: 1rem; /* Tighter gap */
   width: 100%;
   justify-content: center;
 }
@@ -388,18 +387,18 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.8rem 0.8rem; /* Reduced padding */
+  padding: 1.5rem 0.5rem; /* More compact padding */
   border-radius: var(--r);
   text-align: center;
   cursor: pointer;
-  min-width: 110px;
-  max-width: 150px; /* Slightly smaller max width */
+  min-width: 100px;
+  max-width: 140px;
   transition: all var(--t);
 }
 
 .action-card .icon {
-  font-size: 3rem; /* Slightly smaller icons */
-  margin-bottom: 0.8rem;
+  font-size: 2.8rem; /* Smaller icons */
+  margin-bottom: 0.7rem;
   color: var(--acc);
   transition: color var(--t);
 }
@@ -409,8 +408,8 @@ main {
 }
 
 .action-card span {
-  font-size: 1.5rem; /* Slightly smaller font */
-  font-weight: 600;
+  font-size: 1.4rem; /* Smaller text */
+  font-weight: 500; /* Slightly lighter font weight */
   color: var(--text-prime);
 }
 
@@ -418,7 +417,7 @@ main {
 .bookmark-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.2rem; /* Reduced gap */
+  gap: 1rem; /* Tighter gap */
   width: 100%;
   justify-content: center;
 }
@@ -426,16 +425,16 @@ main {
 .bookmark-card {
   display: flex;
   align-items: center;
-  padding: 1.2rem 1.8rem; /* Reduced padding */
+  padding: 1.1rem 1.6rem; /* More compact padding */
   border-radius: var(--r);
-  flex: 1 1 180px; /* Slightly smaller min width */
-  max-width: 280px; /* Slightly smaller max width */
-  gap: 1.2rem;
+  flex: 1 1 170px; /* More compact min width */
+  max-width: 260px; /* More compact max width */
+  gap: 1rem;
   cursor: pointer;
 }
 
 .bookmark-card span:first-child {
-  font-size: 2.2rem; /* Slightly smaller icon */
+  font-size: 2rem; /* Smaller icon */
   color: var(--acc);
   flex-shrink: 0;
 }
@@ -447,7 +446,7 @@ main {
 }
 
 .bookmark-title {
-  font-size: 1.6rem; /* Slightly smaller font */
+  font-size: 1.5rem; /* Smaller font */
   font-weight: 600;
   color: var(--text-prime);
   margin-bottom: 0.1rem;
@@ -455,14 +454,14 @@ main {
 }
 
 .bookmark-description {
-  font-size: 1.3rem; /* Slightly smaller font */
+  font-size: 1.2rem; /* Smaller font */
   color: var(--text-secondary);
   line-height: 1.3;
 }
 
 /* News Section */
 .news-section {
-  padding: 2rem; /* Reduced padding */
+  padding: 1.8rem; /* Reduced padding */
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -471,9 +470,9 @@ main {
 }
 
 .news-section h2 {
-  font-size: 2.5rem; /* Slightly smaller heading */
+  font-size: 2.2rem; /* Smaller heading */
   color: var(--text-prime);
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
   transition: color var(--t);
 }
 
@@ -482,95 +481,98 @@ main {
 }
 
 .news-section p {
-  font-size: 1.5rem; /* Slightly smaller font */
+  font-size: 1.4rem; /* Smaller font */
   color: var(--text-secondary);
 }
 
 /* Scroll to Top Button */
 .scroll-to-top {
-  bottom: 20px; /* Slightly closer to bottom */
-  right: 20px; /* Slightly closer to right */
-  width: 50px; /* Slightly smaller button */
-  height: 50px;
-  font-size: 2.5rem; /* Slightly smaller icon */
-  box-shadow: var(--s-light); /* Lighter shadow */
+  bottom: 18px;
+  right: 18px;
+  width: 48px; /* Slightly smaller button */
+  height: 48px;
+  font-size: 2.2rem; /* Smaller icon */
+  box-shadow: var(--s-light);
 }
 
 .scroll-to-top:hover {
-  box-shadow: var(--s); /* Still some shadow on hover */
-  transform: translateY(-1px); /* Less pronounced lift */
+  box-shadow: var(--s);
+  transform: translateY(-0.5px); /* Even more subtle lift */
 }
 
-/* --- Parallax Effect - Optimized for Smoothness & Lightness --- */
+/* --- Parallax Effect - Highly Optimized & Subtle --- */
 .parallax-bg {
-  /* No changes here, the effect will be controlled via JS values primarily */
+  /* Retained fixed positioning and z-index */
+  background: radial-gradient(circle at center, #101010 0%, #050505 100%); /* Deeper, more subtle gradient */
 }
 
 .parallax-shape {
-  filter: blur(40px); /* Further reduced blur for performance */
-  opacity: 0.5; /* Slightly less opaque */
-  animation: float 25s infinite ease-in-out alternate; /* Slower animation */
+  background-color: rgba(123, 44, 191, 0.08); /* Even more subtle accent shapes */
+  border-radius: 50%;
+  filter: blur(35px); /* Further reduced blur */
+  opacity: 0.4; /* More transparent */
+  animation: float 30s infinite ease-in-out alternate; /* Much slower animation */
+  /* Sizes adjusted for fewer shapes and more subtle presence */
 }
 
-.shape-1 { width: 250px; height: 250px; top: 12%; left: 18%; animation-duration: 27s; } /* Reduced size and slower anim */
-.shape-2 { width: 180px; height: 180px; bottom: 8%; right: 22%; animation-duration: 23s; }
-.shape-3 { width: 350px; height: 350px; top: 35%; right: 12%; animation-duration: 30s; }
-.shape-4 { width: 220px; height: 220px; bottom: 25%; left: 8%; animation-duration: 26s; }
+.shape-1 { width: 220px; height: 220px; top: 15%; left: 20%; animation-duration: 32s; background-color: rgba(123, 44, 191, 0.1); }
+.shape-2 { width: 150px; height: 150px; bottom: 10%; right: 25%; animation-duration: 28s; background-color: rgba(79, 21, 133, 0.09); }
+.shape-3 { width: 300px; height: 300px; top: 40%; right: 15%; animation-duration: 35s; background-color: rgba(123, 44, 191, 0.08); }
 
 @keyframes float {
   0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(15px, -15px) scale(1.02); } /* Reduced movement and scale */
+  50% { transform: translate(10px, -10px) scale(1.01); } /* Minimal movement and scale */
   100% { transform: translate(0, 0) scale(1); }
 }
 
-/* --- Responsive Design (Adjusted for Lighter feel) --- */
+/* --- Responsive Design (Refined for Performance & Elegance) --- */
 @media (min-width: 768px) {
   html {
     font-size: 65%;
   }
 
   .main-grid {
-    gap: 3.5rem; /* Slightly reduced gap */
+    gap: 3rem;
   }
 
   .menu-section h2, .bookmark-section h2 {
-    font-size: 3.2rem; /* Adjusted heading size */
-    margin-bottom: 2.5rem;
+    font-size: 2.8rem;
+    margin-bottom: 2.2rem;
   }
 
   .action-card {
-    max-width: 170px;
-    padding: 2.2rem 1.2rem;
+    max-width: 160px;
+    padding: 2rem 1rem;
   }
 
   .action-card .icon {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
   }
 
   .action-card span {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 
   .bookmark-card {
-    flex: 1 1 220px;
-    max-width: 320px;
-    padding: 1.5rem 2.2rem;
+    flex: 1 1 200px;
+    max-width: 300px;
+    padding: 1.3rem 2rem;
   }
 
   .bookmark-card span:first-child {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
   }
 
   .bookmark-title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 
   .bookmark-description {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .news-section h2 {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
   }
 }
 
@@ -580,60 +582,59 @@ main {
   }
 
   #time {
-    font-size: 10rem; /* Adjusted time size */
+    font-size: 9rem;
   }
 
   #date {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .search-container {
-    max-width: 700px;
+    max-width: 650px;
   }
 
   #search {
-    padding: 1.6rem 2.5rem 1.6rem 65px;
-    font-size: 1.9rem;
+    padding: 1.5rem 2.2rem 1.5rem 60px;
+    font-size: 1.8rem;
   }
 
   #search-icon {
-    left: 22px;
-    font-size: 2.6rem;
+    left: 20px;
+    font-size: 2.4rem;
   }
 
   .search-engine {
-    padding: 1.1rem 2rem;
-    font-size: 1.7rem;
+    padding: 1rem 1.8rem;
+    font-size: 1.6rem;
   }
 
   .search-engine span.material-symbols-outlined {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .main-grid {
-    gap: 4.5rem;
+    gap: 4rem;
   }
 
   .news-section {
-    gap: 3.5rem;
+    gap: 3rem;
   }
 
   .news-section h2 {
-    font-size: 3.2rem;
+    font-size: 3rem;
   }
 
   .news-section p {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 
   .parallax-shape {
-    filter: blur(50px); /* Adjusted blur for larger screens */
+    filter: blur(45px);
   }
 
-  .shape-1 { width: 300px; height: 300px; top: 15%; left: 12%; }
-  .shape-2 { width: 220px; height: 220px; bottom: 10%; right: 18%; }
-  .shape-3 { width: 400px; height: 400px; top: 30%; right: 8%; }
-  .shape-4 { width: 250px; height: 250px; bottom: 20%; left: 10%; }
+  .shape-1 { width: 250px; height: 250px; top: 12%; left: 15%; }
+  .shape-2 { width: 180px; height: 180px; bottom: 8%; right: 20%; }
+  .shape-3 { width: 350px; height: 350px; top: 35%; right: 10%; }
 }
 
 @media (min-width: 1440px) {
@@ -646,22 +647,21 @@ main {
   }
 
   .parallax-shape {
-    filter: blur(60px);
+    filter: blur(55px);
   }
 
-  .shape-1 { width: 350px; height: 350px; top: 10%; left: 10%; }
-  .shape-2 { width: 250px; height: 250px; bottom: 8%; right: 15%; }
-  .shape-3 { width: 450px; height: 450px; top: 25%; right: 5%; }
-  .shape-4 { width: 300px; height: 300px; bottom: 18%; left: 8%; }
+  .shape-1 { width: 300px; height: 300px; top: 10%; left: 10%; }
+  .shape-2 { width: 220px; height: 220px; bottom: 6%; right: 15%; }
+  .shape-3 { width: 400px; height: 400px; top: 30%; right: 5%; }
 }
 
-/* Print Styles (No changes needed here for lightness, as it already removes heavy elements) */
+/* Print Styles (Already optimized for no animations/heavy elements) */
 @media print {
   body {
     background-color: #fff;
     color: #000;
   }
-  .glass, .parallax-bg, .scroll-to-top { /* Removed settings/avatar comments */
+  .glass, .parallax-bg, .scroll-to-top {
     display: none !important;
   }
   header, main {
