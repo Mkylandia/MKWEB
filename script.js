@@ -1,71 +1,59 @@
 // script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations
 
 // --- Initial Setup & Settings Management ---
-const SETTINGS_KEY = 'mkweb-settings-os7';
-const settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
-    theme: 'dark', // Fixed dark theme
-    showAvatar: true,
+const SETTINGS_KEY = 'mkweb-settings-os7'; // Unique key for OS7 settings
+// HIER: theme ist fest auf 'dark' gesetzt, kein Themenwechsel mehr
+const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {
+    theme: 'dark', // Fester Standardwert
+    showAvatar: true, // Keep for potential future use if avatar is re-introduced
     lastActiveEngine: 'google'
 };
 
 // Function to save settings
 const saveSettings = () => {
-    localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    try {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    } catch (e) {
+        console.error("Error saving settings to localStorage:", e);
+    }
 };
 
 // --- DOM Element Caching (Performance) ---
 const fullscreenBtn = document.getElementById('fullscreen-btn');
-const userAvatar = document.getElementById('user-avatar');
-const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
 const searchInput = document.getElementById('search');
-const searchEnginesContainer = document.querySelector('.search-engines'); // Parent for delegation
 const searchEngines = document.querySelectorAll('.search-engine');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const scrollToTopBtn = document.createElement('button'); // Created dynamically
 
-// --- User Avatar Toggle ---
-const toggleUserAvatar = () => {
-    settings.showAvatar = !settings.showAvatar;
-    userAvatar.classList.toggle('show', settings.showAvatar);
-    userAvatar.setAttribute('aria-hidden', !settings.showAvatar);
-    saveSettings();
+// --- Time and Date Display ---
+const updateTimeAndDate = () => {
+    const now = new Date();
+    const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: false };
+    const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    timeElement.textContent = now.toLocaleTimeString('de-DE', optionsTime);
+    dateElement.textContent = now.toLocaleDateString('de-DE', optionsDate);
 };
 
-userAvatarToggleBtn.addEventListener('click', toggleUserAvatar);
-// Set initial avatar state based on settings
-userAvatar.classList.toggle('show', settings.showAvatar);
-userAvatar.setAttribute('aria-hidden', !settings.showAvatar);
+// Update every second
+setInterval(updateTimeAndDate, 1000);
+updateTimeAndDate(); // Initial call
 
-// --- Fullscreen Toggle ---
-const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(e => console.error(`Error attempting to enable fullscreen: ${e.message}`));
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
-    }
-};
-fullscreenBtn.addEventListener('click', toggleFullscreen);
-
-// --- Search Functionality (Optimized with Event Delegation) ---
-const searchBaseUrls = {
+// --- Search Functionality ---
+const searchEnginesMap = {
     google: 'https://www.google.com/search?q=',
     duckduckgo: 'https://duckduckgo.com/?q=',
     youtube: 'https://www.youtube.com/results?search_query=',
-    github: 'https://github.com/search?q=',
-    chatgpt: 'https://chat.openai.com/?q=', // This might not work directly for search, more for direct access
-    perplexity: 'https://www.perplexity.ai/search?q='
+    github: 'https://github.com/search?q='
 };
+
+let currentSearchEngine = settings.lastActiveEngine;
 
 const performSearch = () => {
     const query = searchInput.value.trim();
     if (query) {
-        const activeEngine = settings.lastActiveEngine;
-        const url = searchBaseUrls[activeEngine] + encodeURIComponent(query);
-        window.open(url, '_blank');
-        searchInput.value = ''; // Clear input after search
+        window.open(searchEnginesMap[currentSearchEngine] + encodeURIComponent(query), '_self');
     }
 };
 
@@ -75,50 +63,66 @@ searchInput.addEventListener('keypress', (e) => {
     }
 });
 
-searchEnginesContainer.addEventListener('click', (e) => {
-    const targetButton = e.target.closest('.search-engine');
-    if (targetButton) {
+searchEngines.forEach(button => {
+    button.addEventListener('click', () => {
+        // Deactivate all
         searchEngines.forEach(btn => btn.classList.remove('active'));
-        targetButton.classList.add('active');
-        settings.lastActiveEngine = targetButton.dataset.engine;
+        // Activate clicked
+        button.classList.add('active');
+        currentSearchEngine = button.dataset.engine;
+        settings.lastActiveEngine = currentSearchEngine; // Save active engine
         saveSettings();
         searchInput.focus(); // Keep focus on search input
-    }
+    });
 });
 
-// Set initial active search engine
-const initialActiveEngineBtn = document.querySelector(`.search-engine[data-engine="${settings.lastActiveEngine}"]`);
-if (initialActiveEngineBtn) {
-    initialActiveEngineBtn.classList.add('active');
+// Set initial active search engine based on saved settings
+const initialActiveButton = document.querySelector(`.search-engine[data-engine="${settings.lastActiveEngine}"]`);
+if (initialActiveButton) {
+    initialActiveButton.classList.add('active');
 } else {
-    // Fallback to Google if lastActiveEngine is not found
-    searchEngines[0]?.classList.add('active');
-    settings.lastActiveEngine = searchEngines[0]?.dataset.engine || 'google';
+    // Fallback to Google if saved engine is invalid
+    document.querySelector('.search-engine[data-engine="google"]').classList.add('active');
+    currentSearchEngine = 'google';
+    settings.lastActiveEngine = 'google';
     saveSettings();
 }
 
-// --- Time and Date Display ---
-const updateDateTime = () => {
-    const now = new Date();
-    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+// --- Fullscreen Toggle ---
+if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+            fullscreenBtn.querySelector('.icon').textContent = 'fullscreen_exit';
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+                fullscreenBtn.querySelector('.icon').textContent = 'fullscreen';
+            }
+        }
+    });
 
-    timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
-    dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
-};
+    // Update icon if fullscreen state changes (e.g., via F11)
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fullscreenBtn.querySelector('.icon').textContent = 'fullscreen_exit';
+        } else {
+            fullscreenBtn.querySelector('.icon').textContent = 'fullscreen';
+        }
+    });
+}
 
-// Update every second for time, less frequently for date if needed
-setInterval(updateDateTime, 1000);
-updateDateTime(); // Initial call
 
-// --- Scroll to Top Button ---
-scrollToTopBtn.innerHTML = '<span class="material-symbols-outlined">arrow_upward</span>';
-scrollToTopBtn.className = 'scroll-to-top';
-scrollToTopBtn.setAttribute('aria-label', 'Nach oben scrollen');
+// --- Scroll-to-Top Button ---
+scrollToTopBtn.className = 'scroll-to-top material-symbols-outlined';
+scrollToTopBtn.innerHTML = 'arrow_upward';
 document.body.appendChild(scrollToTopBtn);
 
 const toggleScrollToTopButton = () => {
-    if (window.scrollY > 300) {
+    if (window.scrollY > 300) { // Show after scrolling 300px
         scrollToTopBtn.classList.add('show');
     } else {
         scrollToTopBtn.classList.remove('show');
@@ -128,34 +132,31 @@ const toggleScrollToTopButton = () => {
 window.addEventListener('scroll', toggleScrollToTopButton);
 
 scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// --- Optimized Mouse Parallax Effect ---
-const applyParallax = () => {
-    const parallaxTargets = document.querySelectorAll('.glass');
-    if (parallaxTargets.length === 0) return;
+// --- Element Animations on Load ---
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animate-in');
+    animatedElements.forEach(el => el.classList.add('fade-in-active')); // Trigger animation
+});
 
-    const depths = new Map();
-    parallaxTargets.forEach((target) => {
-        // Assign a random depth or a fixed depth based on element type
-        let depth;
-        if (target.classList.contains('top-bar')) depth = 0.5;
-        else if (target.classList.contains('search-section')) depth = 0.7;
-        else if (target.classList.contains('menu-section')) depth = 0.6;
-        else if (target.classList.contains('bookmark-section')) depth = 0.6;
-        else if (target.classList.contains('news-section')) depth = 0.5;
-        else if (target.classList.contains('action-card') || target.classList.contains('bookmark-card')) depth = 0.3;
-        else depth = 0.4; // Default
-        depths.set(target, depth);
+// --- Parallax Effect for Background Shapes ---
+const applyParallax = () => {
+    const parallaxBg = document.querySelector('.parallax-bg');
+    const parallaxShapes = document.querySelectorAll('.parallax-shape');
+    const depths = new Map(); // Store depth for each shape
+
+    // Assign random depths to shapes for varied movement
+    parallaxShapes.forEach((shape, index) => {
+        // More subtle depth values for smoother effect
+        depths.set(shape, 0.5 + (index * 0.1)); // Range 0.5 to 0.8 for 4 shapes
     });
 
     let animationFrameId = null;
 
     document.addEventListener('mousemove', (e) => {
+        // Cancel previous frame if it exists to ensure only one animation frame is requested
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
@@ -164,37 +165,32 @@ const applyParallax = () => {
             const mouseX = e.clientX / window.innerWidth - 0.5;
             const mouseY = e.clientY / window.innerHeight - 0.5;
 
-            parallaxTargets.forEach((target) => {
-                const depth = depths.get(target);
+            parallaxShapes.forEach((shape) => {
+                const depth = depths.get(shape);
 
-                // Further reduced translation and rotation for subtler effect and less computation
-                const translateX = -mouseX * depth * 20;
-                const translateY = -mouseY * depth * 20;
-                const rotateX = mouseY * depth * 2;
-                const rotateY = -mouseX * depth * 2;
-                const rotateZ = (mouseX + mouseY) * depth * 0.5;
+                // Reduced movement intensity for smoother parallax
+                const translateX = -mouseX * depth * 25; // Adjusted from 30
+                const translateY = -mouseY * depth * 25; // Adjusted from 30
+                const rotateX = mouseY * depth * 2; // Adjusted from 3
+                const rotateY = -mouseX * depth * 2; // Adjusted from 3
+                const rotateZ = (mouseX + mouseY) * depth * 0.5; // Adjusted from 1
 
-                target.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+                // Optimized transform string building
+                shape.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
             });
         });
     });
 
+    // Reset transforms when mouse leaves document for cleaner state
     document.addEventListener('mouseleave', () => {
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
-        parallaxTargets.forEach((target) => {
-            target.style.transform = 'none';
+        parallaxShapes.forEach((shape) => {
+            // Reset to identity transform to remove dynamic parallax
+            shape.style.transform = 'none';
         });
     });
 };
 
 applyParallax(); // Enable the optimized mouse parallax effect
-
-// --- Initial Animation on Load ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Add 'animate-in' class to elements after DOM is loaded for CSS animations
-    document.querySelectorAll('.animate-in').forEach(el => {
-        el.style.opacity = '1'; // Ensure they are visible after animation
-    });
-});
