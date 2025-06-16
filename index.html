@@ -12,86 +12,114 @@
   <meta property="og:title" content="MKWEB OS 7 - Das Ultimative Animierte Dashboard">
   <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Dashboard für Websuche, Schnellzugriffe und tägliche Produktivität.">
   <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg">
-  
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourwebsite.com/">
+  <meta property="twitter:title" content="MKWEB OS 7 - Das Ultimative Animierte Dashboard">
+  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Dashboard für Websuche, Schnellzugriffe und tägliche Einblicke.">
+  <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg">
+
+  <title>MKWEB OS 7</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="styles.css">
-  <title>MKWEB OS 7 - Dashboard</title>
 </head>
-<body>
-  <div class="os-container">
-    <header class="top-bar glass">
-      <div class="time-date">
-        <span id="time" aria-live="polite"></span>
-        <span id="date" aria-live="polite"></span>
-      </div>
-      <div class="header-right">
-        <button id="fullscreen-btn" class="icon-button" aria-label="Vollbild umschalten" title="Vollbild">
-          <span class="material-symbols-outlined" aria-hidden="true">fullscreen</span>
-        </button>
-        <button id="user-avatar-toggle" class="icon-button" aria-label="Benutzer-Avatar anzeigen/verbergen" title="Avatar umschalten">
-          <span class="material-symbols-outlined" aria-hidden="true">person</span>
-        </button>
+<body data-theme="dark">
+  <div class="parallax-bg">
+    <div class="parallax-shape shape-1"></div>
+    <div class="parallax-shape shape-2"></div>
+    <div class="parallax-shape shape-3"></div>
+    <div class="parallax-shape shape-4"></div>
+  </div>
+
+  <div class="wrapper">
+    <header class="container animate-in delay-1">
+      <div class="header-content">
+        <div class="time-date">
+          <time id="time">00:00</time>
+          <div id="date">Datum</div>
+        </div>
+        <div class="search-section">
+          <div class="search-container glass">
+            <span id="search-icon" class="material-symbols-outlined" aria-hidden="true">search</span>
+            <input type="text" id="search" placeholder="Suche im Web...">
+          </div>
+          <div class="search-engines">
+            <button class="search-engine active" data-engine="google">
+              <span class="material-symbols-outlined" aria-hidden="true">travel_explore</span>Google
+            </button>
+            <button class="search-engine" data-engine="duckduckgo">
+              <span class="material-symbols-outlined" aria-hidden="true">vpn_lock</span>DuckDuckGo
+            </button>
+            <button class="search-engine" data-engine="youtube">
+              <span class="material-symbols-outlined" aria-hidden="true">play_circle</span>YouTube
+            </button>
+            <button class="search-engine" data-engine="github">
+              <span class="material-symbols-outlined" aria-hidden="true">data_object</span>GitHub
+            </button>
+          </div>
+        </div>
       </div>
     </header>
 
-    <main class="main-content">
-      <div id="user-avatar" class="user-avatar animate-in" aria-hidden="true"></div>
-
-      <section class="search-section animate-in">
-        <div class="search-bar">
-          <input type="text" id="search" placeholder="Suchen im Web..." aria-label="Websuche-Eingabefeld">
-          <div class="search-engines">
-            <button class="search-engine active" data-engine="google" aria-label="Google Suche" title="Google"><img src="https://www.google.com/favicon.ico" alt="Google Logo"></button>
-            <button class="search-engine" data-engine="duckduckgo" aria-label="DuckDuckGo Suche" title="DuckDuckGo"><img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo Logo"></button>
-            <button class="search-engine" data-engine="youtube" aria-label="YouTube Suche" title="YouTube"><img src="https://www.youtube.com/favicon.ico" alt="YouTube Logo"></button>
-            <button class="search-engine" data-engine="github" aria-label="GitHub Suche" title="GitHub"><img src="https://github.githubassets.com/favicons/favicon.ico" alt="GitHub Logo"></button>
-            <button class="search-engine" data-engine="chatgpt" aria-label="ChatGPT Suche" title="ChatGPT"><img src="https://chat.openai.com/favicon.ico" alt="ChatGPT Logo"></button>
-            <button class="search-engine" data-engine="perplexity" aria-label="Perplexity AI Suche" title="Perplexity AI"><img src="https://www.perplexity.ai/favicon.ico" alt="Perplexity AI Logo"></button>
-          </div>
-        </div>
-      </section>
-
-      <section class="menu-section animate-in" id="menu-container">
-        <h2 id="menu-heading">🚀 Aktionen</h2>
-        <div class="action-grid">
-          <a class="action-card glass" href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web">
-            <span class="material-symbols-outlined" aria-hidden="true">chat</span>
-            <span>WhatsApp</span>
+    <main class="container main-grid">
+      <section class="menu-section glass animate-in delay-2">
+        <h2>🚀 Schnellzugriffe</h2>
+        <div class="action-cards-grid">
+          <a class="action-card glass" href="#" id="fullscreen-btn" title="Vollbildmodus umschalten">
+            <span class="icon material-symbols-outlined" aria-hidden="true">fullscreen</span>
+            <span>Vollbild</span>
           </a>
-          <a class="action-card glass" href="https://discord.com/app" target="_blank" rel="noopener noreferrer" title="Zu Discord">
-            <span class="material-symbols-outlined" aria-hidden="true">discord</span>
-            <span>Discord</span>
+          <a class="action-card glass" href="https://web.telegram.org/a/" target="_blank" rel="noopener noreferrer" title="Zu Telegram Web">
+            <span class="icon material-symbols-outlined" aria-hidden="true">chat</span>
+            <span>Telegram</span>
           </a>
-          <a class="action-card glass" href="https://www.notion.so/" target="_blank" rel="noopener noreferrer" title="Zu Notion">
-            <span class="material-symbols-outlined" aria-hidden="true">article</span>
-            <span>Notion</span>
+          <a class="action-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail">
+            <span class="icon material-symbols-outlined" aria-hidden="true">mail</span>
+            <span>Gmail</span>
           </a>
-          <a class="action-card glass" href="https://outlook.live.com/mail/" target="_blank" rel="noopener noreferrer" title="Zu Outlook Mail">
-            <span class="material-symbols-outlined" aria-hidden="true">mail</span>
-            <span>Outlook</span>
-          </a>
-          <a class="action-card glass" href="https://calendar.google.com/" target="_blank" rel="noopener noreferrer" title="Zum Google Kalender">
-            <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+          <a class="action-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Kalender">
+            <span class="icon material-symbols-outlined" aria-hidden="true">calendar_month</span>
             <span>Kalender</span>
           </a>
-          <a class="action-card glass" href="https://keep.google.com/" target="_blank" rel="noopener noreferrer" title="Zu Google Notizen">
-            <span class="material-symbols-outlined" aria-hidden="true">note_alt</span>
-            <span>Notizen</span>
+          <a class="action-card glass" href="https://www.deepl.com/translator" target="_blank" rel="noopener noreferrer" title="Zu DeepL Übersetzer">
+            <span class="icon material-symbols-outlined" aria-hidden="true">translate</span>
+            <span>DeepL</span>
+          </a>
+          <a class="action-card glass" href="https://www.youtube.com/feed/subscriptions" target="_blank" rel="noopener noreferrer" title="Zu YouTube Abos">
+            <span class="icon material-symbols-outlined" aria-hidden="true">subscriptions</span>
+            <span>YT Abos</span>
           </a>
         </div>
       </section>
 
-      <section class="bookmark-section animate-in" id="bookmarks-container">
-        <h2 id="bookmarks-heading">⭐ Lesezeichen</h2>
+      <section class="bookmark-section glass animate-in delay-3">
+        <h2>⭐ Favoriten</h2>
         <div class="bookmark-grid">
-          <a class="bookmark-card glass" href="https://github.com/MK-WEB-Developer" target="_blank" rel="noopener noreferrer" title="Zum GitHub Profil von MKWEB">
+          <a class="bookmark-card glass" href="https://github.com/MK-WEB-Developer" target="_blank" rel="noopener noreferrer" title="Zu MKWEB GitHub">
             <span class="material-symbols-outlined" aria-hidden="true">data_object</span>
             <div>
               <div class="bookmark-title">MKWEB GitHub</div>
               <div class="bookmark-description">Meine Projekte</div>
             </div>
           </a>
-          <a class="bookmark-card glass" href="https://stackoverflow.com/" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow">
+          <a class="bookmark-card glass" href="https://www.figma.com" target="_blank" rel="noopener noreferrer" title="Zu Figma">
+            <span class="material-symbols-outlined" aria-hidden="true">palette</span>
+            <div>
+              <div class="bookmark-title">Figma</div>
+              <div class="bookmark-description">Design Tool</div>
+            </div>
+          </a>
+          <a class="bookmark-card glass" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
+            <span class="material-symbols-outlined" aria-hidden="true">psychology</span>
+            <div>
+              <div class="bookmark-title">ChatGPT</div>
+              <div class="bookmark-description">AI Assistant</div>
+            </div>
+          </a>
+          <a class="bookmark-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow">
             <span class="material-symbols-outlined" aria-hidden="true">lightbulb</span>
             <div>
               <div class="bookmark-title">Stack Overflow</div>
@@ -115,13 +143,13 @@
         </div>
       </section>
 
-      <a class="news-section glass animate-in" href="https://mkwebnews.vercel.app" target="_blank" rel="noopener noreferrer" title="Zu den aktuellen Nachrichten">
+      <a class="news-section glass animate-in delay-4" href="https://mkwebnews.vercel.app" target="_blank" rel="noopener noreferrer" title="Zu den aktuellen Nachrichten">
         <h2 id="news-heading">📰 News</h2>
         <p class="sr-only">Klicken Sie hier, um zu den neuesten Nachrichten zu gelangen.</p>
       </a>
     </main>
   </div>
 
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
