@@ -317,6 +317,9 @@ header {
   gap: 0.7rem;
   color: var(--text-secondary);
   box-shadow: var(--s-light);
+  /* Added min-width to ensure consistency when many buttons wrap */
+  min-width: 100px;
+  justify-content: center;
 }
 
 .search-engine.active {
@@ -384,6 +387,8 @@ main {
   gap: 1.2rem;
   width: 100%;
   justify-content: center;
+  /* Added max-width to grid for better alignment on very wide screens */
+  max-width: 700px; 
 }
 
 .action-card {
@@ -424,6 +429,8 @@ main {
   gap: 1.2rem;
   width: 100%;
   justify-content: center;
+  /* Added max-width to grid for better alignment on very wide screens */
+  max-width: 900px; 
 }
 
 .bookmark-card {
@@ -571,6 +578,10 @@ main {
     margin-bottom: 2.5rem;
   }
 
+  .action-cards-grid {
+    max-width: 750px; /* Increased max-width for better distribution on tablets */
+  }
+
   .action-card {
     max-width: 170px;
     padding: 2.2rem 1.2rem;
@@ -582,6 +593,10 @@ main {
 
   .action-card span {
     font-size: 1.7rem;
+  }
+
+  .bookmark-grid {
+    max-width: 1000px; /* Increased max-width for better distribution on tablets */
   }
 
   .bookmark-card {
@@ -632,6 +647,10 @@ main {
   #search-icon {
     left: 22px;
     font-size: 2.6rem;
+  }
+
+  .search-engines {
+    gap: 1.2rem; /* Slightly larger gap for desktop buttons */
   }
 
   .search-engine {
