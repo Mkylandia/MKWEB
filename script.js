@@ -1,177 +1,284 @@
-// script.js - MKWEB OS 7: Ultra-Optimierte Funktionalität & Verbesserte Dynamik
+// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations
 
-// --- Initialisierung & Einstellungen ---
-const SETTINGS_KEY = 'mkweb-settings-os7'; // Eindeutiger Schlüssel für OS7-Einstellungen
-const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {
-    // Theme ist fest auf 'dark' gesetzt, kein Themenwechsel mehr
-    lastActiveEngine: 'google' // Letzte aktive Suchmaschine speichern
+// --- Initial Setup & Settings Management ---
+const SETTINGS_KEY = 'mkweb-settings-os7'; // Unique key for OS7 settings
+// HIER: theme ist fest auf 'dark' gesetzt, kein Themenwechsel mehr
+const settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
+    theme: 'dark', // Fester Standardwert
+    showAvatar: true,
+    lastActiveEngine: 'google'
 };
 
-// Funktion zum Speichern der Einstellungen (mit Fehlerbehandlung)
+// Function to save settings
 const saveSettings = () => {
-    try {
-        localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
-    } catch (e) {
-        console.error("Fehler beim Speichern der Einstellungen im localStorage:", e);
-    }
+    localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
 };
 
-// --- DOM-Element-Caching (Für Performance) ---
-// Vollbild-Button wurde entfernt
-// Avatar- und Themenwechsel-Elemente wurden entfernt
+// Da der Themenwechsel entfernt wurde, ist dieser Teil nicht mehr notwendig.
+// document.documentElement.setAttribute('data-theme', settings.theme);
+
+
+// --- DOM Element Caching (Performance) ---
+// HIER: themeToggleBtn wurde entfernt
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+const userAvatar = document.getElementById('user-avatar');
+const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
 const searchInput = document.getElementById('search');
 const searchEngines = document.querySelectorAll('.search-engine');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
-const scrollToTopBtn = document.createElement('button'); // Dynamisch erstellt
+const scrollToTopBtn = document.createElement('button'); // Created dynamically
 
-// --- Zeit- und Datumsanzeige ---
-const updateTimeAndDate = () => {
-    const now = new Date();
-    // 'de-DE' für deutsches Format
-    const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: false };
-    const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+// Element-Referenzen für Menü und Bookmarks, auch wenn jetzt Flexbox verwendet wird
+const menuContainer = document.getElementById('menu-container');
+const bookmarksContainer = document.getElementById('bookmarks-container');
 
-    timeElement.textContent = now.toLocaleTimeString('de-DE', optionsTime);
-    dateElement.textContent = now.toLocaleDateString('de-DE', optionsDate);
-};
 
-// Aktualisiert jede Sekunde (essenziell, bleibt beibehalten)
-setInterval(updateTimeAndDate, 1000);
-updateTimeAndDate(); // Sofortige Initialanzeige beim Laden
+// --- Theme Toggle Logic (KOMPLETT ENTFERNT) ---
+// const updateThemeToggleButton = () => { /* Code entfernt */ };
+// themeToggleBtn.addEventListener('click', () => { /* Code entfernt */ });
+// updateThemeToggleButton(); // Auch der Initialaufruf entfernt
 
-// --- Suchfunktionalität ---
-const searchEnginesMap = {
-    google: 'https://www.google.com/search?q=',
-    yandex: 'https://yandex.com/search/?text=', // Yandex hinzugefügt
-    duckduckgo: 'https://duckduckgo.com/?q=',
-    youtube: 'https://www.youtube.com/results?search_query=', // Korrekte YouTube-Such-URL
-    github: 'https://github.com/search?q='
-};
 
-let currentSearchEngine = settings.lastActiveEngine;
-
-const performSearch = () => {
-    const query = searchInput.value.trim();
-    if (query) {
-        // _self verwenden, um im selben Tab zu bleiben, was typisch für Startseiten ist
-        window.open(searchEnginesMap[currentSearchEngine] + encodeURIComponent(query), '_self');
+// --- User Avatar & Toggle Logic ---
+const applyAvatarVisibility = () => {
+    if (settings.showAvatar) {
+        userAvatar.classList.remove('hidden-avatar');
+        userAvatar.setAttribute('aria-hidden', 'false');
+        userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
+    } else {
+        userAvatar.classList.add('hidden-avatar');
+        userAvatar.setAttribute('aria-hidden', 'true');
+        userAvatarToggleBtn.textContent = '🐵 Avatar einblenden';
     }
 };
 
-// Event-Listener für Enter-Taste im Suchfeld
+userAvatarToggleBtn.addEventListener('click', () => {
+    settings.showAvatar = !settings.showAvatar;
+    saveSettings();
+    applyAvatarVisibility();
+});
+
+// Apply initial visibility
+applyAvatarVisibility();
+
+
+// --- Search Functionality ---
+let activeEngine = settings.lastActiveEngine; // Default or last active
+
+const activateEngine = (engine) => {
+    searchEngines.forEach(btn => {
+        const isActive = btn.dataset.engine === engine;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+    });
+    activeEngine = engine;
+    settings.lastActiveEngine = engine;
+    saveSettings();
+};
+
+searchEngines.forEach(btn => {
+    btn.addEventListener('click', () => activateEngine(btn.dataset.engine));
+});
+
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        performSearch();
+        const query = searchInput.value.trim();
+        if (query) {
+            let url = '';
+            switch (activeEngine) {
+                case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
+                case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Korrigierte YouTube URL
+                case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
+                default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            }
+            window.open(url, '_blank');
+        }
     }
 });
 
-// Event-Listener für Suchmaschinen-Buttons
-searchEngines.forEach(button => {
-    button.addEventListener('click', () => {
-        // Alle Buttons deaktivieren, dann den geklickten aktivieren
-        searchEngines.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        currentSearchEngine = button.dataset.engine;
-        settings.lastActiveEngine = currentSearchEngine; // Aktive Engine speichern
-        saveSettings();
-        searchInput.focus(); // Fokus auf Suchfeld beibehalten
-    });
-});
+// Initialize active engine
+activateEngine(activeEngine);
 
-// Setze die anfängliche aktive Suchmaschine basierend auf den gespeicherten Einstellungen
-const initialActiveButton = document.querySelector(`.search-engine[data-engine="${settings.lastActiveEngine}"]`);
-if (initialActiveButton) {
-    initialActiveButton.classList.add('active');
-} else {
-    // Fallback auf Google, falls die gespeicherte Engine ungültig ist (oder z.B. Yandex noch nicht da war)
-    document.querySelector('.search-engine[data-engine="google"]').classList.add('active');
-    currentSearchEngine = 'google';
-    settings.lastActiveEngine = 'google';
-    saveSettings();
-}
 
-// --- Scroll-to-Top Button ---
-scrollToTopBtn.className = 'scroll-to-top material-symbols-outlined';
-scrollToTopBtn.innerHTML = 'arrow_upward';
-document.body.appendChild(scrollToTopBtn);
+// --- Time and Date Display ---
+const updateDateTime = () => {
+    const now = new Date();
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-const toggleScrollToTopButton = () => {
-    // Zeigen, nachdem man eine moderate Menge gescrollt hat (z.B. 200px)
-    if (window.scrollY > 200) {
-        scrollToTopBtn.classList.add('show');
-    } else {
-        scrollToTopBtn.classList.remove('show');
-    }
+    timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
+    dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
 };
 
-window.addEventListener('scroll', toggleScrollToTopButton);
+// Update every second (minimal performance impact)
+setInterval(updateDateTime, 1000);
+updateDateTime(); // Initial call
+
+
+// --- Background Shapes Creation (Highly Optimized) ---
+const createBackgroundShapes = (numShapes) => {
+    const container = document.body;
+    // Remove existing shapes to prevent duplicates if function is called multiple times
+    document.querySelectorAll('.background-shape').forEach(shape => shape.remove());
+
+    const fragment = document.createDocumentFragment(); // Use DocumentFragment for performance
+
+    for (let i = 0; i < numShapes; i++) {
+        const shape = document.createElement('div');
+        shape.classList.add('background-shape');
+
+        const size = Math.random() * (400 - 200) + 200; // Smaller range: 200px to 400px
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        const delay = Math.random() * 15; // Shorter delay range: up to 15s
+        const duration = Math.random() * (40 - 20) + 20; // Shorter duration: 20s to 40s
+        const opacity = Math.random() * (0.04 - 0.01) + 0.01; // Reduced opacity range: 0.01 to 0.04
+
+        // Subtler initial 3D transforms for smoother start and lower load
+        const initialTranslateX = (Math.random() - 0.5) * 100; // -50 to 50px
+        const initialTranslateY = (Math.random() - 0.5) * 100;
+        const initialTranslateZ = (Math.random() - 0.5) * 80; // Shallower Z
+        const initialRotateX = (Math.random() - 0.5) * 8; // -4 to 4 degrees
+        const initialRotateY = (Math.random() - 0.5) * 8;
+        const initialRotateZ = (Math.random() - 0.5) * 6; // Reduced Z-rotation
+        const initialScale = Math.random() * (1.1 - 0.9) + 0.9; // 0.9 to 1.1
+
+        shape.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            top: ${top}%;
+            left: ${left}%;
+            animation-delay: ${delay}s;
+            animation-duration: ${duration}s;
+            opacity: ${opacity};
+            transform: translate3d(${initialTranslateX}px, ${initialTranslateY}px, ${initialTranslateZ}px) scale(${initialScale}) rotateX(${initialRotateX}deg) rotateY(${initialRotateY}deg) rotateZ(${initialRotateZ}deg);
+            background-color: ${i % 2 === 0 ? 'var(--acc)' : 'rgba(var(--fg-rgb), 0.07)'}; /* Dynamic color with even lower opacity */
+        `;
+
+        fragment.appendChild(shape);
+    }
+    container.appendChild(fragment); // Append all shapes at once
+};
+
+createBackgroundShapes(5); // Reduced number of shapes to 5 for better performance
+
+
+// --- Scroll to Top Button Logic ---
+scrollToTopBtn.classList.add('scroll-to-top');
+scrollToTopBtn.innerHTML = '⬆️';
+scrollToTopBtn.title = 'Nach oben scrollen';
+document.body.appendChild(scrollToTopBtn);
+
+// Use requestAnimationFrame for scroll-based updates
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+        cancelAnimationFrame(scrollTimeout);
+    }
+    scrollTimeout = requestAnimationFrame(() => {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            scrollToTopBtn.classList.add('show');
+        } else {
+            scrollToTopBtn.classList.remove('show');
+        }
+    });
+});
 
 scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 });
 
-// --- Element-Animationen beim Laden ---
+
+// --- Animate-in elements on page load with optimized staggering ---
 document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.animate-in');
-    // Die CSS-Klasse 'animate-in' steuert die Animation mit Verzögerungen
-    // Hier ist keine zusätzliche JS-Klasse notwendig, da die Animation direkt durch CSS getriggert wird
-    // wenn die Elemente im DOM sind und die Verzögerungen greifen.
+    animatedElements.forEach((el, index) => {
+        el.style.animationDelay = `${index * 0.08}s`; // Slightly faster staggering delay
+        el.style.animationFillMode = 'forwards';
+    });
 });
 
-// --- Parallax-Effekt für Hintergrundformen (Optimiert für Design & Performance) ---
-const applyParallax = () => {
-    const parallaxShapes = document.querySelectorAll('.parallax-shape');
-    const depths = new Map();
 
-    // Subtle, aber spürbare Tiefenwerte für die Parallax-Formen
-    parallaxShapes.forEach((shape, index) => {
-        depths.set(shape, 0.15 + (index * 0.05)); // Bereich z.B. 0.15, 0.20, 0.25
+// --- Fullscreen Toggle ---
+fullscreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => {
+            fullscreenBtn.textContent = ' shrink';
+            fullscreenBtn.setAttribute('title', 'Vollbild verlassen');
+            fullscreenBtn.setAttribute('aria-label', 'Vollbild verlassen');
+        }).catch(err => {
+            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        });
+    } else {
+        document.exitFullscreen().then(() => {
+            fullscreenBtn.textContent = '🚀 Vollbild';
+            fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
+            fullscreenBtn.setAttribute('aria-label', 'Vollbild umschalten');
+        }).catch(err => {
+            console.error(`Error attempting to disable full-screen mode: ${err.message} (${err.name})`);
+        });
+    }
+});
+
+
+// --- Mouse Parallax Effect (Highly Optimized with requestAnimationFrame & Reduced Intensity) ---
+const applyParallax = () => {
+    const parallaxTargets = document.querySelectorAll('.glass');
+    let animationFrameId = null; // To manage requestAnimationFrame
+
+    // Pre-calculate depths for slight performance gain
+    const depths = new Map();
+    parallaxTargets.forEach(target => {
+        let depth = 0.04; // Even further reduced base depth
+        if (target.classList.contains('header') || target.classList.contains('main')) {
+            depth *= 0.5; // Even less movement for large containers
+        } else if (target.classList.contains('action-card') || target.classList.contains('bookmark-card')) {
+            depth *= 0.9; // Slightly less movement for smaller cards
+        }
+        depths.set(target, depth);
     });
 
-    let animationFrameId = null;
-
     document.addEventListener('mousemove', (e) => {
-        // Vorherigen Animationsframe abbrechen, um Überlappungen zu vermeiden und Performance zu verbessern
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
 
         animationFrameId = requestAnimationFrame(() => {
-            const mouseX = e.clientX / window.innerWidth - 0.5; // Normalisiert auf -0.5 bis 0.5
-            const mouseY = e.clientY / window.innerHeight - 0.5; // Normalisiert auf -0.5 bis 0.5
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
 
-            parallaxShapes.forEach((shape) => {
-                const depth = depths.get(shape);
+            parallaxTargets.forEach((target) => {
+                const depth = depths.get(target);
 
-                // Moderater Bewegungskoeffizient für einen ansprechenden Parallax-Effekt
-                const translateX = -mouseX * depth * 20;
-                const translateY = -mouseY * depth * 20;
-                const rotateX = mouseY * depth * 2;
-                const rotateY = -mouseX * depth * 2;
-                const rotateZ = (mouseX + mouseY) * depth * 0.8;
+                const translateX = -mouseX * depth * 30; // Further reduced translation
+                const translateY = -mouseY * depth * 30;
+                const rotateX = mouseY * depth * 3; // Further reduced rotation
+                const rotateY = -mouseX * depth * 3;
+                const rotateZ = (mouseX + mouseY) * depth * 1; // Further reduced Z-rotation
 
-                // translate3d für Hardware-Beschleunigung nutzen
-                shape.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+                // Optimized transform string building
+                target.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
             });
         });
     });
 
+    // Reset transforms when mouse leaves document for cleaner state
     document.addEventListener('mouseleave', () => {
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
-        parallaxShapes.forEach((shape) => {
-            shape.style.transition = 'transform 0.5s ease-out'; // Sanfter Übergang zurück zur Ruheposition
-            shape.style.transform = 'none';
+        parallaxTargets.forEach((target) => {
+            // Reset to identity transform to remove dynamic parallax
+            target.style.transform = 'none'; // Or set back to base CSS transform if it has one
         });
-        // Übergang nach dem Reset entfernen, um sofortige Reaktion auf neue Mausbewegung zu gewährleisten
-        setTimeout(() => {
-            parallaxShapes.forEach((shape) => {
-                shape.style.transition = 'none';
-            });
-        }, 500); // Entspricht der Übergangsdauer
     });
 };
 
-applyParallax(); // Aktiviert den optimierten Maus-Parallax-Effekt
+applyParallax(); // Enable the optimized mouse parallax effect
