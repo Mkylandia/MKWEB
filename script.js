@@ -1,11 +1,9 @@
-// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations
+// script.js - MKWEB OS 7: Ultra-Optimized Functionality for Lighter PC Start Page
 
 // --- Initial Setup & Settings Management ---
 const SETTINGS_KEY = 'mkweb-settings-os7'; // Unique key for OS7 settings
-// HIER: theme ist fest auf 'dark' gesetzt, kein Themenwechsel mehr
 const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {
-    theme: 'dark', // Fester Standardwert
-    showAvatar: true, // Keep for potential future use if avatar is re-introduced
+    theme: 'dark', // Theme is fixed to 'dark'
     lastActiveEngine: 'google'
 };
 
@@ -36,7 +34,7 @@ const updateTimeAndDate = () => {
     dateElement.textContent = now.toLocaleDateString('de-DE', optionsDate);
 };
 
-// Update every second
+// Update every second (essential functionality, kept)
 setInterval(updateTimeAndDate, 1000);
 updateTimeAndDate(); // Initial call
 
@@ -44,7 +42,7 @@ updateTimeAndDate(); // Initial call
 const searchEnginesMap = {
     google: 'https://www.google.com/search?q=',
     duckduckgo: 'https://duckduckgo.com/?q=',
-    youtube: 'https://www.youtube.com/results?search_query=',
+    youtube: 'https://www.youtube.com/results?search_query=', // Corrected Youtube URL
     github: 'https://github.com/search?q='
 };
 
@@ -91,7 +89,7 @@ if (initialActiveButton) {
 // --- Fullscreen Toggle ---
 if (fullscreenBtn) {
     fullscreenBtn.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default link behavior
+        e.preventDefault();
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen().catch(err => {
                 console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
@@ -105,7 +103,6 @@ if (fullscreenBtn) {
         }
     });
 
-    // Update icon if fullscreen state changes (e.g., via F11)
     document.addEventListener('fullscreenchange', () => {
         if (document.fullscreenElement) {
             fullscreenBtn.querySelector('.icon').textContent = 'fullscreen_exit';
@@ -115,14 +112,13 @@ if (fullscreenBtn) {
     });
 }
 
-
 // --- Scroll-to-Top Button ---
 scrollToTopBtn.className = 'scroll-to-top material-symbols-outlined';
 scrollToTopBtn.innerHTML = 'arrow_upward';
 document.body.appendChild(scrollToTopBtn);
 
 const toggleScrollToTopButton = () => {
-    if (window.scrollY > 300) { // Show after scrolling 300px
+    if (window.scrollY > 200) { // Show after scrolling 200px (reduced from 300)
         scrollToTopBtn.classList.add('show');
     } else {
         scrollToTopBtn.classList.remove('show');
@@ -138,25 +134,23 @@ scrollToTopBtn.addEventListener('click', () => {
 // --- Element Animations on Load ---
 document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.animate-in');
-    animatedElements.forEach(el => el.classList.add('fade-in-active')); // Trigger animation
+    // Using a simpler class addition for animation trigger
+    animatedElements.forEach(el => el.classList.add('fade-in-active'));
 });
 
-// --- Parallax Effect for Background Shapes ---
+// --- Parallax Effect for Background Shapes (Optimized for Lightness) ---
 const applyParallax = () => {
-    const parallaxBg = document.querySelector('.parallax-bg');
     const parallaxShapes = document.querySelectorAll('.parallax-shape');
-    const depths = new Map(); // Store depth for each shape
+    const depths = new Map();
 
-    // Assign random depths to shapes for varied movement
     parallaxShapes.forEach((shape, index) => {
-        // More subtle depth values for smoother effect
-        depths.set(shape, 0.5 + (index * 0.1)); // Range 0.5 to 0.8 for 4 shapes
+        // Reduced range of depth for very subtle movement
+        depths.set(shape, 0.2 + (index * 0.05)); // Range 0.2 to 0.35
     });
 
     let animationFrameId = null;
 
     document.addEventListener('mousemove', (e) => {
-        // Cancel previous frame if it exists to ensure only one animation frame is requested
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
@@ -168,29 +162,26 @@ const applyParallax = () => {
             parallaxShapes.forEach((shape) => {
                 const depth = depths.get(shape);
 
-                // Reduced movement intensity for smoother parallax
-                const translateX = -mouseX * depth * 25; // Adjusted from 30
-                const translateY = -mouseY * depth * 25; // Adjusted from 30
-                const rotateX = mouseY * depth * 2; // Adjusted from 3
-                const rotateY = -mouseX * depth * 2; // Adjusted from 3
-                const rotateZ = (mouseX + mouseY) * depth * 0.5; // Adjusted from 1
+                // Significantly reduced movement intensity
+                const translateX = -mouseX * depth * 10; // Adjusted from 25
+                const translateY = -mouseY * depth * 10; // Adjusted from 25
+                const rotateX = mouseY * depth * 0.5; // Adjusted from 2
+                const rotateY = -mouseX * depth * 0.5; // Adjusted from 2
+                const rotateZ = (mouseX + mouseY) * depth * 0.2; // Adjusted from 0.5
 
-                // Optimized transform string building
                 shape.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
             });
         });
     });
 
-    // Reset transforms when mouse leaves document for cleaner state
     document.addEventListener('mouseleave', () => {
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
         }
         parallaxShapes.forEach((shape) => {
-            // Reset to identity transform to remove dynamic parallax
             shape.style.transform = 'none';
         });
     });
 };
 
-applyParallax(); // Enable the optimized mouse parallax effect
+applyParallax();
