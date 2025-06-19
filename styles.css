@@ -1,30 +1,30 @@
-/* styles.css - MKWEB OS 7: Compact Single-Screen Layout */
+/* styles.css - MKWEB OS 7: Compact Single-Screen Layout - LIGHTWEIGHT VERSION */
 
 /* --- Global Design Variables - Refined for OS 7 --- */
 :root {
-  --t: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  --r: 20px;
-  --s: 0 8px 25px rgba(0,0,0,0.15);
-  --sh: 0 16px 45px rgba(0,0,0,0.3);
-  --s-light: 0 4px 12px rgba(0,0,0,0.07);
-  --border-width: 1.5px;
+  --t: 0.15s ease-out; /* Faster transitions */
+  --r: 12px; /* Slightly smaller border-radius */
+  --s: 0 4px 12px rgba(0,0,0,0.08); /* Lighter shadow */
+  --sh: 0 8px 20px rgba(0,0,0,0.1); /* Lighter hover shadow */
+  --s-light: 0 2px 6px rgba(0,0,0,0.05); /* Even lighter shadow */
+  --border-width: 1px; /* Thinner borders */
   --text-gradient-angle: 65deg;
-  --glass-reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%, rgba(255, 255, 255, 0.01) 100%);
-  --glow-strength: 0 0 10px;
+  --glass-reflection: transparent; /* Remove glass reflection */
+  --glow-strength: 0 0 5px; /* Reduced glow strength */
   --glow-color: var(--acc);
-  --blur-intensity: 22px;
-  --saturate-intensity: 180%;
-  --content-max-width: 1800px; /* Increased max width for widescreen */
-  --inner-shadow-strength: inset 0 0 10px rgba(0,0,0,0.06);
+  --blur-intensity: 8px; /* Reduced blur intensity */
+  --saturate-intensity: 120%; /* Reduced saturate intensity */
+  --content-max-width: 1800px;
+  --inner-shadow-strength: inset 0 0 5px rgba(0,0,0,0.03); /* Lighter inner shadow */
 
   /* --- Themed Variables (Nur noch Dark Theme) --- */
-  --bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  --bg: #0d0d0d; /* Simpler, slightly darker background */
   --fg: #e0e0e0;
-  --dim: rgba(224,224,224,0.65);
+  --dim: rgba(224,224,224,0.5); /* Less opaque dim text */
   --acc: #8a4ed4;
   --ah: #b080ff;
-  --gl: rgba(255,255,255,0.08);
-  --gb: rgba(255,255,255,0.25);
+  --gl: rgba(255,255,255,0.03); /* Lighter glass background */
+  --gb: rgba(255,255,255,0.1); /* Lighter glass border */
   --inner-shadow: var(--inner-shadow-strength);
   --acc-rgb: 138, 78, 212;
   --fg-rgb: 224, 224, 224;
@@ -52,60 +52,17 @@ body {
   height: 100vh;
   width: 100vw;
   transition: background var(--t), color var(--t);
-  overflow: hidden; /* VERHINDERT SCROLLEN */
+  overflow: hidden;
   position: relative;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  perspective: 1000px;
+  /* Removed perspective for lighter rendering */
 }
 
-/* --- Animated Background Elements --- */
-.background-shape {
-  content: '';
-  position: fixed;
-  border-radius: 50%;
-  opacity: 0.03;
-  filter: blur(50px);
-  z-index: -1;
-  pointer-events: none;
-  background: var(--acc);
-  animation: floatEffect 65s ease-in-out infinite alternate, pulseOpacity 9s infinite alternate;
-  will-change: transform, opacity, filter;
-}
-
-@keyframes floatEffect {
-  0% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-  25% { transform: translate3d(30px, 35px, -80px) scale(1.05) rotateX(5deg) rotateY(4deg) rotateZ(2deg); }
-  50% { transform: translate3d(-25px, -30px, 50px) scale(0.96) rotateX(-4deg) rotateY(-5deg) rotateZ(-3deg); }
-  75% { transform: translate3d(22px, -25px, -70px) scale(1.04) rotateX(4deg) rotateY(4deg) rotateZ(1.8deg); }
-  100% { transform: translate3d(0, 0, 0) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-}
-
-@keyframes pulseOpacity {
-    0% { opacity: 0.03; }
-    50% { opacity: 0.05; }
-    100% { opacity: 0.03; }
-}
-
-.grain {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 100px 100px;
-  animation: grain 0.7s steps(1) infinite;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.15;
-}
-
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-0.2%, 0.2%); }
-}
+/* --- Animated Background Elements - REMOVED --- */
+.background-shape { display: none; } /* Completely hide background shapes */
+.grain { display: none; } /* Completely hide grain effect */
 
 .container {
   position: relative;
@@ -118,18 +75,18 @@ body {
   gap: 1.5rem;
 }
 
-/* --- Glassmorphism Base Style --- */
+/* --- Glassmorphism Base Style - Simplified --- */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t), backdrop-filter var(--t), filter var(--t);
+  transition: background var(--t), border-color var(--t), box-shadow var(--t); /* Simpler transitions */
   position: relative;
   overflow: hidden;
-  will-change: transform, box-shadow, border-color, background, backdrop-filter, filter;
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  /* Removed will-change for lighter rendering */
+  transform: none; /* No initial 3D transform */
 
   &::after {
     content: '';
@@ -138,48 +95,40 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--glass-reflection);
+    background: var(--glass-reflection); /* Now transparent */
     pointer-events: none;
-    opacity: 0.9;
-    transition: opacity var(--t);
+    opacity: 0; /* No reflection visible */
+    transition: none; /* No transition */
   }
 
   &:hover {
-    transform: translate3d(0, -10px, 10px) rotateX(1deg) rotateY(-1deg) scale(1.008);
-    box-shadow: var(--sh), var(--inner-shadow), var(--glow-strength) rgba(var(--acc-rgb), 0.45);
+    transform: translateY(-3px); /* Simpler hover effect */
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* Lighter glow on hover */
   }
 
   &::before {
     content: '';
     position: absolute;
-    top: -3px; left: -3px; right: -3px; bottom: -3px;
-    border-radius: calc(var(--r) + 3px);
-    background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
+    top: -1px; left: -1px; right: -1px; bottom: -1px; /* Tighter border */
+    border-radius: calc(var(--r) + 1px);
+    background: linear-gradient(45deg, var(--acc), var(--ah)); /* Simpler gradient */
     z-index: -1;
     opacity: 0;
-    transition: opacity var(--t), filter var(--t);
-    filter: blur(10px);
+    transition: opacity var(--t); /* Simpler transition */
+    filter: blur(5px); /* Lighter blur */
   }
 
   &:hover::before {
-    opacity: 1;
-    filter: blur(12px);
+    opacity: 0.5; /* Reduced opacity */
+    filter: blur(7px); /* Reduced blur */
   }
 }
 
-/* --- Animation for elements appearing on page load --- */
+/* --- Animation for elements appearing on page load - REMOVED --- */
 .animate-in {
-  opacity: 0;
-  transform: translateY(30px) scale(0.96) rotateX(4deg);
-  animation: fadeInSlideUp 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-  will-change: opacity, transform;
-}
-
-@keyframes fadeInSlideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
-  }
+  opacity: 1; /* Always visible */
+  transform: none; /* No initial transform */
+  animation: none; /* No animation */
 }
 
 /* --- Header --- */
@@ -194,16 +143,16 @@ body {
 
 .logo {
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 800; /* Slightly lighter font weight */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 400% 400%;
+  background-size: 200% 200%; /* Simpler background size */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 30s ease infinite alternate, logoGlowPulse 6s infinite alternate ease-in-out;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+  animation: gradient 15s ease infinite alternate; /* Slower gradient animation */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1); /* Lighter text shadow */
   position: relative;
-  will-change: background-position, text-shadow;
+  /* Removed will-change */
 }
 
 @keyframes gradient {
@@ -211,10 +160,8 @@ body {
   100% { background-position: 100% 50%; }
 }
 
-@keyframes logoGlowPulse {
-    0% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); }
-    100% { text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5); }
-}
+@keyframes logoGlowPulse { display: none; } /* Remove logo glow pulse */
+
 
 .controls {
   display: flex;
@@ -222,46 +169,46 @@ body {
   align-items: center;
 }
 
-/* --- Buttons Styling --- */
+/* --- Buttons Styling - Simplified --- */
 button {
-  padding: 0.7rem 1.2rem;
+  padding: 0.6rem 1rem; /* Slightly smaller padding */
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
-  font-size: 0.9rem;
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t); /* Simpler transitions */
+  font-size: 0.85rem; /* Slightly smaller font size */
   font-weight: 600;
   outline: none;
   box-shadow: var(--s-light);
   position: relative;
   z-index: 1;
   overflow: hidden;
-  will-change: transform, box-shadow, border-color, background, color;
-  transform: translate3d(0, 0, 0);
+  /* Removed will-change */
+  transform: none; /* No initial 3D transform */
 
   &:active {
-    transform: translateY(2px) scale(0.98);
-    box-shadow: var(--s-light), inset 0 3px 8px rgba(0,0,0,0.25);
-    background: rgba(var(--gl-rgb), 0.1);
+    transform: translateY(1px) scale(0.99); /* Simpler active effect */
+    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15); /* Lighter inset shadow */
+    background: rgba(var(--gl-rgb), 0.05); /* Less opaque background */
   }
 }
 
 button:hover {
-  transform: translate3d(0, -5px, 5px) scale(1.03);
+  transform: translateY(-2px); /* Simpler hover effect */
   border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Lighter glow */
 }
 
 .user-avatar {
-  width: 45px;
-  height: 45px;
+  width: 40px; /* Slightly smaller avatar */
+  height: 40px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem;
+  font-size: 1.6rem; /* Slightly smaller icon */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -269,19 +216,19 @@ button:hover {
   transition: all var(--t);
   box-shadow: var(--s-light);
   overflow: hidden;
-  will-change: transform, box-shadow, border-color;
-  transform: translate3d(0, 0, 0);
+  /* Removed will-change */
+  transform: none; /* No initial 3D transform */
 }
 
 .user-avatar:hover {
-  transform: translate3d(0, -5px, 5px) scale(1.2) rotate(5deg);
+  transform: translateY(-3px); /* Simpler hover effect */
   border-color: var(--acc);
-  box-shadow: var(--glow-strength) var(--acc), var(--sh);
+  box-shadow: var(--glow-strength) var(--acc), var(--s); /* Lighter glow */
 }
 
 .hidden-avatar {
   opacity: 0 !important;
-  transform: scale(0.4) !important;
+  transform: scale(0.6) !important; /* Slightly faster scale change */
   pointer-events: none !important;
 }
 
@@ -292,21 +239,21 @@ button:hover {
   max-width: var(--content-max-width);
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; /* Slightly smaller gap */
   flex-grow: 1;
 }
 
 .grid-left, .grid-right {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem; /* Slightly smaller gap */
   height: 100%;
 }
 
 /* --- Search Section --- */
 .search-section {
-  padding: 1.5rem;
+  padding: 1.2rem; /* Slightly smaller padding */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -315,51 +262,51 @@ button:hover {
 
 .search-engines {
   display: flex;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
+  gap: 0.6rem; /* Smaller gap */
+  margin-bottom: 1.2rem; /* Smaller margin */
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: 0.6rem 1rem;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 0.8rem;
+  padding: 0.5rem 0.9rem; /* Smaller padding */
+  border-radius: 30px; /* Smaller border radius */
+  font-weight: 600;
+  font-size: 0.75rem; /* Smaller font size */
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t);
-  will-change: transform, box-shadow, background-color, border-color, color;
+  /* Removed will-change */
 
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translate3d(0, -4px, 4px) scale(1.05);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s);
+    transform: translateY(-2px); /* Simpler active effect */
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); /* Lighter glow */
     border-color: var(--acc);
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translate3d(0, -2px, 2px) scale(1.02);
-    box-shadow: inset 0 0 10px rgba(var(--acc-rgb), 0.2), var(--s-light);
+    transform: translateY(-1px); /* Simpler hover effect */
+    box-shadow: inset 0 0 5px rgba(var(--acc-rgb), 0.1), var(--s-light); /* Lighter inset shadow */
   }
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  border-radius: 50px;
-  padding: 0.8rem 1.5rem;
+  border-radius: 30px; /* Smaller border radius */
+  padding: 0.7rem 1.2rem; /* Smaller padding */
   transition: all var(--t);
   box-shadow: var(--s), var(--inner-shadow);
-  will-change: transform, box-shadow, border-color;
+  /* Removed will-change */
 }
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.01);
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s);
+  transform: scale(1.005); /* Less pronounced scale */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); /* Lighter glow */
 }
 
 #search {
@@ -367,9 +314,9 @@ button:hover {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: 1.1rem;
+  font-size: 1rem; /* Slightly smaller font size */
   outline: none;
-  margin-left: 1rem;
+  margin-left: 0.8rem; /* Slightly smaller margin */
 }
 
 #search::placeholder {
@@ -379,57 +326,57 @@ button:hover {
 /* --- Time Display --- */
 .time-display {
   text-align: center;
-  padding: 1.5rem;
+  padding: 1.2rem; /* Smaller padding */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 2; /* Takes more space than search */
+  flex-grow: 2;
 }
 
 #time {
-  font-size: 5rem;
-  font-weight: 900;
-  margin-bottom: 0.5rem;
+  font-size: 4rem; /* Smaller font size */
+  font-weight: 800; /* Slightly lighter font weight */
+  margin-bottom: 0.3rem; /* Smaller margin */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 500% 500%;
+  background-size: 300% 300%; /* Simpler background size */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 25s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
-  will-change: background-position, text-shadow;
+  animation: gradient 15s ease infinite alternate; /* Slower animation */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Lighter text shadow */
+  /* Removed will-change */
 }
 
 #date {
-  font-size: 1.2rem;
+  font-size: 1.1rem; /* Slightly smaller font size */
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 2px; /* Reduced letter spacing */
 }
 
 /* --- NEW: Apps & Bookmarks Section --- */
 .apps-section {
   width: 100%;
-  padding: 1.5rem;
+  padding: 1.2rem; /* Smaller padding */
   display: flex;
   flex-direction: column;
 }
 
 .apps-section h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 800;
+  margin-bottom: 1.2rem; /* Smaller margin */
+  font-size: 1.4rem; /* Slightly smaller font size */
+  font-weight: 700; /* Slightly lighter font weight */
   text-align: center;
   color: var(--dim);
 }
 
 .apps-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 1rem;
-    overflow-y: auto; /* Fallback scroll for this container if content overflows */
-    padding: 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Slightly smaller minmax */
+    gap: 0.8rem; /* Smaller gap */
+    overflow-y: auto;
+    padding: 0.3rem; /* Smaller padding */
     flex-grow: 1;
 }
 
@@ -437,7 +384,7 @@ button:hover {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 1rem;
+  padding: 0.8rem; /* Smaller padding */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
@@ -445,38 +392,38 @@ button:hover {
   position: relative;
   overflow: hidden;
   box-shadow: var(--s-light), var(--inner-shadow);
-  will-change: transform, box-shadow, border-color;
-  transform: translate3d(0, 0, 0);
+  /* Removed will-change */
+  transform: none; /* No initial 3D transform */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1 / 1; /* Make cards square */
+  aspect-ratio: 1 / 1;
 }
 
 .app-card:hover {
-  transform: translate3d(0, -8px, 8px) scale(1.05);
+  transform: translateY(-5px); /* Simpler hover effect */
   border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25); /* Lighter glow */
 }
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 2rem; /* Smaller icon size */
+  margin-bottom: 0.4rem; /* Smaller margin */
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-  transition: all 0.25s ease-out;
-  will-change: transform;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Lighter text shadow */
+  transition: all 0.15s ease-out; /* Faster transition */
+  /* Removed will-change */
 }
 
 .app-card:hover .icon {
-  transform: scale(1.2) rotate(5deg);
+  transform: scale(1.1); /* Less pronounced scale and no rotation */
 }
 
 .app-card .label {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.75rem; /* Smaller font size */
+  font-weight: 500; /* Lighter font weight */
 }
 
 /* --- SR-Only class for accessibility --- */
@@ -494,49 +441,49 @@ button:hover {
 
 /* --- Media Queries for Responsiveness --- */
 @media (max-width: 1200px) {
-    #time { font-size: 4rem; }
-    #date { font-size: 1rem; }
-    .apps-container { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
-    .app-card .icon { font-size: 2.2rem; }
-    .app-card .label { font-size: 0.75rem; }
+    #time { font-size: 3.5rem; }
+    #date { font-size: 0.95rem; }
+    .apps-container { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+    .app-card .icon { font-size: 1.8rem; }
+    .app-card .label { font-size: 0.7rem; }
 }
 
 @media (max-width: 992px) {
-  .container { padding: 1.5rem; gap: 1.5rem; }
+  .container { padding: 1rem; gap: 1rem; }
   .main-grid {
-      grid-template-columns: 1fr; /* Stack columns vertically */
-      grid-template-rows: auto 1fr; /* Let top row size itself, bottom takes rest */
-      overflow-y: auto; /* Allow scrolling within main grid if needed on small screens */
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      overflow-y: auto;
   }
   .grid-left {
-      flex-direction: row; /* Time and Search side-by-side */
+      flex-direction: column; /* Stack time and search vertically */
       height: auto;
   }
    .grid-right {
-      height: 40vh; /* Give a fixed height to prevent pushing content down */
+      height: auto; /* Allow height to adjust */
   }
-  .time-display { flex-grow: 1; padding: 1rem; }
-  .search-section { flex-grow: 1; padding: 1rem; }
-  #time { font-size: 3.5rem; }
+  .time-display { flex-grow: 0; padding: 1rem; } /* No flex-grow to avoid excessive height */
+  .search-section { flex-grow: 0; padding: 1rem; } /* No flex-grow */
+  #time { font-size: 3rem; }
 }
 
 @media (max-width: 768px) {
-  .container { padding: 1rem; gap: 1rem; }
-  body { overflow: auto; } /* Allow scrolling on mobile as single-page is too cramped */
+  .container { padding: 0.8rem; gap: 0.8rem; }
+  body { overflow: auto; }
   .main-grid { display: flex; flex-direction: column; height: auto; }
   .grid-left { flex-direction: column; }
-  .header { flex-direction: column; gap: 1rem; padding: 1rem; text-align: center; }
-  .logo { font-size: 2.5rem; }
-  #time { font-size: 4rem; }
-  #date { font-size: 1rem; }
-  .apps-container { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
-  .app-card { padding: 0.8rem; }
-  .app-card .icon { font-size: 2rem; }
+  .header { flex-direction: column; gap: 0.8rem; padding: 0.8rem; text-align: center; }
+  .logo { font-size: 2rem; }
+  #time { font-size: 3.5rem; }
+  #date { font-size: 0.9rem; }
+  .apps-container { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .app-card { padding: 0.6rem; }
+  .app-card .icon { font-size: 1.6rem; }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.25);
+    background: rgba(var(--fg-rgb), 0.15); /* Slightly less opaque fallback */
   }
 }
