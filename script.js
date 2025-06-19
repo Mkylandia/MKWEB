@@ -22,7 +22,6 @@ const searchInput = document.getElementById('search');
 const searchEngines = document.querySelectorAll('.search-engine');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
-// NEU: Zitate-Elemente
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
 
@@ -103,7 +102,7 @@ setInterval(updateDateTime, 1000);
 updateDateTime();
 
 
-// --- NEU: Quote of the Day (Local Data) ---
+// --- Quote of the Day (Local Data) ---
 const quotes = [
     { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
     { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
