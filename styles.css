@@ -57,7 +57,6 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Removed perspective for lighter rendering */
 }
 
 /* --- Animated Background Elements - REMOVED --- */
@@ -85,7 +84,6 @@ body {
   transition: background var(--t), border-color var(--t), box-shadow var(--t); /* Simpler transitions */
   position: relative;
   overflow: hidden;
-  /* Removed will-change for lighter rendering */
   transform: none; /* No initial 3D transform */
 
   &::after {
@@ -124,13 +122,6 @@ body {
   }
 }
 
-/* --- Animation for elements appearing on page load - REMOVED --- */
-.animate-in {
-  opacity: 1; /* Always visible */
-  transform: none; /* No initial transform */
-  animation: none; /* No animation */
-}
-
 /* --- Header --- */
 .header {
   display: flex;
@@ -152,16 +143,12 @@ body {
   animation: gradient 15s ease infinite alternate; /* Slower gradient animation */
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1); /* Lighter text shadow */
   position: relative;
-  /* Removed will-change */
 }
 
 @keyframes gradient {
   0% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
 }
-
-@keyframes logoGlowPulse { display: none; } /* Remove logo glow pulse */
-
 
 .controls {
   display: flex;
@@ -185,7 +172,6 @@ button {
   position: relative;
   z-index: 1;
   overflow: hidden;
-  /* Removed will-change */
   transform: none; /* No initial 3D transform */
 
   &:active {
@@ -216,7 +202,6 @@ button:hover {
   transition: all var(--t);
   box-shadow: var(--s-light);
   overflow: hidden;
-  /* Removed will-change */
   transform: none; /* No initial 3D transform */
 }
 
@@ -233,7 +218,7 @@ button:hover {
 }
 
 
-/* --- NEW: Main Grid Layout --- */
+/* --- Main Grid Layout --- */
 .main-grid {
   width: 100%;
   max-width: var(--content-max-width);
@@ -276,7 +261,6 @@ button:hover {
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t);
-  /* Removed will-change */
 
   &.active {
     background: var(--acc);
@@ -300,7 +284,6 @@ button:hover {
   padding: 0.7rem 1.2rem; /* Smaller padding */
   transition: all var(--t);
   box-shadow: var(--s), var(--inner-shadow);
-  /* Removed will-change */
 }
 
 .search-box:focus-within {
@@ -344,7 +327,6 @@ button:hover {
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate; /* Slower animation */
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Lighter text shadow */
-  /* Removed will-change */
 }
 
 #date {
@@ -355,7 +337,69 @@ button:hover {
   letter-spacing: 2px; /* Reduced letter spacing */
 }
 
-/* --- NEW: Apps & Bookmarks Section --- */
+/* --- NEU: Wetter Widget Sektion Styles --- */
+.weather-widget-section {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; /* Passt sich an den verfügbaren Platz an */
+}
+
+#weather-iframe {
+    border-radius: var(--r); /* Passt den Radius der Glass-Elemente an */
+    width: 100%;
+    height: 100%; /* Füllt den verfügbaren Platz in der Sektion */
+    min-height: 250px; /* Eine Mindesthöhe, um sicherzustellen, dass das Widget sichtbar ist */
+}
+
+.weather-notice {
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+    color: var(--dim);
+    text-align: center;
+}
+
+.weather-notice a {
+    color: var(--acc);
+    text-decoration: none;
+    transition: color var(--t);
+}
+
+.weather-notice a:hover {
+    color: var(--ah);
+    text-decoration: underline;
+}
+/* Ende Wetter Widget Sektion Styles */
+
+
+/* --- NEU: Zitate Sektion Styles --- */
+.quote-section {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-grow: 1; /* Passt sich an den verfügbaren Platz an */
+}
+
+#quote-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--fg);
+}
+
+#quote-author {
+  font-size: 0.9rem;
+  color: var(--dim);
+}
+/* Ende Zitate Sektion Styles */
+
+
+/* --- Apps & Bookmarks Section --- */
 .apps-section {
   width: 100%;
   padding: 1.2rem; /* Smaller padding */
@@ -392,7 +436,6 @@ button:hover {
   position: relative;
   overflow: hidden;
   box-shadow: var(--s-light), var(--inner-shadow);
-  /* Removed will-change */
   transform: none; /* No initial 3D transform */
   display: flex;
   flex-direction: column;
@@ -414,7 +457,6 @@ button:hover {
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* Lighter text shadow */
   transition: all 0.15s ease-out; /* Faster transition */
-  /* Removed will-change */
 }
 
 .app-card:hover .icon {
@@ -452,19 +494,21 @@ button:hover {
   .container { padding: 1rem; gap: 1rem; }
   .main-grid {
       grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto auto auto 1fr; /* Add a row for the weather widget */
       overflow-y: auto;
   }
   .grid-left {
-      flex-direction: column; /* Stack time and search vertically */
+      flex-direction: column;
       height: auto;
   }
    .grid-right {
-      height: auto; /* Allow height to adjust */
+      height: auto;
   }
-  .time-display { flex-grow: 0; padding: 1rem; } /* No flex-grow to avoid excessive height */
-  .search-section { flex-grow: 0; padding: 1rem; } /* No flex-grow */
+  .time-display { flex-grow: 0; padding: 1rem; }
+  .search-section { flex-grow: 0; padding: 1rem; }
   #time { font-size: 3rem; }
+  .weather-widget-section { order: 2; flex-grow: 0; } /* Order to move it below time/search on mobile */
+  .quote-section { order: 3; flex-grow: 0; } /* Order to move it below weather on mobile */
 }
 
 @media (max-width: 768px) {
