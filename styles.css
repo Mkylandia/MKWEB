@@ -230,4 +230,313 @@ button {
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t), color var(--t);
+  font-size: 0.9rem;
+  font-weight: 600;
+  outline: none;
+  box-shadow: var(--s-light);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  will-change: transform, box-shadow, border-color, background, color;
+  transform: translate3d(0, 0, 0);
+
+  &:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: var(--s-light), inset 0 3px 8px rgba(0,0,0,0.25);
+    background: rgba(var(--gl-rgb), 0.1);
+  }
+}
+
+button:hover {
+  transform: translate3d(0, -5px, 5px) scale(1.03);
+  border-color: var(--acc);
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
+}
+
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  color: var(--acc);
+  cursor: pointer;
+  transition: all var(--t);
+  box-shadow: var(--s-light);
+  overflow: hidden;
+  will-change: transform, box-shadow, border-color;
+  transform: translate3d(0, 0, 0);
+}
+
+.user-avatar:hover {
+  transform: translate3d(0, -5px, 5px) scale(1.2) rotate(5deg);
+  border-color: var(--acc);
+  box-shadow: var(--glow-strength) var(--acc), var(--sh);
+}
+
+.hidden-avatar {
+  opacity: 0 !important;
+  transform: scale(0.4) !important;
+  pointer-events: none !important;
+}
+
+
+/* --- NEW: Main Grid Layout --- */
+.main-grid {
+  width: 100%;
+  max-width: var(--content-max-width);
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 2rem;
+  flex-grow: 1;
+}
+
+.grid-left, .grid-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+}
+
+/* --- Search Section --- */
+.search-section {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.search-engines {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-engine {
+  padding: 0.6rem 1rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border: var(--border-width) solid transparent;
+  background: var(--gl);
+  transition: all var(--t);
+  will-change: transform, box-shadow, background-color, border-color, color;
+
+  &.active {
+    background: var(--acc);
+    color: #fff;
+    transform: translate3d(0, -4px, 4px) scale(1.05);
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s);
+    border-color: var(--acc);
+  }
+
+  &:not(.active):hover {
+    border-color: var(--acc);
+    transform: translate3d(0, -2px, 2px) scale(1.02);
+    box-shadow: inset 0 0 10px rgba(var(--acc-rgb), 0.2), var(--s-light);
+  }
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  padding: 0.8rem 1.5rem;
+  transition: all var(--t);
+  box-shadow: var(--s), var(--inner-shadow);
+  will-change: transform, box-shadow, border-color;
+}
+
+.search-box:focus-within {
+  border-color: var(--acc);
+  transform: scale(1.01);
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), var(--s);
+}
+
+#search {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  font-size: 1.1rem;
+  outline: none;
+  margin-left: 1rem;
+}
+
+#search::placeholder {
+  color: var(--dim);
+}
+
+/* --- Time Display --- */
+.time-display {
+  text-align: center;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 2; /* Takes more space than search */
+}
+
+#time {
+  font-size: 5rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
+  background-size: 500% 500%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 25s ease infinite alternate;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+  will-change: background-position, text-shadow;
+}
+
+#date {
+  font-size: 1.2rem;
+  color: var(--dim);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* --- NEW: Apps & Bookmarks Section --- */
+.apps-section {
+  width: 100%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.apps-section h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--dim);
+}
+
+.apps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 1rem;
+    overflow-y: auto; /* Fallback scroll for this container if content overflows */
+    padding: 0.5rem;
+    flex-grow: 1;
+}
+
+.app-card {
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--fg);
+  transition: all var(--t);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--s-light), var(--inner-shadow);
+  will-change: transform, box-shadow, border-color;
+  transform: translate3d(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1; /* Make cards square */
+}
+
+.app-card:hover {
+  transform: translate3d(0, -8px, 8px) scale(1.05);
+  border-color: var(--acc);
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45);
+}
+
+.app-card .icon {
+  font-family: 'Material Symbols Outlined';
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+  transition: all 0.25s ease-out;
+  will-change: transform;
+}
+
+.app-card:hover .icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.app-card .label {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* --- SR-Only class for accessibility --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 1200px) {
+    #time { font-size: 4rem; }
+    #date { font-size: 1rem; }
+    .apps-container { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+    .app-card .icon { font-size: 2.2rem; }
+    .app-card .label { font-size: 0.75rem; }
+}
+
+@media (max-width: 992px) {
+  .container { padding: 1.5rem; gap: 1.5rem; }
+  .main-grid {
+      grid-template-columns: 1fr; /* Stack columns vertically */
+      grid-template-rows: auto 1fr; /* Let top row size itself, bottom takes rest */
+      overflow-y: auto; /* Allow scrolling within main grid if needed on small screens */
+  }
+  .grid-left {
+      flex-direction: row; /* Time and Search side-by-side */
+      height: auto;
+  }
+   .grid-right {
+      height: 40vh; /* Give a fixed height to prevent pushing content down */
+  }
+  .time-display { flex-grow: 1; padding: 1rem; }
+  .search-section { flex-grow: 1; padding: 1rem; }
+  #time { font-size: 3.5rem; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 1rem; gap: 1rem; }
+  body { overflow: auto; } /* Allow scrolling on mobile as single-page is too cramped */
+  .main-grid { display: flex; flex-direction: column; height: auto; }
+  .grid-left { flex-direction: column; }
+  .header { flex-direction: column; gap: 1rem; padding: 1rem; text-align: center; }
+  .logo { font-size: 2.5rem; }
+  #time { font-size: 4rem; }
+  #date { font-size: 1rem; }
+  .apps-container { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+  .app-card { padding: 0.8rem; }
+  .app-card .icon { font-size: 2rem; }
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: rgba(var(--fg-rgb), 0.25);
+  }
+}
