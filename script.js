@@ -22,6 +22,10 @@ const searchInput = document.getElementById('search');
 const searchEngines = document.querySelectorAll('.search-engine');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
+// NEU: Zitate-Elemente
+const quoteTextElement = document.getElementById('quote-text');
+const quoteAuthorElement = document.getElementById('quote-author');
+
 
 // --- User Avatar & Toggle Logic ---
 const applyAvatarVisibility = () => {
@@ -73,7 +77,7 @@ searchInput.addEventListener('keypress', (e) => {
                 case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
                 case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
                 case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Note: This URL looks incorrect for Youtube.
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Korrigierte YouTube URL
                 case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
                 default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
@@ -99,17 +103,32 @@ setInterval(updateDateTime, 1000);
 updateDateTime();
 
 
-// --- Background Shapes Creation (REMOVED) ---
-// The function createBackgroundShapes and its invocation are removed.
+// --- NEU: Quote of the Day (Local Data) ---
+const quotes = [
+    { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
+    { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
+    { text: "Sei du selbst die Veränderung, die du dir wünschst für diese Welt.", author: "Mahatma Gandhi" },
+    { text: "Was immer du tun kannst oder träumst es zu können, fang damit an.", author: "Johann Wolfgang von Goethe" },
+    { text: "Glück ist nicht das, was man besitzt, sondern das, was man gibt.", author: "Unbekannt" },
+    { text: "Die Zukunft gehört denen, die an die Schönheit ihrer Träume glauben.", author: "Eleanor Roosevelt" },
+    { text: "Handle so, dass die Maxime deines Willens jederzeit zugleich als Prinzip einer allgemeinen Gesetzgebung gelten könnte.", author: "Immanuel Kant" },
+    { text: "Es ist nicht genug zu wissen, man muss es auch anwenden; es ist nicht genug zu wollen, man muss es auch tun.", author: "Johann Wolfgang von Goethe" },
+    { text: "Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.", author: "Peter F. Drucker" },
+    { text: "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.", author: "Albert Einstein" }
+];
 
+const displayRandomQuote = () => {
+    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const randomQuote = quotes[randomIndex];
+        quoteTextElement.textContent = `"${randomQuote.text}"`;
+        quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+    }
+};
 
-// --- Animate-in elements on page load (SIMPLIFIED) ---
-// The animation property is removed from CSS, so this JavaScript is no longer needed.
-// Keeping a simplified DOMContentLoaded event listener for other potential future uses,
-// but the 'animate-in' specific logic is no longer required.
-document.addEventListener('DOMContentLoaded', () => {
-    // No specific animation handling needed here due to CSS changes
-});
+// Display a new quote every hour, and on page load
+setInterval(displayRandomQuote, 3600000); // Alle Stunde
+document.addEventListener('DOMContentLoaded', displayRandomQuote);
 
 
 // --- Fullscreen Toggle ---
@@ -134,7 +153,3 @@ document.addEventListener('fullscreenchange', () => {
         fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
     }
 });
-
-
-// --- Mouse Parallax Effect (REMOVED) ---
-// The function applyParallax and its invocation are removed.
