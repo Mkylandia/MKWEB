@@ -453,9 +453,9 @@ button:hover {
 
 .apps-container {
     /* Optimierte grid-template-columns für bessere Icon-Anordnung */
-    /* Balance zwischen VH und VW für Skalierung */
-    grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 6vw + 3vh, 120px), 1fr)); /* Optimierte Kartenbreite */
-    gap: clamp(0.3rem, 0.5vw, 1.2rem); /* Optimierter Abstand zwischen Karten */
+    /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(45px, 6vw + 3.5vh, 120px), 1fr)); /* Min-Größe erhöht, VH-Anteil leicht erhöht */
+    gap: clamp(0.3rem, 0.5vw + 0.2vh, 1.2rem); /* Optimierter, responsiver Abstand zwischen Karten */
     overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
     padding: clamp(0.1rem, 0.2vw, 0.5rem); /* Minimales Padding */
     flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
@@ -469,13 +469,13 @@ button:hover {
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   /* Padding der Karte, um Icons und Labels gut auszurichten */
-  padding: clamp(0.4rem, 0.6vw + 0.3vh, 1.2rem); /* Optimiertes Padding für bessere Icon-Zentrierung */
+  padding: clamp(0.4rem, 0.6vw + 0.4vh, 1.2rem); /* Optimiertes Padding, VH-Anteil erhöht */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
   transition: all var(--t);
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Sicherstellen, dass nichts überläuft */
   box-shadow: var(--s-light), var(--inner-shadow);
   transform: none;
   display: flex;
@@ -483,6 +483,8 @@ button:hover {
   align-items: center; /* Zentriert Icons und Labels horizontal */
   justify-content: center; /* Zentriert Icons und Labels vertikal */
   aspect-ratio: 1 / 1; /* Behält quadratisches Verhältnis */
+  min-width: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
+  min-height: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
 }
 
 .app-card:hover {
@@ -494,11 +496,12 @@ button:hover {
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
   /* Größe der Icons, stark an VH gekoppelt, um Skalierung zu gewährleisten */
-  font-size: clamp(1rem, 1.5vw + 0.8vh, 2.8rem); /* Optimierte Icon-Größe */
-  margin-bottom: clamp(0.15rem, 0.25vw + 0.1vh, 0.6rem); /* Abstand zwischen Icon und Label, optimiert */
+  font-size: clamp(1.1rem, 1.6vw + 0.9vh, 2.8rem); /* Optimierte Icon-Größe, Min-Wert und VH-Anteil erhöht */
+  margin-bottom: clamp(0.15rem, 0.25vw + 0.15vh, 0.6rem); /* Abstand zwischen Icon und Label, optimiert */
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
   transition: all 0.15s ease-out;
+  line-height: 1; /* Wichtig, um den vertikalen Raum des Icons zu kontrollieren */
 }
 
 .app-card:hover .icon {
@@ -507,7 +510,7 @@ button:hover {
 
 .app-card .label {
   /* Größe der Labels, ebenfalls an VH gekoppelt */
-  font-size: clamp(0.5rem, 0.6vw + 0.3vh, 1rem); /* Optimierte Label-Größe */
+  font-size: clamp(0.5rem, 0.6vw + 0.35vh, 1rem); /* Optimierte Label-Größe, VH-Anteil leicht erhöht */
   font-weight: 500;
   line-height: 1.1; /* Noch kompakter, aber lesbar */
   word-break: break-word; /* Verhindert Überlauf bei langen Namen */
@@ -591,18 +594,18 @@ button:hover {
   }
   .apps-container {
       /* Optimierte grid-template-columns für mobile */
-      grid-template-columns: repeat(auto-fill, minmax(clamp(30px, 8vw + 4vh, 80px), 1fr)); /* Kleinere Cards für mobile, stärker an VH */
-      gap: clamp(0.2rem, 0.4vw, 0.8rem); /* Feinjustiert */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(35px, 8vw + 4.5vh, 80px), 1fr)); /* Kleinere Cards für mobile, VH-Anteil leicht erhöht */
+      gap: clamp(0.25rem, 0.5vw + 0.2vh, 0.8rem); /* Feinjustiert, VH-Anteil für Gap */
       overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
   }
   .app-card {
-      padding: clamp(0.2rem, 0.35vw + 0.2vh, 1rem); /* Optimiertes Padding für mobile */
+      padding: clamp(0.25rem, 0.4vw + 0.25vh, 1rem); /* Optimiertes Padding für mobile */
   }
   .app-card .icon {
-      font-size: clamp(0.8rem, 2.5vw + 0.8vh, 2rem); /* Feinjustiert */
+      font-size: clamp(0.9rem, 2.8vw + 1vh, 2rem); /* Feinjustiert, Min-Wert und VH-Anteil erhöht */
   }
   .app-card .label {
-      font-size: clamp(0.4rem, 1.5vw + 0.5vh, 0.7rem); /* Feinjustiert */
+      font-size: clamp(0.45rem, 1.8vw + 0.6vh, 0.7rem); /* Feinjustiert, Min-Wert und VH-Anteil erhöht */
       line-height: 1.1;
   }
 }
