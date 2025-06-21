@@ -52,7 +52,7 @@ body {
   height: 100vh;
   width: 100vw;
   transition: background var(--t), color var(--t);
-  overflow: hidden;
+  overflow: hidden; /* Default to hidden for desktop */
   position: relative;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -66,7 +66,7 @@ body {
 .container {
   position: relative;
   z-index: 2;
-  height: 100vh;
+  height: 100vh; /* Default for desktop */
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -222,7 +222,7 @@ button:hover {
 .main-grid {
   width: 100%;
   max-width: var(--content-max-width);
-  height: 100%;
+  height: 100%; /* Default for desktop */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem; /* Slightly smaller gap */
@@ -233,7 +233,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 1.5rem; /* Slightly smaller gap */
-  height: 100%;
+  height: 100%; /* Default for desktop */
 }
 
 /* --- Search Section --- */
@@ -512,20 +512,21 @@ button:hover {
 }
 
 @media (max-width: 992px) {
-  .container { padding: 1rem; gap: 1rem; }
+  body { overflow-y: auto; } /* Allow scrolling on smaller screens */
+  .container { padding: 1rem; gap: 1rem; height: auto; } /* Allow container to grow */
   .main-grid {
-      grid-template-columns: 1fr; /* Single column */
-      grid-template-rows: auto; /* Let content define row height */
-      overflow-y: auto;
+      grid-template-columns: 1fr; /* Single column layout */
+      grid-template-rows: auto; /* Let rows define their height based on content */
       height: auto; /* Allow grid to expand vertically */
+      overflow-y: visible; /* Ensure content is not cut off by grid's own overflow */
   }
   .grid-left, .grid-right {
       flex-direction: column;
-      height: auto;
+      height: auto; /* Allow sections to define their height */
       gap: 1rem; /* Slightly smaller gap for mobile */
   }
   .time-display, .search-section, .weather-link-section, .quote-section {
-      flex-grow: 0; /* Prevent these from growing and taking up too much space */
+      flex-grow: 0; /* Prevent these from taking up too much vertical space */
       padding: 1rem;
   }
   #time { font-size: 3rem; }
@@ -536,11 +537,10 @@ button:hover {
 
 @media (max-width: 768px) {
   .container { padding: 0.8rem; gap: 0.8rem; }
-  body { overflow: auto; } /* Allow body to scroll */
   .header { flex-direction: column; gap: 0.8rem; padding: 0.8rem; text-align: center; }
   .logo { font-size: 1.8rem; } /* Slightly smaller logo */
   .controls { gap: 0.8rem; flex-wrap: wrap; justify-content: center; } /* Wrap controls if needed */
-  #time { font-size: 3rem; } /* Keep time consistent or adjust slightly */
+  #time { font-size: 3rem; }
   #date { font-size: 0.85rem; } /* Slightly smaller date font */
   .apps-container { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); } /* Even smaller minmax for tiny screens */
   .app-card { padding: 0.5rem; } /* Smaller padding */
