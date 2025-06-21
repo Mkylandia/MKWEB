@@ -7,7 +7,7 @@
   --fluid-min-font: 0.6vw;  /* Basis für kleinere Texte, leicht erhöht */
   --fluid-max-font: 0.9vw;  /* Basis für normale Texte, leicht erhöht */
   --fluid-header-font: 1.1vw; /* Basis für Header-Elemente, leicht erhöht */
-  --fluid-time-font: 2.5vw; /* Basis für die Uhrzeit, leicht erhöht */
+  --fluid-time-font: 2.7vw; /* **GEÄNDERT: Basis für die Uhrzeit, erhöht!** */
 
   /* Clamp für Padding: min-val, fluid-val (vw/vh-mix), max-val */
   /* Min-Werte leicht erhöht, vh-Anteile moderat */
@@ -290,10 +290,11 @@ button:hover {
 }
 
 .search-engine {
-  padding: clamp(0.15rem, 0.3vw, 0.4rem) clamp(0.3rem, 0.55vw, 0.8rem); /* Feinjustiert */
+  /* **GEÄNDERT: Padding und Font-Size erhöht!** */
+  padding: clamp(0.2rem, 0.4vw, 0.6rem) clamp(0.4rem, 0.7vw, 1rem);
   border-radius: 30px;
   font-weight: 600;
-  font-size: clamp(0.45rem, var(--fluid-min-font), 0.7rem); /* Feinjustiert */
+  font-size: clamp(0.55rem, 0.8vw, 0.9rem); /* **GEÄNDERT: Font-Size erhöht!** */
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t);
@@ -356,7 +357,8 @@ button:hover {
 }
 
 #time {
-  font-size: clamp(1.2rem, var(--fluid-time-font), 4rem); /* Haupt-Hebel für die Uhr-Größe! Feinjustiert */
+  /* **GEÄNDERT: Font-Size der Uhr erhöht!** */
+  font-size: clamp(1.5rem, var(--fluid-time-font), 5rem); /* Min-Wert erhöht, Max-Wert erhöht */
   font-weight: 800;
   margin-bottom: clamp(0.01rem, 0.04vh, 0.25rem); /* Sehr geringer Margin, stärker an VH gebunden */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
@@ -610,9 +612,9 @@ button:hover {
       overflow: hidden;
   }
 
-  /* Die Uhr wieder etwas größer bei schmaleren Screens */
+  /* Die Uhr noch größer bei schmaleren Screens */
   #time {
-      font-size: clamp(1rem, 4vw, 2.5rem); /* Feinjustiert */
+      font-size: clamp(1.2rem, 5vw, 3rem); /* **GEÄNDERT: Font-Size für Mobile erhöht!** */
   }
   #date {
       font-size: clamp(0.4rem, 1.5vw, 0.9rem); /* Feinjustiert */
