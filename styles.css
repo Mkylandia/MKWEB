@@ -49,11 +49,10 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
-  /* Standard für große Bildschirme: volle Höhe, kein Scrollen */
-  height: 100vh;
+  height: 100vh; /* Standard für große Desktops: volle Höhe */
   width: 100vw;
   transition: background var(--t), color var(--t);
-  overflow: hidden;
+  overflow: hidden; /* Standard für große Desktops: kein Scrollen */
   position: relative;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -67,8 +66,7 @@ body {
 .container {
   position: relative;
   z-index: 2;
-  /* Standard für große Bildschirme: volle Höhe, Flex-Container */
-  height: 100vh;
+  height: 100vh; /* Standard für große Desktops: volle Höhe */
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -224,7 +222,7 @@ button:hover {
 .main-grid {
   width: 100%;
   max-width: var(--content-max-width);
-  height: 100%; /* Standard für Desktop: nimmt volle Höhe ein */
+  height: 100%; /* Desktop: volle Höhe */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
@@ -235,7 +233,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  height: 100%; /* Standard für Desktop: nimmt volle Höhe ein */
+  height: 100%; /* Desktop: volle Höhe */
 }
 
 /* --- Search Section --- */
@@ -244,7 +242,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 1; /* Desktop: Suchfeld kann wachsen */
+  flex-grow: 1; /* Desktop: kann wachsen */
 }
 
 .search-engines {
@@ -315,7 +313,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 2; /* Desktop: Uhr kann wachsen */
+  flex-grow: 2; /* Desktop: kann wachsen */
 }
 
 #time {
@@ -346,7 +344,7 @@ button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1; /* Desktop: Wetter kann wachsen */
+    flex-grow: 1; /* Desktop: kann wachsen */
     text-align: center;
 }
 
@@ -405,7 +403,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  flex-grow: 1; /* Desktop: Zitate können wachsen */
+  flex-grow: 1; /* Desktop: kann wachsen */
 }
 
 #quote-text {
@@ -428,8 +426,8 @@ button:hover {
   padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Apps-Sektion kann wachsen und den verfügbaren Platz einnehmen */
-  min-height: 100px; /* Mindesthöhe für die Apps-Sektion */
+  flex-grow: 1; /* Desktop: nimmt den restlichen Platz ein */
+  min-height: 100px; /* Mindesthöhe für die Apps-Sektion auf Desktop */
 }
 
 .apps-section h2 {
@@ -444,7 +442,7 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 0.8rem;
-    overflow-y: auto; /* Apps-Container kann intern scrollen, falls zu viele Apps */
+    overflow-y: auto; /* Apps-Container kann intern scrollen */
     padding: 0.3rem;
     flex-grow: 1; /* Apps-Container wächst innerhalb der Apps-Sektion */
 }
@@ -510,56 +508,54 @@ button:hover {
 
 /* Laptops / Desktops mit kleineren Bildschirmen (z.B. 1200px - 993px) */
 @media (max-width: 1200px) {
-    #time { font-size: 3rem; } /* Uhr noch kleiner */
-    #date { font-size: 0.85rem; } /* Datum kleiner */
-    .apps-container { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); } /* Apps minmax anpassen */
+    #time { font-size: 3rem; }
+    #date { font-size: 0.85rem; }
+    .apps-container { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
     .app-card .icon { font-size: 1.6rem; }
     .app-card .label { font-size: 0.65rem; }
-    .main-grid { gap: 0.8rem; } /* Abstände reduzieren */
-    .grid-left, .grid-right { gap: 0.8rem; } /* Abstände reduzieren */
-    .header { padding: 0.8rem 1.5rem; } /* Header Padding anpassen */
+    .main-grid { gap: 0.8rem; }
+    .grid-left, .grid-right { gap: 0.8rem; }
+    .header { padding: 0.8rem 1.5rem; }
     .container { padding: 1.5rem; gap: 1rem; }
 }
 
 /* Typische Tablet / Kleine Laptop Bildschirme (z.B. 992px und darunter) */
 @media (max-width: 992px) {
   body {
-    overflow-y: auto; /* WICHTIG: Erlaube Scrollen auf kleineren Bildschirmen */
-    height: auto; /* Der Body muss nicht die volle Viewporthöhe erzwingen */
+    overflow-y: auto; /* WICHTIG: Immer Scrollen erlauben auf kleinen Bildschirmen */
+    height: auto; /* Body-Höhe wird vom Inhalt bestimmt, nicht erzwungen */
+    min-height: 100vh; /* Stellt sicher, dass der Hintergrund zumindest die volle Höhe abdeckt */
   }
   .container {
-      padding: 0.8rem; /* Padding für den Container reduzieren */
-      gap: 0.8rem; /* Abstände reduzieren */
+      padding: 0.8rem;
+      gap: 0.8rem;
       height: auto; /* Container-Höhe wird vom Inhalt bestimmt */
-      min-height: 100vh; /* Mindesthöhe, damit der Footer (Apps) unten bleibt, wenn wenig Inhalt */
-      justify-content: flex-start; /* Inhalte oben ausrichten */
+      min-height: auto; /* Keine Mindesthöhe für den Container, um Quetschen zu ermöglichen */
+      justify-content: flex-start;
   }
   .main-grid {
       grid-template-columns: 1fr; /* Einzelspalten-Layout */
-      /* Explizite Definition der Reihen für bessere Kontrolle der Höhe */
-      grid-template-rows: auto /* Header */
-                            auto /* Search */
-                            auto /* Time */
-                            auto /* Weather */
-                            auto /* Quote */
-                            1fr; /* Apps - nimmt den restlichen verfügbaren Platz ein */
-      height: auto; /* Grid-Höhe wird vom Inhalt bestimmt */
-      overflow-y: visible; /* Wichtig, damit Inhalte nicht vom Grid-Container selbst abgeschnitten werden */
-      gap: 0.8rem; /* Abstand zwischen den Grid-Elementen reduzieren */
+      display: flex; /* Wechsel zu Flexbox für vertikale Kontrolle */
+      flex-direction: column;
+      height: auto; /* Höhe vom Inhalt bestimmen lassen */
+      gap: 0.8rem;
+      flex-grow: 1; /* Soll sich ausdehnen können, um den Platz im Container zu nutzen */
   }
   .grid-left, .grid-right {
       flex-direction: column;
-      height: auto; /* Die Sektionen bestimmen ihre eigene Höhe */
-      gap: 0.8rem; /* Abstände zwischen Sektionen reduzieren */
+      height: auto; /* Sektionen bestimmen ihre eigene Höhe */
+      gap: 0.8rem;
+      flex-grow: 0; /* Verhindert unnötiges Wachstum dieser Elternelemente */
   }
 
-  /* Sicherstellen, dass Sektionen nicht unnötig wachsen */
+  /* WICHTIG: Nur die Apps-Sektion soll bei Bedarf wachsen und scrollen */
   .time-display, .search-section, .weather-link-section, .quote-section {
-      flex-grow: 0;
-      padding: 0.6rem; /* Padding innerhalb der Boxen reduzieren */
+      flex-grow: 0; /* Diese Sektionen nehmen nur den Platz ihres Inhalts ein */
+      padding: 0.6rem;
+      min-height: 0; /* Erlaubt diesen Boxen, so klein wie nötig zu werden */
   }
   #time {
-      font-size: 2rem; /* Uhrzeit noch kleiner machen */
+      font-size: 2rem; /* Uhrzeit noch kleiner */
       margin-bottom: 0.1rem;
   }
   #date { font-size: 0.75rem; }
@@ -575,13 +571,17 @@ button:hover {
 
   .apps-section {
       order: 4; /* Apps sind immer zuletzt */
-      flex-grow: 1; /* Apps-Sektion nimmt den restlichen Platz ein */
-      min-height: 100px; /* Mindesthöhe für Apps, kann aber wachsen */
+      flex-grow: 1; /* WICHTIG: Apps-Sektion nimmt den restlichen Platz ein */
+      min-height: 100px; /* Mindesthöhe für Apps, kann aber wachsen oder intern scrollen */
       padding-top: 0.6rem;
       padding-bottom: 0.6rem;
   }
   .apps-section h2 { font-size: 1.1rem; margin-bottom: 0.6rem; }
-  .apps-container { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); } /* Minmax für Apps anpassen */
+  .apps-container {
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+      flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
+      min-height: 0; /* Erlaubt dem Apps-Container, bei Bedarf zu schrumpfen */
+  }
   .app-card { padding: 0.4rem; }
   .app-card .icon { font-size: 1.3rem; }
   .app-card .label { font-size: 0.55rem; }
