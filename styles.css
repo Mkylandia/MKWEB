@@ -52,7 +52,7 @@ body {
   height: 100vh;
   width: 100vw;
   transition: background var(--t), color var(--t);
-  overflow: hidden; /* Default to hidden for desktop */
+  overflow: hidden; /* Default to hidden for desktop, will change in media queries */
   position: relative;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -213,7 +213,7 @@ button:hover {
 
 .hidden-avatar {
   opacity: 0 !important;
-  transform: scale(0.6) !important; /* Slightly faster scale change */
+  transform: scale(0.6) !important;
   pointer-events: none !important;
 }
 
@@ -503,22 +503,39 @@ button:hover {
 }
 
 /* --- Media Queries for Responsiveness --- */
+
+/* Laptops / Desktops with smaller screens (e.g., 1200px - 993px) */
 @media (max-width: 1200px) {
     #time { font-size: 3.5rem; }
     #date { font-size: 0.95rem; }
     .apps-container { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
     .app-card .icon { font-size: 1.8rem; }
     .app-card .label { font-size: 0.7rem; }
+    .main-grid { gap: 1rem; } /* Slightly reduced gap */
+    .grid-left, .grid-right { gap: 1rem; } /* Slightly reduced gap */
 }
 
+/* Common Tablet / Small Laptop Screens (e.g., 992px and below) */
 @media (max-width: 992px) {
   body { overflow-y: auto; } /* Allow scrolling on smaller screens */
-  .container { padding: 1rem; gap: 1rem; height: auto; } /* Allow container to grow */
+  .container {
+      padding: 1rem;
+      gap: 1rem;
+      height: auto; /* Allow container to adapt to content height */
+      min-height: 100vh; /* Ensure it's at least viewport height, but can expand */
+  }
   .main-grid {
       grid-template-columns: 1fr; /* Single column layout */
-      grid-template-rows: auto; /* Let rows define their height based on content */
+      /* Define rows more explicitly for better control on small screens */
+      grid-template-rows: auto /* Header */
+                            auto /* Search */
+                            auto /* Time */
+                            auto /* Weather */
+                            auto /* Quote */
+                            minmax(150px, 1fr); /* Apps - will take remaining space or scroll */
       height: auto; /* Allow grid to expand vertically */
       overflow-y: visible; /* Ensure content is not cut off by grid's own overflow */
+      gap: 1rem; /* Reduced gap for more compact layout */
   }
   .grid-left, .grid-right {
       flex-direction: column;
@@ -527,21 +544,35 @@ button:hover {
   }
   .time-display, .search-section, .weather-link-section, .quote-section {
       flex-grow: 0; /* Prevent these from taking up too much vertical space */
-      padding: 1rem;
+      padding: 1rem; /* Consistent padding */
   }
-  #time { font-size: 3rem; }
-  .weather-link-section { order: 2; } /* Order to move it below time/search on mobile */
-  .quote-section { order: 3; } /* Order to move it below weather on mobile */
-  .apps-section { order: 4; } /* Ensure apps are last on smaller screens */
+  #time {
+      font-size: 2.8rem; /* Make time smaller on notebooks */
+      margin-bottom: 0.2rem;
+  }
+  #date { font-size: 0.9rem; }
+
+  .header {
+      flex-direction: column;
+      gap: 0.8rem;
+      padding: 0.8rem;
+      text-align: center;
+  }
+  .logo { font-size: 1.8rem; } /* Slightly smaller logo */
+  .controls { gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+
+  .apps-section {
+      order: 4; /* Ensure apps are consistently last on smaller screens */
+      flex-grow: 1; /* Allow apps section to grow if space available */
+      padding-top: 0; /* Reduce vertical padding if needed */
+  }
 }
 
+/* Tablet Portrait / Large Mobile (e.g., 768px and below) */
 @media (max-width: 768px) {
   .container { padding: 0.8rem; gap: 0.8rem; }
-  .header { flex-direction: column; gap: 0.8rem; padding: 0.8rem; text-align: center; }
-  .logo { font-size: 1.8rem; } /* Slightly smaller logo */
-  .controls { gap: 0.8rem; flex-wrap: wrap; justify-content: center; } /* Wrap controls if needed */
-  #time { font-size: 3rem; }
-  #date { font-size: 0.85rem; } /* Slightly smaller date font */
+  #time { font-size: 2.2rem; } /* Even smaller time for tablets/large mobiles */
+  #date { font-size: 0.8rem; } /* Even smaller date font */
   .apps-container { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); } /* Even smaller minmax for tiny screens */
   .app-card { padding: 0.5rem; } /* Smaller padding */
   .app-card .icon { font-size: 1.5rem; } /* Smaller icon */
@@ -555,12 +586,16 @@ button:hover {
   #quote-author { font-size: 0.8rem; }
 }
 
+/* Mobile Devices (e.g., 480px and below) */
 @media (max-width: 480px) {
     .apps-container { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); } /* Further reduction for very small mobiles */
     .app-card .icon { font-size: 1.3rem; }
     .app-card .label { font-size: 0.6rem; }
-    #time { font-size: 2.5rem; }
-    #date { font-size: 0.8rem; }
+    #time { font-size: 2rem; } /* Smallest time for tiny phones */
+    #date { font-size: 0.75rem; }
+    .search-engine { font-size: 0.65rem; padding: 0.35rem 0.7rem; } /* Even smaller for buttons */
+    .weather-link-button { font-size: 0.8rem; padding: 0.6rem 1rem; }
+    .weather-link-button .weather-icon { font-size: 1.5rem; }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
