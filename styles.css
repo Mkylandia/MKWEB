@@ -514,36 +514,53 @@ button:hover {
 @media (max-width: 992px) {
   .container { padding: 1rem; gap: 1rem; }
   .main-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto auto 1fr; /* Rows for time, weather, quotes, apps */
+      grid-template-columns: 1fr; /* Single column */
+      grid-template-rows: auto; /* Let content define row height */
       overflow-y: auto;
+      height: auto; /* Allow grid to expand vertically */
   }
-  .grid-left {
+  .grid-left, .grid-right {
       flex-direction: column;
       height: auto;
+      gap: 1rem; /* Slightly smaller gap for mobile */
   }
-   .grid-right {
-      height: auto;
+  .time-display, .search-section, .weather-link-section, .quote-section {
+      flex-grow: 0; /* Prevent these from growing and taking up too much space */
+      padding: 1rem;
   }
-  .time-display { flex-grow: 0; padding: 1rem; }
-  .search-section { flex-grow: 0; padding: 1rem; }
   #time { font-size: 3rem; }
-  .weather-link-section { order: 2; flex-grow: 0; } /* Order to move it below time/search on mobile */
-  .quote-section { order: 3; flex-grow: 0; } /* Order to move it below weather on mobile */
+  .weather-link-section { order: 2; } /* Order to move it below time/search on mobile */
+  .quote-section { order: 3; } /* Order to move it below weather on mobile */
+  .apps-section { order: 4; } /* Ensure apps are last on smaller screens */
 }
 
 @media (max-width: 768px) {
   .container { padding: 0.8rem; gap: 0.8rem; }
-  body { overflow: auto; }
-  .main-grid { display: flex; flex-direction: column; height: auto; }
-  .grid-left { flex-direction: column; }
+  body { overflow: auto; } /* Allow body to scroll */
   .header { flex-direction: column; gap: 0.8rem; padding: 0.8rem; text-align: center; }
-  .logo { font-size: 2rem; }
-  #time { font-size: 3.5rem; }
-  #date { font-size: 0.9rem; }
-  .apps-container { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
-  .app-card { padding: 0.6rem; }
-  .app-card .icon { font-size: 1.6rem; }
+  .logo { font-size: 1.8rem; } /* Slightly smaller logo */
+  .controls { gap: 0.8rem; flex-wrap: wrap; justify-content: center; } /* Wrap controls if needed */
+  #time { font-size: 3rem; } /* Keep time consistent or adjust slightly */
+  #date { font-size: 0.85rem; } /* Slightly smaller date font */
+  .apps-container { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); } /* Even smaller minmax for tiny screens */
+  .app-card { padding: 0.5rem; } /* Smaller padding */
+  .app-card .icon { font-size: 1.5rem; } /* Smaller icon */
+  .app-card .label { font-size: 0.65rem; } /* Smaller label */
+  .search-engine { font-size: 0.7rem; padding: 0.4rem 0.8rem; } /* Smaller search engine buttons */
+  .search-box { padding: 0.6rem 1rem; } /* Smaller search box padding */
+  #search { font-size: 0.9rem; } /* Smaller search input font */
+  .weather-link-button { font-size: 0.9rem; padding: 0.7rem 1.2rem; }
+  .weather-link-button .weather-icon { font-size: 1.8rem; }
+  #quote-text { font-size: 1rem; }
+  #quote-author { font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+    .apps-container { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); } /* Further reduction for very small mobiles */
+    .app-card .icon { font-size: 1.3rem; }
+    .app-card .label { font-size: 0.6rem; }
+    #time { font-size: 2.5rem; }
+    #date { font-size: 0.8rem; }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
