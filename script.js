@@ -22,7 +22,8 @@ const searchInput = document.getElementById('search');
 const searchEngines = document.querySelectorAll('.search-engine');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
-// quoteTextElement und quoteAuthorElement wurden entfernt
+const quoteTextElement = document.getElementById('quote-text');
+const quoteAuthorElement = document.getElementById('quote-author');
 
 
 // --- User Avatar & Toggle Logic ---
@@ -33,8 +34,8 @@ const applyAvatarVisibility = () => {
         userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
     } else {
         userAvatar.classList.add('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'true'); // Korrigiert: war 'false'
-        userAvatarToggleBtn.textContent = '😎 Avatar einblenden'; // Text anpassen
+        userAvatar.setAttribute('aria-hidden', 'true');
+        userAvatarToggleBtn.textContent = '🐵 Avatar einblenden';
     }
 };
 
@@ -44,86 +45,89 @@ userAvatarToggleBtn.addEventListener('click', () => {
     applyAvatarVisibility();
 });
 
-// Apply initial visibility on load
-document.addEventListener('DOMContentLoaded', applyAvatarVisibility);
+applyAvatarVisibility();
 
 
-// --- Search Engine Functionality ---
-let activeEngine = settings.lastActiveEngine; // Load last active engine
+// --- Search Functionality ---
+let activeEngine = settings.lastActiveEngine;
 
 const activateEngine = (engine) => {
-    searchEngines.forEach(button => {
-        if (button.dataset.engine === engine) {
-            button.classList.add('active');
-            activeEngine = engine;
-        } else {
-            button.classList.remove('active');
-        }
+    searchEngines.forEach(btn => {
+        const isActive = btn.dataset.engine === engine;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
     });
-    settings.lastActiveEngine = engine; // Save active engine
+    activeEngine = engine;
+    settings.lastActiveEngine = engine;
     saveSettings();
-    searchInput.focus(); // Keep focus on search input
 };
 
-// Event listeners for search engine buttons
-searchEngines.forEach(button => {
-    button.addEventListener('click', () => {
-        activateEngine(button.dataset.engine);
-    });
+searchEngines.forEach(btn => {
+    btn.addEventListener('click', () => activateEngine(btn.dataset.engine));
 });
 
-// Handle search input submission
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        const query = searchInput.value;
+        const query = searchInput.value.trim();
         if (query) {
-            let url;
+            let url = '';
             switch (activeEngine) {
-                case 'google':
-                    url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-                    break;
-                case 'duckduckgo':
-                    url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
-                    break;
-                case 'youtube':
-                    url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
-                    break;
-                case 'bing':
-                    url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
-                    break;
-                default:
-                    url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
+                case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Korrigierte YouTube URL
+                case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
+                default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
             window.open(url, '_blank');
-            searchInput.value = ''; // Clear input after search
         }
     }
 });
 
-// Set initial active engine on page load
-document.addEventListener('DOMContentLoaded', () => {
-    activateEngine(activeEngine);
-});
+activateEngine(activeEngine);
 
 
-// --- Time & Date Display ---
-const updateTimeAndDate = () => {
+// --- Time and Date Display ---
+const updateDateTime = () => {
     const now = new Date();
-    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-    // Format time and date for Germany (de-DE)
-    const timeString = now.toLocaleTimeString('de-DE', timeOptions);
-    const dateString = now.toLocaleDateString('de-DE', dateOptions);
-
-    timeElement.textContent = timeString;
-    dateElement.textContent = dateString;
+    timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
+    dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
 };
 
-// Update time and date every second
-setInterval(updateTimeAndDate, 1000);
-// Initial call to display time and date immediately on load
-document.addEventListener('DOMContentLoaded', updateTimeAndDate);
+setInterval(updateDateTime, 1000);
+updateDateTime();
+
+
+// --- Quote of the Day (Local Data) ---
+const quotes = [
+    { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
+    { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
+    { text: "Sei du selbst die Veränderung, die du dir wünschst für diese Welt.", author: "Mahatma Gandhi" },
+    { text: "Was immer du tun kannst oder träumst es zu können, fang damit an.", author: "Johann Wolfgang von Goethe" },
+    { text: "Glück ist nicht das, was man besitzt, sondern das, was man gibt.", author: "Unbekannt" },
+    { text: "Die Zukunft gehört denen, die an die Schönheit ihrer Träume glauben.", author: "Eleanor Roosevelt" },
+    { text: "Handle so, dass die Maxime deines Willens jederzeit zugleich als Prinzip einer allgemeinen Gesetzgebung gelten könnte.", author: "Immanuel Kant" },
+    { text: "Es ist nicht genug zu wissen, man muss es auch anwenden; es ist nicht genug zu wollen, man muss es auch tun.", author: "Johann Wolfgang von Goethe" },
+    { text: "Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.", author: "Peter F. Drucker" },
+    { text: "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.", author: "Albert Einstein" }
+];
+
+const displayRandomQuote = () => {
+    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const randomQuote = quotes[randomIndex];
+        quoteTextElement.textContent = `"${randomQuote.text}"`;
+        quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+    }
+};
+
+// Display a new quote every hour, and on page load
+setInterval(displayRandomQuote, 3600000); // Alle Stunde
+document.addEventListener('DOMContentLoaded', displayRandomQuote);
 
 
 // --- Fullscreen Toggle ---
