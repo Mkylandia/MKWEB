@@ -4,22 +4,22 @@
 :root {
   /* Skalierungs-Faktoren: Aggressiv für VH, da kein Scrollen erlaubt ist */
   /* Diese Werte wurden fein abgestimmt, um ein optimales 'No-Scroll'-Verhalten zu erzielen. */
-  --fluid-min-font: 0.6vw;  /* Basis für kleinere Texte, leicht reduziert */
-  --fluid-max-font: 0.9vw;  /* Basis für normale Texte, leicht reduziert */
-  --fluid-header-font: 1.1vw; /* Basis für Header-Elemente, leicht reduziert */
-  --fluid-time-font: 2.5vw; /* Basis für die Uhrzeit, leicht reduziert */
+  --fluid-min-font: 0.55vw;  /* Basis für kleinere Texte, noch leicht reduziert */
+  --fluid-max-font: 0.85vw;  /* Basis für normale Texte, noch leicht reduziert */
+  --fluid-header-font: 1.0vw; /* Basis für Header-Elemente, noch leicht reduziert */
+  --fluid-time-font: 2.3vw; /* Basis für die Uhrzeit, noch leicht reduziert */
 
   /* Clamp für Padding: min-val, fluid-val (vw/vh-mix), max-val */
-  --fluid-padding-xs: clamp(0.15rem, 0.25vw + 0.1vh, 0.7rem); /* Sehr kleines Padding, min und vh reduziert */
-  --fluid-padding-s: clamp(0.3rem, 0.4vw + 0.2vh, 1rem);   /* Kleines Padding, min und vh reduziert */
-  --fluid-padding-m: clamp(0.5rem, 0.7vw + 0.35vh, 1.3rem);   /* Mittleres Padding, min und vh reduziert */
-  --fluid-padding-l: clamp(0.7rem, 0.9vw + 0.45vh, 1.8rem);  /* Großes Padding, min und vh reduziert */
-  --fluid-padding-xl: clamp(0.9rem, 1.1vw + 0.55vh, 2.3rem); /* Extra großes Padding, min und vh reduziert */
+  --fluid-padding-xs: clamp(0.12rem, 0.22vw + 0.08vh, 0.6rem); /* Sehr kleines Padding, min und vh noch feiner */
+  --fluid-padding-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.9rem);   /* Kleines Padding, min und vh noch feiner */
+  --fluid-padding-m: clamp(0.45rem, 0.65vw + 0.3vh, 1.2rem);   /* Mittleres Padding, min und vh noch feiner */
+  --fluid-padding-l: clamp(0.6rem, 0.85vw + 0.4vh, 1.6rem);  /* Großes Padding, min und vh noch feiner */
+  --fluid-padding-xl: clamp(0.8rem, 1.0vw + 0.5vh, 2.0rem); /* Extra großes Padding, min und vh noch feiner */
 
   /* Clamp für Gaps: min-val, fluid-val (vw/vh-mix), max-val */
-  --fluid-gap-xs: clamp(0.15rem, 0.2vw + 0.08vh, 0.5rem); /* Sehr kleiner Gap, min und vh reduziert */
-  --fluid-gap-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.8rem);   /* Kleiner Gap, min und vh reduziert */
-  --fluid-gap-m: clamp(0.35rem, 0.45vw + 0.2vh, 1.2rem);   /* Mittlerer Gap, min und vh reduziert */
+  --fluid-gap-xs: clamp(0.1rem, 0.18vw + 0.06vh, 0.4rem); /* Sehr kleiner Gap, min und vh noch feiner */
+  --fluid-gap-s: clamp(0.2rem, 0.3vw + 0.12vh, 0.7rem);   /* Kleiner Gap, min und vh noch feiner */
+  --fluid-gap-m: clamp(0.3rem, 0.4vw + 0.18vh, 1.0rem);   /* Mittlerer Gap, min und vh noch feiner */
 
   --t: 0.15s ease-out; /* Faster transitions */
   --r: 12px; /* Slightly smaller border-radius */
@@ -56,7 +56,8 @@
 html {
   scroll-behavior: smooth;
   /* WICHTIG: Font-size skaliert mit Breite UND HÖHE! */
-  font-size: clamp(6px, 0.6vw + 0.35vh, 17px); /* Min-Font und vh-Anteil leicht reduziert */
+  /* Globaler min-Wert noch leicht reduziert, vh-Anteil leicht erhöht für aggressivere Skalierung */
+  font-size: clamp(5.5px, 0.58vw + 0.38vh, 16px);
 }
 
 * {
@@ -158,7 +159,7 @@ body {
 }
 
 .logo {
-  font-size: clamp(1rem, var(--fluid-header-font), 2.2rem); /* Feinjustiert */
+  font-size: clamp(0.9rem, var(--fluid-header-font), 2.0rem); /* Feinjustiert */
   font-weight: 800;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 200% 200%;
@@ -190,7 +191,7 @@ button {
   color: var(--fg);
   cursor: pointer;
   transition: border-color var(--t), transform var(--t), box-shadow var(--t);
-  font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
+  font-size: clamp(0.45rem, var(--fluid-min-font), 0.75rem); /* Feinjustiert */
   font-weight: 600;
   outline: none;
   box-shadow: var(--s-light);
@@ -213,13 +214,13 @@ button:hover {
 }
 
 .user-avatar {
-  width: clamp(20px, 2.5vw, 40px); /* Noch kleinerer Avatar für extreme Skalierung */
-  height: clamp(20px, 2.5vw, 40px);
+  width: clamp(18px, 2.2vw, 38px); /* Noch kleinerer Avatar für extreme Skalierung */
+  height: clamp(18px, 2.2vw, 38px);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(0.8rem, 1vw, 1.8rem);
+  font-size: clamp(0.7rem, 0.9vw, 1.6rem);
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -287,10 +288,10 @@ button:hover {
 }
 
 .search-engine {
-  padding: clamp(0.15rem, 0.3vw, 0.4rem) clamp(0.3rem, 0.55vw, 0.8rem); /* Feinjustiert */
+  padding: clamp(0.12rem, 0.25vw, 0.35rem) clamp(0.25rem, 0.5vw, 0.7rem); /* Feinjustiert */
   border-radius: 30px;
   font-weight: 600;
-  font-size: clamp(0.45rem, var(--fluid-min-font), 0.7rem); /* Feinjustiert */
+  font-size: clamp(0.4rem, var(--fluid-min-font), 0.65rem); /* Feinjustiert */
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t);
@@ -330,7 +331,7 @@ button:hover {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
+  font-size: clamp(0.55rem, var(--fluid-max-font), 0.9rem); /* Feinjustiert */
   outline: none;
   margin-left: var(--fluid-padding-xs); /* Feinjustiert */
 }
@@ -353,9 +354,9 @@ button:hover {
 }
 
 #time {
-  font-size: clamp(1.2rem, var(--fluid-time-font), 4rem); /* Haupt-Hebel für die Uhr-Größe! Feinjustiert */
+  font-size: clamp(1.1rem, var(--fluid-time-font), 3.5rem); /* Haupt-Hebel für die Uhr-Größe! Feinjustiert */
   font-weight: 800;
-  margin-bottom: clamp(0.01rem, 0.04vh, 0.25rem); /* Sehr geringer Margin, stärker an VH gebunden */
+  margin-bottom: clamp(0.01rem, 0.03vh, 0.2rem); /* Sehr geringer Margin, stärker an VH gebunden */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -366,11 +367,11 @@ button:hover {
 }
 
 #date {
-  font-size: clamp(0.5rem, var(--fluid-min-font), 1rem); /* Feinjustiert */
+  font-size: clamp(0.45rem, var(--fluid-min-font), 0.9rem); /* Feinjustiert */
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: clamp(0.2px, 0.07vw, 1.8px); /* Feinjustiert */
+  letter-spacing: clamp(0.15px, 0.06vw, 1.5px); /* Feinjustiert */
 }
 
 /* --- NEU: Wetter Link Sektion Styles --- */
@@ -388,7 +389,7 @@ button:hover {
 }
 
 .weather-link-section h2 {
-    font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem); /* Feinjustiert */
+    font-size: clamp(0.7rem, var(--fluid-header-font), 1.3rem); /* Feinjustiert */
     font-weight: 700;
     margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
     color: var(--fg);
@@ -405,7 +406,7 @@ button:hover {
     text-decoration: none;
     color: var(--fg);
     font-weight: 600;
-    font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
+    font-size: clamp(0.55rem, var(--fluid-max-font), 0.95rem); /* Feinjustiert */
     transition: all var(--t);
     box-shadow: var(--s-light), var(--inner-shadow);
 }
@@ -417,7 +418,7 @@ button:hover {
 }
 
 .weather-link-button .weather-icon {
-    font-size: clamp(1rem, 1.2vw, 2.2rem); /* Feinjustiert */
+    font-size: clamp(0.9rem, 1.1vw, 2.0rem); /* Feinjustiert */
     color: var(--acc);
     transition: all var(--t);
 }
@@ -428,7 +429,7 @@ button:hover {
 
 .weather-notice {
     margin-top: var(--fluid-padding-s); /* Feinjustiert */
-    font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
+    font-size: clamp(0.45rem, var(--fluid-min-font), 0.75rem); /* Feinjustiert */
     color: var(--dim);
 }
 /* Ende Wetter Link Sektion Styles */
@@ -450,14 +451,14 @@ button:hover {
 }
 
 #quote-text {
-  font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem); /* Feinjustiert */
+  font-size: clamp(0.65rem, var(--fluid-max-font), 1.0rem); /* Feinjustiert */
   font-weight: 600;
-  margin-bottom: clamp(0.1rem, 0.2vw, 0.5rem); /* Feinjustiert */
+  margin-bottom: clamp(0.08rem, 0.18vw, 0.4rem); /* Feinjustiert */
   color: var(--fg);
 }
 
 #quote-author {
-  font-size: clamp(0.45rem, var(--fluid-min-font), 0.9rem); /* Feinjustiert */
+  font-size: clamp(0.4rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
   color: var(--dim);
 }
 /* Ende Zitate Sektion Styles */
@@ -477,7 +478,7 @@ button:hover {
 
 .apps-section h2 {
   margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
-  font-size: clamp(0.7rem, var(--fluid-header-font), 1.4rem); /* Feinjustiert */
+  font-size: clamp(0.65rem, var(--fluid-header-font), 1.3rem); /* Feinjustiert */
   font-weight: 700;
   text-align: center;
   color: var(--dim);
@@ -486,7 +487,8 @@ button:hover {
 .apps-container {
     /* Optimierte grid-template-columns für bessere Icon-Anordnung */
     /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
-    grid-template-columns: repeat(auto-fill, minmax(clamp(45px, 6.5vw + 4.5vh, 100px), 1fr)); /* Min-Größe & VH-Anteil erhöht */
+    /* Min-Größe nochmals reduziert, VH-Anteil für noch aggressivere vertikale Schrumpfung erhöht */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 6vw + 5.5vh, 90px), 1fr));
     gap: var(--fluid-gap-s); /* Optimierter, responsiver Abstand zwischen Karten */
     overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
     padding: var(--fluid-padding-xs); /* Minimales Padding */
@@ -501,7 +503,8 @@ button:hover {
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   /* Padding der Karte, um Icons und Labels gut auszurichten */
-  padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem); /* Optimiertes Padding, VH-Anteil erhöht und min reduziert */
+  /* Min-Padding nochmals reduziert, VH-Anteil erhöht */
+  padding: clamp(0.25rem, 0.45vw + 0.38vh, 0.9rem);
   text-align: center;
   text-decoration: none;
   color: var(--fg);
@@ -527,9 +530,10 @@ button:hover {
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  /* Größe der Icons, stark an VH gekoppelt, um Skalierung zu gewährleisten */
-  font-size: clamp(0.9rem, 1.5vw + 1.5vh, 2.5rem); /* **KRITISCH: Min-Wert stark reduziert, VH-Anteil stark erhöht** */
-  margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem); /* Abstand zwischen Icon und Label, optimiert */
+  /* Größe der Icons: Min-Wert nochmals drastisch reduziert, VH-Anteil nochmals erhöht */
+  font-size: clamp(0.7rem, 1.4vw + 1.8vh, 2.2rem);
+  /* Margin-Bottom: Min-Wert und VH-Anteil reduziert für weniger Platz zwischen Icon und Label */
+  margin-bottom: clamp(0.08rem, 0.18vw + 0.08vh, 0.4rem);
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
   transition: all 0.15s ease-out;
@@ -541,8 +545,8 @@ button:hover {
 }
 
 .app-card .label {
-  /* Größe der Labels, ebenfalls an VH gekoppelt */
-  font-size: clamp(0.4rem, 0.5vw + 0.3vh, 0.9rem); /* **KRITISCH: Min-Wert stark reduziert, VH-Anteil erhöht** */
+  /* Größe der Labels: Min-Wert nochmals drastisch reduziert, VH-Anteil nochmals erhöht */
+  font-size: clamp(0.35rem, 0.45vw + 0.35vh, 0.8rem);
   font-weight: 500;
   line-height: 1.1; /* Noch kompakter, aber lesbar */
   word-break: break-word; /* Verhindert Überlauf bei langen Namen */
@@ -571,8 +575,9 @@ button:hover {
 /* Bei schmaleren Bildschirmen auf eine Spalte wechseln */
 @media (max-width: 992px) {
   /* `html` font-size hier überschreiben, um die Skalierung bei kleineren Geräten anzupassen */
+  /* Min-Font und vh-Anteil noch aggressiver für mobile, feinjustiert */
   html {
-    font-size: clamp(5px, 0.7vw + 0.4vh, 15px); /* Min-Font und vh-Anteil leicht reduziert */
+    font-size: clamp(4.5px, 0.65vw + 0.35vh, 14px);
   }
 
   .container {
@@ -605,10 +610,10 @@ button:hover {
 
   /* Die Uhr noch kleiner bei schmaleren Screens */
   #time {
-      font-size: clamp(1rem, 4vw, 2.5rem); /* Feinjustiert */
+      font-size: clamp(0.9rem, 3.5vw, 2.2rem); /* Feinjustiert */
   }
   #date {
-      font-size: clamp(0.4rem, 1.5vw, 0.9rem); /* Feinjustiert */
+      font-size: clamp(0.35rem, 1.2vw, 0.8rem); /* Feinjustiert */
   }
 
   .header {
@@ -616,36 +621,39 @@ button:hover {
       gap: var(--fluid-gap-s); /* Feinjustiert */
       padding: var(--fluid-padding-s); /* Feinjustiert */
   }
-  .logo { font-size: clamp(0.8rem, 2.5vw, 1.8rem); } /* Feinjustiert */
+  .logo { font-size: clamp(0.7rem, 2.2vw, 1.6rem); } /* Feinjustiert */
   .controls { gap: var(--fluid-gap-s); flex-wrap: wrap; justify-content: center; } /* Feinjustiert */
 
   /* Apps-Sektion bleibt der flexible Bereich */
   .apps-section {
       order: 4; /* Stellt sicher, dass es am Ende kommt */
       flex-grow: 1; /* Nimmt den restlichen Platz ein */
-      min-height: clamp(70px, 14vh, 220px); /* Eine flexible Mindesthöhe, feinjustiert */
+      min-height: clamp(60px, 12vh, 200px); /* Eine flexible Mindesthöhe, noch feiner justiert */
       padding: var(--fluid-padding-s); /* Feinjustiert */
       overflow-y: auto; /* **WICHTIG: Hier erlauben wir Scrollen, da sonst bei sehr vielen Apps ein harter Cut stattfindet.** */
   }
   .apps-section h2 {
-      font-size: clamp(0.6rem, 2.2vw, 1.2rem); /* Feinjustiert */
+      font-size: clamp(0.55rem, 2.0vw, 1.1rem); /* Feinjustiert */
       margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
   }
   .apps-container {
       /* Optimierte grid-template-columns für mobile */
-      grid-template-columns: repeat(auto-fill, minmax(clamp(35px, 8vw + 5.5vh, 70px), 1fr)); /* Kleinere Cards für mobile, VH-Anteil noch stärker erhöht */
-      gap: var(--fluid-gap-s); /* Feinjustiert, VH-Anteil für Gap */
+      /* Min-Größe für mobile Cards noch weiter reduziert, VH-Anteil für Gap erhöht */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(30px, 7.5vw + 6vh, 65px), 1fr));
+      gap: var(--fluid-gap-s); /* Feinjustiert, VH-Anteil für Gap erhöht */
       overflow: hidden; /* **Internes Scrollen hier wieder erlauben, wenn Apps-Section scrollt** */
       max-height: none; /* Deaktivieren der max-height, wenn die Sektion scrollt */
   }
   .app-card {
-      padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem); /* Optimiertes Padding für mobile, min reduziert */
+      padding: clamp(0.18rem, 0.3vw + 0.22vh, 0.8rem); /* Optimiertes Padding für mobile, min reduziert */
   }
   .app-card .icon {
-      font-size: clamp(0.8rem, 2.5vw + 1.5vh, 1.8rem); /* **KRITISCH: Min-Wert stark reduziert, VH-Anteil stark erhöht** */
+      /* Icons für mobile: Min-Wert nochmals drastisch reduziert, VH-Anteil stark erhöht */
+      font-size: clamp(0.6rem, 2.2vw + 1.8vh, 1.6rem);
   }
   .app-card .label {
-      font-size: clamp(0.35rem, 1.2vw + 0.5vh, 0.6rem); /* **KRITISCH: Min-Wert stark reduziert, VH-Anteil erhöht** */
+      /* Labels für mobile: Min-Wert nochmals drastisch reduziert, VH-Anteil erhöht */
+      font-size: clamp(0.3rem, 1.0vw + 0.4vh, 0.55rem);
       line-height: 1.1;
   }
 }
