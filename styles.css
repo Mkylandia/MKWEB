@@ -1,7 +1,18 @@
-/* styles.css - MKWEB OS 7: Compact Single-Screen Layout - LIGHTWEIGHT VERSION */
+/* styles.css - MKWEB OS 7: Ultra-Fluid Responsive Layout */
 
 /* --- Global Design Variables - Refined for OS 7 --- */
 :root {
+  /* Skalierungs-Faktoren: Diese Werte bestimmen, wie schnell die Elemente schrumpfen/wachsen. */
+  /* Für eine stärkere vertikale Komprimierung, könnten die vh-Werte reduziert werden. */
+  --fluid-min-font: 0.8vw;  /* Basis für kleinere Texte (z.B. Labels, Datum) */
+  --fluid-max-font: 1.1vw;  /* Basis für normale Texte (z.B. Search Input) */
+  --fluid-header-font: 1.5vw; /* Basis für Header-Elemente */
+  --fluid-time-font: 3.5vw; /* Basis für die Uhrzeit */
+
+  --fluid-min-padding: 0.5vw; /* Basis für kleinere Paddings */
+  --fluid-max-padding: 1vw;   /* Basis für normale Paddings */
+  --fluid-large-padding: 1.5vw; /* Basis für große Paddings (Container) */
+
   --t: 0.15s ease-out; /* Faster transitions */
   --r: 12px; /* Slightly smaller border-radius */
   --s: 0 4px 12px rgba(0,0,0,0.08); /* Lighter shadow */
@@ -36,6 +47,9 @@
 /* --- Base Styles --- */
 html {
   scroll-behavior: smooth;
+  /* Font-size für REM-Einheiten setzen, die sich mit der Viewport-Breite skalieren */
+  /* Dies ist der Haupthebel für die proportionale Skalierung */
+  font-size: clamp(10px, 0.8vw + 0.8vh, 18px); /* Skaliert stark mit Breite UND Höhe */
 }
 
 * {
@@ -49,10 +63,13 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
-  height: 100vh; /* Standard für große Desktops: volle Höhe */
+  /* Höhe und Breite passen sich an den Inhalt an, immer scrollbar, wenn nötig */
+  height: auto;
+  min-height: 100vh; /* Stellt sicher, dass der Body mindestens die volle VH einnimmt, um den Hintergrund zu füllen */
   width: 100vw;
   transition: background var(--t), color var(--t);
-  overflow: hidden; /* Standard für große Desktops: kein Scrollen */
+  overflow-y: auto; /* Erlaube Scrollen vertikal auf allen Bildschirmgrößen */
+  overflow-x: hidden; /* Verhindere horizontales Scrollen */
   position: relative;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -60,18 +77,19 @@ body {
 }
 
 /* --- Animated Background Elements - REMOVED --- */
-.background-shape { display: none; } /* Completely hide background shapes */
-.grain { display: none; } /* Completely hide grain effect */
+.background-shape { display: none; }
+.grain { display: none; }
 
 .container {
   position: relative;
   z-index: 2;
-  height: 100vh; /* Standard für große Desktops: volle Höhe */
-  padding: 2rem;
+  height: auto; /* Höhe wird durch den Inhalt bestimmt */
+  min-height: 100vh; /* Mindesthöhe für den Container, damit Footer unten bleibt */
+  padding: clamp(1rem, var(--fluid-large-padding), 2.5rem); /* Proportionales Padding */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: clamp(0.8rem, var(--fluid-max-padding), 1.5rem); /* Proportionaler Abstand */
 }
 
 /* --- Glassmorphism Base Style - Simplified --- */
@@ -81,7 +99,7 @@ body {
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  transition: background var(--t), border-color var(--t), box-shadow var(--t);
+  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
   position: relative;
   overflow: hidden;
   transform: none;
@@ -100,7 +118,7 @@ body {
   }
 
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-0.3em); /* Skaliert mit Schriftgröße */
     box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
   }
 
@@ -129,11 +147,11 @@ body {
   align-items: center;
   width: 100%;
   max-width: var(--content-max-width);
-  padding: 1rem 2rem;
+  padding: clamp(0.5rem, var(--fluid-max-padding), 1.5rem); /* Proportionales Padding */
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, var(--fluid-header-font), 2.5rem); /* Skaliert Logo */
   font-weight: 800;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 200% 200%;
@@ -152,20 +170,20 @@ body {
 
 .controls {
   display: flex;
-  gap: 1rem;
+  gap: clamp(0.5rem, 0.8vw, 1rem); /* Proportionaler Abstand */
   align-items: center;
 }
 
 /* --- Buttons Styling - Simplified --- */
 button {
-  padding: 0.6rem 1rem;
+  padding: clamp(0.4rem, 0.6vw, 0.8rem) clamp(0.7rem, 1vw, 1.2rem); /* Proportionales Padding */
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
   transition: border-color var(--t), transform var(--t), box-shadow var(--t);
-  font-size: 0.85rem;
+  font-size: clamp(0.7rem, var(--fluid-min-font), 0.9rem); /* Proportionaler Font-Size */
   font-weight: 600;
   outline: none;
   box-shadow: var(--s-light);
@@ -175,26 +193,26 @@ button {
   transform: none;
 
   &:active {
-    transform: translateY(1px) scale(0.99);
+    transform: translateY(0.1em) scale(0.99);
     box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
     background: rgba(var(--gl-rgb), 0.05);
   }
 }
 
 button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-0.2em);
   border-color: var(--acc);
   box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: clamp(30px, 3.5vw, 45px); /* Proportionale Größe */
+  height: clamp(30px, 3.5vw, 45px); /* Proportionale Größe */
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 1.5vw, 2rem); /* Proportionaler Icon-Size */
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -206,7 +224,7 @@ button:hover {
 }
 
 .user-avatar:hover {
-  transform: translateY(-3px);
+  transform: translateY(-0.3em);
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--s);
 }
@@ -222,42 +240,46 @@ button:hover {
 .main-grid {
   width: 100%;
   max-width: var(--content-max-width);
-  height: 100%; /* Desktop: volle Höhe */
+  height: auto; /* Höhe wird durch den Inhalt bestimmt */
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  flex-grow: 1;
+  gap: clamp(0.8rem, var(--fluid-max-padding), 1.5rem); /* Proportionaler Abstand */
+  flex-grow: 1; /* Nimmt den restlichen Platz im Container ein */
+  min-height: 0; /* Erlaubt dem Grid, bei Bedarf zu schrumpfen */
 }
 
 .grid-left, .grid-right {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  height: 100%; /* Desktop: volle Höhe */
+  gap: clamp(0.8rem, var(--fluid-max-padding), 1.5rem); /* Proportionaler Abstand */
+  height: auto; /* Höhe wird durch den Inhalt bestimmt */
+  flex-grow: 1; /* Nehmen den verfügbaren Platz in der Spalte ein */
+  min-height: 0; /* Erlaubt ihnen, bei Bedarf zu schrumpfen */
 }
 
 /* --- Search Section --- */
 .search-section {
-  padding: 1.2rem;
+  padding: clamp(0.8rem, var(--fluid-max-padding), 1.2rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 1; /* Desktop: kann wachsen */
+  flex-grow: 1; /* Kann im Desktop-Grid wachsen */
+  min-height: 0; /* Erlaubt Schrumpfung */
 }
 
 .search-engines {
   display: flex;
-  gap: 0.6rem;
-  margin-bottom: 1.2rem;
+  gap: clamp(0.3rem, 0.5vw, 0.6rem); /* Proportionaler Abstand */
+  margin-bottom: clamp(0.6rem, 0.8vw, 1.2rem); /* Proportionaler Margin */
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: 0.5rem 0.9rem;
+  padding: clamp(0.3rem, 0.45vw, 0.5rem) clamp(0.6rem, 0.8vw, 0.9rem); /* Proportionaler Padding */
   border-radius: 30px;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: clamp(0.6rem, var(--fluid-min-font), 0.8rem); /* Proportionaler Font-Size */
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t);
@@ -265,14 +287,14 @@ button:hover {
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-2px);
+    transform: translateY(-0.2em);
     box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s);
     border-color: var(--acc);
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-1px);
+    transform: translateY(-0.1em);
     box-shadow: inset 0 0 5px rgba(var(--acc-rgb), 0.1), var(--s-light);
   }
 }
@@ -281,7 +303,7 @@ button:hover {
   display: flex;
   align-items: center;
   border-radius: 30px;
-  padding: 0.7rem 1.2rem;
+  padding: clamp(0.5rem, 0.6vw, 0.8rem) clamp(0.8rem, 1.1vw, 1.5rem); /* Proportionaler Padding */
   transition: all var(--t);
   box-shadow: var(--s), var(--inner-shadow);
 }
@@ -297,9 +319,9 @@ button:hover {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: 1rem;
+  font-size: clamp(0.8rem, var(--fluid-max-font), 1.1rem); /* Proportionaler Font-Size */
   outline: none;
-  margin-left: 0.8rem;
+  margin-left: clamp(0.5rem, 0.7vw, 1rem); /* Proportionaler Margin */
 }
 
 #search::placeholder {
@@ -309,17 +331,18 @@ button:hover {
 /* --- Time Display --- */
 .time-display {
   text-align: center;
-  padding: 1.2rem;
+  padding: clamp(0.8rem, var(--fluid-max-padding), 1.2rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 2; /* Desktop: kann wachsen */
+  flex-grow: 2; /* Kann im Desktop-Grid stärker wachsen */
+  min-height: 0; /* Erlaubt Schrumpfung */
 }
 
 #time {
-  font-size: 4rem;
+  font-size: clamp(2rem, var(--fluid-time-font), 4.5rem); /* Haupt-Hebel für die Uhr-Größe! */
   font-weight: 800;
-  margin-bottom: 0.3rem;
+  margin-bottom: clamp(0.1rem, 0.2vh, 0.5rem); /* Proportionaler Margin, stärker an VH gebunden */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -330,55 +353,56 @@ button:hover {
 }
 
 #date {
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, var(--fluid-min-font), 1.2rem); /* Proportionaler Font-Size */
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: clamp(1px, 0.15vw, 2px); /* Proportionales Letter-Spacing */
 }
 
 /* --- NEU: Wetter Link Sektion Styles --- */
 .weather-link-section {
-    padding: 1.2rem;
+    padding: clamp(0.8rem, var(--fluid-max-padding), 1.2rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1; /* Desktop: kann wachsen */
+    flex-grow: 1; /* Kann im Desktop-Grid wachsen */
     text-align: center;
+    min-height: 0; /* Erlaubt Schrumpfung */
 }
 
 .weather-link-section h2 {
-    font-size: 1.4rem;
+    font-size: clamp(1rem, var(--fluid-header-font), 1.6rem); /* Proportionaler Font-Size */
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: clamp(0.5rem, 0.8vw, 1rem); /* Proportionaler Margin */
     color: var(--fg);
 }
 
 .weather-link-button {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.8rem 1.5rem;
+    gap: clamp(0.4rem, 0.5vw, 0.8rem); /* Proportionaler Abstand */
+    padding: clamp(0.6rem, 0.7vw, 1rem) clamp(1rem, 1.3vw, 1.8rem); /* Proportionales Padding */
     background: var(--gl);
     border: var(--border-width) solid var(--gb);
     border-radius: var(--r);
     text-decoration: none;
     color: var(--fg);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: clamp(0.8rem, var(--fluid-max-font), 1.1rem); /* Proportionaler Font-Size */
     transition: all var(--t);
     box-shadow: var(--s-light), var(--inner-shadow);
 }
 
 .weather-link-button:hover {
-    transform: translateY(-3px);
+    transform: translateY(-0.3em);
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
 
 .weather-link-button .weather-icon {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 1.8vw, 2.5rem); /* Proportionaler Icon-Size */
     color: var(--acc);
     transition: all var(--t);
 }
@@ -388,8 +412,8 @@ button:hover {
 }
 
 .weather-notice {
-    margin-top: 1rem;
-    font-size: 0.8rem;
+    margin-top: clamp(0.5rem, 0.7vw, 1rem); /* Proportionaler Margin */
+    font-size: clamp(0.7rem, var(--fluid-min-font), 0.9rem); /* Proportionaler Font-Size */
     color: var(--dim);
 }
 /* Ende Wetter Link Sektion Styles */
@@ -397,24 +421,25 @@ button:hover {
 
 /* --- NEU: Zitate Sektion Styles --- */
 .quote-section {
-  padding: 1.2rem;
+  padding: clamp(0.8rem, var(--fluid-max-padding), 1.2rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  flex-grow: 1; /* Desktop: kann wachsen */
+  flex-grow: 1; /* Kann im Desktop-Grid wachsen */
+  min-height: 0; /* Erlaubt Schrumpfung */
 }
 
 #quote-text {
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, var(--fluid-max-font), 1.2rem); /* Proportionaler Font-Size */
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: clamp(0.3rem, 0.4vw, 0.6rem); /* Proportionaler Margin */
   color: var(--fg);
 }
 
 #quote-author {
-  font-size: 0.9rem;
+  font-size: clamp(0.7rem, var(--fluid-min-font), 1rem); /* Proportionaler Font-Size */
   color: var(--dim);
 }
 /* Ende Zitate Sektion Styles */
@@ -423,35 +448,37 @@ button:hover {
 /* --- Apps & Bookmarks Section --- */
 .apps-section {
   width: 100%;
-  padding: 1.2rem;
+  padding: clamp(0.8rem, var(--fluid-max-padding), 1.2rem);
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Desktop: nimmt den restlichen Platz ein */
-  min-height: 100px; /* Mindesthöhe für die Apps-Sektion auf Desktop */
+  flex-grow: 1; /* WICHTIG: Diese Sektion nimmt den restlichen Platz ein */
+  min-height: 0; /* Erlaubt dieser Sektion, so klein wie nötig zu werden (aber ihr Container scrollt) */
 }
 
 .apps-section h2 {
-  margin-bottom: 1.2rem;
-  font-size: 1.4rem;
+  margin-bottom: clamp(0.8rem, 1vw, 1.2rem); /* Proportionaler Margin */
+  font-size: clamp(1rem, var(--fluid-header-font), 1.6rem); /* Proportionaler Font-Size */
   font-weight: 700;
   text-align: center;
   color: var(--dim);
 }
 
 .apps-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 0.8rem;
-    overflow-y: auto; /* Apps-Container kann intern scrollen */
-    padding: 0.3rem;
+    /* minmax() kombiniert mit fluiden Werten für responsive Spalten */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 6vw, 120px), 1fr));
+    gap: clamp(0.5rem, 0.7vw, 1rem); /* Proportionaler Abstand */
+    overflow-y: auto; /* Apps-Container kann intern scrollen, falls zu viele Apps */
+    padding: clamp(0.2rem, 0.3vw, 0.5rem); /* Proportionaler Padding */
     flex-grow: 1; /* Apps-Container wächst innerhalb der Apps-Sektion */
+    min-height: 0; /* Erlaubt dem Apps-Container, bei Bedarf zu schrumpfen */
+    display: grid; /* Behalte Grid für die App-Cards */
 }
 
 .app-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: 0.8rem;
+  padding: clamp(0.5rem, 0.7vw, 1rem); /* Proportionaler Padding */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
@@ -464,19 +491,19 @@ button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1; /* Behält quadratisches Verhältnis */
 }
 
 .app-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-0.5em);
   border-color: var(--acc);
   box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  font-size: 2rem;
-  margin-bottom: 0.4rem;
+  font-size: clamp(1.2rem, 1.8vw, 2.5rem); /* Proportionaler Icon-Size */
+  margin-bottom: clamp(0.2rem, 0.3vw, 0.5rem); /* Proportionaler Margin */
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
   transition: all 0.15s ease-out;
@@ -487,8 +514,10 @@ button:hover {
 }
 
 .app-card .label {
-  font-size: 0.75rem;
+  font-size: clamp(0.6rem, 0.7vw, 0.9rem); /* Proportionaler Font-Size */
   font-weight: 500;
+  line-height: 1.2; /* Für bessere Lesbarkeit bei kleineren Größen */
+  word-break: break-word; /* Verhindert Überlauf bei langen Namen */
 }
 
 /* --- SR-Only class for accessibility --- */
@@ -504,120 +533,81 @@ button:hover {
   border-width: 0;
 }
 
-/* --- Media Queries for Responsiveness --- */
+/* --- Media Queries for Layout Change (nicht nur Skalierung) --- */
 
-/* Laptops / Desktops mit kleineren Bildschirmen (z.B. 1200px - 993px) */
-@media (max-width: 1200px) {
-    #time { font-size: 3rem; }
-    #date { font-size: 0.85rem; }
-    .apps-container { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
-    .app-card .icon { font-size: 1.6rem; }
-    .app-card .label { font-size: 0.65rem; }
-    .main-grid { gap: 0.8rem; }
-    .grid-left, .grid-right { gap: 0.8rem; }
-    .header { padding: 0.8rem 1.5rem; }
-    .container { padding: 1.5rem; gap: 1rem; }
-}
-
-/* Typische Tablet / Kleine Laptop Bildschirme (z.B. 992px und darunter) */
+/* Bei schmaleren Bildschirmen auf eine Spalte wechseln */
 @media (max-width: 992px) {
-  body {
-    overflow-y: auto; /* WICHTIG: Immer Scrollen erlauben auf kleinen Bildschirmen */
-    height: auto; /* Body-Höhe wird vom Inhalt bestimmt, nicht erzwungen */
-    min-height: 100vh; /* Stellt sicher, dass der Hintergrund zumindest die volle Höhe abdeckt */
+  /* `html` font-size hier überschreiben, um die Skalierung bei kleineren Geräten anzupassen */
+  html {
+    font-size: clamp(9px, 0.9vw + 0.9vh, 16px); /* Etwas aggressiver für mobile */
   }
+
   .container {
-      padding: 0.8rem;
-      gap: 0.8rem;
-      height: auto; /* Container-Höhe wird vom Inhalt bestimmt */
-      min-height: auto; /* Keine Mindesthöhe für den Container, um Quetschen zu ermöglichen */
-      justify-content: flex-start;
+      padding: clamp(0.5rem, 1.5vw, 1.5rem); /* Etwas weniger Padding für mobile */
+      gap: clamp(0.5rem, 1vw, 1rem); /* Etwas weniger Gap */
+      min-height: 100vh; /* Mindesthöhe beibehalten, falls wenig Inhalt */
   }
   .main-grid {
       grid-template-columns: 1fr; /* Einzelspalten-Layout */
-      display: flex; /* Wechsel zu Flexbox für vertikale Kontrolle */
+      display: flex; /* Erneut Flexbox, um die vertikale Verteilung zu steuern */
       flex-direction: column;
-      height: auto; /* Höhe vom Inhalt bestimmen lassen */
-      gap: 0.8rem;
-      flex-grow: 1; /* Soll sich ausdehnen können, um den Platz im Container zu nutzen */
+      gap: clamp(0.5rem, 1vw, 1rem);
   }
   .grid-left, .grid-right {
       flex-direction: column;
-      height: auto; /* Sektionen bestimmen ihre eigene Höhe */
-      gap: 0.8rem;
-      flex-grow: 0; /* Verhindert unnötiges Wachstum dieser Elternelemente */
+      gap: clamp(0.5rem, 1vw, 1rem);
   }
 
-  /* WICHTIG: Nur die Apps-Sektion soll bei Bedarf wachsen und scrollen */
+  /* Diese Sektionen sollen ihre natürliche Höhe behalten */
   .time-display, .search-section, .weather-link-section, .quote-section {
-      flex-grow: 0; /* Diese Sektionen nehmen nur den Platz ihres Inhalts ein */
-      padding: 0.6rem;
-      min-height: 0; /* Erlaubt diesen Boxen, so klein wie nötig zu werden */
+      flex-grow: 0;
+      padding: clamp(0.5rem, 0.8vw, 1rem); /* Padding reduzieren */
+      /* min-height: 0; ist bereits oben im Grid und grid-elements gesetzt, aber kann hier explizit sein */
   }
+
+  /* Die Uhr noch kleiner bei schmaleren Screens */
   #time {
-      font-size: 2rem; /* Uhrzeit noch kleiner */
-      margin-bottom: 0.1rem;
+      font-size: clamp(1.8rem, 6vw, 3rem); /* Sehr aggressiv für die Uhr */
   }
-  #date { font-size: 0.75rem; }
+  #date {
+      font-size: clamp(0.6rem, 2.5vw, 1rem); /* Und das Datum auch */
+  }
 
   .header {
       flex-direction: column;
-      gap: 0.6rem;
-      padding: 0.6rem;
-      text-align: center;
+      gap: clamp(0.3rem, 0.5vw, 0.8rem);
+      padding: clamp(0.5rem, 0.8vw, 1rem);
   }
-  .logo { font-size: 1.5rem; }
-  .controls { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+  .logo { font-size: clamp(1.2rem, 4vw, 2rem); } /* Logo skaliert auch stärker */
+  .controls { gap: clamp(0.3rem, 0.6vw, 0.8rem); flex-wrap: wrap; justify-content: center; }
 
+  /* Apps-Sektion bleibt der flexible Bereich */
   .apps-section {
-      order: 4; /* Apps sind immer zuletzt */
-      flex-grow: 1; /* WICHTIG: Apps-Sektion nimmt den restlichen Platz ein */
-      min-height: 100px; /* Mindesthöhe für Apps, kann aber wachsen oder intern scrollen */
-      padding-top: 0.6rem;
-      padding-bottom: 0.6rem;
+      order: 4;
+      flex-grow: 1; /* Nimmt den restlichen Platz ein */
+      min-height: clamp(100px, 20vh, 300px); /* Eine flexible Mindesthöhe */
+      padding: clamp(0.5rem, 0.8vw, 1rem);
   }
-  .apps-section h2 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+  .apps-section h2 {
+      font-size: clamp(0.9rem, 3.5vw, 1.4rem);
+      margin-bottom: clamp(0.5rem, 0.8vw, 1rem);
+  }
   .apps-container {
-      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-      flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
-      min-height: 0; /* Erlaubt dem Apps-Container, bei Bedarf zu schrumpfen */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(50px, 12vw, 90px), 1fr)); /* Kleinere Cards für mobile */
+      gap: clamp(0.4rem, 0.6vw, 0.8rem);
   }
-  .app-card { padding: 0.4rem; }
-  .app-card .icon { font-size: 1.3rem; }
-  .app-card .label { font-size: 0.55rem; }
+  .app-card {
+      padding: clamp(0.3rem, 0.5vw, 0.8rem);
+  }
+  .app-card .icon {
+      font-size: clamp(1rem, 4vw, 2rem); /* Icons noch kleiner */
+  }
+  .app-card .label {
+      font-size: clamp(0.5rem, 2vw, 0.7rem); /* Labels noch kleiner */
+  }
 }
+/* Keine weiteren festen Media Queries. Die Skalierung übernimmt jetzt die Arbeit! */
 
-/* Tablet Portrait / Große Mobilgeräte (z.B. 768px und darunter) */
-@media (max-width: 768px) {
-  .container { padding: 0.5rem; gap: 0.5rem; }
-  #time { font-size: 1.8rem; }
-  #date { font-size: 0.65rem; }
-  .apps-container { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
-  .app-card { padding: 0.3rem; }
-  .app-card .icon { font-size: 1.2rem; }
-  .app-card .label { font-size: 0.5rem; }
-  .search-engine { font-size: 0.6rem; padding: 0.3rem 0.6rem; }
-  .search-box { padding: 0.4rem 0.7rem; }
-  #search { font-size: 0.8rem; }
-  .weather-link-button { font-size: 0.75rem; padding: 0.5rem 0.9rem; }
-  .weather-link-button .weather-icon { font-size: 1.4rem; }
-  #quote-text { font-size: 0.85rem; }
-  #quote-author { font-size: 0.65rem; }
-}
-
-/* Mobilgeräte (z.B. 480px und darunter) */
-@media (max-width: 480px) {
-    .apps-container { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); }
-    .app-card .icon { font-size: 1rem; }
-    .app-card .label { font-size: 0.45rem; }
-    #time { font-size: 1.6rem; }
-    #date { font-size: 0.6rem; }
-    .search-engine { font-size: 0.55rem; padding: 0.25rem 0.5rem; }
-    .weather-link-button { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
-    .weather-link-button .weather-icon { font-size: 1.2rem; }
-    #quote-text { font-size: 0.8rem; }
-    #quote-author { font-size: 0.6rem; }
-}
 
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
