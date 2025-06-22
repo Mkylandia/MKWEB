@@ -1,12 +1,12 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - MITTE WEG ZWISCHEN LIGHTWEIGHT & ATTRACTIVE */
+/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - OPTIMIZED APPS & MIDDLE GROUND */
 
 /* --- Global Design Variables - Refined for OS 7 & Middle Ground --- */
 :root {
   /* Skalierungs-Faktoren (feinjustiert für bessere Balance) */
-  --fluid-min-font: clamp(0.75rem, 0.6vw + 0.2vh, 1.05rem); /* Min-REM leicht erhöht, VH-Anteil moderat */
-  --fluid-max-font: clamp(0.95rem, 0.8vw + 0.3vh, 1.4rem); /* Min-REM leicht erhöht, VH-Anteil moderat */
-  --fluid-header-font: clamp(1.1rem, 0.9vw + 0.4vh, 2rem); /* Min-REM leicht erhöht, VH-Anteil moderat */
-  --fluid-time-font: clamp(2.8rem, 5vw, 7rem); /* Uhrzeit: Min-REM weiter erhöht, VW als Haupttreiber */
+  --fluid-min-font: clamp(0.75rem, 0.6vw + 0.2vh, 1.05rem);
+  --fluid-max-font: clamp(0.95rem, 0.8vw + 0.3vh, 1.4rem);
+  --fluid-header-font: clamp(1.1rem, 0.9vw + 0.4vh, 2rem);
+  --fluid-time-font: clamp(2.8rem, 5vw, 7rem);
 
   /* Clamp für Padding (leichte Anpassungen, stabil) */
   --fluid-padding-xs: clamp(0.25rem, 0.35vw, 0.7rem);
@@ -20,29 +20,29 @@
   --fluid-gap-s: clamp(0.35rem, 0.5vw, 1.1rem);
   --fluid-gap-m: clamp(0.55rem, 0.8vw, 1.8rem);
 
-  --t: 0.2s ease-out; /* **GEÄNDERT: Übergänge wieder etwas langsamer für mehr "Gefühl"** */
-  --r: 10px; /* **GEÄNDERT: Randradius wieder leicht erhöht** */
-  --s: 0 2px 8px rgba(0,0,0,0.08); /* **GEÄNDERT: Schatten wieder etwas präsenter, aber immer noch leicht** */
-  --sh: 0 4px 12px rgba(0,0,0,0.12); /* **GEÄNDERT: Hover-Schatten wieder etwas präsenter** */
-  --s-light: 0 1px 3px rgba(0,0,0,0.04); /* **GEÄNDERT: Leichtere Schatten für Buttons etc. wieder etwas präsenter** */
-  --border-width: 0.8px; /* **GEÄNDERT: Border-Dicke wieder leicht erhöht** */
+  --t: 0.2s ease-out;
+  --r: 10px;
+  --s: 0 2px 8px rgba(0,0,0,0.08);
+  --sh: 0 4px 12px rgba(0,0,0,0.12);
+  --s-light: 0 1px 3px rgba(0,0,0,0.04);
+  --border-width: 0.8px;
   --text-gradient-angle: 65deg;
   --glass-reflection: transparent;
-  --glow-strength: 0 0 4px; /* **GEÄNDERT: Glow-Stärke wieder leicht erhöht** */
+  --glow-strength: 0 0 4px;
   --glow-color: var(--acc);
-  --blur-intensity: 6px; /* **GEÄNDERT: Blur-Intensität wieder leicht erhöht für mehr Glas-Effekt** */
-  --saturate-intensity: 115%; /* **GEÄNDERT: Sättigung wieder leicht erhöht** */
+  --blur-intensity: 6px;
+  --saturate-intensity: 115%;
   --content-max-width: 1800px;
-  --inner-shadow-strength: inset 0 0 3px rgba(0,0,0,0.02); /* **GEÄNDERT: Innerer Schatten wieder etwas präsenter** */
+  --inner-shadow-strength: inset 0 0 3px rgba(0,0,0,0.02);
 
   /* --- Themed Variables (Nur noch Dark Theme) --- */
-  --bg: #0d0d0d; /* Hintergrund wieder etwas heller */
-  --fg: #e0e0e0; /* Vordergrund wieder etwas dunkler */
-  --dim: rgba(224,224,224,0.5); /* Dim Farbe an neuen Vordergrund angepasst */
+  --bg: #0d0d0d;
+  --fg: #e0e0e0;
+  --dim: rgba(224,224,224,0.5);
   --acc: #8a4ed4;
   --ah: #b080ff;
-  --gl: rgba(255,255,255,0.025); /* **GEÄNDERT: Glas-Hintergrund wieder etwas weniger transparent** */
-  --gb: rgba(255,255,255,0.08); /* **GEÄNDERT: Glas-Border wieder etwas weniger transparent** */
+  --gl: rgba(255,255,255,0.025);
+  --gb: rgba(255,255,255,0.08);
   --inner-shadow: var(--inner-shadow-strength);
   --acc-rgb: 138, 78, 212;
   --fg-rgb: 224, 224, 224;
@@ -54,7 +54,6 @@
 /* --- Base Styles --- */
 html {
   scroll-behavior: smooth;
-  /* **GEÄNDERT: Grundschriftgröße wieder etwas erhöht für bessere Lesbarkeit** */
   font-size: clamp(9px, 0.8vw + 0.25vh, 19px);
 }
 
@@ -101,11 +100,9 @@ body {
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
-  /* **GEÄNDERT: Border ist standardmäßig transparent, aber bei Hover präsenter** */
   border: var(--border-width) solid transparent;
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  /* **GEÄNDERT: Transform wieder in Transition für Hover-Lift** */
   transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
   position: relative;
   overflow: hidden;
@@ -125,8 +122,8 @@ body {
   }
 
   &:hover {
-    transform: translateY(-0.2em); /* **GEÄNDERT: Dezenter Lift bei Hover wieder drin** */
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* **GEÄNDERT: Subtiler Hover-Schatten/Glow wieder drin** */
+    transform: translateY(-0.2em);
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
     border-color: var(--acc);
   }
 
@@ -139,12 +136,12 @@ body {
     z-index: -1;
     opacity: 0;
     transition: opacity var(--t);
-    filter: blur(3px); /* **GEÄNDERT: Blur des Glows wieder leicht erhöht** */
+    filter: blur(3px);
   }
 
   &:hover::before {
-    opacity: 0.3; /* **GEÄNDERT: Glow-Deckkraft wieder leicht erhöht** */
-    filter: blur(5px); /* **GEÄNDERT: Blur des Hover-Glows wieder leicht erhöht** */
+    opacity: 0.3;
+    filter: blur(5px);
   }
 }
 
@@ -167,7 +164,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.05); /* **GEÄNDERT: Logo-Glow wieder etwas präsenter** */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.05);
   position: relative;
 }
 
@@ -190,7 +187,6 @@ button {
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  /* **GEÄNDERT: Transform wieder in Transition für Hover-Lift** */
   transition: border-color var(--t), box-shadow var(--t), transform var(--t);
   font-size: var(--fluid-min-font);
   font-weight: 600;
@@ -202,16 +198,16 @@ button {
   transform: none;
 
   &:active {
-    transform: translateY(0.05em) scale(0.995); /* **GEÄNDERT: Dezenter Active-Effekt wieder drin** */
+    transform: translateY(0.05em) scale(0.995);
     box-shadow: var(--s-light), inset 0 1px 3px rgba(0,0,0,0.08);
     background: rgba(var(--gl-rgb), 0.03);
   }
 }
 
 button:hover {
-  transform: translateY(-0.15em); /* **GEÄNDERT: Dezenter Lift bei Hover wieder drin** */
+  transform: translateY(-0.15em);
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* **GEÄNDERT: Subtiler Hover-Schatten/Glow wieder drin** */
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
 }
 
 .user-avatar {
@@ -226,14 +222,13 @@ button:hover {
   border: var(--border-width) solid transparent;
   color: var(--acc);
   cursor: pointer;
-  /* **GEÄNDERT: Transform wieder in Transition für Hover-Lift** */
   transition: all var(--t);
   box-shadow: var(--s-light);
   overflow: hidden;
   transform: none;
 
   &:hover {
-    transform: translateY(-0.2em); /* **GEÄNDERT: Dezenter Lift bei Hover wieder drin** */
+    transform: translateY(-0.2em);
     border-color: var(--acc);
     box-shadow: var(--glow-strength) var(--acc), var(--s);
   }
@@ -296,20 +291,19 @@ button:hover {
   font-size: var(--fluid-min-font);
   border: var(--border-width) solid transparent;
   background: var(--gl);
-  /* **GEÄNDERT: Transform wieder in Transition für Hover/Active** */
   transition: all var(--t);
 
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-0.1em); /* **GEÄNDERT: Dezenter Active-Effekt wieder drin** */
+    transform: translateY(-0.1em);
     box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
     border-color: var(--acc);
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-0.05em); /* **GEÄNDERT: Dezenter Hover-Effekt wieder drin** */
+    transform: translateY(-0.05em);
     box-shadow: inset 0 0 3px rgba(0,0,0,0.05), var(--s-light);
   }
 }
@@ -319,14 +313,13 @@ button:hover {
   align-items: center;
   border-radius: 30px;
   padding: var(--fluid-padding-s);
-  /* **GEÄNDERT: Transform wieder in Transition für Fokus** */
   transition: all var(--t);
   box-shadow: var(--s), var(--inner-shadow);
 }
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.002); /* **GEÄNDERT: Dezenter Fokus-Zoom wieder drin** */
+  transform: scale(1.002);
   box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
 }
 
@@ -352,7 +345,6 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   flex-grow: 2;
-  /* **GEÄNDERT: Min-Height der Uhr etwas reduziert, aber immer noch prominent** */
   min-height: clamp(7rem, 13vh, 18rem);
   flex-shrink: 0;
   overflow: hidden;
@@ -369,7 +361,7 @@ button:hover {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08); /* **GEÄNDERT: Uhr-Glow wieder etwas präsenter** */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08);
 }
 
 #date {
@@ -413,12 +405,11 @@ button:hover {
     color: var(--fg);
     font-weight: 600;
     font-size: var(--fluid-max-font);
-    /* **GEÄNDERT: Transform wieder in Transition für Hover** */
     transition: all var(--t);
     box-shadow: var(--s-light), var(--inner-shadow);
 
     &:hover {
-      transform: translateY(-0.2em); /* **GEÄNDERT: Dezenter Lift bei Hover wieder drin** */
+      transform: translateY(-0.2em);
       border-color: var(--acc);
       box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
     }
@@ -427,11 +418,10 @@ button:hover {
 .weather-link-button .weather-icon {
     font-size: clamp(1rem, 1.2vw, 2.2rem);
     color: var(--acc);
-    /* **GEÄNDERT: Transform wieder in Transition für Hover** */
     transition: all var(--t);
 
     &:hover {
-        transform: scale(1.05); /* **GEÄNDERT: Dezenter Scale bei Hover wieder drin** */
+        transform: scale(1.05);
     }
 }
 
@@ -467,7 +457,7 @@ button:hover {
   color: var(--dim);
 }
 
-/* --- Apps & Bookmarks Section - ICONS FIX & MIDDLE GROUND --- */
+/* --- Apps & Bookmarks Section - ICON OVERLAP FIX & FINAL TUNING --- */
 .apps-section {
   width: 100%;
   padding: var(--fluid-padding-s);
@@ -488,9 +478,9 @@ button:hover {
 }
 
 .apps-container {
-    /* **GEÄNDERT: Min-Breite der App-Karten angepasst, um Überlappung zu vermeiden** */
-    /* Weniger aggressiv im VW-Anteil, robustere REM-Minima */
-    grid-template-columns: repeat(auto-fill, minmax(clamp(65px, 7.5vw, 120px), 1fr)); /* Min-Breite etwas erhöht, VW-Anteil angepasst */
+    /* **MAJOR CHANGE: Min-width of app cards increased, VW component adjusted for wider windows** */
+    /* This aims to give icons/labels more room before the grid collapses them. */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(70px, 8vw, 130px), 1fr)); /* Min-width of card increased from 65px to 70px. VW component from 7.5vw to 8vw. Max to 130px. */
     gap: var(--fluid-gap-s);
     overflow: hidden;
     padding: var(--fluid-padding-xs);
@@ -504,13 +494,12 @@ button:hover {
   background: var(--gl);
   border: var(--border-width) solid transparent;
   border-radius: var(--r);
-  /* **GEÄNDERT: Padding angepasst für mehr Raum und bessere Icon/Label-Trennung** */
-  padding: clamp(0.5rem, 0.7vw, 1.2rem); /* Mehr Padding */
+  /* **ADJUSTED: Padding within the card slightly more generous to fit content better** */
+  padding: clamp(0.6rem, 0.8vw, 1.3rem); /* Slightly more padding (from 0.5rem) */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
-  /* **GEÄNDERT: Transform wieder in Transition für Hover-Lift** */
-  transition: all var(--t); /* Transition auf "all" für flexible Effekte */
+  transition: all var(--t);
   position: relative;
   overflow: hidden;
   box-shadow: var(--s-light);
@@ -524,42 +513,39 @@ button:hover {
   min-height: 0;
 
   &:hover {
-    transform: translateY(-0.2em); /* **GEÄNDERT: Dezenter Lift bei Hover wieder drin** */
+    transform: translateY(-0.2em);
     border-color: var(--acc);
-    /* **GEÄNDERT: Subtiler Hover-Schatten/Glow wieder drin** */
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15);
   }
 }
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  /* **GEÄNDERT: ICON GRÖSSE FIX - Robustere REM-Minima, moderater VW-Anteil** */
-  /* Dies sollte Überlappungen minimieren und eine gute Standardgröße bieten */
-  font-size: clamp(1.8rem, 2.5vw, 4rem); /* Robusteres Clamp für Icons */
-  margin-bottom: var(--fluid-gap-xs); /* **GEÄNDERT: Margin-Bottom für Trennung** */
+  /* **MAJOR CHANGE: ICON FONT SIZE - More conservative VW, slightly larger REM floor** */
+  /* This aims to prevent icons from becoming too large and overlapping */
+  font-size: clamp(2rem, 3.5vw, 4.5rem); /* Min-REM increased from 1.8rem to 2rem. VW from 2.5vw to 3.5vw, Max to 4.5rem (was 4rem) */
+  margin-bottom: var(--fluid-gap-xs);
   display: block;
-  /* **GEÄNDERT: Subtiler Text-Shadow für Icons wieder drin** */
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.05);
-  /* **GEÄNDERT: Transition auf "all" für Farbwechsel und optionalen Scale-Effekt** */
   transition: all var(--t);
   line-height: 1;
 
   &:hover {
-    transform: scale(1.05); /* **GEÄNDERT: Dezenter Scale bei Hover wieder drin** */
+    transform: scale(1.05);
     color: var(--acc);
   }
 }
 
 .app-card .label {
-  /* **GEÄNDERT: Label-Größe angepasst für Lesbarkeit, weniger VH-Anteil** */
-  font-size: clamp(0.7rem, 0.8vw, 1.1rem); /* Robusteres Clamp für Labels */
+  /* **ADJUSTED: Label font size slightly smaller relative to icon for better balance** */
+  font-size: clamp(0.7rem, 0.75vw, 1.05rem); /* VW component slightly reduced */
   font-weight: 500;
   line-height: 1.1;
   word-break: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Bleibt bei 2 Zeilen für längere Namen */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -610,7 +596,7 @@ button:hover {
   }
 
   #time {
-      font-size: clamp(2.5rem, 9vw, 6rem); /* **GEÄNDERT: Uhrzeit Min-REM für Mobile leicht erhöht** */
+      font-size: clamp(2.5rem, 9vw, 6rem);
   }
   #date {
       font-size: var(--fluid-min-font);
@@ -627,7 +613,7 @@ button:hover {
   .apps-section {
       order: 4;
       flex-grow: 1;
-      min-height: clamp(120px, 20vh, 350px); /* **GEÄNDERT: Min-Höhe der Apps-Sektion für Mobile erhöht** */
+      min-height: clamp(120px, 20vh, 350px);
       padding: var(--fluid-padding-s);
       overflow-y: auto;
   }
@@ -636,21 +622,20 @@ button:hover {
       margin-bottom: var(--fluid-padding-s);
   }
   .apps-container {
-      /* **GEÄNDERT: Min-Breite der App-Karten für Mobile angepasst** */
-      grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 12vw, 100px), 1fr)); /* Mobile Min-Breite etwas erhöht */
+      /* **MAJOR CHANGE: Min-width of app cards for MOBILE increased** */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(65px, 13vw, 110px), 1fr)); /* Min-width from 60px to 65px. VW from 12vw to 13vw. Max to 110px. */
       gap: var(--fluid-gap-s);
       overflow: hidden;
       max-height: none;
   }
   .app-card {
-      padding: clamp(0.4rem, 0.6vw, 1rem); /* Kompakteres Padding für Mobile */
+      padding: clamp(0.4rem, 0.6vw, 1rem);
   }
   .app-card .icon {
-      /* **GEÄNDERT: ICON GRÖSSE FIX FÜR MOBILE - Robusteres Clamp** */
-      font-size: clamp(1.6rem, 4vw, 3rem); /* Mobile Icons robuster */
+      /* **MAJOR CHANGE: ICON FONT SIZE FOR MOBILE - More conservative VW** */
+      font-size: clamp(1.8rem, 4.5vw, 3.5rem); /* Min-REM from 1.6rem to 1.8rem. VW from 4vw to 4.5vw, Max to 3.5rem (was 3rem) */
   }
   .app-card .label {
-      /* **GEÄNDERT: Label-Größe für Mobile angepasst** */
       font-size: clamp(0.65rem, 1.8vw, 1rem);
       line-height: 1.1;
   }
