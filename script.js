@@ -1,51 +1,54 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Lightweight Version */
+/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - EXTREME LIGHTWEIGHT VERSION */
 
-/* --- Global Design Variables - Refined for OS 7 & Lightweight --- */
+/* --- Global Design Variables - Refined for OS 7 & Extreme Lightweight --- */
 :root {
-  /* Skalierungs-Faktoren (unverändert, da die Größen jetzt stimmen) */
-  --fluid-min-font: 0.6vw;
-  --fluid-max-font: 0.9vw;
-  --fluid-header-font: 1.1vw;
-  --fluid-time-font: 3vw;
+  /* Skalierungs-Faktoren: Weniger aggressiv bei VH, mehr auf feste Werte/REM */
+  /* Min-Werte wurden weiter erhöht, VH-Anteil für fluid-font reduziert */
+  --fluid-min-font: clamp(0.7rem, 0.5vw + 0.2vh, 1rem); /* **GEÄNDERT: Min-REM erhöht, VW/VH Anteil reduziert** */
+  --fluid-max-font: clamp(0.9rem, 0.7vw + 0.3vh, 1.3rem); /* **GEÄNDERT: Min-REM erhöht, VW/VH Anteil reduziert** */
+  --fluid-header-font: clamp(1rem, 0.8vw + 0.4vh, 1.8rem); /* **GEÄNDERT: Min-REM erhöht, VW/VH Anteil reduziert** */
+  --fluid-time-font: clamp(2.5rem, 4.5vw, 6rem); /* **GEÄNDERT: Uhrzeit Min-REM stark erhöht, VW als Haupttreiber** */
 
-  /* Clamp für Padding (unverändert) */
-  --fluid-padding-xs: clamp(0.15rem, 0.25vw + 0.1vh, 0.7rem);
-  --fluid-padding-s: clamp(0.3rem, 0.4vw + 0.2vh, 1rem);
-  --fluid-padding-m: clamp(0.5rem, 0.7vw + 0.35vh, 1.3rem);
-  --fluid-padding-l: clamp(0.7rem, 0.9vw + 0.45vh, 1.8rem);
-  --fluid-padding-xl: clamp(0.9rem, 1.1vw + 0.55vh, 2.3rem);
+  /* Clamp für Padding: min-val, fluid-val (vw/vh-mix), max-val */
+  /* VH-Anteile weiter reduziert für mehr Stabilität */
+  --fluid-padding-xs: clamp(0.2rem, 0.3vw, 0.6rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
+  --fluid-padding-s: clamp(0.4rem, 0.6vw, 1rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
+  --fluid-padding-m: clamp(0.6rem, 0.9vw, 1.4rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
+  --fluid-padding-l: clamp(0.8rem, 1.2vw, 2rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
+  --fluid-padding-xl: clamp(1rem, 1.5vw, 2.5rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
 
-  /* Clamp für Gaps (unverändert) */
-  --fluid-gap-xs: clamp(0.15rem, 0.2vw + 0.08vh, 0.5rem);
-  --fluid-gap-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.8rem);
-  --fluid-gap-m: clamp(0.35rem, 0.45vw + 0.2vh, 1.2rem);
+  /* Clamp für Gaps: min-val, fluid-val (vw/vh-mix), max-val */
+  /* VH-Anteile weiter reduziert für mehr Stabilität */
+  --fluid-gap-xs: clamp(0.2rem, 0.25vw, 0.6rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
+  --fluid-gap-s: clamp(0.3rem, 0.45vw, 1rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
+  --fluid-gap-m: clamp(0.5rem, 0.7vw, 1.5rem); /* **GEÄNDERT: VH entfernt, Min-REM erhöht** */
 
-  --t: 0.15s ease-out; /* Transitions (bleibt schnell) */
-  --r: 10px; /* **GEÄNDERT: Randradius leicht reduziert für schlankeren Look** */
-  --s: 0 2px 8px rgba(0,0,0,0.06); /* **GEÄNDERT: Schatten deutlich leichter** */
-  --sh: 0 4px 12px rgba(0,0,0,0.08); /* **GEÄNDERT: Hover-Schatten leichter** */
-  --s-light: 0 1px 3px rgba(0,0,0,0.03); /* **GEÄNDERT: Noch leichtere Schatten für Buttons etc.** */
-  --border-width: 0.8px; /* **GEÄNDERT: Border-Dicke reduziert für filigraneren Look** */
+  --t: 0.1s ease-out; /* **GEÄNDERT: Noch schnellere Transitions** */
+  --r: 8px; /* **GEÄNDERT: Randradius noch stärker reduziert** */
+  --s: 0 1px 4px rgba(0,0,0,0.04); /* **GEÄNDERT: Schatten extrem leicht** */
+  --sh: 0 2px 6px rgba(0,0,0,0.06); /* **GEÄNDERT: Hover-Schatten extrem leicht** */
+  --s-light: 0 0.5px 2px rgba(0,0,0,0.02); /* **GEÄNDERT: Noch leichtere Schatten (fast unsichtbar)** */
+  --border-width: 0.5px; /* **GEÄNDERT: Border-Dicke extrem reduziert** */
   --text-gradient-angle: 65deg;
   --glass-reflection: transparent; /* Bleibt entfernt */
-  --glow-strength: 0 0 3px; /* **GEÄNDERT: Glow-Stärke reduziert** */
+  --glow-strength: 0 0 2px; /* **GEÄNDERT: Glow-Stärke minimal** */
   --glow-color: var(--acc);
-  --blur-intensity: 5px; /* **GEÄNDERT: Blur-Intensität reduziert für leichteres Glass** */
-  --saturate-intensity: 110%; /* **GEÄNDERT: Sättigung reduziert für weniger Kontrast** */
+  --blur-intensity: 3px; /* **GEÄNDERT: Blur-Intensität minimal (nahezu flach)** */
+  --saturate-intensity: 105%; /* **GEÄNDERT: Sättigung fast neutral** */
   --content-max-width: 1800px;
-  --inner-shadow-strength: inset 0 0 3px rgba(0,0,0,0.02); /* **GEÄNDERT: Innerer Schatten leichter** */
+  --inner-shadow-strength: inset 0 0 2px rgba(0,0,0,0.01); /* **GEÄNDERT: Innerer Schatten fast unsichtbar** */
 
   /* --- Themed Variables (Nur noch Dark Theme) --- */
-  --bg: #0d0d0d;
-  --fg: #e0e0e0;
-  --dim: rgba(224,224,224,0.5);
-  --acc: #8a4ed4; /* Akzentfarbe bleibt */
-  --ah: #b080ff; /* Akzent-Hoverfarbe bleibt */
-  --gl: rgba(255,255,255,0.02); /* **GEÄNDERT: Glas-Hintergrund noch transparenter** */
-  --gb: rgba(255,255,255,0.08); /* **GEÄNDERT: Glas-Border noch transparenter** */
+  --bg: #0b0b0b; /* **GEÄNDERT: Hintergrund noch dunkler für mehr Kontrast zur Transparenz** */
+  --fg: #f0f0f0; /* **GEÄNDERT: Vordergrund noch heller für mehr Kontrast** */
+  --dim: rgba(240,240,240,0.4); /* **GEÄNDERT: Dim Farbe an neuen Vordergrund angepasst** */
+  --acc: #8a4ed4;
+  --ah: #b080ff;
+  --gl: rgba(255,255,255,0.01); /* **GEÄNDERT: Glas-Hintergrund fast komplett transparent** */
+  --gb: rgba(255,255,255,0.05); /* **GEÄNDERT: Glas-Border noch transparenter** */
   --inner-shadow: var(--inner-shadow-strength);
   --acc-rgb: 138, 78, 212;
-  --fg-rgb: 224, 224, 224;
+  --fg-rgb: 240, 240, 240;
   --ah-rgb: 176, 128, 255;
   --gb-rgb: 255, 255, 255;
 }
@@ -54,7 +57,8 @@
 /* --- Base Styles --- */
 html {
   scroll-behavior: smooth;
-  font-size: clamp(6px, 0.6vw + 0.35vh, 17px);
+  /* **GEÄNDERT: Grundschriftgröße stärker an REM gebunden, VH reduziert** */
+  font-size: clamp(8px, 0.7vw + 0.2vh, 18px); /* Min-REM erhöht */
 }
 
 * {
@@ -80,7 +84,7 @@ body {
   flex-direction: column;
 }
 
-/* --- Animated Background Elements - REMOVED (bleiben entfernt) --- */
+/* Hintergrundelemente bleiben entfernt */
 .background-shape { display: none; }
 .grain { display: none; }
 
@@ -97,14 +101,14 @@ body {
   min-height: 0;
 }
 
-/* --- Glassmorphism Base Style - Optimized for Lightweight --- */
+/* --- Glassmorphism Base Style - Extreme Lightweight --- */
 .glass {
-  background: var(--gl);
-  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  box-shadow: var(--s), var(--inner-shadow); /* Nutzt die neuen, leichteren Schatten */
-  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
+  background: var(--gl); /* Extrem transparent */
+  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity)); /* Minimaler Blur/Sättigung */
+  border: var(--border-width) solid var(--gb); /* Extrem dünne, transparente Border */
+  border-radius: var(--r); /* Kleinerer Radius */
+  box-shadow: var(--s), var(--inner-shadow); /* Extrem leichter Schatten */
+  transition: background var(--t), border-color var(--t), box-shadow var(--t); /* **GEÄNDERT: Transform von Transition entfernt** */
   position: relative;
   overflow: hidden;
   transform: none; /* Keine Initial-Transformation */
@@ -123,8 +127,8 @@ body {
   }
 
   &:hover {
-    transform: translateY(-0.2em); /* **GEÄNDERT: Weniger starker Hover-Lift** */
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* **GEÄNDERT: Weniger starker Hover-Glow** */
+    transform: none; /* **GEÄNDERT: KEIN LIFT BEI HOVER** */
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.1); /* Minimaler Hover-Glow */
   }
 
   &::before {
@@ -136,12 +140,12 @@ body {
     z-index: -1;
     opacity: 0;
     transition: opacity var(--t);
-    filter: blur(4px); /* **GEÄNDERT: Blur des Glows reduziert** */
+    filter: blur(2px); /* **GEÄNDERT: Blur des Glows minimal** */
   }
 
   &:hover::before {
-    opacity: 0.3; /* **GEÄNDERT: Glow-Deckkraft reduziert** */
-    filter: blur(6px); /* **GEÄNDERT: Blur des Hover-Glows reduziert** */
+    opacity: 0.2; /* **GEÄNDERT: Glow-Deckkraft minimal** */
+    filter: blur(4px); /* **GEÄNDERT: Blur des Hover-Glows minimal** */
   }
 }
 
@@ -164,7 +168,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate; /* Animation bleibt für Dynamik */
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.05); /* **GEÄNDERT: Logo-Glow noch subtiler** */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.03); /* **GEÄNDERT: Logo-Glow extrem subtil** */
   position: relative;
 }
 
@@ -179,35 +183,35 @@ body {
   align-items: center;
 }
 
-/* --- Buttons Styling - Lightweight Optimierung --- */
+/* --- Buttons Styling - Extreme Lightweight --- */
 button {
   padding: var(--fluid-padding-xs) var(--fluid-padding-s);
-  border: var(--border-width) solid var(--gb); /* Nutzt reduzierte Border */
-  border-radius: var(--r); /* Nutzt reduzierten Radius */
-  background: var(--gl); /* Nutzt transparenteren Glas-Hintergrund */
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
-  font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem);
+  transition: border-color var(--t), box-shadow var(--t); /* **GEÄNDERT: Transform von Transition entfernt** */
+  font-size: var(--fluid-min-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
   font-weight: 600;
   outline: none;
-  box-shadow: var(--s-light); /* Nutzt den noch leichteren Schatten */
+  box-shadow: var(--s-light);
   position: relative;
   z-index: 1;
   overflow: hidden;
-  transform: none;
+  transform: none; /* **GEÄNDERT: Keine Initial-Transformation** */
 
   &:active {
-    transform: translateY(0.05em) scale(0.995); /* **GEÄNDERT: Weniger starker Active-Effekt** */
-    box-shadow: var(--s-light), inset 0 1px 3px rgba(0,0,0,0.08); /* **GEÄNDERT: Active-Schatten noch leichter** */
-    background: rgba(var(--gl-rgb), 0.03); /* **GEÄNDERT: Active-Hintergrund noch transparenter** */
+    transform: none; /* **GEÄNDERT: KEIN LIFT/SCALE BEI ACTIVE** */
+    box-shadow: var(--s-light), inset 0 0.5px 2px rgba(0,0,0,0.05); /* Minimaler Active-Schatten */
+    background: rgba(var(--gl-rgb), 0.02); /* Minimal transparenter Active-Hintergrund */
   }
 }
 
 button:hover {
-  transform: translateY(-0.15em); /* **GEÄNDERT: Weniger starker Hover-Lift** */
+  transform: none; /* **GEÄNDERT: KEIN LIFT BEI HOVER** */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* **GEÄNDERT: Weniger starker Hover-Glow** */
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.1); /* Minimaler Hover-Glow */
 }
 
 .user-avatar {
@@ -222,13 +226,13 @@ button:hover {
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
   cursor: pointer;
-  transition: all var(--t);
+  transition: all var(--t); /* **GEÄNDERT: Transform von Transition entfernt** */
   box-shadow: var(--s-light);
   overflow: hidden;
-  transform: none;
+  transform: none; /* **GEÄNDERT: Keine Initial-Transformation** */
 
   &:hover {
-    transform: translateY(-0.2em); /* **GEÄNDERT: Weniger starker Hover-Lift** */
+    transform: none; /* **GEÄNDERT: KEIN LIFT BEI HOVER** */
     border-color: var(--acc);
     box-shadow: var(--glow-strength) var(--acc), var(--s);
   }
@@ -258,10 +262,10 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: var(--fluid-gap-m);
-  height: 100%;
-  flex-grow: 1;
-  min-height: 0;
-  overflow: hidden;
+  height: 100%; /* Wichtig, damit sie den verfügbaren Platz im Grid nutzen */
+  flex-grow: 1; /* Nehmen den verfügbaren Platz in der Spalte ein */
+  min-height: 0; /* Erlaubt ihnen, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen in den Spalten */
 }
 
 /* --- Search Section --- */
@@ -270,7 +274,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 1;
+  flex-grow: 1; /* Kann im Desktop-Grid wachsen */
   min-height: 0;
   flex-shrink: 1;
   overflow: hidden;
@@ -285,10 +289,10 @@ button:hover {
 }
 
 .search-engine {
-  padding: clamp(0.2rem, 0.4vw, 0.6rem) clamp(0.4rem, 0.7vw, 1rem);
+  padding: var(--fluid-padding-xs) var(--fluid-padding-s); /* **GEÄNDERT: Padding vereinfacht auf Variablen** */
   border-radius: 30px;
   font-weight: 600;
-  font-size: clamp(0.55rem, 0.8vw, 0.9rem);
+  font-size: var(--fluid-min-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t);
@@ -296,15 +300,15 @@ button:hover {
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-0.1em); /* **GEÄNDERT: Weniger starker Active-Effekt** */
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1); /* **GEÄNDERT: Active-Glow noch leichter** */
+    transform: none; /* **GEÄNDERT: KEIN LIFT BEI ACTIVE** */
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.05); /* Minimaler Active-Glow */
     border-color: var(--acc);
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-0.05em); /* **GEÄNDERT: Weniger starker Hover-Effekt** */
-    box-shadow: inset 0 0 3px rgba(0,0,0,0.05), var(--s-light); /* **GEÄNDERT: Schatten leichter** */
+    transform: none; /* **GEÄNDERT: KEIN LIFT BEI HOVER** */
+    box-shadow: inset 0 0 1px rgba(0,0,0,0.02), var(--s-light); /* Minimaler Schatten */
   }
 }
 
@@ -319,8 +323,8 @@ button:hover {
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.002); /* **GEÄNDERT: Weniger starker Fokus-Zoom** */
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* **GEÄNDERT: Fokus-Glow leichter** */
+  transform: none; /* **GEÄNDERT: KEIN ZOOM BEI FOKUS** */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1); /* Minimaler Fokus-Glow */
 }
 
 #search {
@@ -328,7 +332,7 @@ button:hover {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: clamp(0.6rem, var(--fluid-max-font), 1rem);
+  font-size: var(--fluid-max-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
   outline: none;
   margin-left: var(--fluid-padding-xs);
 }
@@ -344,27 +348,28 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 2;
-  min-height: 0;
-  flex-shrink: 1;
+  flex-grow: 2; /* Behält höheren Flex-Grow für Prominenz */
+  min-height: clamp(8rem, 15vh, 20rem); /* **GEÄNDERT: DEUTLICH HÖHERE MIN-HEIGHT FÜR DIE UHR** */
+  flex-shrink: 0; /* **WICHTIG: Soll nicht schrumpfen, außer absolut notwendig** */
   overflow: hidden;
+  box-sizing: border-box; /* Sicherstellen, dass Padding in Höhe eingeht */
 }
 
 #time {
-  font-size: clamp(1.8rem, var(--fluid-time-font), 6rem);
+  font-size: var(--fluid-time-font); /* Nutzt die neue, hohe Fluid-Time-Font Variable */
   font-weight: 800;
-  margin-bottom: clamp(0.01rem, 0.04vh, 0.25rem);
+  margin-bottom: var(--fluid-gap-xs); /* **GEÄNDERT: Vereinfacht auf Gap Variable** */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08); /* **GEÄNDERT: Uhr-Glow leichter** */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.05); /* Minimaler Uhr-Glow */
 }
 
 #date {
-  font-size: clamp(0.5rem, var(--fluid-min-font), 1rem);
+  font-size: var(--fluid-min-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
@@ -386,7 +391,7 @@ button:hover {
 }
 
 .weather-link-section h2 {
-    font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem);
+    font-size: var(--fluid-header-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
     font-weight: 700;
     margin-bottom: var(--fluid-padding-s);
     color: var(--fg);
@@ -403,30 +408,30 @@ button:hover {
     text-decoration: none;
     color: var(--fg);
     font-weight: 600;
-    font-size: clamp(0.6rem, var(--fluid-max-font), 1rem);
-    transition: all var(--t);
+    font-size: var(--fluid-max-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
+    transition: all var(--t); /* **GEÄNDERT: Transform von Transition entfernt** */
     box-shadow: var(--s-light), var(--inner-shadow);
 
     &:hover {
-      transform: translateY(-0.2em); /* **GEÄNDERT: Weniger starker Hover-Lift** */
+      transform: none; /* **GEÄNDERT: KEIN LIFT BEI HOVER** */
       border-color: var(--acc);
-      box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* **GEÄNDERT: Weniger starker Hover-Glow** */
+      box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.1);
     }
 }
 
 .weather-link-button .weather-icon {
     font-size: clamp(1rem, 1.2vw, 2.2rem);
     color: var(--acc);
-    transition: all var(--t);
+    transition: all var(--t); /* **GEÄNDERT: Transform von Transition entfernt** */
 
     &:hover {
-        transform: scale(1.05); /* **GEÄNDERT: Weniger starker Hover-Skalierung** */
+        transform: none; /* **GEÄNDERT: KEIN SCALE BEI HOVER** */
     }
 }
 
 .weather-notice {
     margin-top: var(--fluid-padding-s);
-    font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem);
+    font-size: var(--fluid-min-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
     color: var(--dim);
 }
 
@@ -445,14 +450,14 @@ button:hover {
 }
 
 #quote-text {
-  font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem);
+  font-size: var(--fluid-max-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
   font-weight: 600;
-  margin-bottom: clamp(0.1rem, 0.2vw, 0.5rem);
+  margin-bottom: var(--fluid-gap-xs); /* **GEÄNDERT: Vereinfacht auf Variable** */
   color: var(--fg);
 }
 
 #quote-author {
-  font-size: clamp(0.45rem, var(--fluid-min-font), 0.9rem);
+  font-size: var(--fluid-min-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
   color: var(--dim);
 }
 
@@ -470,14 +475,15 @@ button:hover {
 
 .apps-section h2 {
   margin-bottom: var(--fluid-padding-s);
-  font-size: clamp(0.7rem, var(--fluid-header-font), 1.4rem);
+  font-size: var(--fluid-header-font); /* **GEÄNDERT: Vereinfacht auf Variable** */
   font-weight: 700;
   text-align: center;
   color: var(--dim);
 }
 
 .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr));
+    /* **GEÄNDERT: Min-Breite der App-Karten erhöht, VH-Anteil entfernt** */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(55px, 7vw, 110px), 1fr));
     gap: var(--fluid-gap-s);
     overflow: hidden;
     padding: var(--fluid-padding-xs);
@@ -491,15 +497,15 @@ button:hover {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem);
+  padding: var(--fluid-padding-xs); /* **GEÄNDERT: Padding vereinfacht auf Variable** */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
-  transition: all var(--t);
+  transition: all var(--t); /* **GEÄNDERT: Transform von Transition entfernt** */
   position: relative;
   overflow: hidden;
-  box-shadow: var(--s-light), var(--inner-shadow); /* Nutzt die leichteren Schatten */
-  transform: none;
+  box-shadow: var(--s-light), var(--inner-shadow);
+  transform: none; /* **GEÄNDERT: Keine Initial-Transformation** */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -509,28 +515,30 @@ button:hover {
   min-height: 0;
 
   &:hover {
-    transform: translateY(-0.2em); /* **GEÄNDERT: Weniger starker Hover-Lift** */
+    transform: none; /* **GEÄNDERT: KEIN LIFT BEI HOVER** */
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.15); /* **GEÄNDERT: Weniger starker Hover-Glow** */
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.1);
   }
 }
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  font-size: clamp(0.9rem, 1.5vw + 1.5vh, 2.5rem);
-  margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
+  /* **GEÄNDERT: Icon-Größe stärker an REM gebunden, VH-Anteil reduziert** */
+  font-size: clamp(1.2rem, 1.8vw, 3rem);
+  margin-bottom: var(--fluid-gap-xs); /* **GEÄNDERT: Vereinfacht auf Variable** */
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.08); /* **GEÄNDERT: Icon-Glow leichter** */
-  transition: all 0.15s ease-out;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.03); /* Minimaler Icon-Glow */
+  transition: all var(--t); /* **GEÄNDERT: Transform von Transition entfernt** */
   line-height: 1;
-}
 
-.app-card:hover .icon {
-  transform: scale(1.05); /* **GEÄNDERT: Weniger starker Hover-Skalierung** */
+  &:hover {
+    transform: none; /* **GEÄNDERT: KEIN SCALE BEI HOVER** */
+  }
 }
 
 .app-card .label {
-  font-size: clamp(0.4rem, 0.5vw + 0.3vh, 0.9rem);
+  /* **GEÄNDERT: Label-Größe stärker an REM gebunden, VH-Anteil entfernt** */
+  font-size: clamp(0.6rem, 0.7vw, 1rem);
   font-weight: 500;
   line-height: 1.1;
   word-break: break-word;
@@ -554,10 +562,11 @@ button:hover {
   border-width: 0;
 }
 
-/* --- Media Queries for Layout Change (nicht nur Skalierung) --- */
+/* --- Media Queries for Layout Change (Mobile Optimization) --- */
 @media (max-width: 992px) {
+  /* **GEÄNDERT: Grundschriftgröße für Mobile erhöht** */
   html {
-    font-size: clamp(5px, 0.7vw + 0.4vh, 15px);
+    font-size: clamp(10px, 0.9vw, 16px);
   }
 
   .container {
@@ -569,7 +578,7 @@ button:hover {
       display: flex;
       flex-direction: column;
       gap: var(--fluid-gap-m);
-      overflow-y: auto;
+      overflow-y: auto; /* Erlaube Scrollen auf mobilen Geräten */
       height: auto;
   }
   .grid-left, .grid-right {
@@ -579,6 +588,7 @@ button:hover {
       min-height: 0;
   }
 
+  /* Diese Sektionen sollen ihre natürliche Höhe behalten */
   .time-display, .search-section, .weather-link-section, .quote-section {
       flex-grow: 0;
       padding: var(--fluid-padding-s);
@@ -587,11 +597,12 @@ button:hover {
       overflow: hidden;
   }
 
+  /* Die Uhr auf schmaleren Screens */
   #time {
-      font-size: clamp(1.5rem, 6vw, 4rem);
+      font-size: clamp(2rem, 8vw, 5rem); /* **GEÄNDERT: Uhrzeit Min-REM für Mobile stark erhöht, VW als Haupttreiber** */
   }
   #date {
-      font-size: clamp(0.4rem, 1.5vw, 0.9rem);
+      font-size: var(--fluid-min-font);
   }
 
   .header {
@@ -599,34 +610,36 @@ button:hover {
       gap: var(--fluid-gap-s);
       padding: var(--fluid-padding-s);
   }
-  .logo { font-size: clamp(0.8rem, 2.5vw, 1.8rem); }
+  .logo { font-size: clamp(1rem, 2.8vw, 2rem); }
   .controls { gap: var(--fluid-gap-s); flex-wrap: wrap; justify-content: center; }
 
+  /* Apps-Sektion bleibt der flexible Bereich */
   .apps-section {
       order: 4;
       flex-grow: 1;
-      min-height: clamp(70px, 14vh, 220px);
+      min-height: clamp(100px, 18vh, 300px); /* **GEÄNDERT: Min-Höhe der Apps-Sektion für Mobile erhöht** */
       padding: var(--fluid-padding-s);
-      overflow-y: auto;
+      overflow-y: auto; /* **WICHTIG: Hier erlauben wir Scrollen** */
   }
   .apps-section h2 {
-      font-size: clamp(0.6rem, 2.2vw, 1.2rem);
+      font-size: var(--fluid-header-font);
       margin-bottom: var(--fluid-padding-s);
   }
   .apps-container {
-      grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 8vw + 5vh, 75px), 1fr));
+      /* **GEÄNDERT: Min-Breite der App-Karten für Mobile erhöht, VH-Anteil entfernt** */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(50px, 10vw, 90px), 1fr));
       gap: var(--fluid-gap-s);
       overflow: hidden;
       max-height: none;
   }
   .app-card {
-      padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem);
+      padding: var(--fluid-padding-xs);
   }
   .app-card .icon {
-      font-size: clamp(0.8rem, 2.5vw + 1.5vh, 1.8rem);
+      font-size: clamp(1.1rem, 3vw, 2.5rem);
   }
   .app-card .label {
-      font-size: clamp(0.35rem, 1.2vw + 0.5vh, 0.6rem);
+      font-size: clamp(0.5rem, 1.5vw, 0.8rem);
       line-height: 1.1;
   }
 }
@@ -634,6 +647,6 @@ button:hover {
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.1); /* Fallback für noch transparenteren Hintergrund */
+    background: rgba(var(--fg-rgb), 0.08); /* Fallback für noch transparenteren Hintergrund */
   }
 }
