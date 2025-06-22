@@ -1,4 +1,4 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - OPTIMIZED APPS & MIDDLE GROUND */
+/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - FINAL APPS & MIDDLE GROUND */
 
 /* --- Global Design Variables - Refined for OS 7 & Middle Ground --- */
 :root {
@@ -457,7 +457,7 @@ button:hover {
   color: var(--dim);
 }
 
-/* --- Apps & Bookmarks Section - ICON OVERLAP FIX & FINAL TUNING --- */
+/* --- Apps & Bookmarks Section - CRITICAL ICON OVERLAP FIX --- */
 .apps-section {
   width: 100%;
   padding: var(--fluid-padding-s);
@@ -478,9 +478,9 @@ button:hover {
 }
 
 .apps-container {
-    /* **MAJOR CHANGE: Min-width of app cards increased, VW component adjusted for wider windows** */
-    /* This aims to give icons/labels more room before the grid collapses them. */
-    grid-template-columns: repeat(auto-fill, minmax(clamp(70px, 8vw, 130px), 1fr)); /* Min-width of card increased from 65px to 70px. VW component from 7.5vw to 8vw. Max to 130px. */
+    /* **CRITICAL CHANGE: Grid min-width for cards - less aggressive VW, higher REM floor** */
+    /* This aims to prevent cards from ever becoming too narrow for the content */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(80px, 9vw, 150px), 1fr)); /* Min-width increased to 80px (from 70px), VW slightly higher (9vw from 8vw), max to 150px (from 130px) */
     gap: var(--fluid-gap-s);
     overflow: hidden;
     padding: var(--fluid-padding-xs);
@@ -494,8 +494,8 @@ button:hover {
   background: var(--gl);
   border: var(--border-width) solid transparent;
   border-radius: var(--r);
-  /* **ADJUSTED: Padding within the card slightly more generous to fit content better** */
-  padding: clamp(0.6rem, 0.8vw, 1.3rem); /* Slightly more padding (from 0.5rem) */
+  /* **ADJUSTED: Padding slightly increased to give more inner space** */
+  padding: clamp(0.7rem, 0.9vw, 1.4rem); /* Padding increased (from 0.6rem) */
   text-align: center;
   text-decoration: none;
   color: var(--fg);
@@ -521,9 +521,9 @@ button:hover {
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  /* **MAJOR CHANGE: ICON FONT SIZE - More conservative VW, slightly larger REM floor** */
-  /* This aims to prevent icons from becoming too large and overlapping */
-  font-size: clamp(2rem, 3.5vw, 4.5rem); /* Min-REM increased from 1.8rem to 2rem. VW from 2.5vw to 3.5vw, Max to 4.5rem (was 4rem) */
+  /* **CRITICAL CHANGE: ICON FONT SIZE - Much more conservative VW, robust REM floors** */
+  /* This is key to preventing icons from ever becoming too large */
+  font-size: clamp(2.2rem, 3vw, 4rem); /* Min-REM increased to 2.2rem (from 2rem). VW reduced to 3vw (from 3.5vw). Max reduced to 4rem (from 4.5rem). */
   margin-bottom: var(--fluid-gap-xs);
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.05);
@@ -537,8 +537,8 @@ button:hover {
 }
 
 .app-card .label {
-  /* **ADJUSTED: Label font size slightly smaller relative to icon for better balance** */
-  font-size: clamp(0.7rem, 0.75vw, 1.05rem); /* VW component slightly reduced */
+  /* **ADJUSTED: Label font size slightly more conservative** */
+  font-size: clamp(0.7rem, 0.7vw, 1rem); /* VW component reduced further (from 0.75vw), max reduced to 1rem (from 1.05rem) */
   font-weight: 500;
   line-height: 1.1;
   word-break: break-word;
@@ -622,21 +622,21 @@ button:hover {
       margin-bottom: var(--fluid-padding-s);
   }
   .apps-container {
-      /* **MAJOR CHANGE: Min-width of app cards for MOBILE increased** */
-      grid-template-columns: repeat(auto-fill, minmax(clamp(65px, 13vw, 110px), 1fr)); /* Min-width from 60px to 65px. VW from 12vw to 13vw. Max to 110px. */
+      /* **CRITICAL CHANGE: Grid min-width for MOBILE cards - higher REM floor** */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(70px, 14vw, 120px), 1fr)); /* Min-width increased to 70px (from 65px). VW to 14vw (from 13vw). Max to 120px (from 110px). */
       gap: var(--fluid-gap-s);
       overflow: hidden;
       max-height: none;
   }
   .app-card {
-      padding: clamp(0.4rem, 0.6vw, 1rem);
+      padding: clamp(0.5rem, 0.7vw, 1.1rem); /* Padding for mobile increased */
   }
   .app-card .icon {
-      /* **MAJOR CHANGE: ICON FONT SIZE FOR MOBILE - More conservative VW** */
-      font-size: clamp(1.8rem, 4.5vw, 3.5rem); /* Min-REM from 1.6rem to 1.8rem. VW from 4vw to 4.5vw, Max to 3.5rem (was 3rem) */
+      /* **CRITICAL CHANGE: ICON FONT SIZE FOR MOBILE - higher REM floor, tighter VW** */
+      font-size: clamp(2rem, 4vw, 3rem); /* Min-REM increased to 2rem (from 1.8rem). VW reduced to 4vw (from 4.5vw). Max reduced to 3rem (from 3.5rem). */
   }
   .app-card .label {
-      font-size: clamp(0.65rem, 1.8vw, 1rem);
+      font-size: clamp(0.7rem, 1.8vw, 1rem); /* Label font size for mobile adjusted */
       line-height: 1.1;
   }
 }
