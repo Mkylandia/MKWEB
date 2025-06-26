@@ -1,11 +1,13 @@
-// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations - LIGHTWEIGHT VERSION
+// script.js - MKWEB OS 8: Dynamic Data, Enhanced Animations & Polished Functionality
 
 // --- Initial Setup & Settings Management ---
-const SETTINGS_KEY = 'mkweb-settings-os7';
+const SETTINGS_KEY = 'mkweb-settings-os8';
 const settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
-    lastActiveEngine: 'google'
+    lastActiveEngine: 'google',
+    // NEU: Speichern der Stadt für das Wetter
+    weatherCity: 'Heidenheim' 
 };
 
 // Function to save settings
@@ -13,31 +15,39 @@ const saveSettings = () => {
     localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
 };
 
+// --- DOM Element Caching ---
+const doc = document;
+const fullscreenBtn = doc.getElementById('fullscreen-btn');
+const userAvatar = doc.getElementById('user-avatar');
+const userAvatarToggleBtn = doc.getElementById('user-avatar-toggle');
+const searchInput = doc.getElementById('search');
+const searchEngines = doc.querySelectorAll('.search-engine');
+const timeElement = doc.getElementById('time');
+const dateElement = doc.getElementById('date');
+const quoteTextElement = doc.getElementById('quote-text');
+const quoteAuthorElement = doc.getElementById('quote-author');
+// NEU: DOM-Elemente für das Wetter-Widget
+const weatherIconElement = doc.getElementById('weather-icon');
+const weatherTempElement = doc.getElementById('weather-temp');
+const weatherDescElement = doc.getElementById('weather-desc');
+const weatherCityElement = doc.getElementById('weather-city');
+const weatherDetailsLink = doc.getElementById('weather-details-link');
 
-// --- DOM Element Caching (Performance) ---
-const fullscreenBtn = document.getElementById('fullscreen-btn');
-const userAvatar = document.getElementById('user-avatar');
-const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
-const searchInput = document.getElementById('search');
-const searchEngines = document.querySelectorAll('.search-engine');
-const timeElement = document.getElementById('time');
-const dateElement = document.getElementById('date');
-const quoteTextElement = document.getElementById('quote-text');
-const quoteAuthorElement = document.getElementById('quote-author');
 
+// --- Event Listeners ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Start all initialization functions
+    applyAvatarVisibility();
+    activateEngine(settings.lastActiveEngine);
+    updateDateTime();
+    fetchAndDisplayQuote();
+    fetchAndDisplayWeather();
 
-// --- User Avatar & Toggle Logic ---
-const applyAvatarVisibility = () => {
-    if (settings.showAvatar) {
-        userAvatar.classList.remove('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'false');
-        userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
-    } else {
-        userAvatar.classList.add('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'true');
-        userAvatarToggleBtn.textContent = '🐵 Avatar einblenden';
-    }
-};
+    // Set intervals for updates
+    setInterval(updateDateTime, 1000); // Jede Sekunde
+    setInterval(fetchAndDisplayQuote, 3600000); // Jede Stunde
+    setInterval(fetchAndDisplayWeather, 600000); // Alle 10 Minuten
+});
 
 userAvatarToggleBtn.addEventListener('click', () => {
     settings.showAvatar = !settings.showAvatar;
@@ -45,8 +55,25 @@ userAvatarToggleBtn.addEventListener('click', () => {
     applyAvatarVisibility();
 });
 
-applyAvatarVisibility();
+searchEngines.forEach(btn => {
+    btn.addEventListener('click', () => activateEngine(btn.dataset.engine));
+});
 
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleSearch();
+});
+
+fullscreenBtn.addEventListener('click', toggleFullscreen);
+doc.addEventListener('fullscreenchange', updateFullscreenButton);
+
+
+// --- User Avatar ---
+const applyAvatarVisibility = () => {
+    const isHidden = !settings.showAvatar;
+    userAvatar.classList.toggle('hidden-avatar', isHidden);
+    userAvatar.setAttribute('aria-hidden', String(isHidden));
+    userAvatarToggleBtn.textContent = isHidden ? '🐵 Avatar einblenden' : '🙈 Avatar ausblenden';
+};
 
 // --- Search Functionality ---
 let activeEngine = settings.lastActiveEngine;
@@ -55,100 +82,126 @@ const activateEngine = (engine) => {
     searchEngines.forEach(btn => {
         const isActive = btn.dataset.engine === engine;
         btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
     });
     activeEngine = engine;
     settings.lastActiveEngine = engine;
     saveSettings();
 };
 
-searchEngines.forEach(btn => {
-    btn.addEventListener('click', () => activateEngine(btn.dataset.engine));
-});
+const handleSearch = () => {
+    const query = searchInput.value.trim();
+    if (!query) return;
 
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        const query = searchInput.value.trim();
-        if (query) {
-            let url = '';
-            switch (activeEngine) {
-                case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
-                case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
-                case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
-                case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Korrigierte YouTube URL
-                case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
-                default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-            }
-            window.open(url, '_blank');
-        }
+    let url = '';
+    const encodedQuery = encodeURIComponent(query);
+
+    switch (activeEngine) {
+        case 'google':      url = `https://www.google.com/search?q=${encodedQuery}`; break;
+        case 'yandex':      url = `https://yandex.com/search/?text=${encodedQuery}`; break;
+        case 'bing':        url = `https://www.bing.com/search?q=${encodedQuery}`; break;
+        case 'duckduckgo':  url = `https://duckduckgo.com/?q=${encodedQuery}`; break;
+        // KORRIGIERT: Korrekte YouTube Such-URL
+        case 'youtube':     url = `https://www.youtube.com/results?search_query=${encodedQuery}`; break;
+        case 'github':      url = `https://github.com/search?q=${encodedQuery}`; break;
+        default:            url = `https://www.google.com/search?q=${encodedQuery}`;
     }
-});
+    window.open(url, '_blank');
+    searchInput.value = '';
+};
 
-activateEngine(activeEngine);
 
-
-// --- Time and Date Display ---
+// --- Time and Date ---
 const updateDateTime = () => {
     const now = new Date();
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
     timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
     dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
 };
 
-setInterval(updateDateTime, 1000);
-updateDateTime();
-
-
-// --- Quote of the Day (Local Data) ---
-const quotes = [
-    { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
-    { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
-    { text: "Sei du selbst die Veränderung, die du dir wünschst für diese Welt.", author: "Mahatma Gandhi" },
-    { text: "Was immer du tun kannst oder träumst es zu können, fang damit an.", author: "Johann Wolfgang von Goethe" },
-    { text: "Glück ist nicht das, was man besitzt, sondern das, was man gibt.", author: "Unbekannt" },
-    { text: "Die Zukunft gehört denen, die an die Schönheit ihrer Träume glauben.", author: "Eleanor Roosevelt" },
-    { text: "Handle so, dass die Maxime deines Willens jederzeit zugleich als Prinzip einer allgemeinen Gesetzgebung gelten könnte.", author: "Immanuel Kant" },
-    { text: "Es ist nicht genug zu wissen, man muss es auch anwenden; es ist nicht genug zu wollen, man muss es auch tun.", author: "Johann Wolfgang von Goethe" },
-    { text: "Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.", author: "Peter F. Drucker" },
-    { text: "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.", author: "Albert Einstein" }
-];
-
-const displayRandomQuote = () => {
-    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        const randomQuote = quotes[randomIndex];
-        quoteTextElement.textContent = `"${randomQuote.text}"`;
-        quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+// --- NEU: Dynamic Quote of the Day (via API) ---
+const fetchAndDisplayQuote = async () => {
+    try {
+        const response = await fetch('https://api.quotable.io/random?language=de');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const quote = await response.json();
+        quoteTextElement.textContent = `"${quote.content}"`;
+        quoteAuthorElement.textContent = `- ${quote.author}`;
+    } catch (error) {
+        console.error("Fehler beim Abrufen des Zitats:", error);
+        // Fallback auf ein lokales Zitat, wenn die API fehlschlägt
+        quoteTextElement.textContent = '"Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten."';
+        quoteAuthorElement.textContent = '- Peter F. Drucker';
     }
 };
 
-// Display a new quote every hour, and on page load
-setInterval(displayRandomQuote, 3600000); // Alle Stunde
-document.addEventListener('DOMContentLoaded', displayRandomQuote);
+// --- NEU: Dynamic Weather Widget (via API) ---
+const fetchAndDisplayWeather = async () => {
+    // WICHTIG: Ersetzen Sie 'DEIN_API_SCHLÜSSEL' durch Ihren eigenen API-Schlüssel von OpenWeatherMap
+    const API_KEY = 'DEIN_API_SCHLÜSSEL'; 
+    const city = settings.weatherCity;
+
+    if (API_KEY === 'DEIN_API_SCHLÜSSEL') {
+        weatherDescElement.textContent = 'API-Schlüssel fehlt';
+        console.error("Bitte fügen Sie Ihren OpenWeatherMap API-Schlüssel in script.js ein.");
+        return;
+    }
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=de`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Wetterdaten konnten nicht abgerufen werden.');
+        const data = await response.json();
+        
+        // Daten in die HTML-Elemente einfügen
+        weatherTempElement.textContent = `${Math.round(data.main.temp)}°C`;
+        weatherDescElement.textContent = data.weather[0].description;
+        weatherCityElement.textContent = data.name;
+        weatherIconElement.textContent = mapWeatherIcon(data.weather[0].icon);
+        weatherDetailsLink.href = `https://www.google.com/search?q=wetter+${encodeURIComponent(data.name)}`;
+
+    } catch (error) {
+        console.error("Fehler beim Abrufen des Wetters:", error);
+        weatherDescElement.textContent = 'Wetter nicht verfügbar';
+    }
+};
+
+// Helferfunktion, um API-Icons auf Material Symbols abzubilden
+const mapWeatherIcon = (iconCode) => {
+    const iconMap = {
+        '01d': 'clear_day', '01n': 'clear_night',
+        '02d': 'partly_cloudy_day', '02n': 'partly_cloudy_night',
+        '03d': 'cloud', '03n': 'cloud',
+        '04d': 'cloudy', '04n': 'cloudy',
+        '09d': 'rainy', '09n': 'rainy',
+        '10d': 'rainy', '10n': 'rainy_light',
+        '11d': 'thunderstorm', '11n': 'thunderstorm',
+        '13d': 'ac_unit', '13n': 'ac_unit', // Schnee
+        '50d': 'foggy', '50n': 'foggy',
+    };
+    return iconMap[iconCode] || 'thermostat'; // Fallback-Icon
+};
 
 
-// --- Fullscreen Toggle ---
-fullscreenBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+// --- Fullscreen ---
+function toggleFullscreen() {
+    if (!doc.fullscreenElement) {
+        doc.documentElement.requestFullscreen().catch(err => {
+            console.error(`Vollbild-Fehler: ${err.message}`);
         });
     } else {
-        document.exitFullscreen().catch(err => {
-            console.error(`Error attempting to disable full-screen mode: ${err.message} (${err.name})`);
-        });
+        doc.exitFullscreen();
     }
-});
+}
 
-document.addEventListener('fullscreenchange', () => {
-    if (document.fullscreenElement) {
+function updateFullscreenButton() {
+    if (doc.fullscreenElement) {
         fullscreenBtn.textContent = 'Shrink';
         fullscreenBtn.setAttribute('title', 'Vollbild verlassen');
     } else {
         fullscreenBtn.textContent = '🚀 Vollbild';
         fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
     }
-});
+}
