@@ -1,72 +1,72 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Enhanced Design Version */
+/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Premium Version */
 
-/* --- Global Design Variables - Enhanced --- */
+/* --- Global Design Variables - Premium --- */
 :root {
   /* Fluid Typography */
-  --fluid-min-font: 0.6vw;
-  --fluid-max-font: 0.9vw;
-  --fluid-header-font: 1.1vw;
-  --fluid-time-font: 3vw;
+  --fluid-min-font: 0.65vw;
+  --fluid-max-font: 0.95vw;
+  --fluid-header-font: 1.15vw;
+  --fluid-time-font: 3.2vw;
 
   /* Enhanced Padding System */
-  --fluid-padding-xs: clamp(0.15rem, 0.25vw + 0.1vh, 0.7rem);
-  --fluid-padding-s: clamp(0.3rem, 0.4vw + 0.2vh, 1rem);
-  --fluid-padding-m: clamp(0.5rem, 0.7vw + 0.35vh, 1.3rem);
-  --fluid-padding-l: clamp(0.7rem, 0.9vw + 0.45vh, 1.8rem);
-  --fluid-padding-xl: clamp(0.9rem, 1.1vw + 0.55vh, 2.3rem);
+  --fluid-padding-xs: clamp(0.2rem, 0.3vw + 0.12vh, 0.8rem);
+  --fluid-padding-s: clamp(0.35rem, 0.45vw + 0.22vh, 1.1rem);
+  --fluid-padding-m: clamp(0.55rem, 0.75vw + 0.4vh, 1.4rem);
+  --fluid-padding-l: clamp(0.75rem, 1vw + 0.5vh, 2rem);
+  --fluid-padding-xl: clamp(1rem, 1.2vw + 0.6vh, 2.5rem);
 
   /* Enhanced Gap System */
-  --fluid-gap-xs: clamp(0.15rem, 0.2vw + 0.08vh, 0.5rem);
-  --fluid-gap-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.8rem);
-  --fluid-gap-m: clamp(0.35rem, 0.45vw + 0.2vh, 1.2rem);
+  --fluid-gap-xs: clamp(0.2rem, 0.25vw + 0.1vh, 0.6rem);
+  --fluid-gap-s: clamp(0.3rem, 0.4vw + 0.18vh, 0.9rem);
+  --fluid-gap-m: clamp(0.4rem, 0.5vw + 0.25vh, 1.3rem);
 
-  /* Enhanced Animation Variables */
-  --t: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --t-slow: 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
-  --t-bounce: 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  /* Premium Animation Variables */
+  --t: 0.22s cubic-bezier(0.25, 0.8, 0.5, 1);
+  --t-slow: 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
+  --t-bounce: 0.35s cubic-bezier(0.68, -0.4, 0.27, 1.3);
   
-  /* Enhanced Visual Variables */
-  --r: 12px;
-  --r-lg: 16px;
-  --s: 0 4px 12px rgba(0,0,0,0.1);
-  --sh: 0 8px 24px rgba(0,0,0,0.15);
-  --s-light: 0 2px 8px rgba(0,0,0,0.08);
-  --border-width: 1px;
-  --text-gradient-angle: 65deg;
+  /* Premium Visual Variables */
+  --r: 14px;
+  --r-lg: 18px;
+  --s: 0 5px 15px rgba(0,0,0,0.12);
+  --sh: 0 10px 28px rgba(0,0,0,0.18);
+  --s-light: 0 3px 8px rgba(0,0,0,0.08);
+  --border-width: 1.2px;
+  --text-gradient-angle: 70deg;
   --glass-reflection: transparent;
-  --glow-strength: 0 0 8px;
+  --glow-strength: 0 0 10px;
   --glow-color: var(--acc);
-  --blur-intensity: 10px;
-  --saturate-intensity: 130%;
-  --content-max-width: 1800px;
-  --inner-shadow-strength: inset 0 0 8px rgba(0,0,0,0.05);
+  --blur-intensity: 12px;
+  --saturate-intensity: 140%;
+  --content-max-width: 1850px;
+  --inner-shadow-strength: inset 0 0 10px rgba(0,0,0,0.08);
 
-  /* Enhanced Color Scheme */
-  --bg: #0d0d0d;
-  --fg: #f0f0f0;
-  --dim: rgba(240,240,240,0.6);
-  --acc: #8a4ed4;
-  --ah: #b080ff;
-  --gl: rgba(255,255,255,0.05);
-  --gb: rgba(255,255,255,0.15);
+  /* Premium Color Scheme */
+  --bg: #0a0a0a;
+  --fg: #f5f5f5;
+  --dim: rgba(245,245,245,0.65);
+  --acc: #9565e6;
+  --ah: #c095ff;
+  --gl: rgba(255,255,255,0.07);
+  --gb: rgba(255,255,255,0.18);
   --inner-shadow: var(--inner-shadow-strength);
-  --acc-rgb: 138, 78, 212;
-  --fg-rgb: 240, 240, 240;
-  --ah-rgb: 176, 128, 255;
+  --acc-rgb: 149, 101, 230;
+  --fg-rgb: 245, 245, 245;
+  --ah-rgb: 192, 149, 255;
   --gb-rgb: 255, 255, 255;
 }
 
 /* --- Base Styles --- */
 html {
   scroll-behavior: smooth;
-  font-size: clamp(6px, 0.6vw + 0.35vh, 17px);
+  font-size: clamp(6.5px, 0.65vw + 0.4vh, 18px);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -98,7 +98,7 @@ body {
   min-height: 0;
 }
 
-/* --- Enhanced Glassmorphism --- */
+/* --- Premium Glassmorphism --- */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
@@ -107,38 +107,39 @@ body {
   box-shadow: var(--s), var(--inner-shadow);
   transition: all var(--t-slow);
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* WICHTIG: Für sichtbare Animationen */
   transform: none;
+  will-change: transform, box-shadow;
 
   &::before {
     content: '';
     position: absolute;
-    top: -1px; left: -1px; right: -1px; bottom: -1px;
-    border-radius: calc(var(--r) + 1px);
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border-radius: calc(var(--r) + 2px);
     background: linear-gradient(135deg, var(--acc), var(--ah));
     z-index: -1;
     opacity: 0;
     transition: opacity var(--t-slow), filter var(--t-slow);
-    filter: blur(5px);
+    filter: blur(8px);
   }
 
   &:hover {
-    transform: translateY(-0.4em);
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+    transform: translateY(-0.5em);
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
     
     &::before {
-      opacity: 0.6;
-      filter: blur(8px);
+      opacity: 0.7;
+      filter: blur(10px);
     }
   }
 
   &:active {
     transform: translateY(-0.2em);
-    transition: transform 0.1s ease-out;
+    transition: transform 0.15s ease-out;
   }
 }
 
-/* --- Enhanced Header --- */
+/* --- Premium Header --- */
 .header {
   display: flex;
   justify-content: space-between;
@@ -149,31 +150,28 @@ body {
 }
 
 .logo {
-  font-size: clamp(1rem, var(--fluid-header-font), 2.2rem);
+  font-size: clamp(1.1rem, var(--fluid-header-font), 2.4rem);
   font-weight: 800;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
+  animation: gradient 15s ease infinite alternate, pulse 2.5s ease infinite alternate;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
   position: relative;
   transition: all var(--t-slow);
 }
 
-.logo:hover {
-  animation: gradient 8s ease infinite alternate, pulse 2s ease infinite;
-}
-
 @keyframes gradient {
   0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes pulse {
   0% { opacity: 1; }
-  50% { opacity: 0.8; }
+  50% { opacity: 0.85; }
   100% { opacity: 1; }
 }
 
@@ -183,7 +181,7 @@ body {
   align-items: center;
 }
 
-/* --- Enhanced Buttons --- */
+/* --- Premium Buttons --- */
 button {
   padding: var(--fluid-padding-xs) var(--fluid-padding-s);
   border: var(--border-width) solid var(--gb);
@@ -192,13 +190,14 @@ button {
   color: var(--fg);
   cursor: pointer;
   transition: all var(--t-bounce);
-  font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem);
+  font-size: clamp(0.55rem, var(--fluid-min-font), 0.85rem);
   font-weight: 600;
   outline: none;
   box-shadow: var(--s-light);
   position: relative;
   z-index: 1;
   overflow: hidden;
+  will-change: transform;
 
   &::after {
     content: '';
@@ -207,15 +206,15 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
     opacity: 0;
     transition: opacity var(--t);
   }
 
   &:hover {
-    transform: translateY(-0.3em);
+    transform: translateY(-0.35em);
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.35);
     
     &::after {
       opacity: 1;
@@ -223,19 +222,19 @@ button {
   }
 
   &:active {
-    transform: translateY(0.1em) scale(0.98);
-    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
+    transform: translateY(0.1em) scale(0.97);
+    box-shadow: var(--s-light), inset 0 3px 6px rgba(0,0,0,0.2);
   }
 }
 
 .user-avatar {
-  width: clamp(20px, 2.5vw, 40px);
-  height: clamp(20px, 2.5vw, 40px);
+  width: clamp(22px, 2.7vw, 44px);
+  height: clamp(22px, 2.7vw, 44px);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(0.8rem, 1vw, 1.8rem);
+  font-size: clamp(0.9rem, 1.1vw, 2rem);
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -243,9 +242,10 @@ button {
   transition: all var(--t-bounce);
   box-shadow: var(--s-light);
   overflow: hidden;
+  will-change: transform;
 
   &:hover {
-    transform: translateY(-0.4em) scale(1.05);
+    transform: translateY(-0.5em) scale(1.08);
     border-color: var(--acc);
     box-shadow: var(--glow-strength) var(--acc), var(--s);
   }
@@ -274,7 +274,7 @@ button {
   overflow: hidden;
 }
 
-/* --- Enhanced Search Section --- */
+/* --- Premium Search Section --- */
 .search-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -295,25 +295,26 @@ button {
 }
 
 .search-engine {
-  padding: clamp(0.2rem, 0.4vw, 0.6rem) clamp(0.4rem, 0.7vw, 1rem);
+  padding: clamp(0.25rem, 0.45vw, 0.7rem) clamp(0.45rem, 0.8vw, 1.1rem);
   border-radius: 30px;
   font-weight: 600;
-  font-size: clamp(0.55rem, 0.8vw, 0.9rem);
+  font-size: clamp(0.6rem, 0.85vw, 1rem);
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t-bounce);
+  will-change: transform;
 
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-0.2em);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
+    transform: translateY(-0.25em);
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.35), var(--s);
     border-color: var(--acc);
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-0.15em);
+    transform: translateY(-0.2em);
     box-shadow: var(--s-light);
   }
 }
@@ -325,11 +326,12 @@ button {
   padding: var(--fluid-padding-s);
   transition: all var(--t-slow);
   box-shadow: var(--s), var(--inner-shadow);
+  will-change: transform;
 
   &:focus-within {
     border-color: var(--acc);
-    transform: scale(1.01);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s);
+    transform: scale(1.02);
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.45), var(--s);
   }
 }
 
@@ -338,7 +340,7 @@ button {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: clamp(0.6rem, var(--fluid-max-font), 1rem);
+  font-size: clamp(0.65rem, var(--fluid-max-font), 1.1rem);
   outline: none;
   margin-left: var(--fluid-padding-xs);
   transition: all var(--t);
@@ -349,11 +351,11 @@ button {
   }
 
   &:focus::placeholder {
-    opacity: 0.5;
+    opacity: 0.4;
   }
 }
 
-/* --- Enhanced Time Display --- */
+/* --- Premium Time Display --- */
 .time-display {
   text-align: center;
   padding: var(--fluid-padding-s);
@@ -367,29 +369,29 @@ button {
 }
 
 #time {
-  font-size: clamp(1.8rem, var(--fluid-time-font), 6rem);
+  font-size: clamp(2rem, var(--fluid-time-font), 6.5rem);
   font-weight: 800;
-  margin-bottom: clamp(0.01rem, 0.04vh, 0.25rem);
+  margin-bottom: clamp(0.02rem, 0.05vh, 0.3rem);
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate, pulse 3s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+  animation: gradient 12s ease infinite alternate, pulse 3.5s ease infinite alternate;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
   transition: all var(--t-slow);
 }
 
 #date {
-  font-size: clamp(0.5rem, var(--fluid-min-font), 1rem);
+  font-size: clamp(0.55rem, var(--fluid-min-font), 1.1rem);
   color: var(--dim);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: clamp(0.2px, 0.07vw, 1.8px);
+  letter-spacing: clamp(0.25px, 0.08vw, 2px);
   transition: all var(--t-slow);
 }
 
-/* --- Enhanced Weather Link Section --- */
+/* --- Premium Weather Link Section --- */
 .weather-link-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -404,7 +406,7 @@ button {
 }
 
 .weather-link-section h2 {
-  font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem);
+  font-size: clamp(0.8rem, var(--fluid-header-font), 1.5rem);
   font-weight: 700;
   margin-bottom: var(--fluid-padding-s);
   color: var(--fg);
@@ -421,34 +423,35 @@ button {
   text-decoration: none;
   color: var(--fg);
   font-weight: 600;
-  font-size: clamp(0.6rem, var(--fluid-max-font), 1rem);
+  font-size: clamp(0.65rem, var(--fluid-max-font), 1.1rem);
   transition: all var(--t-bounce);
   box-shadow: var(--s-light), var(--inner-shadow);
+  will-change: transform;
 
   &:hover {
-    transform: translateY(-0.4em);
+    transform: translateY(-0.5em);
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.35);
   }
 }
 
 .weather-link-button .weather-icon {
-  font-size: clamp(1rem, 1.2vw, 2.2rem);
+  font-size: clamp(1.1rem, 1.3vw, 2.4rem);
   color: var(--acc);
   transition: all var(--t-bounce);
 }
 
 .weather-link-button:hover .weather-icon {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.2) rotate(8deg);
 }
 
 .weather-notice {
   margin-top: var(--fluid-padding-s);
-  font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem);
+  font-size: clamp(0.55rem, var(--fluid-min-font), 0.85rem);
   color: var(--dim);
 }
 
-/* --- Enhanced Quote Section --- */
+/* --- Premium Quote Section --- */
 .quote-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -464,20 +467,20 @@ button {
 }
 
 #quote-text {
-  font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem);
+  font-size: clamp(0.75rem, var(--fluid-max-font), 1.2rem);
   font-weight: 600;
-  margin-bottom: clamp(0.1rem, 0.2vw, 0.5rem);
+  margin-bottom: clamp(0.15rem, 0.25vw, 0.6rem);
   color: var(--fg);
   transition: all var(--t-slow);
 }
 
 #quote-author {
-  font-size: clamp(0.45rem, var(--fluid-min-font), 0.9rem);
+  font-size: clamp(0.5rem, var(--fluid-min-font), 1rem);
   color: var(--dim);
   transition: all var(--t-slow);
 }
 
-/* --- Enhanced Apps Section --- */
+/* --- Premium Apps Section (FIXED CLIPPING ISSUE) --- */
 .apps-section {
   width: 100%;
   padding: var(--fluid-padding-s);
@@ -485,40 +488,43 @@ button {
   flex-direction: column;
   flex-grow: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible; /* WICHTIG: Für sichtbare Animationen */
   flex-shrink: 1;
+  position: relative;
 }
 
 .apps-section h2 {
   margin-bottom: var(--fluid-padding-s);
-  font-size: clamp(0.7rem, var(--fluid-header-font), 1.4rem);
+  font-size: clamp(0.75rem, var(--fluid-header-font), 1.5rem);
   font-weight: 700;
   text-align: center;
   color: var(--dim);
 }
 
 .apps-container {
-  grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(clamp(52px, 7vw + 4.5vh, 110px), 1fr));
   gap: var(--fluid-gap-s);
-  overflow: hidden;
+  overflow: visible; /* WICHTIG: Kein Clipping von Animationen */
   padding: var(--fluid-padding-xs);
   flex-grow: 1;
   min-height: 0;
   display: grid;
   max-height: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .app-card {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem);
+  padding: clamp(0.35rem, 0.55vw + 0.4vh, 1.1rem);
   text-align: center;
   text-decoration: none;
   color: var(--fg);
   transition: all var(--t-bounce);
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* WICHTIG: Kein Clipping von Animationen */
   box-shadow: var(--s-light), var(--inner-shadow);
   transform: none;
   display: flex;
@@ -528,37 +534,41 @@ button {
   aspect-ratio: 1 / 1;
   min-width: 0;
   min-height: 0;
+  will-change: transform;
+  margin-top: 0.5em; /* Platz für Animation */
 
   &:hover {
-    transform: translateY(-0.6em) scale(1.05);
+    transform: translateY(-0.7em) scale(1.08);
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    z-index: 2;
   }
 
   &:active {
-    transform: translateY(-0.3em) scale(0.98);
-    transition: transform 0.1s ease-out;
+    transform: translateY(-0.4em) scale(0.98);
+    transition: transform 0.15s ease-out;
   }
 }
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  font-size: clamp(0.9rem, 1.5vw + 1.5vh, 2.5rem);
-  margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
+  font-size: clamp(1rem, 1.6vw + 1.6vh, 2.7rem);
+  margin-bottom: clamp(0.15rem, 0.25vw + 0.15vh, 0.6rem);
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25);
   transition: all var(--t-bounce);
   line-height: 1;
+  will-change: transform;
 }
 
 .app-card:hover .icon {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.2) rotate(8deg);
 }
 
 .app-card .label {
-  font-size: clamp(0.4rem, 0.5vw + 0.3vh, 0.9rem);
+  font-size: clamp(0.45rem, 0.55vw + 0.35vh, 1rem);
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.15;
   word-break: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -567,23 +577,10 @@ button {
   -webkit-box-orient: vertical;
 }
 
-/* --- Accessibility --- */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* --- Responsive Design (Beibehalten) --- */
+/* --- Responsive Design (Enhanced) --- */
 @media (max-width: 992px) {
   html {
-    font-size: clamp(5px, 0.7vw + 0.4vh, 15px);
+    font-size: clamp(5.5px, 0.75vw + 0.45vh, 16px);
   }
 
   .container {
@@ -616,11 +613,11 @@ button {
   }
   
   #time {
-    font-size: clamp(1.5rem, 6vw, 4rem);
+    font-size: clamp(1.6rem, 6.5vw, 4.5rem);
   }
   
   #date {
-    font-size: clamp(0.4rem, 1.5vw, 0.9rem);
+    font-size: clamp(0.45rem, 1.6vw, 1rem);
   }
   
   .header {
@@ -630,7 +627,7 @@ button {
   }
   
   .logo { 
-    font-size: clamp(0.8rem, 2.5vw, 1.8rem);
+    font-size: clamp(0.85rem, 2.7vw, 2rem);
   }
   
   .controls { 
@@ -642,40 +639,43 @@ button {
   .apps-section {
     order: 4;
     flex-grow: 1;
-    min-height: clamp(70px, 14vh, 220px);
+    min-height: clamp(75px, 15vh, 230px);
     padding: var(--fluid-padding-s);
     overflow-y: auto;
+    overflow-x: hidden;
   }
   
   .apps-section h2 {
-    font-size: clamp(0.6rem, 2.2vw, 1.2rem);
+    font-size: clamp(0.65rem, 2.3vw, 1.3rem);
     margin-bottom: var(--fluid-padding-s);
   }
   
   .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 8vw + 5vh, 75px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(clamp(45px, 8.5vw + 5.5vh, 80px), 1fr));
     gap: var(--fluid-gap-s);
-    overflow: hidden;
+    overflow: visible;
     max-height: none;
+    padding-bottom: 1em; /* Platz für Animationen */
   }
   
   .app-card {
-    padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem);
+    padding: clamp(0.25rem, 0.4vw + 0.3vh, 1rem);
+    margin-top: 0.4em;
   }
   
   .app-card .icon {
-    font-size: clamp(0.8rem, 2.5vw + 1.5vh, 1.8rem);
+    font-size: clamp(0.9rem, 2.7vw + 1.6vh, 2rem);
   }
   
   .app-card .label {
-    font-size: clamp(0.35rem, 1.2vw + 0.5vh, 0.6rem);
-    line-height: 1.1;
+    font-size: clamp(0.4rem, 1.3vw + 0.6vh, 0.7rem);
+    line-height: 1.15;
   }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.15);
+    background: rgba(var(--fg-rgb), 0.18);
   }
 }
