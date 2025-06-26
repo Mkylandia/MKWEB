@@ -1,332 +1,720 @@
-/* styles.css - MKWEB OS 8: Dynamic Animations, Live Data & Refined Fluidity */
+/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Final Version with Improved App Icon Layout */
 
-/* --- Global Design Variables - Refined for OS 8 --- */
+/* --- Global Design Variables - Refined for OS 7 --- */
 :root {
-  /* Skalierungsfaktoren bleiben das Herzstück des fluiden Designs */
-  --fluid-min-font: 0.6vw;
-  --fluid-max-font: 0.9vw;
-  --fluid-header-font: 1.1vw;
-  --fluid-time-font: 3.2vw; /* Leicht angepasst für Balance */
+  /* Skalierungs-Faktoren: Moderat aggressiv für VH, da kein Scrollen erlaubt ist */
+  /* Die min-Werte wurden leicht erhöht, um nicht zu klein zu werden. */
+  --fluid-min-font: 0.7vw;  /* Basis für kleinere Texte, leicht erhöht */
+  --fluid-max-font: 1.0vw;  /* Basis für normale Texte, leicht erhöht */
+  --fluid-header-font: 1.2vw; /* Basis für Header-Elemente, leicht erhöht */
+  --fluid-time-font: 3.5vw; /* **GEÄNDERT: Basis für die Uhrzeit, weiter erhöht!** */
 
-  /* Fluide Abstände */
-  --fluid-padding-s: clamp(0.3rem, 0.4vw + 0.2vh, 1rem);
-  --fluid-padding-m: clamp(0.5rem, 0.7vw + 0.35vh, 1.5rem);
-  --fluid-padding-l: clamp(0.7rem, 0.9vw + 0.45vh, 2rem);
-  --fluid-padding-xl: clamp(1rem, 1.2vw + 0.6vh, 2.5rem);
-  --fluid-gap-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.8rem);
-  --fluid-gap-m: clamp(0.5rem, 0.6vw + 0.3vh, 1.5rem);
+  /* Clamp für Padding: min-val, fluid-val (vw/vh-mix), max-val */
+  /* Min-Werte leicht erhöht, vh-Anteile moderat */
+  --fluid-padding-xs: clamp(0.2rem, 0.3vw + 0.15vh, 0.8rem);
+  --fluid-padding-s: clamp(0.4rem, 0.5vw + 0.25vh, 1.2rem);
+  --fluid-padding-m: clamp(0.6rem, 0.8vw + 0.4vh, 1.5rem);
+  --fluid-padding-l: clamp(0.8rem, 1.0vw + 0.5vh, 2.0rem);
+  --fluid-padding-xl: clamp(1.0rem, 1.2vw + 0.6vh, 2.5rem);
 
-  /* Animationen & Effekte */
-  --t-fast: 0.2s ease-out; /* Schnellere, bissigere Übergänge */
-  --t-med: 0.4s ease-out;
-  --r: 14px; /* Etwas größerer Radius für einen weicheren Look */
-  --s: 0 5px 15px rgba(0,0,0,0.07);
-  --sh: 0 10px 25px rgba(0,0,0,0.12);
-  --s-light: 0 3px 8px rgba(0,0,0,0.05);
-  --border-width: 1px;
-  --blur-intensity: 10px; /* Leicht erhöhter Blur für tieferen Glaseffekt */
-  --saturate-intensity: 110%; /* Reduzierte Sättigung für subtileren Effekt */
-  --glow-strength: 0 0 8px; /* Feineres Glühen */
+  /* Clamp für Gaps: min-val, fluid-val (vw/vh-mix), max-val */
+  /* Min-Werte leicht erhöht, vh-Anteile moderat */
+  --fluid-gap-xs: clamp(0.2rem, 0.25vw + 0.1vh, 0.6rem);
+  --fluid-gap-s: clamp(0.3rem, 0.4vw + 0.2vh, 1.0rem);
+  --fluid-gap-m: clamp(0.4rem, 0.5vw + 0.25vh, 1.4rem);
 
-  /* Dark Theme */
-  --bg: #0a0a0a;
-  --fg: #e6e6e6;
-  --dim: rgba(230, 230, 230, 0.55);
-  --acc: #9333ea; /* Kräftigeres Lila */
-  --ah: #a855f7;
-  --gl: rgba(255,255,255,0.04);
-  --gb: rgba(255,255,255,0.12);
-  --acc-rgb: 147, 51, 234;
+  --t: 0.25s ease-out; /* Slightly slower and smoother transitions */
+  --r: 16px; /* Slightly larger border-radius for softer look */
+  --s: 0 6px 18px rgba(0,0,0,0.12); /* Stronger, more prominent shadow */
+  --sh: 0 12px 30px rgba(0,0,0,0.2); /* Stronger hover shadow */
+  --s-light: 0 3px 9px rgba(0,0,0,0.07); /* Even lighter shadow */
+  --border-width: 1.5px; /* Slightly thicker borders */
+  --text-gradient-angle: 45deg;
+  --glass-reflection: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 60%); /* Subtle glass reflection */
+  --glow-strength: 0 0 15px; /* More noticeable glow strength */
+  --glow-color: var(--acc);
+  --blur-intensity: 12px; /* Increased blur intensity */
+  --saturate-intensity: 150%; /* Increased saturate intensity */
+  --content-max-width: 1920px; /* Increased max width for larger screens */
+  --inner-shadow-strength: inset 0 0 8px rgba(0,0,0,0.05); /* More visible inner shadow */
+
+  /* --- Themed Variables (Nur noch Dark Theme) --- */
+  --bg: #0a0a0f; /* Deeper background */
+  --fg: #f0f0f0; /* Brighter foreground */
+  --dim: rgba(240,240,240,0.6); /* Slightly brighter dim text */
+  --acc: #a060f0; /* Brighter, more vibrant accent */
+  --ah: #c890ff; /* Brighter, more vibrant accent hover */
+  --gl: rgba(255,255,255,0.05); /* Slightly more opaque glass background */
+  --gb: rgba(255,255,255,0.15); /* Slightly more opaque glass border */
+  --inner-shadow: var(--inner-shadow-strength);
+  --acc-rgb: 160, 96, 240;
+  --fg-rgb: 240, 240, 240;
+  --ah-rgb: 200, 144, 255;
+  --gb-rgb: 255, 255, 255;
 }
 
-/* --- NEU: Keyframes für Startanimationen --- */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* --- Base Styles --- */
 html {
-  font-size: clamp(7px, 0.65vw + 0.4vh, 18px); /* Basis-Schriftgröße leicht erhöht */
+  scroll-behavior: smooth;
+  /* WICHTIG: Font-size skaliert mit Breite UND HÖHE! */
+  /* Globaler min-Wert erhöht, vh-Anteil moderat */
+  font-size: clamp(8px, 0.7vw + 0.4vh, 18px);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
 
 body {
-  background: var(--bg); color: var(--fg);
-  height: 100vh; width: 100vw;
-  overflow: hidden; /* Wichtig: Kein Scrollen auf dem Desktop */
+  background: var(--bg);
+  color: var(--fg);
+  height: 100vh; /* Muss 100vh sein, um sicherzustellen, dass die Seite nicht scrollt */
+  width: 100vw;
+  transition: background var(--t), color var(--t);
+  overflow: hidden; /* **GANZ WICHTIG: KEIN SCROLLEN ERLAUBT!** */
   position: relative;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  display: flex; flex-direction: column;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex; /* Body wird selbst zum Flex-Container */
+  flex-direction: column;
 }
+
+/* --- Animated Background Elements - REMOVED --- */
+.background-shape { display: none; }
+.grain { display: none; }
 
 .container {
-  width: 100%; height: 100%;
-  padding: var(--fluid-padding-l); /* Etwas mehr Luft am Rand */
-  display: flex; flex-direction: column;
-  align-items: center; gap: var(--fluid-gap-m);
+  position: relative;
+  z-index: 2;
+  height: 100%; /* Nimmt die gesamte verfügbare Höhe des Body ein */
+  padding: var(--fluid-padding-xl); /* Proportionales Padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--fluid-gap-m); /* Proportionaler Abstand */
+  flex-grow: 1; /* Nimmt den verbleibenden Platz ein */
+  min-height: 0; /* Erlaubt dem Container, zu schrumpfen, wenn die Inhalte es erfordern */
 }
 
-/* NEU: Klasse für Startanimationen anwenden */
-.animated .anim-fade-up {
-  animation: fadeInUp 0.6s var(--t-med) backwards;
-  /* `backwards` sorgt dafür, dass der Startzustand (opacity: 0) vor der Animation gilt */
-  animation-delay: var(--anim-delay, 0s);
-}
-
-/* --- Glassmorphism & Interactivity Refined --- */
+/* --- Glassmorphism Base Style - Enhanced --- */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
-  -webkit-backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  box-shadow: var(--s);
-  transition: all var(--t-fast);
+  box-shadow: var(--s), var(--inner-shadow);
+  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
   position: relative;
   overflow: hidden;
+  transform: translateZ(0); /* Force hardware acceleration */
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--glass-reflection);
+    pointer-events: none;
+    opacity: 1; /* Reflection always visible, subtle */
+    transition: opacity var(--t);
+  }
+
+  &:hover {
+    transform: translateY(-0.5em) scale(1.02); /* More pronounced lift and slight scale */
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3); /* Stronger glow */
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px; /* Slightly larger border-glow area */
+    border-radius: calc(var(--r) + 2px);
+    background: linear-gradient(45deg, var(--acc), var(--ah));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--t), filter var(--t);
+    filter: blur(8px); /* Stronger initial blur */
+  }
+
+  &:hover::before {
+    opacity: 0.8; /* More intense border glow on hover */
+    filter: blur(10px); /* Stronger blur on hover */
+  }
 }
 
-.glass:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-  border-color: rgba(var(--acc-rgb), 0.5);
-}
-
-/* ... (Header, Logo, Controls, Buttons Stile bleiben größtenteils gleich, profitieren aber von den neuen Variablen) */
-.header, .main-grid { width: 100%; max-width: 1920px; }
+/* --- Header --- */
 .header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: var(--fluid-padding-s) var(--fluid-padding-m);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: var(--content-max-width);
+  padding: var(--fluid-padding-s) var(--fluid-padding-l); /* Reduziertes Padding */
 }
+
 .logo {
-  font-size: clamp(1.2rem, var(--fluid-header-font), 2.4rem);
-  font-weight: 800;
-  background: linear-gradient(65deg, var(--acc), var(--fg), var(--ah));
-  background-size: 200% 200%;
-  -webkit-background-clip: text; background-clip: text;
+  font-size: clamp(1.2rem, var(--fluid-header-font), 2.5rem); /* Feinjustiert */
+  font-weight: 900; /* Bolder logo */
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
+  background-size: 300% 300%; /* Larger background for more dynamic animation */
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 12s ease infinite alternate;
-}
-@keyframes gradient { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-
-.main-grid {
-  height: 100%; display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--fluid-gap-m);
-  flex-grow: 1; min-height: 0;
-}
-.grid-left, .grid-right {
-  display: flex; flex-direction: column;
-  gap: var(--fluid-gap-m);
-  min-height: 0;
+  animation: gradient 20s ease infinite alternate; /* Slower, smoother gradient animation */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2); /* More prominent text shadow */
+  position: relative;
 }
 
-/* Time & Search bleiben strukturell ähnlich, aber mit verfeinerten Details */
-.time-display, .search-section, .quote-section, .weather-widget {
-    padding: var(--fluid-padding-m);
-    display: flex; flex-direction: column;
-    justify-content: center; text-align: center;
-    flex-shrink: 1; min-height: 0;
-}
-.time-display { flex-grow: 2; }
-.search-section, .quote-section, .weather-widget { flex-grow: 1; }
-
-#time {
-  font-size: clamp(2.2rem, var(--fluid-time-font), 7rem);
-  font-weight: 800;
-  background: linear-gradient(65deg, var(--acc), var(--fg), var(--ah));
-  background-size: 300% 300%;
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 12s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-}
-#date {
-    font-size: clamp(0.6rem, var(--fluid-min-font), 1.1rem);
-    color: var(--dim); font-weight: 400; text-transform: uppercase;
-    letter-spacing: clamp(0.5px, 0.08vw, 2px);
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
-.search-engine.active {
-    background: var(--acc); color: #fff; transform: translateY(-3px);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
-    border-color: var(--acc);
+.controls {
+  display: flex;
+  gap: var(--fluid-gap-s); /* Feinjustiert */
+  align-items: center;
 }
-.search-box:focus-within {
-  transform: scale(1.01);
+
+/* --- Buttons Styling - Enhanced --- */
+button {
+  padding: var(--fluid-padding-xs) var(--fluid-padding-s); /* Feinjustiert */
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  background: var(--gl);
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t);
+  font-size: clamp(0.6rem, var(--fluid-min-font), 0.9rem); /* Feinjustiert */
+  font-weight: 700; /* Bolder button text */
+  outline: none;
+  box-shadow: var(--s-light);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transform: translateZ(0);
+
+  &:active {
+    transform: translateY(0.2em) scale(0.98); /* More pronounced press effect */
+    box-shadow: var(--s-light), inset 0 3px 8px rgba(0,0,0,0.2); /* Stronger inset shadow */
+    background: rgba(var(--gl-rgb), 0.08); /* Slightly more visible active background */
+  }
+}
+
+button:hover {
+  transform: translateY(-0.3em); /* More pronounced lift on hover */
   border-color: var(--acc);
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--sh);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4); /* Stronger glow on hover */
 }
+
+.user-avatar {
+  width: clamp(24px, 3vw, 48px); /* Avatar larger */
+  height: clamp(24px, 3vw, 48px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1rem, 1.2vw, 2.0rem);
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  color: var(--acc);
+  cursor: pointer;
+  transition: all var(--t);
+  box-shadow: var(--s-light);
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.user-avatar:hover {
+  transform: translateY(-0.4em) rotate(5deg); /* More dynamic hover effect */
+  border-color: var(--acc);
+  box-shadow: var(--glow-strength) var(--acc), var(--s);
+}
+
+.hidden-avatar {
+  opacity: 0 !important;
+  transform: scale(0.5) translateX(-20px) !important; /* More dynamic hide animation */
+  pointer-events: none !important;
+}
+
+
+/* --- Main Grid Layout --- */
+.main-grid {
+  width: 100%;
+  max-width: var(--content-max-width);
+  height: 100%; /* WICHTIG: Nimmt gesamte verfügbare Höhe des Containers ein */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--fluid-gap-m); /* Feinjustiert */
+  flex-grow: 1; /* WICHTIG: Nimmt den verbleibenden Platz im Container ein */
+  min-height: 0; /* Erlaubt dem Grid, zu schrumpfen */
+  overflow: hidden; /* Stellt sicher, dass das Grid selbst nicht scrollt */
+}
+
+.grid-left, .grid-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fluid-gap-m); /* Feinjustiert */
+  height: 100%; /* WICHTIG: Nehmen gesamte Höhe ihrer Spalte ein */
+  flex-grow: 1; /* Nehmen den verfügbaren Platz in der Spalte ein */
+  min-height: 0; /* Erlaubt ihnen, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen in den Spalten */
+}
+
+/* --- Search Section --- */
+.search-section {
+  padding: var(--fluid-padding-s); /* Feinjustiert */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1; /* Kann im Desktop-Grid wachsen */
+  min-height: 0; /* Erlaubt Schrumpfung */
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen */
+}
+
+.search-engines {
+  display: flex;
+  gap: var(--fluid-gap-xs); /* Feinjustiert */
+  margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-engine {
+  padding: clamp(0.3rem, 0.5vw, 0.7rem) clamp(0.5rem, 0.8vw, 1.2rem);
+  border-radius: 40px; /* More rounded pills */
+  font-weight: 700;
+  font-size: clamp(0.6rem, 0.9vw, 1.0rem); /* Search engine button text slightly larger */
+  border: var(--border-width) solid transparent;
+  background: var(--gl);
+  transition: all var(--t);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &.active {
+    background: var(--acc);
+    color: #fff;
+    transform: translateY(-0.2em) scale(1.02); /* More pronounced active effect */
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s); /* Stronger glow */
+    border-color: var(--acc);
+  }
+
+  &:not(.active):hover {
+    border-color: var(--acc);
+    transform: translateY(-0.15em); /* More pronounced hover effect */
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.15), var(--s-light); /* Stronger inset shadow */
+  }
+
+  &::before { /* Subtle internal gradient for depth */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.02) 50%, transparent);
+    opacity: 0;
+    transition: opacity var(--t);
+    z-index: -1;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border-radius: 40px; /* More rounded search box */
+  padding: var(--fluid-padding-s); /* Feinjustiert */
+  transition: all var(--t);
+  box-shadow: var(--s), var(--inner-shadow);
+}
+
+.search-box:focus-within {
+  border-color: var(--acc);
+  transform: scale(1.01); /* Slight scale on focus */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--sh); /* Stronger glow and shadow on focus */
+}
+
 #search {
-  font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem);
-  /* ... Rest wie zuvor */
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem); /* Feinjustiert */
+  outline: none;
+  margin-left: var(--fluid-padding-xs); /* Feinjustiert */
 }
 
-
-/* --- NEU: Wetter-Widget Styling --- */
-.weather-widget {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between; /* Verteilt den Inhalt schön */
-    padding: var(--fluid-padding-m);
-    gap: var(--fluid-gap-s);
-}
-#weather-info {
-    display: flex;
-    align-items: center;
-    gap: var(--fluid-padding-m);
-}
-#weather-icon {
-    font-size: clamp(2.5rem, 4vw, 5rem); /* Großes, klares Icon */
-    color: var(--acc);
-    transition: transform var(--t-med);
-}
-.weather-widget:hover #weather-icon {
-    transform: scale(1.1) rotate(5deg);
-}
-.weather-details { text-align: left; }
-#weather-temp {
-    font-size: clamp(1.5rem, 2vw, 2.5rem);
-    font-weight: 700;
-}
-#weather-desc {
-    font-size: clamp(0.7rem, 0.9vw, 1rem);
-    color: var(--dim);
-}
-#weather-city {
-    font-size: clamp(0.6rem, 0.8vw, 0.9rem);
-    font-weight: 600;
-    opacity: 0.8;
-}
-.weather-details-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    font-size: clamp(0.5rem, 0.7vw, 0.8rem);
-    color: var(--dim);
-    text-decoration: none;
-    transition: color var(--t-fast);
-}
-.weather-details-link:hover { color: var(--fg); }
-.weather-details-link .material-symbols-outlined { font-size: 1.2em; }
-
-/* Quote Section Refined */
-#quote-text {
-  font-size: clamp(0.8rem, var(--fluid-max-font), 1.2rem);
-  font-weight: 600; font-style: italic;
-  margin-bottom: var(--fluid-gap-s);
-}
-#quote-author {
-  font-size: clamp(0.6rem, var(--fluid-min-font), 1rem);
+#search::placeholder {
   color: var(--dim);
 }
 
-
-/* --- Apps & Bookmarks Section Refined --- */
-.apps-section {
-  width: 100%; padding: var(--fluid-padding-s);
-  display: flex; flex-direction: column;
-  flex-grow: 1; min-height: 0;
-  overflow: hidden;
-}
-.apps-section h2 {
-    /* ... wie zuvor */
-    text-align: center;
-    padding-bottom: var(--fluid-padding-s);
-}
-.apps-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(clamp(55px, 7vw + 3.5vh, 110px), 1fr));
-    gap: var(--fluid-gap-m); /* Etwas mehr Abstand */
-    overflow: hidden; padding: var(--fluid-padding-s);
-    flex-grow: 1; min-height: 0;
-}
-
-/* --- NEU: 3D App Card Hover Effect --- */
-.app-card {
-  aspect-ratio: 1 / 1;
-  text-decoration: none; color: var(--fg);
-  padding: clamp(0.4rem, 0.6vw + 0.4vh, 1.2rem);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+/* --- Time Display --- */
+.time-display {
   text-align: center;
-  /* Wichtig für den 3D-Effekt */
-  transform-style: preserve-3d;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: var(--fluid-padding-s); /* Feinjustiert */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 2; /* Kann im Desktop-Grid stärker wachsen */
+  min-height: 0; /* Erlaubt Schrumpfung */
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen */
+}
+
+#time {
+  /* **GEÄNDERT: Font-Size der Uhr WEITER ERHÖHT!** */
+  font-size: clamp(2.0rem, var(--fluid-time-font), 7rem); /* Min-Wert nochmals erhöht, Max-Wert ebenfalls */
+  font-weight: 900;
+  margin-bottom: clamp(0.05rem, 0.06vh, 0.3rem); /* Sehr geringer Margin, stärker an VH gebunden */
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 20s ease infinite alternate; /* Slower, smoother gradient animation */
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+}
+
+#date {
+  font-size: clamp(0.6rem, var(--fluid-min-font), 1.1rem); /* Feinjustiert */
+  color: var(--dim);
+  font-weight: 400; /* Slightly bolder date */
+  text-transform: uppercase;
+  letter-spacing: clamp(0.5px, 0.1vw, 2.5px); /* More pronounced letter spacing */
+}
+
+/* --- NEU: Wetter Link Sektion Styles --- */
+.weather-link-section {
+    padding: var(--fluid-padding-s); /* Feinjustiert */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+    min-height: 0;
+    flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+    overflow: hidden; /* Verhindert internes Scrollen */
+}
+
+.weather-link-section h2 {
+    font-size: clamp(0.8rem, var(--fluid-header-font), 1.5rem); /* Feinjustiert */
+    font-weight: 800;
+    margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
+    color: var(--fg);
+}
+
+.weather-link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fluid-gap-s); /* Feinjustiert */
+    padding: var(--fluid-padding-s) var(--fluid-padding-m); /* Feinjustiert */
+    background: var(--gl);
+    border: var(--border-width) solid var(--gb);
+    border-radius: var(--r);
+    text-decoration: none;
+    color: var(--fg);
+    font-weight: 700;
+    font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem); /* Feinjustiert */
+    transition: all var(--t);
+    box-shadow: var(--s-light), var(--inner-shadow);
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.weather-link-button:hover {
+    transform: translateY(-0.4em) scale(1.01); /* More pronounced lift and slight scale */
+    border-color: var(--acc);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+}
+
+.weather-link-button .weather-icon {
+    font-size: clamp(1.2rem, 1.4vw, 2.5rem); /* Feinjustiert */
+    color: var(--acc);
+    transition: all var(--t);
+}
+
+.weather-link-button:hover .weather-icon {
+    transform: scale(1.2) rotate(10deg); /* More dynamic icon animation */
+}
+
+.weather-notice {
+    margin-top: var(--fluid-padding-s); /* Feinjustiert */
+    font-size: clamp(0.6rem, var(--fluid-min-font), 0.9rem); /* Feinjustiert */
+    color: var(--dim);
+}
+/* Ende Wetter Link Sektion Styles */
+
+
+/* --- NEU: Zitate Sektion Styles --- */
+/* Dies ist die Zitate-Sektion, die du behalten wolltest. */
+.quote-section {
+  padding: var(--fluid-padding-s); /* Feinjustiert */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-grow: 1;
+  min-height: 0;
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen */
+}
+
+#quote-text {
+  font-size: clamp(0.8rem, var(--fluid-max-font), 1.2rem); /* Feinjustiert */
+  font-weight: 700;
+  margin-bottom: clamp(0.15rem, 0.25vw, 0.6rem); /* Feinjustiert */
+  color: var(--fg);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#quote-author {
+  font-size: clamp(0.5rem, var(--fluid-min-font), 1.0rem); /* Feinjustiert */
+  color: var(--dim);
+  font-style: italic; /* Italic author name */
+}
+/* Ende Zitate Sektion Styles */
+
+
+/* --- Apps & Bookmarks Section --- */
+.apps-section {
+  width: 100%;
+  padding: var(--fluid-padding-s); /* Feinjustiert */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Nimmt den restlichen Platz ein */
+  min-height: 0; /* Erlaubt dieser Sektion, zu schrumpfen */
+  overflow: hidden; /* **WICHTIG: KEIN SCROLLEN AUCH HIER!** Wenn zu viele Apps, werden sie abgeschnitten. */
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+}
+
+.apps-section h2 {
+  margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
+  font-size: clamp(0.8rem, var(--fluid-header-font), 1.5rem); /* Feinjustiert */
+  font-weight: 800;
+  text-align: center;
+  color: var(--dim);
+  position: relative;
+  padding-bottom: var(--fluid-gap-xs); /* Space for underline */
+}
+
+.apps-section h2::after { /* Animated underline */
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 50px; /* Initial width */
+  height: 2px;
+  background: var(--acc);
+  border-radius: 2px;
+  transition: width var(--t) ease-in-out;
+}
+
+.apps-section:hover h2::after {
+  width: 80px; /* Wider underline on hover */
+}
+
+
+.apps-container {
+    /* Optimierte grid-template-columns für bessere Icon-Anordnung */
+    /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
+    /* Min-Größe wieder leicht erhöht, VH-Anteil für vertikale Schrumpfung wieder moderater */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(55px, 7vw + 4.5vh, 110px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht, max leicht reduziert */
+    gap: var(--fluid-gap-s); /* Optimierter, responsiver Abstand zwischen Karten */
+    overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
+    padding: var(--fluid-padding-xs); /* Minimales Padding */
+    flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
+    min-height: 0;
+    display: grid;
+    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe */
+}
+
+.app-card {
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  /* Padding der Karte, um Icons und Labels gut auszurichten */
+  /* Padding wieder etwas erhöht, vh-Anteil moderater */
+  padding: clamp(0.4rem, 0.6vw + 0.4vh, 1.1rem);
+  text-align: center;
+  text-decoration: none;
+  color: var(--fg);
+  transition: all var(--t);
+  position: relative;
+  overflow: hidden; /* Sicherstellen, dass nichts überläuft */
+  box-shadow: var(--s-light), var(--inner-shadow);
+  transform: translateZ(0); /* Hardware acceleration */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Zentriert Icons und Labels horizontal */
+  justify-content: center; /* Zentriert Icons und Labels vertikal */
+  aspect-ratio: 1 / 1; /* Behält quadratisches Verhältnis */
+  min-width: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
+  min-height: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
 }
 
 .app-card:hover {
-  transform: translateY(-8px) perspective(1000px) rotateX(10deg) rotateY(-5deg);
-  box-shadow: var(--sh), 0 15px 30px rgba(0,0,0,0.2), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-  border-color: rgba(var(--acc-rgb), 0.6);
-}
-
-.app-card .icon, .app-card .label {
-    transform: translateZ(20px); /* Hebt Icon und Label im 3D-Raum an */
+  transform: translateY(-0.6em) scale(1.03); /* More pronounced lift and scale */
+  border-color: var(--acc);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.35); /* Stronger glow */
 }
 
 .app-card .icon {
-  font-size: clamp(1.2rem, 1.8vw + 1.8vh, 3rem);
-  margin-bottom: clamp(0.2rem, 0.3vw + 0.2vh, 0.6rem);
-  transition: transform var(--t-fast);
+  font-family: 'Material Symbols Outlined';
+  /* Größe der Icons: Min-Wert erhöht, VH-Anteil moderater */
+  font-size: clamp(1.0rem, 1.7vw + 1.7vh, 2.8rem); /* Min-Wert erhöht, VH-Anteil wieder moderater */
+  /* Margin-Bottom: Min-Wert und VH-Anteil leicht erhöht */
+  margin-bottom: clamp(0.15rem, 0.25vw + 0.15vh, 0.6rem);
+  display: block;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+  transition: all 0.2s ease-out; /* Slightly longer transition for icon */
+  line-height: 1; /* Wichtig, um den vertikalen Raum des Icons zu kontrollieren */
 }
+
 .app-card:hover .icon {
-  transform: translateZ(40px) scale(1.1); /* Bewegt sich weiter auf den Nutzer zu */
+  transform: scale(1.2) rotateY(15deg); /* More dynamic icon animation */
+  color: var(--ah); /* Icon color changes on hover */
 }
+
 .app-card .label {
-  font-size: clamp(0.5rem, 0.55vw + 0.35vh, 0.9rem);
-  font-weight: 500;
-  line-height: 1.2;
-  word-break: break-word;
+  /* Größe der Labels: Min-Wert erhöht, VH-Anteil moderater */
+  font-size: clamp(0.5rem, 0.6vw + 0.35vh, 1.0rem); /* Min-Wert erhöht, VH-Anteil moderater */
+  font-weight: 600;
+  line-height: 1.2; /* Slightly more line height for readability */
+  word-break: break-word; /* Verhindert Überlauf bei langen Namen */
+  text-overflow: ellipsis; /* Fügt ... hinzu, wenn Text zu lang ist */
+  overflow: hidden; /* Versteckt überlaufenden Text */
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; /* Beschränkt auf 2 Zeilen */
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  transition: color var(--t);
 }
 
+.app-card:hover .label {
+  color: var(--acc); /* Label color changes on hover */
+}
 
-/* --- Media Queries (leicht angepasst für die neuen Elemente) --- */
+/* --- SR-Only class for accessibility --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* --- Media Queries for Layout Change (nicht nur Skalierung) --- */
+
+/* Bei schmaleren Bildschirmen auf eine Spalte wechseln */
 @media (max-width: 992px) {
+  /* `html` font-size hier überschreiben, um die Skalierung bei kleineren Geräten anzupassen */
+  /* Min-Font und vh-Anteil für mobile wieder moderater */
   html {
     font-size: clamp(6px, 0.8vw + 0.5vh, 16px);
   }
-  body { overflow: auto; /* Scrollen auf Mobilgeräten erlauben */ }
+
   .container {
-      padding: var(--fluid-padding-m);
+      padding: var(--fluid-padding-m); /* Feinjustiert */
+      gap: var(--fluid-gap-m); /* Feinjustiert */
   }
   .main-grid {
       grid-template-columns: 1fr;
+      display: flex; /* Wechsel zu Flexbox für vertikale Stapelung */
       flex-direction: column;
-      overflow-y: initial; /* Scrollen dem Body überlassen */
-      height: auto;
+      gap: var(--fluid-gap-m); /* Feinjustiert */
+      overflow-y: auto; /* Erlaube hier Scrollen, da der Inhalt sonst überlaufen könnte */
+      height: auto; /* Wichtig, damit Flexbox die Höhe richtig berechnet */
   }
-  .grid-left, .grid-right { height: auto; }
-  .time-display, .search-section, .weather-widget, .quote-section {
-      flex-grow: 0; padding: var(--fluid-padding-m);
+  .grid-left, .grid-right {
+      flex-direction: column;
+      gap: var(--fluid-gap-m); /* Feinjustiert */
+      height: auto; /* Muss sich an den Inhalt anpassen */
+      min-height: 0;
   }
-  #time { font-size: clamp(2.5rem, 8vw, 5rem); }
+
+  /* Diese Sektionen sollen ihre natürliche Höhe behalten */
+  .time-display, .search-section, .weather-link-section, .quote-section {
+      flex-grow: 0;
+      padding: var(--fluid-padding-s); /* Feinjustiert */
+      min-height: 0;
+      flex-shrink: 1; /* Sicherstellen, dass sie schrumpfen können */
+      overflow: hidden;
+  }
+
+  /* Die Uhr noch größer bei schmaleren Screens */
+  #time {
+      font-size: clamp(2rem, 7vw, 4.5rem); /* **GEÄNDERT: Font-Size für Mobile weiter erhöht!** */
+  }
+  #date {
+      font-size: clamp(0.5rem, 1.8vw, 1.0rem); /* Feinjustiert */
+  }
+
+  .header {
+      flex-direction: column;
+      gap: var(--fluid-gap-s); /* Feinjustiert */
+      padding: var(--fluid-padding-s); /* Feinjustiert */
+  }
+  .logo { font-size: clamp(1rem, 3vw, 2.0rem); } /* Feinjustiert */
+  .controls { gap: var(--fluid-gap-s); flex-wrap: wrap; justify-content: center; } /* Feinjustiert */
+
+  /* Apps-Sektion bleibt der flexible Bereich */
   .apps-section {
-      order: 5;
-      overflow-y: initial; /* Scrollen dem Body überlassen */
-      min-height: 200px;
+      order: 4; /* Stellt sicher, dass es am Ende kommt */
+      flex-grow: 1; /* Nimmt den restlichen Platz ein */
+      min-height: clamp(80px, 16vh, 250px); /* Eine flexible Mindesthöhe, wieder etwas erhöht */
+      padding: var(--fluid-padding-s); /* Feinjustiert */
+      overflow-y: auto; /* **WICHTIG: Hier erlauben wir Scrollen, da sonst bei sehr vielen Apps ein harter Cut stattfindet.** */
+  }
+  .apps-section h2 {
+      font-size: clamp(0.7rem, 2.5vw, 1.3rem); /* Feinjustiert */
+      margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
   }
   .apps-container {
-      grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 10vw + 6vh, 90px), 1fr));
-      gap: var(--fluid-gap-s);
+      /* Optimierte grid-template-columns für mobile */
+      /* Min-Größe für mobile Cards wieder erhöht, VH-Anteil für Gap moderater */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(45px, 9vw + 6vh, 80px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht */
+      gap: var(--fluid-gap-s); /* Feinjustiert, VH-Anteil für Gap moderater */
+      overflow: hidden; /* **Internes Scrollen hier wieder erlauben, wenn Apps-Section scrollt** */
+      max-height: none; /* Deaktivieren der max-height, wenn die Sektion scrollt */
+  }
+  .app-card {
+      padding: clamp(0.3rem, 0.45vw + 0.3vh, 1.0rem); /* Optimiertes Padding für mobile, min leicht erhöht */
+  }
+  .app-card .icon {
+      /* Icons für mobile: Min-Wert erhöht, VH-Anteil moderater */
+      font-size: clamp(0.9rem, 2.8vw + 1.8vh, 2.0rem);
+  }
+  .app-card .label {
+      /* Labels für mobile: Min-Wert erhöht, VH-Anteil moderater */
+      font-size: clamp(0.4rem, 1.5vw + 0.6vh, 0.7rem);
+      line-height: 1.2;
   }
 }
 
-/* Fallback für alte Browser */
+/* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
-  .glass { background: rgba(var(--fg-rgb), 0.1); }
+  .glass {
+    background: rgba(var(--fg-rgb), 0.18); /* Slightly more opaque fallback */
+  }
 }
