@@ -1,611 +1,566 @@
-/* MKWEB OS 7: Enhanced Ultra-Fluid Design System */
-/* ================================================ */
+/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Final Version with Improved App Icon Layout */
 
-/* Design Tokens */
+/* --- Global Design Variables - Refined for OS 7 --- */
 :root {
-  /* Typography Scale */
-  --font-base: clamp(0.75rem, 0.8vw + 0.4vh, 1.1rem);
-  --font-sm: clamp(0.65rem, 0.7vw + 0.3vh, 0.95rem);
-  --font-lg: clamp(1rem, 1.2vw + 0.5vh, 1.8rem);
-  --font-xl: clamp(1.5rem, 2.5vw + 1vh, 4.5rem);
-  --font-time: clamp(1.5rem, 3vw + 1.5vh, 4rem);
-  
-  /* Spacing System */
-  --space-xs: clamp(0.25rem, 0.5vw + 0.2vh, 0.75rem);
-  --space-sm: clamp(0.5rem, 0.8vw + 0.4vh, 1.25rem);
-  --space-md: clamp(0.75rem, 1.2vw + 0.6vh, 2rem);
-  --space-lg: clamp(1rem, 1.6vw + 0.8vh, 2.5rem);
-  --space-xl: clamp(1.5rem, 2.4vw + 1.2vh, 3.5rem);
-  
-  /* Layout */
-  --border-radius: min(1.2vw, 16px);
-  --border-radius-lg: min(2vw, 24px);
-  --border-width: max(1px, 0.08vw);
-  --container-max: min(1800px, 95vw);
-  
-  /* Timing & Effects */
-  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --blur-strength: clamp(8px, 1.2vw, 20px);
-  --shadow-elevation-1: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-elevation-2: 0 4px 16px rgba(0, 0, 0, 0.12);
-  --shadow-elevation-3: 0 8px 32px rgba(0, 0, 0, 0.16);
-  
-  /* Color Palette - Dark Theme */
-  --color-bg: hsl(220, 15%, 6%);
-  --color-surface: hsl(220, 12%, 8%);
-  --color-surface-variant: hsl(220, 10%, 12%);
-  --color-text: hsl(220, 20%, 88%);
-  --color-text-secondary: hsl(220, 12%, 65%);
-  --color-text-tertiary: hsl(220, 8%, 45%);
-  --color-accent: hsl(260, 65%, 65%);
-  --color-accent-hover: hsl(260, 70%, 72%);
-  --color-accent-subtle: hsla(260, 65%, 65%, 0.12);
-  --color-border: hsla(220, 20%, 88%, 0.08);
-  --color-border-hover: hsla(260, 65%, 65%, 0.4);
-  --color-glass: hsla(220, 20%, 88%, 0.04);
-  --color-glass-border: hsla(220, 20%, 88%, 0.12);
-  
-  /* Gradients */
-  --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
-  --gradient-text: linear-gradient(120deg, var(--color-accent), var(--color-text), var(--color-accent));
-  --gradient-glow: radial-gradient(circle at center, var(--color-accent-subtle), transparent 70%);
+  /* Skalierungs-Faktoren: Moderat aggressiv für VH, da kein Scrollen erlaubt ist */
+  /* Die min-Werte wurden leicht erhöht, um nicht zu klein zu werden. */
+  --fluid-min-font: 0.6vw;  /* Basis für kleinere Texte, leicht erhöht */
+  --fluid-max-font: 0.9vw;  /* Basis für normale Texte, leicht erhöht */
+  --fluid-header-font: 1.1vw; /* Basis für Header-Elemente, leicht erhöht */
+  --fluid-time-font: 3vw; /* **GEÄNDERT: Basis für die Uhrzeit, weiter erhöht!** */
+
+  /* Clamp für Padding: min-val, fluid-val (vw/vh-mix), max-val */
+  /* Min-Werte leicht erhöht, vh-Anteile moderat */
+  --fluid-padding-xs: clamp(0.15rem, 0.25vw + 0.1vh, 0.7rem);
+  --fluid-padding-s: clamp(0.3rem, 0.4vw + 0.2vh, 1rem);
+  --fluid-padding-m: clamp(0.5rem, 0.7vw + 0.35vh, 1.3rem);
+  --fluid-padding-l: clamp(0.7rem, 0.9vw + 0.45vh, 1.8rem);
+  --fluid-padding-xl: clamp(0.9rem, 1.1vw + 0.55vh, 2.3rem);
+
+  /* Clamp für Gaps: min-val, fluid-val (vw/vh-mix), max-val */
+  /* Min-Werte leicht erhöht, vh-Anteile moderat */
+  --fluid-gap-xs: clamp(0.15rem, 0.2vw + 0.08vh, 0.5rem);
+  --fluid-gap-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.8rem);
+  --fluid-gap-m: clamp(0.35rem, 0.45vw + 0.2vh, 1.2rem);
+
+  --t: 0.15s ease-out; /* Faster transitions */
+  --r: 12px; /* Slightly smaller border-radius */
+  --s: 0 4px 12px rgba(0,0,0,0.08); /* Lighter shadow */
+  --sh: 0 8px 20px rgba(0,0,0,0.1); /* Lighter hover shadow */
+  --s-light: 0 2px 6px rgba(0,0,0,0.05); /* Even lighter shadow */
+  --border-width: 1px; /* Thinner borders */
+  --text-gradient-angle: 65deg;
+  --glass-reflection: transparent; /* Remove glass reflection */
+  --glow-strength: 0 0 5px; /* Reduced glow strength */
+  --glow-color: var(--acc);
+  --blur-intensity: 8px; /* Reduced blur intensity */
+  --saturate-intensity: 120%; /* Reduced saturate intensity */
+  --content-max-width: 1800px;
+  --inner-shadow-strength: inset 0 0 5px rgba(0,0,0,0.03); /* Lighter inner shadow */
+
+  /* --- Themed Variables (Nur noch Dark Theme) --- */
+  --bg: #0d0d0d;
+  --fg: #e0e0e0;
+  --dim: rgba(224,224,224,0.5);
+  --acc: #8a4ed4;
+  --ah: #b080ff;
+  --gl: rgba(255,255,255,0.03);
+  --gb: rgba(255,255,255,0.1);
+  --inner-shadow: var(--inner-shadow-strength);
+  --acc-rgb: 138, 78, 212;
+  --fg-rgb: 224, 224, 224;
+  --ah-rgb: 176, 128, 255;
+  --gb-rgb: 255, 255, 255;
 }
 
-/* Reset & Base Styles */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+
+/* --- Base Styles --- */
+html {
+  scroll-behavior: smooth;
+  /* WICHTIG: Font-size skaliert mit Breite UND HÖHE! */
+  /* Globaler min-Wert erhöht, vh-Anteil moderat */
+  font-size: clamp(6px, 0.6vw + 0.35vh, 17px);
+}
+
+* {
   margin: 0;
   padding: 0;
-}
-
-html {
-  font-size: clamp(12px, 1.2vw + 0.5vh, 18px);
-  scroll-behavior: smooth;
-  text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
-  background: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.6;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  background: var(--bg);
+  color: var(--fg);
+  height: 100vh; /* Muss 100vh sein, um sicherzustellen, dass die Seite nicht scrollt */
+  width: 100vw;
+  transition: background var(--t), color var(--t);
+  overflow: hidden; /* **GANZ WICHTIG: KEIN SCROLLEN ERLAUBT!** */
+  position: relative;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: relative;
+  display: flex; /* Body wird selbst zum Flex-Container */
+  flex-direction: column;
 }
 
-/* Enhanced Glass Morphism */
-.glass {
-  background: var(--color-glass);
-  backdrop-filter: blur(var(--blur-strength)) saturate(130%);
-  border: var(--border-width) solid var(--color-glass-border);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-elevation-1);
-  transition: all var(--transition-base);
-  position: relative;
-  overflow: hidden;
-}
+/* --- Animated Background Elements - REMOVED --- */
+.background-shape { display: none; }
+.grain { display: none; }
 
-.glass::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-glow);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  pointer-events: none;
-}
-
-.glass:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-border-hover);
-  box-shadow: var(--shadow-elevation-2), 0 0 20px var(--color-accent-subtle);
-}
-
-.glass:hover::before {
-  opacity: 1;
-}
-
-/* Layout Container */
 .container {
-  flex: 1;
+  position: relative;
+  z-index: 2;
+  height: 100%; /* Nimmt die gesamte verfügbare Höhe des Body ein */
+  padding: var(--fluid-padding-xl); /* Proportionales Padding */
   display: flex;
   flex-direction: column;
-  padding: var(--space-sm);
-  gap: var(--space-sm);
-  max-width: var(--container-max);
-  margin: 0 auto;
-  width: 100%;
-  min-height: 0;
-  height: 100vh;
+  align-items: center;
+  gap: var(--fluid-gap-m); /* Proportionaler Abstand */
+  flex-grow: 1; /* Nimmt den verbleibenden Platz ein */
+  min-height: 0; /* Erlaubt dem Container, zu schrumpfen, wenn die Inhalte es erfordern */
 }
 
-/* Header */
+/* --- Glassmorphism Base Style - Simplified --- */
+.glass {
+  background: var(--gl);
+  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  box-shadow: var(--s), var(--inner-shadow);
+  transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
+  position: relative;
+  overflow: hidden;
+  transform: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--glass-reflection);
+    pointer-events: none;
+    opacity: 0;
+    transition: none;
+  }
+
+  &:hover {
+    transform: translateY(-0.3em);
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: calc(var(--r) + 1px);
+    background: linear-gradient(45deg, var(--acc), var(--ah));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--t);
+    filter: blur(5px);
+  }
+
+  &:hover::before {
+    opacity: 0.5;
+    filter: blur(7px);
+  }
+}
+
+/* --- Header --- */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--border-radius-lg);
-  flex-shrink: 0;
+  width: 100%;
+  max-width: var(--content-max-width);
+  padding: var(--fluid-padding-s) var(--fluid-padding-l); /* Reduziertes Padding */
 }
 
 .logo {
-  font-size: var(--font-lg);
+  font-size: clamp(1rem, var(--fluid-header-font), 2.2rem); /* Feinjustiert */
   font-weight: 800;
-  background: var(--gradient-text);
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
   background-size: 200% 200%;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient-shift 12s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px var(--color-accent-subtle));
+  animation: gradient 15s ease infinite alternate;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
+  position: relative;
 }
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 .controls {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--fluid-gap-s); /* Feinjustiert */
   align-items: center;
 }
 
-/* Enhanced Button Styles */
+/* --- Buttons Styling - Simplified --- */
 button {
-  padding: var(--space-xs) var(--space-sm);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-glass);
-  color: var(--color-text);
-  font-size: var(--font-sm);
-  font-weight: 600;
+  padding: var(--fluid-padding-xs) var(--fluid-padding-s); /* Feinjustiert */
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  background: var(--gl);
+  color: var(--fg);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
+  font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
+  font-weight: 600;
   outline: none;
-  backdrop-filter: blur(var(--blur-strength));
+  box-shadow: var(--s-light);
   position: relative;
+  z-index: 1;
   overflow: hidden;
-}
+  transform: none;
 
-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-accent);
-  opacity: 0;
-  transition: opacity var(--transition-base);
+  &:active {
+    transform: translateY(0.1em) scale(0.99);
+    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
+    background: rgba(var(--gl-rgb), 0.05);
+  }
 }
 
 button:hover {
-  transform: translateY(-1px);
-  border-color: var(--color-border-hover);
-  box-shadow: var(--shadow-elevation-2);
-}
-
-button:hover::before {
-  opacity: 0.1;
-}
-
-button:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: var(--shadow-elevation-1);
+  transform: translateY(-0.2em);
+  border-color: var(--acc);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 }
 
 .user-avatar {
-  width: clamp(28px, 3vw, 40px);
-  height: clamp(28px, 3vw, 40px);
+  width: clamp(20px, 2.5vw, 40px); /* Avatar wieder leicht größer */
+  height: clamp(20px, 2.5vw, 40px);
   border-radius: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: var(--font-sm);
-  background: var(--color-glass);
-  border: var(--border-width) solid var(--color-border);
-  color: var(--color-accent);
+  align-items: center;
+  font-size: clamp(0.8rem, 1vw, 1.8rem);
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  color: var(--acc);
   cursor: pointer;
-  transition: all var(--transition-base);
-  backdrop-filter: blur(var(--blur-strength));
+  transition: all var(--t);
+  box-shadow: var(--s-light);
   overflow: hidden;
-  position: relative;
-}
-
-.user-avatar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-accent);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  border-radius: inherit;
+  transform: none;
 }
 
 .user-avatar:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-elevation-2), 0 0 16px var(--color-accent-subtle);
+  transform: translateY(-0.3em);
+  border-color: var(--acc);
+  box-shadow: var(--glow-strength) var(--acc), var(--s);
 }
 
-.user-avatar:hover::before {
-  opacity: 0.15;
+.hidden-avatar {
+  opacity: 0 !important;
+  transform: scale(0.6) !important;
+  pointer-events: none !important;
 }
 
-/* Main Content Layout - Single Column */
-.main-content {
-  flex: 1;
+
+/* --- Main Grid Layout --- */
+.main-grid {
+  width: 100%;
+  max-width: var(--content-max-width);
+  height: 100%; /* WICHTIG: Nimmt gesamte verfügbare Höhe des Containers ein */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--fluid-gap-m); /* Feinjustiert */
+  flex-grow: 1; /* WICHTIG: Nimmt den verbleibenden Platz im Container ein */
+  min-height: 0; /* Erlaubt dem Grid, zu schrumpfen */
+  overflow: hidden; /* Stellt sicher, dass das Grid selbst nicht scrollt */
+}
+
+.grid-left, .grid-right {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  min-height: 0;
+  gap: var(--fluid-gap-m); /* Feinjustiert */
+  height: 100%; /* WICHTIG: Nehmen gesamte Höhe ihrer Spalte ein */
+  flex-grow: 1; /* Nehmen den verfügbaren Platz in der Spalte ein */
+  min-height: 0; /* Erlaubt ihnen, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen in den Spalten */
 }
 
-/* Time and Search Section */
-.time-search-section {
-  display: flex;
-  gap: var(--space-sm);
-  flex-shrink: 0;
-}
-
-/* Time Display */
-.time-display {
-  flex: 1;
-  padding: var(--space-sm);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-#time {
-  font-size: var(--font-time);
-  font-weight: 900;
-  margin-bottom: var(--space-xs);
-  background: var(--gradient-text);
-  background-size: 300% 300%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 15s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px var(--color-accent-subtle));
-  line-height: 0.9;
-}
-
-#date {
-  font-size: var(--font-sm);
-  color: var(--color-text-secondary);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.8;
-}
-
-/* Search Section */
+/* --- Search Section --- */
 .search-section {
-  flex: 1;
-  padding: var(--space-sm);
+  padding: var(--fluid-padding-s); /* Feinjustiert */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  flex-grow: 1; /* Kann im Desktop-Grid wachsen */
+  min-height: 0; /* Erlaubt Schrumpfung */
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen */
 }
 
 .search-engines {
   display: flex;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
+  gap: var(--fluid-gap-xs); /* Feinjustiert */
+  margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: 9999px;
+  padding: clamp(0.2rem, 0.4vw, 0.6rem) clamp(0.4rem, 0.7vw, 1rem);
+  border-radius: 30px;
   font-weight: 600;
-  font-size: var(--font-sm);
+  font-size: clamp(0.55rem, 0.8vw, 0.9rem); /* Suchauswahl bleibt so, wie sie war. */
   border: var(--border-width) solid transparent;
-  background: var(--color-glass);
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: all var(--transition-base);
-  backdrop-filter: blur(var(--blur-strength));
-  position: relative;
-  overflow: hidden;
-}
+  background: var(--gl);
+  transition: all var(--t);
 
-.search-engine::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-accent);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  border-radius: inherit;
-}
+  &.active {
+    background: var(--acc);
+    color: #fff;
+    transform: translateY(-0.15em); /* Simpler active effect */
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); /* Lighter glow */
+    border-color: var(--acc);
+  }
 
-.search-engine.active {
-  background: var(--color-accent);
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-elevation-2), 0 0 12px var(--color-accent-subtle);
-}
-
-.search-engine:not(.active):hover {
-  border-color: var(--color-border-hover);
-  transform: translateY(-1px);
-}
-
-.search-engine:not(.active):hover::before {
-  opacity: 0.1;
+  &:not(.active):hover {
+    border-color: var(--acc);
+    transform: translateY(-0.1em); /* Simpler hover effect */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light); /* Lighter inset shadow */
+  }
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  border-radius: 9999px;
-  padding: var(--space-sm);
-  transition: all var(--transition-base);
-  box-shadow: var(--shadow-elevation-1);
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-}
-
-.search-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-glow);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  border-radius: inherit;
+  border-radius: 30px;
+  padding: var(--fluid-padding-s); /* Feinjustiert */
+  transition: all var(--t);
+  box-shadow: var(--s), var(--inner-shadow);
 }
 
 .search-box:focus-within {
-  border-color: var(--color-accent);
-  transform: scale(1.02);
-  box-shadow: var(--shadow-elevation-2), 0 0 20px var(--color-accent-subtle);
-}
-
-.search-box:focus-within::before {
-  opacity: 1;
+  border-color: var(--acc);
+  transform: scale(1.005);
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
 }
 
 #search {
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--color-text);
-  font-size: var(--font-base);
+  color: var(--fg);
+  font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
   outline: none;
-  margin-left: var(--space-xs);
-  position: relative;
-  z-index: 1;
+  margin-left: var(--fluid-padding-xs); /* Feinjustiert */
 }
 
 #search::placeholder {
-  color: var(--color-text-tertiary);
+  color: var(--dim);
 }
 
-/* Bottom Section */
-.bottom-section {
-  display: flex;
-  gap: var(--space-sm);
-  flex: 1;
-  min-height: 0;
-}
-
-/* Weather and Quote Section */
-.info-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.weather-link-section,
-.quote-section {
-  flex: 1;
-  padding: var(--space-sm);
+/* --- Time Display --- */
+.time-display {
+  text-align: center;
+  padding: var(--fluid-padding-s); /* Feinjustiert */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  flex-grow: 2; /* Kann im Desktop-Grid stärker wachsen */
+  min-height: 0; /* Erlaubt Schrumpfung */
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen */
+}
+
+#time {
+  /* **GEÄNDERT: Font-Size der Uhr WEITER ERHÖHT!** */
+  font-size: clamp(1.8rem, var(--fluid-time-font), 6rem); /* Min-Wert nochmals erhöht, Max-Wert ebenfalls */
+  font-weight: 800;
+  margin-bottom: clamp(0.01rem, 0.04vh, 0.25rem); /* Sehr geringer Margin, stärker an VH gebunden */
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 15s ease infinite alternate;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+}
+
+#date {
+  font-size: clamp(0.5rem, var(--fluid-min-font), 1rem); /* Feinjustiert */
+  color: var(--dim);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: clamp(0.2px, 0.07vw, 1.8px); /* Feinjustiert */
+}
+
+/* --- NEU: Wetter Link Sektion Styles --- */
+.weather-link-section {
+    padding: var(--fluid-padding-s); /* Feinjustiert */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+    min-height: 0;
+    flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+    overflow: hidden; /* Verhindert internes Scrollen */
 }
 
 .weather-link-section h2 {
-  font-size: var(--font-lg);
-  font-weight: 700;
-  margin-bottom: var(--space-sm);
-  color: var(--color-text);
+    font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem); /* Feinjustiert */
+    font-weight: 700;
+    margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
+    color: var(--fg);
 }
 
 .weather-link-button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
-  background: var(--color-glass);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  text-decoration: none;
-  color: var(--color-text);
-  font-weight: 600;
-  font-size: var(--font-base);
-  transition: all var(--transition-base);
-  backdrop-filter: blur(var(--blur-strength));
-  position: relative;
-  overflow: hidden;
-}
-
-.weather-link-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-glow);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  border-radius: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fluid-gap-s); /* Feinjustiert */
+    padding: var(--fluid-padding-s) var(--fluid-padding-m); /* Feinjustiert */
+    background: var(--gl);
+    border: var(--border-width) solid var(--gb);
+    border-radius: var(--r);
+    text-decoration: none;
+    color: var(--fg);
+    font-weight: 600;
+    font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
+    transition: all var(--t);
+    box-shadow: var(--s-light), var(--inner-shadow);
 }
 
 .weather-link-button:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-border-hover);
-  box-shadow: var(--shadow-elevation-2), 0 0 16px var(--color-accent-subtle);
+    transform: translateY(-0.3em);
+    border-color: var(--acc);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
 
-.weather-link-button:hover::before {
-  opacity: 1;
-}
-
-.weather-icon {
-  font-size: clamp(1.2rem, 1.5vw, 2rem);
-  color: var(--color-accent);
-  transition: transform var(--transition-base);
+.weather-link-button .weather-icon {
+    font-size: clamp(1rem, 1.2vw, 2.2rem); /* Feinjustiert */
+    color: var(--acc);
+    transition: all var(--t);
 }
 
 .weather-link-button:hover .weather-icon {
-  transform: rotate(10deg) scale(1.1);
+    transform: scale(1.1);
 }
 
 .weather-notice {
-  margin-top: var(--space-sm);
-  font-size: var(--font-sm);
-  color: var(--color-text-tertiary);
-  opacity: 0.7;
+    margin-top: var(--fluid-padding-s); /* Feinjustiert */
+    font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
+    color: var(--dim);
 }
+/* Ende Wetter Link Sektion Styles */
 
-#quote-text {
-  font-size: var(--font-base);
-  font-weight: 500;
-  margin-bottom: var(--space-sm);
-  color: var(--color-text);
-  font-style: italic;
-  line-height: 1.5;
-}
 
-#quote-author {
-  font-size: var(--font-sm);
-  color: var(--color-text-secondary);
-  font-weight: 400;
-}
-
-#quote-author::before {
-  content: '— ';
-}
-
-/* Apps Section */
-.apps-section {
-  flex: 1;
-  padding: var(--space-sm);
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.apps-section h2 {
-  margin-bottom: var(--space-sm);
-  font-size: var(--font-lg);
-  font-weight: 700;
-  text-align: center;
-  color: var(--color-text-secondary);
-  flex-shrink: 0;
-}
-
-.apps-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(50px, 8vw, 80px), 1fr));
-  gap: var(--space-xs);
-  flex: 1;
-  align-content: start;
-  overflow: hidden;
-}
-
-.app-card {
-  background: var(--color-glass);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  padding: var(--space-xs);
-  text-align: center;
-  text-decoration: none;
-  color: var(--color-text);
-  transition: all var(--transition-base);
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(var(--blur-strength));
+/* --- NEU: Zitate Sektion Styles --- */
+/* Dies ist die Zitate-Sektion, die du behalten wolltest. */
+.quote-section {
+  padding: var(--fluid-padding-s); /* Feinjustiert */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1;
-  min-width: 0;
+  text-align: center;
+  flex-grow: 1;
+  min-height: 0;
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+  overflow: hidden; /* Verhindert internes Scrollen */
 }
 
-.app-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gradient-glow);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  border-radius: inherit;
+#quote-text {
+  font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem); /* Feinjustiert */
+  font-weight: 600;
+  margin-bottom: clamp(0.1rem, 0.2vw, 0.5rem); /* Feinjustiert */
+  color: var(--fg);
+}
+
+#quote-author {
+  font-size: clamp(0.45rem, var(--fluid-min-font), 0.9rem); /* Feinjustiert */
+  color: var(--dim);
+}
+/* Ende Zitate Sektion Styles */
+
+
+/* --- Apps & Bookmarks Section --- */
+.apps-section {
+  width: 100%;
+  padding: var(--fluid-padding-s); /* Feinjustiert */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Nimmt den restlichen Platz ein */
+  min-height: 0; /* Erlaubt dieser Sektion, zu schrumpfen */
+  overflow: hidden; /* **WICHTIG: KEIN SCROLLEN AUCH HIER!** Wenn zu viele Apps, werden sie abgeschnitten. */
+  flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+}
+
+.apps-section h2 {
+  margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
+  font-size: clamp(0.7rem, var(--fluid-header-font), 1.4rem); /* Feinjustiert */
+  font-weight: 700;
+  text-align: center;
+  color: var(--dim);
+}
+
+.apps-container {
+    /* Optimierte grid-template-columns für bessere Icon-Anordnung */
+    /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
+    /* Min-Größe wieder leicht erhöht, VH-Anteil für vertikale Schrumpfung wieder moderater */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht, max leicht reduziert */
+    gap: var(--fluid-gap-s); /* Optimierter, responsiver Abstand zwischen Karten */
+    overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
+    padding: var(--fluid-padding-xs); /* Minimales Padding */
+    flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
+    min-height: 0;
+    display: grid;
+    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe */
+}
+
+.app-card {
+  background: var(--gl);
+  border: var(--border-width) solid var(--gb);
+  border-radius: var(--r);
+  /* Padding der Karte, um Icons und Labels gut auszurichten */
+  /* Padding wieder etwas erhöht, vh-Anteil moderater */
+  padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem);
+  text-align: center;
+  text-decoration: none;
+  color: var(--fg);
+  transition: all var(--t);
+  position: relative;
+  overflow: hidden; /* Sicherstellen, dass nichts überläuft */
+  box-shadow: var(--s-light), var(--inner-shadow);
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Zentriert Icons und Labels horizontal */
+  justify-content: center; /* Zentriert Icons und Labels vertikal */
+  aspect-ratio: 1 / 1; /* Behält quadratisches Verhältnis */
+  min-width: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
+  min-height: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
 }
 
 .app-card:hover {
-  transform: translateY(-2px) scale(1.05);
-  border-color: var(--color-border-hover);
-  box-shadow: var(--shadow-elevation-3), 0 0 20px var(--color-accent-subtle);
-}
-
-.app-card:hover::before {
-  opacity: 1;
+  transform: translateY(-0.5em);
+  border-color: var(--acc);
+  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
 
 .app-card .icon {
-  font-family: 'Material Symbols Outlined', system-ui;
-  font-size: clamp(1rem, 2.5vw, 2rem);
-  margin-bottom: var(--space-xs);
+  font-family: 'Material Symbols Outlined';
+  /* Größe der Icons: Min-Wert erhöht, VH-Anteil moderater */
+  font-size: clamp(0.9rem, 1.5vw + 1.5vh, 2.5rem); /* Min-Wert erhöht, VH-Anteil wieder moderater */
+  /* Margin-Bottom: Min-Wert und VH-Anteil leicht erhöht */
+  margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
   display: block;
-  color: var(--color-accent);
-  transition: all var(--transition-base);
-  line-height: 1;
-  position: relative;
-  z-index: 1;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+  transition: all 0.15s ease-out;
+  line-height: 1; /* Wichtig, um den vertikalen Raum des Icons zu kontrollieren */
 }
 
 .app-card:hover .icon {
-  transform: scale(1.1) rotate(5deg);
-  filter: drop-shadow(0 0 8px var(--color-accent-subtle));
+  transform: scale(1.1);
 }
 
 .app-card .label {
-  font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+  /* Größe der Labels: Min-Wert erhöht, VH-Anteil moderater */
+  font-size: clamp(0.4rem, 0.5vw + 0.3vh, 0.9rem); /* Min-Wert erhöht, VH-Anteil moderater */
   font-weight: 500;
-  line-height: 1.2;
-  word-break: break-word;
-  overflow: hidden;
+  line-height: 1.1; /* Noch kompakter, aber lesbar */
+  word-break: break-word; /* Verhindert Überlauf bei langen Namen */
+  text-overflow: ellipsis; /* Fügt ... hinzu, wenn Text zu lang ist */
+  overflow: hidden; /* Versteckt überlaufenden Text */
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; /* Beschränkt auf 2 Zeilen */
   -webkit-box-orient: vertical;
-  position: relative;
-  z-index: 1;
 }
 
-/* Utility Classes */
+/* --- SR-Only class for accessibility --- */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -615,124 +570,100 @@ button:active {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border: 0;
+  border-width: 0;
 }
 
-.hidden-avatar {
-  opacity: 0 !important;
-  transform: scale(0.6) !important;
-  pointer-events: none !important;
-}
+/* --- Media Queries for Layout Change (nicht nur Skalierung) --- */
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .time-search-section {
-    flex-direction: column;
+/* Bei schmaleren Bildschirmen auf eine Spalte wechseln */
+@media (max-width: 992px) {
+  /* `html` font-size hier überschreiben, um die Skalierung bei kleineren Geräten anzupassen */
+  /* Min-Font und vh-Anteil für mobile wieder moderater */
+  html {
+    font-size: clamp(5px, 0.7vw + 0.4vh, 15px);
   }
-  
-  .bottom-section {
-    flex-direction: column;
-  }
-  
-  .apps-container {
-    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
-  }
-}
 
-@media (max-width: 768px) {
-  :root {
-    --font-time: clamp(1.2rem, 5vw, 2.5rem);
-  }
-  
   .container {
-    padding: var(--space-xs);
-    gap: var(--space-xs);
+      padding: var(--fluid-padding-m); /* Feinjustiert */
+      gap: var(--fluid-gap-m); /* Feinjustiert */
   }
-  
+  .main-grid {
+      grid-template-columns: 1fr;
+      display: flex; /* Wechsel zu Flexbox für vertikale Stapelung */
+      flex-direction: column;
+      gap: var(--fluid-gap-m); /* Feinjustiert */
+      overflow-y: auto; /* Erlaube hier Scrollen, da der Inhalt sonst überlaufen könnte */
+      height: auto; /* Wichtig, damit Flexbox die Höhe richtig berechnet */
+  }
+  .grid-left, .grid-right {
+      flex-direction: column;
+      gap: var(--fluid-gap-m); /* Feinjustiert */
+      height: auto; /* Muss sich an den Inhalt anpassen */
+      min-height: 0;
+  }
+
+  /* Diese Sektionen sollen ihre natürliche Höhe behalten */
+  .time-display, .search-section, .weather-link-section, .quote-section {
+      flex-grow: 0;
+      padding: var(--fluid-padding-s); /* Feinjustiert */
+      min-height: 0;
+      flex-shrink: 1; /* Sicherstellen, dass sie schrumpfen können */
+      overflow: hidden;
+  }
+
+  /* Die Uhr noch größer bei schmaleren Screens */
+  #time {
+      font-size: clamp(1.5rem, 6vw, 4rem); /* **GEÄNDERT: Font-Size für Mobile weiter erhöht!** */
+  }
+  #date {
+      font-size: clamp(0.4rem, 1.5vw, 0.9rem); /* Feinjustiert */
+  }
+
   .header {
-    padding: var(--space-xs);
+      flex-direction: column;
+      gap: var(--fluid-gap-s); /* Feinjustiert */
+      padding: var(--fluid-padding-s); /* Feinjustiert */
   }
-  
-  .time-display,
-  .search-section,
-  .weather-link-section,
-  .quote-section,
+  .logo { font-size: clamp(0.8rem, 2.5vw, 1.8rem); } /* Feinjustiert */
+  .controls { gap: var(--fluid-gap-s); flex-wrap: wrap; justify-content: center; } /* Feinjustiert */
+
+  /* Apps-Sektion bleibt der flexible Bereich */
   .apps-section {
-    padding: var(--space-xs);
+      order: 4; /* Stellt sicher, dass es am Ende kommt */
+      flex-grow: 1; /* Nimmt den restlichen Platz ein */
+      min-height: clamp(70px, 14vh, 220px); /* Eine flexible Mindesthöhe, wieder etwas erhöht */
+      padding: var(--fluid-padding-s); /* Feinjustiert */
+      overflow-y: auto; /* **WICHTIG: Hier erlauben wir Scrollen, da sonst bei sehr vielen Apps ein harter Cut stattfindet.** */
   }
-  
-  .search-engines {
-    gap: 2px;
+  .apps-section h2 {
+      font-size: clamp(0.6rem, 2.2vw, 1.2rem); /* Feinjustiert */
+      margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
   }
-  
-  .search-engine {
-    padding: 4px 8px;
-    font-size: clamp(0.6rem, 2vw, 0.75rem);
-  }
-  
   .apps-container {
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-    gap: 2px;
+      /* Optimierte grid-template-columns für mobile */
+      /* Min-Größe für mobile Cards wieder erhöht, VH-Anteil für Gap moderater */
+      grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 8vw + 5vh, 75px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht */
+      gap: var(--fluid-gap-s); /* Feinjustiert, VH-Anteil für Gap moderater */
+      overflow: hidden; /* **Internes Scrollen hier wieder erlauben, wenn Apps-Section scrollt** */
+      max-height: none; /* Deaktivieren der max-height, wenn die Sektion scrollt */
   }
-  
   .app-card {
-    padding: 2px;
+      padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem); /* Optimiertes Padding für mobile, min leicht erhöht */
   }
-  
   .app-card .icon {
-    font-size: clamp(0.8rem, 3vw, 1.5rem);
-    margin-bottom: 1px;
+      /* Icons für mobile: Min-Wert erhöht, VH-Anteil moderater */
+      font-size: clamp(0.8rem, 2.5vw + 1.5vh, 1.8rem);
   }
-  
   .app-card .label {
-    font-size: clamp(0.5rem, 2vw, 0.65rem);
+      /* Labels für mobile: Min-Wert erhöht, VH-Anteil moderater */
+      font-size: clamp(0.35rem, 1.2vw + 0.5vh, 0.6rem);
+      line-height: 1.1;
   }
 }
 
-@media (max-width: 480px) {
-  .header {
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-  
-  .controls {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .user-avatar {
-    width: 24px;
-    height: 24px;
-    font-size: 0.7rem;
-  }
-  
-  .apps-container {
-    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
-  }
-}
-
-/* Performance Optimizations */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Fallback for browsers without backdrop-filter support */
+/* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: var(--color-surface);
-  }
-  
-  button,
-  .user-avatar,
-  .search-engine,
-  .weather-link-button,
-  .app-card {
-    background: var(--color-surface-variant);
+    background: rgba(var(--fg-rgb), 0.15);
   }
 }
