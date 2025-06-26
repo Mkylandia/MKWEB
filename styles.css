@@ -33,8 +33,8 @@
   --glass-reflection: transparent; /* Remove glass reflection */
   --glow-strength: 0 0 5px; /* Reduced glow strength */
   --glow-color: var(--acc);
-  --blur-intensity: 8px; /* Reduced blur intensity */
-  --saturate-intensity: 120%; /* Reduced saturate intensity */
+  --blur-intensity: 6px; /* IMPROVED: Slightly reduced blur intensity */
+  --saturate-intensity: 110%; /* IMPROVED: Slightly reduced saturate intensity */
   --content-max-width: 1800px;
   --inner-shadow-strength: inset 0 0 5px rgba(0,0,0,0.03); /* Lighter inner shadow */
 
@@ -129,7 +129,8 @@ body {
 
   &:hover {
     transform: translateY(-0.3em);
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+    /* IMPROVED: Slightly more diffused glow on hover for glass elements */
+    box-shadow: var(--sh), 0 0 8px rgba(var(--acc-rgb), 0.3);
   }
 
   &::before {
@@ -205,14 +206,15 @@ button {
   &:active {
     transform: translateY(0.1em) scale(0.99);
     box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
-    background: rgba(var(--gl-rgb), 0.05);
+    background: rgba(var(--gl-rgb), 0.05); /* Assuming --gl-rgb exists, otherwise use a direct rgba value */
   }
 }
 
 button:hover {
   transform: translateY(-0.2em);
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+  /* IMPROVED: Subtler glow for buttons */
+  box-shadow: var(--s), 0 0 6px rgba(var(--acc-rgb), 0.2);
 }
 
 .user-avatar {
@@ -231,6 +233,12 @@ button:hover {
   box-shadow: var(--s-light);
   overflow: hidden;
   transform: none;
+
+  /* IMPROVED: Added active state for user-avatar */
+  &:active {
+    transform: translateY(0.1em) scale(0.98);
+    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.1);
+  }
 }
 
 .user-avatar:hover {
@@ -311,6 +319,12 @@ button:hover {
     transform: translateY(-0.1em); /* Simpler hover effect */
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light); /* Lighter inset shadow */
   }
+
+  /* IMPROVED: Added active state for search-engine */
+  &:active:not(.active) {
+    transform: translateY(0.05em) scale(0.99);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.15), var(--s-light);
+  }
 }
 
 .search-box {
@@ -367,6 +381,8 @@ button:hover {
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+  /* IMPROVED: Adding a very subtle drop shadow for more depth */
+  filter: drop-shadow(0 0 3px rgba(var(--acc-rgb), 0.1));
 }
 
 #date {
@@ -412,6 +428,12 @@ button:hover {
     font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
     transition: all var(--t);
     box-shadow: var(--s-light), var(--inner-shadow);
+
+    /* IMPROVED: Added active state for weather-link-button */
+    &:active {
+      transform: translateY(0.1em) scale(0.99);
+      box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
+    }
 }
 
 .weather-link-button:hover {
@@ -523,6 +545,12 @@ button:hover {
   aspect-ratio: 1 / 1; /* Behält quadratisches Verhältnis */
   min-width: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
   min-height: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
+
+  /* IMPROVED: Added active state for app-card */
+  &:active {
+    transform: translateY(0.1em) scale(0.98);
+    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
+  }
 }
 
 .app-card:hover {
