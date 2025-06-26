@@ -33,8 +33,8 @@
   --glass-reflection: transparent; /* Remove glass reflection */
   --glow-strength: 0 0 5px; /* Reduced glow strength */
   --glow-color: var(--acc);
-  --blur-intensity: 6px; /* IMPROVED: Slightly reduced blur intensity */
-  --saturate-intensity: 110%; /* IMPROVED: Slightly reduced saturate intensity */
+  --blur-intensity: 6px; /* **IMPROVED: Slightly reduced blur intensity for finer glassmorphism** */
+  --saturate-intensity: 110%; /* **IMPROVED: Slightly reduced saturate intensity for finer glassmorphism** */
   --content-max-width: 1800px;
   --inner-shadow-strength: inset 0 0 5px rgba(0,0,0,0.03); /* Lighter inner shadow */
 
@@ -51,6 +51,8 @@
   --fg-rgb: 224, 224, 224;
   --ah-rgb: 176, 128, 255;
   --gb-rgb: 255, 255, 255;
+
+  --darker-bg: #0a0a0a; /* **NEW: For subtle background depth** */
 }
 
 
@@ -75,7 +77,7 @@ body {
   color: var(--fg);
   height: 100vh; /* Muss 100vh sein, um sicherzustellen, dass die Seite nicht scrollt */
   width: 100vw;
-  transition: background var(--t), color var(--t);
+  transition: background var(--t), color var(--t), transform var(--t); /* **IMPROVED: Added transform to transition** */
   overflow: hidden; /* **GANZ WICHTIG: KEIN SCROLLEN ERLAUBT!** */
   position: relative;
   text-rendering: optimizeLegibility;
@@ -83,7 +85,23 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex; /* Body wird selbst zum Flex-Container */
   flex-direction: column;
+
+  /* **NEW: Subtle 'page press' effect on active** */
+  &:active {
+    transform: scale(0.99);
+  }
 }
+
+/* **NEW: Custom selection styles** */
+::selection {
+  background: rgba(var(--acc-rgb), 0.7);
+  color: #fff;
+}
+::-moz-selection {
+  background: rgba(var(--acc-rgb), 0.7);
+  color: #fff;
+}
+
 
 /* --- Animated Background Elements - REMOVED --- */
 .background-shape { display: none; }
@@ -121,17 +139,29 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--glass-reflection);
+    background: var(--glass-reflection); /* Remains transparent by default */
     pointer-events: none;
     opacity: 0;
-    transition: none;
+    transition: opacity var(--t), transform var(--t); /* **IMPROVED: Added transform to transition for reflection** */
+
+    /* **NEW: Subtle moving reflection on hover** */
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
   }
 
   &:hover {
-    transform: translateY(-0.3em);
-    /* IMPROVED: Slightly more diffused glow on hover for glass elements */
-    box-shadow: var(--sh), 0 0 8px rgba(var(--acc-rgb), 0.3);
+    transform: translateY(-0.4em); /* **IMPROVED: Stronger hover lift** */
+    /* **IMPROVED: More diffused glow on hover for glass elements** */
+    box-shadow: var(--sh), 0 0 10px rgba(var(--acc-rgb), 0.4);
   }
+
+  /* **NEW: Reflection animation on hover** */
+  &:hover::after {
+    opacity: 1;
+    transform: translateX(100%);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
 
   &::before {
     content: '';
@@ -146,8 +176,8 @@ body {
   }
 
   &:hover::before {
-    opacity: 0.5;
-    filter: blur(7px);
+    opacity: 0.6; /* **IMPROVED: Slightly more opaque glow edge** */
+    filter: blur(8px); /* **IMPROVED: Stronger blur for glow edge** */
   }
 }
 
@@ -165,7 +195,7 @@ body {
   font-size: clamp(1rem, var(--fluid-header-font), 2.2rem); /* Feinjustiert */
   font-weight: 800;
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 200% 200%;
+  background-size: 250% 250%; /* **IMPROVED: Larger background size for more dynamic gradient** */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -193,7 +223,7 @@ button {
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t), background var(--t); /* **IMPROVED: Added background to transition** */
   font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
   font-weight: 600;
   outline: none;
@@ -204,17 +234,19 @@ button {
   transform: none;
 
   &:active {
-    transform: translateY(0.1em) scale(0.99);
-    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
-    background: rgba(var(--gl-rgb), 0.05); /* Assuming --gl-rgb exists, otherwise use a direct rgba value */
+    transform: translateY(0.1em) scale(0.98); /* **IMPROVED: More pronounced active press** */
+    box-shadow: var(--s-light), inset 0 2px 8px rgba(0,0,0,0.2); /* **IMPROVED: Deeper inner shadow on active** */
+    background: rgba(var(--gb-rgb), 0.08); /* **IMPROVED: Slightly darker background on active** */
   }
 }
 
 button:hover {
-  transform: translateY(-0.2em);
+  transform: translateY(-0.25em); /* **IMPROVED: Stronger button hover lift** */
   border-color: var(--acc);
-  /* IMPROVED: Subtler glow for buttons */
-  box-shadow: var(--s), 0 0 6px rgba(var(--acc-rgb), 0.2);
+  /* **IMPROVED: Subtler, more focused glow for buttons** */
+  box-shadow: var(--s), 0 0 8px rgba(var(--acc-rgb), 0.35);
+  /* **NEW: Subtle gradient background on hover** */
+  background: linear-gradient(135deg, var(--gl), rgba(var(--gb-rgb), 0.05));
 }
 
 .user-avatar {
@@ -234,17 +266,20 @@ button:hover {
   overflow: hidden;
   transform: none;
 
-  /* IMPROVED: Added active state for user-avatar */
+  /* **IMPROVED: Added active state for user-avatar** */
   &:active {
-    transform: translateY(0.1em) scale(0.98);
-    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.1);
+    transform: translateY(0.1em) scale(0.97); /* **IMPROVED: More pronounced active press** */
+    border-color: var(--acc);
+    box-shadow: var(--s-light), inset 0 2px 6px rgba(0,0,0,0.15);
+    color: var(--ah); /* **NEW: Color shift on active** */
   }
 }
 
 .user-avatar:hover {
-  transform: translateY(-0.3em);
+  transform: translateY(-0.35em); /* **IMPROVED: Stronger hover lift** */
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--s);
+  color: var(--ah); /* **NEW: Color shift on hover** */
 }
 
 .hidden-avatar {
@@ -305,6 +340,9 @@ button:hover {
   border: var(--border-width) solid transparent;
   background: var(--gl);
   transition: all var(--t);
+  position: relative; /* For ::before glow */
+  overflow: hidden; /* For ::before glow */
+
 
   &.active {
     background: var(--acc);
@@ -318,12 +356,33 @@ button:hover {
     border-color: var(--acc);
     transform: translateY(-0.1em); /* Simpler hover effect */
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light); /* Lighter inset shadow */
+    /* **NEW: Subtle gradient background on hover for non-active search engines** */
+    background: linear-gradient(135deg, var(--gl), rgba(var(--gb-rgb), 0.05));
   }
 
-  /* IMPROVED: Added active state for search-engine */
+  /* **IMPROVED: Added active state for search-engine** */
   &:active:not(.active) {
-    transform: translateY(0.05em) scale(0.99);
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.15), var(--s-light);
+    transform: translateY(0.05em) scale(0.98); /* **IMPROVED: Slightly more pronounced press** */
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.2), var(--s-light); /* **IMPROVED: Deeper inner shadow** */
+    background: rgba(var(--gb-rgb), 0.08);
+  }
+
+  /* **NEW: Subtle glowing border on hover for search engines (non-active)** */
+  &:not(.active)::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: 31px; /* Slightly larger than element border-radius */
+    background: linear-gradient(45deg, rgba(var(--acc-rgb), 0.4), rgba(var(--ah-rgb), 0.2));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--t), filter var(--t);
+    filter: blur(3px);
+  }
+
+  &:not(.active):hover::before {
+    opacity: 1;
+    filter: blur(5px);
   }
 }
 
@@ -334,12 +393,14 @@ button:hover {
   padding: var(--fluid-padding-s); /* Feinjustiert */
   transition: all var(--t);
   box-shadow: var(--s), var(--inner-shadow);
+  background: var(--gl); /* **NEW: Ensure consistent background** */
 }
 
 .search-box:focus-within {
   border-color: var(--acc);
-  transform: scale(1.005);
-  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
+  transform: scale(1.008); /* **IMPROVED: Slightly stronger scale on focus** */
+  box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s); /* **IMPROVED: Stronger glow on focus** */
+  background: rgba(var(--gb-rgb), 0.05); /* **NEW: Subtle background change on focus** */
 }
 
 #search {
@@ -367,6 +428,9 @@ button:hover {
   min-height: 0; /* Erlaubt Schrumpfung */
   flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
   overflow: hidden; /* Verhindert internes Scrollen */
+  background: var(--darker-bg); /* **NEW: Slightly darker background for prominence** */
+  border-radius: var(--r);
+  box-shadow: var(--s-light);
 }
 
 #time {
@@ -375,14 +439,14 @@ button:hover {
   font-weight: 800;
   margin-bottom: clamp(0.01rem, 0.04vh, 0.25rem); /* Sehr geringer Margin, stärker an VH gebunden */
   background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 300% 300%;
+  background-size: 400% 400%; /* **IMPROVED: Much larger background size for bolder gradient animation** */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-  /* IMPROVED: Adding a very subtle drop shadow for more depth */
-  filter: drop-shadow(0 0 3px rgba(var(--acc-rgb), 0.1));
+  /* **IMPROVED: More prominent text shadow and drop shadow** */
+  text-shadow: 0 0 15px rgba(var(--acc-rgb), 0.3), 0 0 5px rgba(var(--acc-rgb), 0.1);
+  filter: drop-shadow(0 0 8px rgba(var(--acc-rgb), 0.25));
 }
 
 #date {
@@ -429,27 +493,30 @@ button:hover {
     transition: all var(--t);
     box-shadow: var(--s-light), var(--inner-shadow);
 
-    /* IMPROVED: Added active state for weather-link-button */
+    /* **IMPROVED: Added active state for weather-link-button** */
     &:active {
-      transform: translateY(0.1em) scale(0.99);
-      box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
+      transform: translateY(0.1em) scale(0.98);
+      box-shadow: var(--s-light), inset 0 2px 8px rgba(0,0,0,0.2);
+      background: rgba(var(--gb-rgb), 0.08);
     }
 }
 
 .weather-link-button:hover {
-    transform: translateY(-0.3em);
+    transform: translateY(-0.35em); /* **IMPROVED: Stronger hover lift** */
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+    box-shadow: var(--s), 0 0 10px rgba(var(--acc-rgb), 0.35); /* **IMPROVED: More pronounced glow** */
+    background: linear-gradient(135deg, var(--gl), rgba(var(--gb-rgb), 0.05)); /* **NEW: Subtle gradient on hover** */
 }
 
 .weather-link-button .weather-icon {
     font-size: clamp(1rem, 1.2vw, 2.2rem); /* Feinjustiert */
     color: var(--acc);
-    transition: all var(--t);
+    transition: all var(--t), color var(--t); /* **IMPROVED: Added color to transition** */
 }
 
 .weather-link-button:hover .weather-icon {
-    transform: scale(1.1);
+    transform: scale(1.15); /* **IMPROVED: Slightly stronger icon scale** */
+    color: var(--ah); /* **NEW: Icon color change on hover** */
 }
 
 .weather-notice {
@@ -473,6 +540,9 @@ button:hover {
   min-height: 0;
   flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
   overflow: hidden; /* Verhindert internes Scrollen */
+  background: var(--darker-bg); /* **NEW: Slightly darker background for prominence** */
+  border-radius: var(--r);
+  box-shadow: var(--s-light);
 }
 
 #quote-text {
@@ -499,6 +569,9 @@ button:hover {
   min-height: 0; /* Erlaubt dieser Sektion, zu schrumpfen */
   overflow: hidden; /* **WICHTIG: KEIN SCROLLEN AUCH HIER!** Wenn zu viele Apps, werden sie abgeschnitten. */
   flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+  background: var(--darker-bg); /* **NEW: Slightly darker background for prominence** */
+  border-radius: var(--r);
+  box-shadow: var(--s-light);
 }
 
 .apps-section h2 {
@@ -546,17 +619,19 @@ button:hover {
   min-width: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
   min-height: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
 
-  /* IMPROVED: Added active state for app-card */
+  /* **IMPROVED: Added active state for app-card** */
   &:active {
-    transform: translateY(0.1em) scale(0.98);
-    box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
+    transform: translateY(0.05em) scale(0.97); /* **IMPROVED: More pronounced active press** */
+    box-shadow: var(--s-light), inset 0 2px 8px rgba(0,0,0,0.2); /* **IMPROVED: Deeper inner shadow** */
+    background: rgba(var(--gb-rgb), 0.08);
   }
 }
 
 .app-card:hover {
-  transform: translateY(-0.5em);
+  transform: translateY(-0.6em); /* **IMPROVED: Stronger hover lift for app cards** */
   border-color: var(--acc);
-  box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+  /* **IMPROVED: Stronger, more vibrant glow for app cards** */
+  box-shadow: var(--s), 0 0 12px rgba(var(--acc-rgb), 0.4);
 }
 
 .app-card .icon {
@@ -572,7 +647,9 @@ button:hover {
 }
 
 .app-card:hover .icon {
-  transform: scale(1.1);
+  transform: scale(1.2); /* **IMPROVED: Stronger icon scale on hover** */
+  text-shadow: 0 0 10px rgba(var(--acc-rgb), 0.4); /* **NEW: Stronger text shadow on icon hover** */
+  color: var(--ah); /* **NEW: Icon color change on hover** */
 }
 
 .app-card .label {
@@ -586,6 +663,12 @@ button:hover {
   display: -webkit-box;
   -webkit-line-clamp: 2; /* Beschränkt auf 2 Zeilen */
   -webkit-box-orient: vertical;
+  transition: all 0.15s ease-out; /* **NEW: Added transition for label** */
+}
+
+.app-card:hover .label {
+  transform: scale(1.05); /* **NEW: Subtle label scale on hover** */
+  color: var(--ah); /* **NEW: Label color change on hover** */
 }
 
 /* --- SR-Only class for accessibility --- */
@@ -637,6 +720,8 @@ button:hover {
       min-height: 0;
       flex-shrink: 1; /* Sicherstellen, dass sie schrumpfen können */
       overflow: hidden;
+      background: var(--gl); /* **IMPROVED: Use glass background on mobile for consistency** */
+      box-shadow: var(--s), var(--inner-shadow); /* **IMPROVED: Use glass shadows on mobile** */
   }
 
   /* Die Uhr noch größer bei schmaleren Screens */
@@ -662,6 +747,8 @@ button:hover {
       min-height: clamp(70px, 14vh, 220px); /* Eine flexible Mindesthöhe, wieder etwas erhöht */
       padding: var(--fluid-padding-s); /* Feinjustiert */
       overflow-y: auto; /* **WICHTIG: Hier erlauben wir Scrollen, da sonst bei sehr vielen Apps ein harter Cut stattfindet.** */
+      background: var(--gl); /* **IMPROVED: Use glass background on mobile for consistency** */
+      box-shadow: var(--s), var(--inner-shadow); /* **IMPROVED: Use glass shadows on mobile** */
   }
   .apps-section h2 {
       font-size: clamp(0.6rem, 2.2vw, 1.2rem); /* Feinjustiert */
