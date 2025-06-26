@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MKWEB OS 7 Compact - Ihr personalisiertes, leistungsstarkes Single-Screen-Dashboard.">
-  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, minimalistisch, animiert, performance, mkweb, produktivität, startseite, single page">
+  <meta name="description" content="MKWEB OS 8 - Ihr personalisiertes, dynamisches und leistungsstarkes Dashboard.">
+  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, live daten, minimalistisch, animiert, performance, mkweb, produktivität, startseite, single page">
   <meta name="author" content="MKWEB">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yourwebsite.com/">
-  <meta property="og:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
-  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Single-Screen-Dashboard.">
+  <meta property="og:title" content="MKWEB OS 8 - Das Dynamische Dashboard">
+  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Single-Screen-Dashboard mit Live-Daten.">
   <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg">
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://yourwebsite.com/">
-  <meta property="twitter:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
-  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Single-Screen-Dashboard.">
+  <meta property="twitter:title" content="MKWEB OS 8 - Das Dynamische Dashboard">
+  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Single-Screen-Dashboard mit Live-Daten.">
   <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg">
-  <title>MKWEB OS 7 - Kompaktes Dashboard</title>
+  <title>MKWEB OS 8 - Dynamisches Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 </head>
 <body data-theme="dark">
-  <div class="container">
-    <header class="header glass">
-      <div class="logo" aria-label="MKWEB OS 7 Logo">MKWEB OS 7</div>
+  <div class="container animated">
+    <header class="header glass anim-fade-up" style="--anim-delay: 0.1s;">
+      <div class="logo" aria-label="MKWEB OS 8 Logo">MKWEB OS 8</div>
       <div class="controls">
         <button id="fullscreen-btn" class="glass" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
         <button id="user-avatar-toggle" class="glass" aria-label="Benutzer-Avatar ein-/ausblenden">🙈 Avatar ausblenden</button>
@@ -39,24 +39,30 @@
 
     <main class="main-grid">
       <div class="grid-left">
-        <section class="time-display glass">
+        <section class="time-display glass anim-fade-up" style="--anim-delay: 0.2s;">
           <h2 class="sr-only">Aktuelle Uhrzeit und Datum</h2>
           <div id="time"></div>
           <div id="date"></div>
         </section>
 
-        <section class="weather-link-section glass">
-            <h2>Aktuelles Wetter</h2>
-            <a href="https://www.google.com/search?q=wetter+Heidenheim" target="_blank" rel="noopener noreferrer" class="weather-link-button glass">
-                <span class="material-symbols-outlined weather-icon">cloudy_snowing</span>
-                Wetter in Heidenheim ansehen
+        <section id="weather-widget" class="weather-widget glass anim-fade-up" style="--anim-delay: 0.3s;">
+            <div id="weather-info">
+                <span id="weather-icon" class="material-symbols-outlined weather-icon">hourglass_empty</span>
+                <div class="weather-details">
+                    <h2 id="weather-temp">Lade...</h2>
+                    <p id="weather-desc">Wetter wird abgerufen</p>
+                </div>
+            </div>
+            <p id="weather-city">Heidenheim</p>
+             <a id="weather-details-link" href="https://www.google.com/search?q=wetter+Heidenheim" target="_blank" rel="noopener noreferrer" class="weather-details-link" aria-label="Details zum Wetter in Heidenheim auf Google ansehen">
+                <span>Details</span>
+                <span class="material-symbols-outlined">open_in_new</span>
             </a>
-            <p class="weather-notice">Klicke, um das aktuelle Wetter auf Google anzuzeigen.</p>
         </section>
-        </div>
+      </div>
 
       <div class="grid-right">
-        <section class="search-section glass">
+        <section class="search-section glass anim-fade-up" style="--anim-delay: 0.4s;">
           <h2 class="sr-only">Websuche</h2>
           <div class="search-engines" role="group" aria-label="Suchmaschinen auswählen">
             <button class="search-engine glass" data-engine="google" aria-pressed="true">Google</button>
@@ -73,12 +79,13 @@
           </div>
         </section>
 
-        <section class="quote-section glass">
-          <h2 class="sr-only">Tägliches Zitat</h2>
-          <p id="quote-text"></p>
+        <section class="quote-section glass anim-fade-up" style="--anim-delay: 0.5s;">
+          <h2 class="sr-only">Zitat des Tages</h2>
+          <p id="quote-text">Lade inspirierendes Zitat...</p>
           <small id="quote-author"></small>
         </section>
-        <section class="apps-section glass">
+        
+        <section class="apps-section glass anim-fade-up" style="--anim-delay: 0.6s;">
           <h2 id="apps-heading">✨ Apps & Bookmarks</h2>
           <div class="apps-container">
             <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
@@ -99,7 +106,7 @@
             <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web">
               <span class="material-symbols-outlined icon">chat_bubble</span><div class="label">WhatsApp</div>
             </a>
-            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
+            <a class="app-card glass" href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
               <span class="material-symbols-outlined icon">headphones</span><div class="label">Spotify</div>
             </a>
             <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub">
