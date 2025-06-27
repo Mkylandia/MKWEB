@@ -24,20 +24,12 @@
 	--fluid-gap-m: clamp(0.35rem, 0.45vw + 0.2vh, 1.2rem);
 
 	/* --- NEU: Zentrale Animations-Variablen für saubere & konsistente Effekte --- */
-	--t-duration: 0.3s; /* Etwas längere Dauer für weichere Animationen, leicht erhöht */
-	/* VERBESSERT: Custom cubic-bezier für subtilen Pop/Bounce-Effekt */
-	--t-timing-pop: cubic-bezier(0.34, 1.56, 0.64, 1); /* For hover pop */
-	--t-timing-press: cubic-bezier(0.2, 0.6, 0.8, 0.4); /* For active press */
-	--t-timing-ease: ease-in-out; /* Default ease for other transitions */
-
-	--t: var(--t-duration) var(--t-timing-ease); /* Kombinierte Variable für einfache Anwendung */
-	--t-pop: var(--t-duration) var(--t-timing-pop); /* Specific for pop effects */
-	--t-press: var(--t-duration) var(--t-timing-press); /* Specific for press effects */
-
-
-	--hover-lift: -6px; /* Einheitliche "Anheben"-Distanz für die meisten Hover-Effekte, leicht erhöht für mehr pop */
-	--active-press: 3px; /* Einheitliche "Hineindrücken"-Distanz für Klick-Effekte, leicht erhöht */
-	--hover-scale: 1.1; /* Einheitliche Skalierung für Icons etc., leicht erhöht für mehr pop */
+	--t-duration: 0.25s; /* Etwas längere Dauer für weichere Animationen */
+	--t-timing: ease-in-out; /* Weicher Start und sanftes Ende für alle Übergänge */
+	--t: var(--t-duration) var(--t-timing); /* Kombinierte Variable für einfache Anwendung */
+	--hover-lift: -4px; /* Einheitliche "Anheben"-Distanz für die meisten Hover-Effekte */
+	--active-press: 2px; /* Einheitliche "Hineindrücken"-Distanz für Klick-Effekte */
+	--hover-scale: 1.08; /* Einheitliche Skalierung für Icons etc. */
 
 	--r: 12px; /* Slightly smaller border-radius */
 	--s: 0 4px 12px rgba(0,0,0,0.08); /* Lighter shadow */
@@ -46,7 +38,7 @@
 	--border-width: 1px; /* Thinner borders */
 	--text-gradient-angle: 65deg;
 	--glass-reflection: transparent; /* Remove glass reflection */
-	--glow-strength: 0 0 10px; /* VERBESSERT: Etwas weicherer, subtilerer Glow, leicht erhöht */
+	--glow-strength: 0 0 8px; /* VERBESSERT: Etwas weicherer, subtilerer Glow */
 	--glow-color: var(--acc);
 	--blur-intensity: 10px; /* VERBESSERT: Blur leicht erhöht für einen schöneren Glas-Effekt */
 	--saturate-intensity: 120%; /* Reduced saturate intensity */
@@ -124,8 +116,8 @@ body {
 	border: var(--border-width) solid var(--gb);
 	border-radius: var(--r);
 	box-shadow: var(--s), var(--inner-shadow);
-	/* VERBESSERT: Explizite, performantere Transitions mit Pop-Timing */
-	transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t-pop);
+	/* VERBESSERT: Explizite, performantere Transitions */
+	transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
 	position: relative;
 	overflow: hidden;
 	transform: translateY(0); /* Expliziter Startpunkt für saubere Animation */
@@ -144,7 +136,7 @@ body {
 	}
 
 	&:hover {
-		/* VERBESSERT: Einheitliches Anheben und subtilerer Schatten mit Pop-Effekt */
+		/* VERBESSERT: Einheitliches Anheben und subtilerer Schatten */
 		transform: translateY(var(--hover-lift));
 		box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 	}
@@ -212,8 +204,8 @@ button {
 	background: var(--gl);
 	color: var(--fg);
 	cursor: pointer;
-	/* VERBESSERT: Explizite, performantere Transitions mit Pop/Press Timing */
-	transition: border-color var(--t), transform var(--t-pop), box-shadow var(--t), background-color var(--t);
+	/* VERBESSERT: Explizite, performantere Transitions */
+	transition: border-color var(--t), transform var(--t), box-shadow var(--t), background-color var(--t);
 	font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
 	font-weight: 600;
 	outline: none;
@@ -224,16 +216,15 @@ button {
 	transform: translateY(0); /* Expliziter Startpunkt */
 
 	&:active {
-		/* VERBESSERT: Einheitlicher "Drücken"-Effekt mit Bounce-Back */
-		transform: translateY(var(--active-press)) scale(0.98); /* Slightly less scale for buttons */
+		/* VERBESSERT: Einheitlicher "Drücken"-Effekt */
+		transform: translateY(var(--active-press)) scale(0.99);
 		box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
 		background: rgba(var(--gl-rgb), 0.05);
-		transition: transform var(--t-press); /* Faster and specific press timing */
 	}
 }
 
 button:hover {
-	/* VERBESSERT: Einheitliches Anheben und subtilerer Schatten mit Pop-Effekt */
+	/* VERBESSERT: Einheitliches Anheben und subtilerer Schatten */
 	transform: translateY(var(--hover-lift));
 	border-color: var(--acc);
 	box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
@@ -251,19 +242,14 @@ button:hover {
 	border: var(--border-width) solid var(--gb);
 	color: var(--acc);
 	cursor: pointer;
-	transition: all var(--t-pop); /* Pop timing for avatar */
+	transition: all var(--t);
 	box-shadow: var(--s-light);
 	overflow: hidden;
 	transform: translateY(0); /* Expliziter Startpunkt */
-
-	&:active {
-		transform: translateY(var(--active-press)) scale(0.95); /* More pronounced press for avatar */
-		transition: transform var(--t-press);
-	}
 }
 
 .user-avatar:hover {
-	/* VERBESSERT: Einheitliches Anheben mit Pop-Effekt */
+	/* VERBESSERT: Einheitliches Anheben */
 	transform: translateY(var(--hover-lift));
 	border-color: var(--acc);
 	box-shadow: var(--glow-strength) var(--acc), var(--s);
@@ -326,27 +312,22 @@ button:hover {
 	font-size: clamp(0.55rem, 0.8vw, 0.9rem); /* Suchauswahl bleibt so, wie sie war. */
 	border: var(--border-width) solid transparent;
 	background: var(--gl);
-	transition: all var(--t-pop); /* Pop timing for search engines */
+	transition: all var(--t);
 	transform: translateY(0);
 
 	&.active {
 		background: var(--acc);
 		color: #fff;
-		transform: translateY(-3px); /* Simpler active effect, slightly more lift */
+		transform: translateY(-2px); /* Simpler active effect */
 		box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); /* Lighter glow */
 		border-color: var(--acc);
 	}
 
 	&:not(.active):hover {
 		border-color: var(--acc);
-		/* VERBESSERT: Einheitliches, aber subtileres Anheben für diese Elemente mit Pop-Effekt */
-		transform: translateY(-3px);
+		/* VERBESSERT: Einheitliches, aber subtileres Anheben für diese Elemente */
+		transform: translateY(-2px);
 		box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light); /* Lighter inset shadow */
-	}
-
-	&:active {
-		transform: translateY(1px); /* Gentle press for active state */
-		transition: transform var(--t-press);
 	}
 }
 
@@ -362,9 +343,8 @@ button:hover {
 .search-box:focus-within {
 	border-color: var(--acc);
 	/* VERBESSERT: Skalierung ist ein sauberer Effekt, leicht vergrößert für besseres Feedback */
-	transform: scale(1.005); /* Very subtle scale to not disrupt layout */
+	transform: scale(1.01);
 	box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
-	transition: transform var(--t-pop); /* Add pop on focus */
 }
 
 #search {
@@ -419,69 +399,64 @@ button:hover {
 
 /* --- NEU: Wetter Link Sektion Styles --- */
 .weather-link-section {
-    padding: var(--fluid-padding-s); /* Feinjustiert */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    text-align: center;
-    min-height: 0;
-    flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
-    overflow: hidden; /* Verhindert internes Scrollen */
+    padding: var(--fluid-padding-s); /* Feinjustiert */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+    min-height: 0;
+    flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+    overflow: hidden; /* Verhindert internes Scrollen */
 }
 
 .weather-link-section h2 {
-    font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem); /* Feinjustiert */
-    font-weight: 700;
-    margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
-    color: var(--fg);
+    font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem); /* Feinjustiert */
+    font-weight: 700;
+    margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
+    color: var(--fg);
 }
 
 .weather-link-button {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--fluid-gap-s); /* Feinjustiert */
-    padding: var(--fluid-padding-s) var(--fluid-padding-m); /* Feinjustiert */
-    background: var(--gl);
-    border: var(--border-width) solid var(--gb);
-    border-radius: var(--r);
-    text-decoration: none;
-    color: var(--fg);
-    font-weight: 600;
-    font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
-    transition: all var(--t-pop); /* Pop timing for weather button */
-    box-shadow: var(--s-light), var(--inner-shadow);
-    transform: translateY(0);
-
-	&:active {
-		transform: translateY(var(--active-press)) scale(0.98);
-		transition: transform var(--t-press);
-	}
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fluid-gap-s); /* Feinjustiert */
+    padding: var(--fluid-padding-s) var(--fluid-padding-m); /* Feinjustiert */
+    background: var(--gl);
+    border: var(--border-width) solid var(--gb);
+    border-radius: var(--r);
+    text-decoration: none;
+    color: var(--fg);
+    font-weight: 600;
+    font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
+    transition: all var(--t);
+    box-shadow: var(--s-light), var(--inner-shadow);
+    transform: translateY(0);
 }
 
 .weather-link-button:hover {
-    /* VERBESSERT: Einheitliches Anheben mit Pop-Effekt */
-    transform: translateY(var(--hover-lift));
-    border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+    /* VERBESSERT: Einheitliches Anheben */
+    transform: translateY(var(--hover-lift));
+    border-color: var(--acc);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
 
 .weather-link-button .weather-icon {
-    font-size: clamp(1rem, 1.2vw, 2.2rem); /* Feinjustiert */
-    color: var(--acc);
-    transition: transform var(--t-pop); /* Pop timing for icon inside button */
+    font-size: clamp(1rem, 1.2vw, 2.2rem); /* Feinjustiert */
+    color: var(--acc);
+    transition: transform var(--t);
 }
 
 .weather-link-button:hover .weather-icon {
-    /* VERBESSERT: Einheitliche Skalierung mit Pop-Effekt */
-    transform: scale(var(--hover-scale));
+    /* VERBESSERT: Einheitliche Skalierung */
+    transform: scale(var(--hover-scale));
 }
 
 .weather-notice {
-    margin-top: var(--fluid-padding-s); /* Feinjustiert */
-    font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
-    color: var(--dim);
+    margin-top: var(--fluid-padding-s); /* Feinjustiert */
+    font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
+    color: var(--dim);
 }
 /* Ende Wetter Link Sektion Styles */
 
@@ -536,17 +511,17 @@ button:hover {
 }
 
 .apps-container {
-    /* Optimierte grid-template-columns für bessere Icon-Anordnung */
-    /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
-    /* Min-Größe wieder leicht erhöht, VH-Anteil für vertikale Schrumpfung wieder moderater */
-    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht, max leicht reduziert */
-    gap: var(--fluid-gap-s); /* Optimierter, responsiver Abstand zwischen Karten */
-    overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
-    padding: var(--fluid-padding-xs); /* Minimales Padding */
-    flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
-    min-height: 0;
-    display: grid;
-    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe */
+    /* Optimierte grid-template-columns für bessere Icon-Anordnung */
+    /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
+    /* Min-Größe wieder leicht erhöht, VH-Anteil für vertikale Schrumpfung wieder moderater */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht, max leicht reduziert */
+    gap: var(--fluid-gap-s); /* Optimierter, responsiver Abstand zwischen Karten */
+    overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
+    padding: var(--fluid-padding-xs); /* Minimales Padding */
+    flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
+    min-height: 0;
+    display: grid;
+    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe */
 }
 
 .app-card {
@@ -559,8 +534,8 @@ button:hover {
 	text-align: center;
 	text-decoration: none;
 	color: var(--fg);
-	/* VERBESSERT: Explizite, performantere Transitions mit Pop-Timing */
-	transition: border-color var(--t), box-shadow var(--t), transform var(--t-pop);
+	/* VERBESSERT: Explizite, performantere Transitions */
+	transition: border-color var(--t), box-shadow var(--t), transform var(--t);
 	position: relative;
 	overflow: hidden; /* Sicherstellen, dass nichts überläuft */
 	box-shadow: var(--s-light), var(--inner-shadow);
@@ -572,16 +547,11 @@ button:hover {
 	aspect-ratio: 1 / 1; /* Behält quadratisches Verhältnis */
 	min-width: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
 	min-height: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
-
-	&:active {
-		transform: translateY(var(--active-press)) scale(0.95); /* Stronger press effect for app cards */
-		transition: transform var(--t-press);
-	}
 }
 
 .app-card:hover {
-	/* VERBESSERT: Etwas stärkeres Anheben für die größeren App-Karten, aber immer noch konsistent mit Pop-Effekt */
-	transform: translateY(var(--hover-lift));
+	/* VERBESSERT: Etwas stärkeres Anheben für die größeren App-Karten, aber immer noch konsistent */
+	transform: translateY(-6px);
 	border-color: var(--acc);
 	box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
@@ -594,13 +564,13 @@ button:hover {
 	margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
 	display: block;
 	text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-	/* VERBESSERT: Saubere Transition nur für die Transformation mit Pop-Timing */
-	transition: transform var(--t-pop);
+	/* VERBESSERT: Saubere Transition nur für die Transformation */
+	transition: transform var(--t);
 	line-height: 1; /* Wichtig, um den vertikalen Raum des Icons zu kontrollieren */
 }
 
 .app-card:hover .icon {
-	/* VERBESSERT: Einheitliche Skalierung mit Pop-Effekt */
+	/* VERBESSERT: Einheitliche Skalierung */
 	transform: scale(var(--hover-scale));
 }
 
