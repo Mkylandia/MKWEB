@@ -67,10 +67,6 @@
   100% { background-position: 0% 50%; }
 }
 
-@keyframes float-particle {
-  to { transform: translateY(-100vh) rotate(360deg); }
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -115,6 +111,10 @@ body {
   border-radius: 50%;
   background: rgba(123, 76, 255, 0.15);
   animation: float-particle linear infinite;
+}
+
+@keyframes float-particle {
+  to { transform: translateY(-100vh) rotate(360deg); }
 }
 
 .container {
@@ -228,11 +228,6 @@ body {
   transform: translateY(2px) scale(var(--quantum-active));
 }
 
-.quantum-btn.active {
-  background: var(--quantum-acc);
-  color: white;
-}
-
 .user-avatar {
   width: 42px;
   height: 42px;
@@ -275,12 +270,6 @@ body {
   &::after {
     opacity: 1;
   }
-}
-
-.hidden-avatar {
-  opacity: 0 !important;
-  transform: scale(0.6) !important;
-  pointer-events: none !important;
 }
 
 /* Main Grid */
@@ -364,6 +353,20 @@ body {
   background: var(--quantum-gl);
   transition: all var(--quantum-duration) var(--quantum-easing);
   transform: perspective(1000px) translateZ(0);
+  
+  &.active {
+    background: var(--quantum-acc);
+    color: white;
+    transform: 
+      translateY(calc(-1 * var(--quantum-float))) 
+      scale(var(--quantum-scale));
+    box-shadow: 0 0 20px rgba(123, 76, 255, 0.3);
+  }
+
+  &:not(.active):hover {
+    border-color: var(--quantum-acc);
+    transform: translateY(calc(-0.5 * var(--quantum-float)));
+  }
 }
 
 .search-box {
@@ -411,6 +414,44 @@ body {
   margin-bottom: var(--quantum-space-xs);
   color: var(--quantum-fg);
   text-shadow: 0 0 10px rgba(123, 76, 255, 0.2);
+}
+
+.weather-link-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--quantum-space-xs);
+  padding: var(--quantum-space-xs) var(--quantum-space-md);
+  background: var(--quantum-gl);
+  border: 1px solid var(--quantum-gb);
+  border-radius: 100px;
+  text-decoration: none;
+  color: var(--quantum-fg);
+  font-weight: 600;
+  font-size: var(--quantum-text-sm);
+  transition: all var(--quantum-duration) var(--quantum-easing);
+  transform: perspective(1000px) translateZ(0);
+  box-shadow: var(--quantum-shadow);
+  
+  &:hover {
+    transform: 
+      translateY(calc(-1 * var(--quantum-float))) 
+      scale(var(--quantum-scale))
+      perspective(1000px) 
+      translateZ(20px);
+    border-color: var(--quantum-acc);
+    box-shadow: var(--quantum-shadow-hover), 0 0 25px rgba(123, 76, 255, 0.3);
+  }
+}
+
+.weather-link-button .weather-icon {
+  font-size: 1.8rem;
+  color: var(--quantum-acc);
+  transition: all var(--quantum-duration) var(--quantum-easing);
+}
+
+.weather-link-button:hover .weather-icon {
+  transform: rotate(8deg) scale(1.2);
+  filter: drop-shadow(0 0 8px rgba(123, 76, 255, 0.4));
 }
 
 .weather-notice {
@@ -470,7 +511,7 @@ body {
 
 .apps-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: var(--quantum-space-sm);
   flex-grow: 1;
   min-height: 0;
@@ -478,204 +519,84 @@ body {
   overflow: hidden;
 }
 
-/* iOS Animierter Button */
-.ios-animated-button {
-  position: relative;
+.app-card {
+  background: var(--quantum-gl);
+  border: 1px solid var(--quantum-gb);
+  border-radius: var(--quantum-radius);
+  padding: var(--quantum-space-xs);
+  text-decoration: none;
+  color: var(--quantum-fg);
+  transition: all var(--quantum-duration) var(--quantum-easing);
+  transform: perspective(1000px) translateZ(0);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--quantum-space-3xs);
-  padding: var(--quantum-space-xs) var(--quantum-space-md);
-  border: 3px solid transparent;
-  font-size: var(--quantum-text-sm);
-  background-color: transparent;
-  border-radius: 100px;
-  font-weight: 600;
-  color: var(--quantum-acc);
-  box-shadow: 0 0 0 2px var(--quantum-acc);
-  cursor: pointer;
-  overflow: hidden;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  text-decoration: none;
-}
-
-.ios-animated-button svg {
-  position: absolute;
-  width: 20px;
-  fill: var(--quantum-acc);
-  z-index: 9;
-  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.ios-animated-button .arr-1 {
-  right: var(--quantum-space-sm);
-}
-
-.ios-animated-button .arr-2 {
-  left: -25%;
-}
-
-.ios-animated-button .circle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  background-color: var(--quantum-acc);
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.ios-animated-button .text {
-  position: relative;
-  z-index: 1;
-  transform: translateX(-12px);
-  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.ios-animated-button:hover {
-  box-shadow: 0 0 0 12px transparent;
-  color: white;
-  border-radius: var(--quantum-radius);
-}
-
-.ios-animated-button:hover .arr-1 {
-  right: -25%;
-}
-
-.ios-animated-button:hover .arr-2 {
-  left: var(--quantum-space-sm);
-}
-
-.ios-animated-button:hover .text {
-  transform: translateX(12px);
-}
-
-.ios-animated-button:hover svg {
-  fill: white;
-}
-
-.ios-animated-button:active {
-  scale: 0.95;
-  box-shadow: 0 0 0 4px var(--quantum-acc);
-}
-
-.ios-animated-button:hover .circle {
-  width: 220px;
-  height: 220px;
-  opacity: 1;
-}
-
-/* iOS App Cards - Animiert */
-.ios-app-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: white;
-  border-radius: var(--quantum-radius);
-  overflow: hidden;
-  box-shadow: var(--quantum-shadow);
-  transition: var(--quantum-transition);
   aspect-ratio: 1/1;
+  overflow: hidden;
   animation: quantum-fade 0.8s var(--quantum-easing) calc(0.1s * var(--i)) both;
+  
+  &:hover {
+    transform: 
+      translateY(calc(-1 * var(--quantum-float))) 
+      scale(var(--quantum-scale))
+      perspective(1000px) 
+      translateZ(20px);
+    border-color: var(--quantum-acc);
+    box-shadow: var(--quantum-shadow-hover), 0 0 20px rgba(123, 76, 255, 0.3);
+    z-index: 10;
+  }
 }
 
-.app-background {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--app-color), color-mix(in srgb, var(--app-color) 70%, black));
-  opacity: 0.9;
+.app-card .icon {
+  font-family: 'Material Symbols Outlined';
+  font-size: 2.2rem;
+  margin-bottom: var(--quantum-space-3xs);
+  transition: all var(--quantum-duration) var(--quantum-easing);
+  color: var(--quantum-acc);
 }
 
-.app-logo {
-  position: absolute;
-  right: 50%;
-  bottom: 50%;
-  transform: translate(50%, 50%);
-  transition: var(--quantum-transition);
-  z-index: 2;
+.app-card:hover .icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px rgba(123, 76, 255, 0.4));
 }
 
-.app-logo .material-symbols-outlined {
-  font-size: 2.5rem;
-  color: white;
+.app-card .label {
+  font-size: var(--quantum-text-xs);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
-.app-box {
-  position: absolute;
-  padding: var(--quantum-space-3xs);
-  text-align: right;
-  background: rgba(255, 255, 255, 0.3);
-  border-top: 2px solid rgba(255, 255, 255, 0.5);
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10% 13% 42% 0%/10% 12% 75% 0%;
-  box-shadow: rgba(100, 100, 111, 0.1) -4px 4px 10px 0px;
-  transform-origin: bottom left;
-  transition: var(--quantum-transition);
+/* Quantum Particles Generator */
+function createParticles() {
+  const container = document.querySelector('.quantum-particles');
+  const particleCount = 30;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    
+    const size = Math.random() * 10 + 2;
+    const posX = Math.random() * 100;
+    const duration = Math.random() * 20 + 10;
+    const delay = Math.random() * 5;
+    
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${posX}%`;
+    particle.style.bottom = `-${size}px`;
+    particle.style.animationDuration = `${duration}s`;
+    particle.style.animationDelay = `${delay}s`;
+    particle.style.opacity = Math.random() * 0.4 + 0.1;
+    
+    container.appendChild(particle);
+  }
 }
 
-.app-box::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  opacity: 0;
-  transition: var(--quantum-transition);
-  background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
-}
-
-.box1 {
-  width: 70%;
-  height: 70%;
-  bottom: -70%;
-  left: -70%;
-}
-
-.box2 {
-  width: 50%;
-  height: 50%;
-  bottom: -50%;
-  left: -50%;
-  transition-delay: 0.1s;
-}
-
-.box3 {
-  width: 30%;
-  height: 30%;
-  bottom: -30%;
-  left: -30%;
-  transition-delay: 0.2s;
-}
-
-.box4 {
-  width: 10%;
-  height: 10%;
-  bottom: -10%;
-  left: -10%;
-  transition-delay: 0.3s;
-}
-
-.ios-app-card:hover {
-  transform: scale(1.05);
-  box-shadow: var(--quantum-shadow-hover);
-}
-
-.ios-app-card:hover .app-box {
-  bottom: -1px;
-  left: -1px;
-}
-
-.ios-app-card:hover .app-logo {
-  transform: translate(0, 0);
-  bottom: var(--quantum-space-sm);
-  right: var(--quantum-space-sm);
-}
-
-.ios-app-card:hover .app-box::before {
-  opacity: 0.7;
-}
+/* Init Particles */
+document.addEventListener('DOMContentLoaded', createParticles);
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
@@ -713,10 +634,6 @@ body {
   }
   
   .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  }
-  
-  .ios-app-card {
-    aspect-ratio: 1/1;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
   }
 }
