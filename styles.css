@@ -1,4 +1,4 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid Premium - Version 3.0 */
+/* styles.css - MKWEB OS 7: Ultra-Polished Premium - Version 4.0 */
 
 /* --- Optimized Design Variables --- */
 :root {
@@ -7,9 +7,8 @@
   --fluid-max-font: clamp(0.75rem, 0.95vw, 1.2rem);
   --fluid-header-font: clamp(1.1rem, 1.15vw, 2.4rem);
   --fluid-time-font: clamp(2rem, 3.2vw, 6.5rem);
-  --fluid-search-title: clamp(1rem, 1.8vw, 2.5rem);
   
-  /* Adaptive Spacing System */
+  /* Adaptive Spacing */
   --space-xxs: clamp(0.15rem, 0.2vw + 0.1vh, 0.5rem);
   --space-xs: clamp(0.25rem, 0.3vw + 0.15vh, 0.8rem);
   --space-s: clamp(0.35rem, 0.45vw + 0.22vh, 1.1rem);
@@ -17,45 +16,42 @@
   --space-l: clamp(0.75rem, 0.9vw + 0.45vh, 2rem);
   --space-xl: clamp(1rem, 1.2vw + 0.6vh, 2.5rem);
   
-  /* Adaptive Gap System */
-  --gap-xs: clamp(0.15rem, 0.2vw + 0.08vh, 0.5rem);
-  --gap-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.9rem);
-  --gap-m: clamp(0.4rem, 0.5vw + 0.25vh, 1.3rem);
-  --gap-l: clamp(0.6rem, 0.7vw + 0.35vh, 1.8rem);
+  /* Adaptive Gaps */
+  --gap-xxs: clamp(0.15rem, 0.15vw + 0.1vh, 0.4rem);
+  --gap-xs: clamp(0.25rem, 0.25vw + 0.15vh, 0.7rem);
+  --gap-s: clamp(0.35rem, 0.35vw + 0.2vh, 1rem);
+  --gap-m: clamp(0.5rem, 0.5vw + 0.3vh, 1.3rem);
   
   /* Faster Animation Variables */
-  --t-fast: 0.16s cubic-bezier(0.25, 0.8, 0.5, 1);
-  --t: 0.18s cubic-bezier(0.32, 0.8, 0.6, 1);
-  --t-slow: 0.28s cubic-bezier(0.2, 0.8, 0.4, 1);
-  --t-bounce: 0.24s cubic-bezier(0.68, -0.4, 0.27, 1.3);
-  --t-elastic: 0.32s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  --t-fast: 0.12s cubic-bezier(0.32, 0.8, 0.7, 1);
+  --t: 0.16s cubic-bezier(0.34, 0.9, 0.6, 1);
+  --t-bounce: 0.2s cubic-bezier(0.68, -0.25, 0.27, 1.3);
   
   /* Enhanced Visual Variables */
-  --r: clamp(10px, 1.1vw, 18px);
-  --r-lg: clamp(14px, 1.4vw, 22px);
-  --r-xl: clamp(18px, 1.8vw, 28px);
-  --s: 0 4px 12px rgba(0,0,0,0.14);
-  --sh: 0 8px 24px rgba(0,0,0,0.22);
-  --s-light: 0 2px 6px rgba(0,0,0,0.08);
+  --r: clamp(10px, 1.1vw, 16px);
+  --r-lg: clamp(14px, 1.4vw, 20px);
+  --r-xl: clamp(18px, 1.8vw, 24px);
+  --s: 0 4px 10px rgba(0,0,0,0.16);
+  --sh: 0 6px 18px rgba(0,0,0,0.22);
+  --s-light: 0 2px 5px rgba(0,0,0,0.1);
   --border-width: clamp(0.8px, 0.1vw, 1.2px);
-  --glass-reflection: linear-gradient(120deg, rgba(255,255,255,0.12) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.08) 100%);
-  --glow-strength: 0 0 10px;
-  --blur-intensity: clamp(10px, 1.2vw, 16px);
-  --saturate-intensity: 160%;
-  --content-max-width: min(1850px, 95vw);
+  --glass-reflection: linear-gradient(120deg, rgba(255,255,255,0.15) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.1) 100%);
+  --glow-strength: 0 0 8px;
+  --blur-intensity: clamp(10px, 1.2vw, 14px);
+  --saturate-intensity: 180%;
+  --content-max-width: min(1850px, 94vw);
   
   /* Premium Color Scheme */
   --bg: #0a0a0a;
-  --fg: #f5f5f5;
-  --dim: rgba(245,245,245,0.7);
-  --acc: #8a5ce6;
-  --ah: #b18aff;
-  --gl: rgba(255,255,255,0.08);
-  --gb: rgba(255,255,255,0.2);
-  --acc-rgb: 138, 92, 230;
-  --fg-rgb: 245, 245, 245;
-  --ah-rgb: 177, 138, 255;
-  --gb-rgb: 255, 255, 255;
+  --fg: #f8f8f8;
+  --dim: rgba(248,248,248,0.7);
+  --acc: #8d63f0;
+  --ah: #b28fff;
+  --gl: rgba(255,255,255,0.09);
+  --gb: rgba(255,255,255,0.22);
+  --acc-rgb: 141, 99, 240;
+  --fg-rgb: 248, 248, 248;
+  --ah-rgb: 178, 143, 255;
   
   /* Text Gradients */
   --text-gradient: linear-gradient(75deg, var(--acc), var(--ah), var(--acc));
@@ -63,33 +59,25 @@
 }
 
 /* --- Base Styles --- */
-html {
-  scroll-behavior: smooth;
-  font-size: clamp(6px, 0.65vw, 16px);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 body {
+  margin: 0;
   background: var(--bg);
   color: var(--fg);
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
-  transition: background var(--t-slow), color var(--t-slow);
+  position: relative;
 }
 
+/* --- No-Scroll Container --- */
 .container {
   position: relative;
   z-index: 2;
@@ -101,15 +89,16 @@ body {
   gap: var(--gap-m);
   flex-grow: 1;
   min-height: 0;
+  overflow: hidden;
 }
 
-/* --- Premium Glassmorphism --- */
+/* --- Polished Glassmorphism --- */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  box-shadow: var(--s), inset 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: var(--s), inset 0 0 6px rgba(0,0,0,0.08);
   transition: all var(--t-fast);
   position: relative;
   overflow: visible;
@@ -138,11 +127,11 @@ body {
     background: var(--glass-reflection);
     border-radius: var(--r);
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   &:hover {
-    transform: translateY(-0.4em);
+    transform: translateY(-0.35em);
     box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     
     &::before {
@@ -152,7 +141,7 @@ body {
   }
 
   &:active {
-    transform: translateY(-0.15em);
+    transform: translateY(-0.1em);
   }
 }
 
@@ -175,8 +164,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 12s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em;
   transition: all var(--t);
 }
 
@@ -188,7 +176,7 @@ body {
 
 .controls {
   display: flex;
-  gap: var(--gap-s);
+  gap: var(--gap-xs);
   align-items: center;
 }
 
@@ -217,13 +205,13 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.22), transparent);
     opacity: 0;
     transition: opacity var(--t-fast);
   }
 
   &:hover {
-    transform: translateY(-0.3em);
+    transform: translateY(-0.25em);
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     
@@ -234,18 +222,18 @@ button {
 
   &:active {
     transform: translateY(0.05em) scale(0.98);
-    box-shadow: var(--s-light), inset 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: var(--s-light), inset 0 1px 3px rgba(0,0,0,0.2);
   }
 }
 
 .user-avatar {
-  width: clamp(24px, 2.7vw, 42px);
-  height: clamp(24px, 2.7vw, 42px);
+  width: clamp(24px, 2.7vw, 40px);
+  height: clamp(24px, 2.7vw, 40px);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(0.9rem, 1.1vw, 1.8rem);
+  font-size: clamp(0.9rem, 1.1vw, 1.6rem);
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
@@ -256,13 +244,13 @@ button {
   will-change: transform;
 
   &:hover {
-    transform: translateY(-0.4em) scale(1.06);
+    transform: translateY(-0.35em) scale(1.05);
     border-color: var(--acc);
     box-shadow: var(--glow-strength) var(--acc), var(--s);
   }
 }
 
-/* --- Main Grid Layout --- */
+/* --- Main Grid Layout - No Scroll --- */
 .main-grid {
   width: 100%;
   max-width: var(--content-max-width);
@@ -297,11 +285,11 @@ button {
   overflow: visible;
   position: relative;
   z-index: 10;
-  margin-bottom: 1.2em;
+  margin-bottom: 1.5em;
 }
 
 .search-title {
-  font-size: var(--fluid-search-title);
+  font-size: clamp(1.2rem, 1.8vw, 2.2rem);
   font-weight: 800;
   margin-bottom: var(--space-m);
   text-align: center;
@@ -311,21 +299,22 @@ button {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 6s linear infinite;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  transition: all var(--t);
   padding: 0 var(--space-s);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .search-engines {
   display: flex;
-  gap: var(--gap-xs);
+  gap: var(--gap-xxs);
   margin-bottom: var(--space-m);
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .search-engine {
-  padding: var(--space-xs) var(--space-s);
+  padding: var(--space-xxs) var(--space-s);
   border-radius: 30px;
   font-weight: 600;
   font-size: var(--fluid-min-font);
@@ -382,8 +371,8 @@ button {
   align-items: center;
   border-radius: var(--r-xl);
   padding: var(--space-m);
-  transition: all var(--t-elastic);
-  box-shadow: var(--s), inset 0 0 8px rgba(0,0,0,0.1);
+  transition: all var(--t-bounce);
+  box-shadow: var(--s), inset 0 0 6px rgba(0,0,0,0.1);
   will-change: transform;
   position: relative;
   z-index: 1;
@@ -404,7 +393,7 @@ button {
   }
 
   &:focus-within {
-    transform: scale(1.02) translateY(-0.4em);
+    transform: scale(1.02) translateY(-0.35em);
     box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
 
     &::before {
@@ -414,7 +403,7 @@ button {
 }
 
 .search-box:hover {
-  transform: translateY(-0.4em);
+  transform: translateY(-0.35em);
   box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
   
   &::before {
@@ -445,7 +434,7 @@ button {
 }
 
 .search-icon {
-  font-size: clamp(1rem, 1.2vw, 1.6rem);
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
   color: var(--dim);
   transition: all var(--t-bounce);
 }
@@ -472,7 +461,7 @@ button {
 #time {
   font-size: var(--fluid-time-font);
   font-weight: 800;
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-xxs);
   background: var(--time-gradient);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -493,7 +482,7 @@ button {
   transition: all var(--t);
 }
 
-/* --- Premium Weather Link Section --- */
+/* --- Premium Weather Link --- */
 .weather-link-section {
   padding: var(--space-m);
   display: flex;
@@ -512,13 +501,13 @@ button {
   font-weight: 700;
   margin-bottom: var(--space-m);
   color: var(--fg);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .weather-link-button {
   display: inline-flex;
   align-items: center;
-  gap: var(--gap-m);
+  gap: var(--gap-s);
   padding: var(--space-m) var(--space-l);
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
@@ -528,7 +517,7 @@ button {
   font-weight: 600;
   font-size: var(--fluid-max-font);
   transition: all var(--t-bounce);
-  box-shadow: var(--s-light), inset 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: var(--s-light), inset 0 0 6px rgba(0,0,0,0.1);
   will-change: transform;
   position: relative;
   overflow: hidden;
@@ -546,7 +535,7 @@ button {
   }
 
   &:hover {
-    transform: translateY(-0.4em);
+    transform: translateY(-0.35em);
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 
@@ -557,14 +546,14 @@ button {
 }
 
 .weather-link-button .weather-icon {
-  font-size: clamp(1.2rem, 1.5vw, 2.4rem);
+  font-size: clamp(1.2rem, 1.5vw, 2.2rem);
   color: var(--acc);
   transition: all var(--t-bounce);
   filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.3));
 }
 
 .weather-link-button:hover .weather-icon {
-  transform: scale(1.15) rotate(6deg);
+  transform: scale(1.12) rotate(5deg);
   filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.5));
 }
 
@@ -592,10 +581,10 @@ button {
 #quote-text {
   font-size: var(--fluid-max-font);
   font-weight: 600;
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-xxs);
   color: var(--fg);
   line-height: 1.4;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   padding: 0 var(--space-m);
   position: relative;
   font-style: italic;
@@ -610,11 +599,11 @@ button {
   }
 
   &::before {
-    margin-right: 0.15em;
+    margin-right: 0.12em;
   }
 
   &::after {
-    margin-left: 0.15em;
+    margin-left: 0.12em;
   }
 }
 
@@ -629,7 +618,7 @@ button {
   }
 }
 
-/* --- Premium Apps Section --- */
+/* --- Premium Apps Section - No Scroll --- */
 .apps-section {
   width: 100%;
   padding: var(--space-m);
@@ -649,20 +638,20 @@ button {
   font-weight: 700;
   text-align: center;
   color: var(--dim);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .apps-container {
-  grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 7.5vw, 100px), 1fr));
-  gap: var(--gap-m);
-  padding: var(--space-xs);
+  grid-template-columns: repeat(auto-fill, minmax(clamp(64px, 8vw, 96px), 1fr));
+  gap: var(--gap-s);
+  padding: var(--space-xxs);
   display: grid;
   flex-grow: 1;
   min-height: 0;
   max-height: 100%;
   position: relative;
   z-index: 1;
-  overflow-y: auto;
+  overflow: hidden;
   align-content: start;
 }
 
@@ -670,14 +659,14 @@ button {
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  padding: clamp(0.4rem, 0.6vw, 1rem);
+  padding: var(--space-xs);
   text-align: center;
   text-decoration: none;
   color: var(--fg);
   transition: all var(--t-bounce);
   position: relative;
   overflow: visible;
-  box-shadow: var(--s-light), inset 0 0 6px rgba(0,0,0,0.1);
+  box-shadow: var(--s-light), inset 0 0 4px rgba(0,0,0,0.08);
   transform: none;
   display: flex;
   flex-direction: column;
@@ -703,7 +692,7 @@ button {
   }
 
   &:hover {
-    transform: translateY(-0.5em) scale(1.06);
+    transform: translateY(-0.45em) scale(1.05);
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
     z-index: 2;
@@ -714,14 +703,14 @@ button {
   }
 
   &:active {
-    transform: translateY(-0.3em) scale(0.98);
+    transform: translateY(-0.25em) scale(0.98);
   }
 }
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  font-size: clamp(1.3rem, 1.8vw, 2.6rem);
-  margin-bottom: clamp(0.2rem, 0.25vw, 0.5rem);
+  font-size: clamp(1.4rem, 1.9vw, 2.4rem);
+  margin-bottom: var(--space-xxs);
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
   transition: all var(--t-bounce);
@@ -730,11 +719,11 @@ button {
 }
 
 .app-card:hover .icon {
-  transform: scale(1.15) rotate(6deg);
+  transform: scale(1.12) rotate(5deg);
 }
 
 .app-card .label {
-  font-size: clamp(0.55rem, 0.65vw, 0.95rem);
+  font-size: clamp(0.55rem, 0.65vw, 0.9rem);
   font-weight: 500;
   line-height: 1.15;
   word-break: break-word;
@@ -745,18 +734,7 @@ button {
   -webkit-box-orient: vertical;
 }
 
-/* --- Enhanced Responsive Design --- */
-@media (max-width: 1200px) {
-  .main-grid {
-    gap: var(--gap-s);
-  }
-  
-  .search-section, .time-display, 
-  .weather-link-section, .quote-section {
-    padding: var(--space-s);
-  }
-}
-
+/* --- Responsive Design - No Scroll Guarantee --- */
 @media (max-width: 992px) {
   .container {
     padding: var(--space-l);
@@ -765,51 +743,28 @@ button {
   
   .main-grid {
     grid-template-columns: 1fr;
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-m);
-    overflow-y: auto;
+    grid-template-rows: auto auto auto auto;
+    display: grid;
+    gap: var(--gap-s);
+    overflow: hidden;
     height: auto;
   }
   
   .grid-left, .grid-right {
     gap: var(--gap-s);
-    height: auto;
-    min-height: 0;
-  }
-  
-  .time-display, .search-section, 
-  .weather-link-section, .quote-section {
-    flex-grow: 0;
     min-height: 0;
     flex-shrink: 1;
-    overflow: hidden;
   }
   
-  .search-section {
-    margin-bottom: 0.8em;
-    padding-bottom: var(--space-m);
-  }
-  
-  .search-box {
-    margin-top: 0.5em;
-  }
-
-  .search-box:focus-within {
-    transform: scale(1.01) translateY(-0.3em);
-  }
-  
-  .apps-section {
-    order: 4;
-    flex-grow: 1;
-    min-height: clamp(100px, 20vh, 250px);
-    padding: var(--space-m);
-  }
+  .time-display { order: 1; }
+  .search-section { order: 2; margin-bottom: 1em; }
+  .weather-link-section { order: 3; }
+  .quote-section { order: 4; }
+  .apps-section { order: 5; }
   
   .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(clamp(55px, 9.5vw, 90px), 1fr));
-    gap: var(--gap-s);
-    padding-bottom: 0.5em;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(60px, 10vw, 85px), 1fr));
+    gap: var(--gap-xs);
   }
 }
 
@@ -820,72 +775,47 @@ button {
   
   .header {
     flex-direction: column;
-    gap: var(--gap-s);
-    padding: var(--space-m);
-  }
-  
-  .controls {
-    gap: var(--gap-m);
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: var(--gap-xs);
+    padding: var(--space-s) 0;
   }
   
   .search-title {
-    font-size: clamp(1.2rem, 4.2vw, 2rem);
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
     margin-bottom: var(--space-s);
+  }
+  
+  #time {
+    font-size: clamp(2rem, 8vw, 4.5rem);
   }
   
   .weather-link-button {
     padding: var(--space-s) var(--space-m);
-  }
-  
-  #time {
-    font-size: clamp(1.8rem, 7.5vw, 5rem);
-  }
-  
-  #date {
-    font-size: clamp(0.5rem, 2vw, 1rem);
   }
 }
 
 @media (max-width: 480px) {
   .container {
     padding: var(--space-m) var(--space-s);
-    gap: var(--gap-s);
   }
   
   .search-engines {
-    gap: var(--gap-xs);
+    gap: var(--gap-xxs);
     margin-bottom: var(--space-s);
   }
   
   .search-engine {
-    padding: var(--space-xs) var(--space-s);
+    padding: var(--space-xxs) var(--space-s);
   }
   
   .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
-    gap: var(--gap-xs);
-  }
-  
-  .app-card {
-    padding: var(--space-xs);
-    margin-top: 0.3em;
-  }
-  
-  .app-card .icon {
-    font-size: clamp(1.2rem, 4vw, 2rem);
-  }
-  
-  .app-card .label {
-    font-size: clamp(0.5rem, 1.8vw, 0.8rem);
+    grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
   }
 }
 
 /* Fallback for browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.15);
+    background: rgba(255,255,255,0.12);
   }
 }
 
@@ -896,7 +826,6 @@ button {
     --fluid-max-font: 1.05vw;
     --fluid-header-font: 1.25vw;
     --fluid-time-font: 3.5vw;
-    --fluid-search-title: 2vw;
     
     --space-xxs: 0.3vw;
     --space-xs: 0.45vw;
@@ -905,19 +834,15 @@ button {
     --space-l: 1.1vw;
     --space-xl: 1.4vw;
     
-    --gap-xs: 0.25vw;
+    --gap-xxs: 0.2vw;
+    --gap-xs: 0.3vw;
     --gap-s: 0.4vw;
-    --gap-m: 0.6vw;
-    --gap-l: 0.8vw;
+    --gap-m: 0.55vw;
     
     --r: 0.9vw;
     --r-lg: 1.2vw;
     --r-xl: 1.6vw;
     
     --blur-intensity: 1.3vw;
-  }
-  
-  .container {
-    padding: 1.6vw;
   }
 }
