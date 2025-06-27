@@ -1,4 +1,4 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Premium Version 2.1 */
+/* styles.css - MKWEB OS 7: iOS-Optimierte Version */
 
 /* --- Global Design Variables - Premium --- */
 :root {
@@ -21,11 +21,11 @@
   --fluid-gap-s: clamp(0.3rem, 0.4vw + 0.18vh, 0.9rem);
   --fluid-gap-m: clamp(0.4rem, 0.5vw + 0.25vh, 1.3rem);
 
-  /* Premium Animation Variables */
-  --t: 0.22s cubic-bezier(0.25, 0.8, 0.5, 1);
-  --t-slow: 0.4s cubic-bezier(0.2, 0.6, 0.4, 1);
-  --t-bounce: 0.35s cubic-bezier(0.68, -0.4, 0.27, 1.3);
-  --t-elastic: 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  /* iOS Animation Timing */
+  --t: 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Standard iOS Easing */
+  --t-slow: 0.38s cubic-bezier(0.55, 0.055, 0.675, 0.19); /* Schnelle Interaktion */
+  --t-bounce: 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* iOS Bounce */
+  --t-elastic: 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Elastischer Effekt */
   
   /* Premium Visual Variables */
   --r: 14px;
@@ -60,6 +60,17 @@
   --gb-rgb: 255, 255, 255;
 }
 
+/* --- Reduced Motion Support --- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+}
+
 /* --- Base Styles --- */
 html {
   scroll-behavior: smooth;
@@ -89,6 +100,32 @@ body {
   flex-direction: column;
 }
 
+/* --- Parallax Effekt für Hintergrund --- */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(149, 101, 230, 0.08) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* --- Parallax beim Bewegen --- */
+@media (hover: hover) {
+  body:hover::before {
+    transform: translate3d(
+      calc((var(--mouse-x, 0.5) - 0.5) * 20px),
+      calc((var(--mouse-y, 0.5) - 0.5) * 20px),
+      0
+    );
+  }
+}
+
 .container {
   position: relative;
   z-index: 2;
@@ -105,15 +142,17 @@ body {
 /* --- Premium Glassmorphism --- */
 .glass {
   background: var(--gl);
+  -webkit-backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  transition: all var(--t-slow);
+  transition: transform var(--t), box-shadow var(--t-slow);
   position: relative;
   overflow: visible;
-  transform: none;
+  transform: translate3d(0, 0, 0);
   will-change: transform, box-shadow;
+  backface-visibility: hidden;
 
   &::before {
     content: '';
@@ -141,7 +180,7 @@ body {
   }
 
   &:hover {
-    transform: translateY(-0.5em);
+    transform: translate3d(0, -0.5em, 0);
     box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     
     &::before {
@@ -151,7 +190,7 @@ body {
   }
 
   &:active {
-    transform: translateY(-0.2em);
+    transform: translate3d(0, -0.2em, 0);
     transition: transform 0.15s ease-out;
   }
 }
@@ -189,7 +228,7 @@ body {
 
 @keyframes pulse {
   0% { opacity: 1; }
-  50% { opacity: 0.85; }
+  50% { opacity: 0.92; }
   100% { opacity: 1; }
 }
 
@@ -207,7 +246,10 @@ button {
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: all var(--t-bounce);
+  transition: 
+    transform var(--t-bounce),
+    box-shadow var(--t),
+    border-color var(--t);
   font-size: clamp(0.55rem, var(--fluid-min-font), 0.85rem);
   font-weight: 600;
   outline: none;
@@ -216,6 +258,8 @@ button {
   z-index: 1;
   overflow: hidden;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 
   &::after {
     content: '';
@@ -230,7 +274,7 @@ button {
   }
 
   &:hover {
-    transform: translateY(-0.35em);
+    transform: translate3d(0, -0.35em, 0);
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     
@@ -240,7 +284,7 @@ button {
   }
 
   &:active {
-    transform: translateY(0.1em) scale(0.97);
+    transform: translate3d(0, 0.1em, 0) scale(0.96);
     box-shadow: var(--s-light), inset 0 3px 6px rgba(0,0,0,0.2);
   }
 }
@@ -261,9 +305,11 @@ button {
   box-shadow: var(--s-light);
   overflow: hidden;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 
   &:hover {
-    transform: translateY(-0.5em) scale(1.08);
+    transform: translate3d(0, -0.5em, 0) scale(1.08);
     border-color: var(--acc);
     box-shadow: var(--glow-strength) var(--acc), var(--s);
   }
@@ -301,10 +347,10 @@ button {
   flex-grow: 1;
   min-height: 0;
   flex-shrink: 1;
-  overflow: visible; /* Changed to visible to prevent clipping */
+  overflow: visible;
   position: relative;
-  z-index: 10; /* Higher z-index to ensure it stays on top */
-  margin-bottom: 1em; /* Added space for hover effect */
+  z-index: 10;
+  margin-bottom: 1em;
 }
 
 .search-title {
@@ -344,6 +390,8 @@ button {
   will-change: transform;
   position: relative;
   overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 
   &::after {
     content: '';
@@ -360,7 +408,7 @@ button {
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-0.25em);
+    transform: translate3d(0, -0.25em, 0);
     box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s);
     border-color: var(--acc);
 
@@ -371,7 +419,7 @@ button {
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-0.2em);
+    transform: translate3d(0, -0.2em, 0);
     box-shadow: var(--s-light);
 
     &::after {
@@ -383,7 +431,7 @@ button {
 .search-box-container {
   position: relative;
   z-index: 10;
-  margin-top: 1em; /* Added space for hover effect */
+  margin-top: 1em;
 }
 
 .search-box {
@@ -391,12 +439,16 @@ button {
   align-items: center;
   border-radius: var(--r-xl);
   padding: var(--fluid-padding-m);
-  transition: all var(--t-elastic);
+  transition: 
+    transform var(--t-elastic),
+    box-shadow var(--t-slow);
   box-shadow: var(--s), var(--inner-shadow);
   will-change: transform;
   position: relative;
   z-index: 1;
-  margin-top: 0.5em; /* Added space for hover effect */
+  margin-top: 0.5em;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 
   &::before {
     content: '';
@@ -414,7 +466,7 @@ button {
   }
 
   &:focus-within {
-    transform: scale(1.02) translateY(-0.5em); /* Combined transform */
+    transform: translate3d(0, -0.5em, 0) scale(1.02);
     box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
 
     &::before {
@@ -423,9 +475,8 @@ button {
   }
 }
 
-/* New hover effect for search box */
 .search-box:hover {
-  transform: translateY(-0.5em);
+  transform: translate3d(0, -0.5em, 0);
   box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
   
   &::before {
@@ -459,7 +510,9 @@ button {
 .search-icon {
   font-size: clamp(1rem, 1.2vw, 1.8rem);
   color: var(--dim);
-  transition: all var(--t-bounce);
+  transition: 
+    transform var(--t-bounce),
+    color var(--t);
 }
 
 .search-box:focus-within .search-icon,
@@ -544,6 +597,8 @@ button {
   will-change: transform;
   position: relative;
   overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 
   &::before {
     content: '';
@@ -558,7 +613,7 @@ button {
   }
 
   &:hover {
-    transform: translateY(-0.5em);
+    transform: translate3d(0, -0.5em, 0);
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 
@@ -654,7 +709,7 @@ button {
   overflow: hidden;
   flex-shrink: 1;
   position: relative;
-  z-index: 1; /* Lower than search section */
+  z-index: 1;
 }
 
 .apps-section h2 {
@@ -688,11 +743,14 @@ button {
   text-align: center;
   text-decoration: none;
   color: var(--fg);
-  transition: all var(--t-bounce);
+  transition: 
+    transform var(--t-bounce),
+    box-shadow var(--t-slow),
+    border-color var(--t);
   position: relative;
   overflow: visible;
   box-shadow: var(--s-light), var(--inner-shadow);
-  transform: none;
+  transform: translate3d(0, 0, 0);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -704,6 +762,7 @@ button {
   margin-top: 0.5em;
   max-width: 100%;
   max-height: 100%;
+  backface-visibility: hidden;
 
   &::before {
     content: '';
@@ -718,7 +777,7 @@ button {
   }
 
   &:hover {
-    transform: translateY(-0.7em) scale(1.08);
+    transform: translate3d(0, -0.7em, 0) scale(1.08);
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
     z-index: 2;
@@ -729,7 +788,7 @@ button {
   }
 
   &:active {
-    transform: translateY(-0.4em) scale(0.98);
+    transform: translate3d(0, -0.4em, 0) scale(0.98);
     transition: transform 0.15s ease-out;
   }
 }
@@ -861,7 +920,6 @@ button {
     line-height: 1.15;
   }
 
-  /* Mobile search box adjustments */
   .search-section {
     margin-bottom: 0.5em;
     padding-bottom: 1em;
@@ -872,11 +930,33 @@ button {
   }
 
   .search-box:focus-within {
-    transform: scale(1.01) translateY(-0.3em);
+    transform: translate3d(0, -0.3em, 0) scale(1.01);
   }
 }
 
-/* Fallback for browsers that don't support backdrop-filter */
+/* --- Touch Feedback für Mobile --- */
+@media (pointer: coarse) {
+  button, .user-avatar, .search-engine, 
+  .weather-link-button, .app-card {
+    &:active {
+      transform: scale(0.95) !important;
+      transition: transform 0.1s ease-out !important;
+    }
+  }
+  
+  .search-box:active {
+    transform: scale(0.98) !important;
+  }
+}
+
+/* Glow Effekte optimiert */
+.glass:hover, .search-box:focus-within {
+  box-shadow: 
+    0 10px 28px rgba(0,0,0,0.18),
+    0 0 12px rgba(var(--acc-rgb), 0.25) !important;
+}
+
+/* Fallback für browsers that don't support backdrop-filter */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
     background: rgba(var(--fg-rgb), 0.2);
