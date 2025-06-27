@@ -24,7 +24,8 @@
   /* Smooth Animation Timing */
   --t: 0.28s cubic-bezier(0.23, 1, 0.32, 1);
   --t-slow: 0.36s cubic-bezier(0.23, 1, 0.32, 1);
-  --t-elastic: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  --t-elastic: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --t-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   
   /* Visual Variables */
   --r: 14px;
@@ -43,6 +44,7 @@
   --content-max-width: 1850px;
   --inner-shadow-strength: inset 0 0 12px rgba(0,0,0,0.1);
   --text-shadow-strength: 0 2px 4px rgba(0,0,0,0.2);
+  --inner-glow: inset 0 0 15px rgba(149, 101, 230, 0.4);
 
   /* Color Scheme */
   --bg: #0a0a0a;
@@ -141,12 +143,13 @@ body {
   }
 
   &:hover {
-    transform: translate3d(0, -0.2em, 0);
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    transform: translate3d(0, -0.2em, 0) scale(1.02);
+    box-shadow: var(--sh), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    border-color: var(--ah);
   }
 
   &:active {
-    transform: translate3d(0, -0.1em, 0);
+    transform: translate3d(0, -0.1em, 0) scale(0.98);
   }
 }
 
@@ -168,17 +171,26 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate;
+  animation: gradient-bounce 15s ease infinite alternate;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
   position: relative;
   transition: all var(--t-slow);
   letter-spacing: -0.5px;
 }
 
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes gradient-bounce {
+  0% { 
+    background-position: 0% 50%; 
+    text-shadow: 0 0 5px rgba(var(--acc-rgb), 0.3);
+  }
+  50% { 
+    background-position: 100% 50%; 
+    text-shadow: 0 0 15px rgba(var(--ah-rgb), 0.5);
+  }
+  100% { 
+    background-position: 0% 50%; 
+    text-shadow: 0 0 5px rgba(var(--acc-rgb), 0.3);
+  }
 }
 
 .controls {
@@ -195,7 +207,7 @@ button {
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: all var(--t);
+  transition: all var(--t-elastic);
   font-size: clamp(0.55rem, var(--fluid-min-font), 0.85rem);
   font-weight: 600;
   outline: none;
@@ -220,9 +232,9 @@ button {
   }
 
   &:hover {
-    transform: translate3d(0, -0.15em, 0);
-    border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    transform: translate3d(0, -0.15em, 0) scale(1.05);
+    box-shadow: var(--s), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    background: linear-gradient(rgba(var(--acc-rgb), 0.15), var(--gl);
     
     &::after {
       opacity: 1;
@@ -230,7 +242,8 @@ button {
   }
 
   &:active {
-    transform: translate3d(0, 0.05em, 0);
+    transform: translate3d(0, 0.05em, 0) scale(0.95);
+    box-shadow: var(--s-light), var(--inner-glow);
   }
 }
 
@@ -246,7 +259,7 @@ button {
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
   cursor: pointer;
-  transition: all var(--t);
+  transition: all var(--t-bounce);
   box-shadow: var(--s-light);
   overflow: hidden;
   will-change: transform;
@@ -254,9 +267,13 @@ button {
   backface-visibility: hidden;
 
   &:hover {
-    transform: translate3d(0, -0.2em, 0);
-    border-color: var(--acc);
-    box-shadow: var(--glow-strength) var(--acc), var(--s);
+    transform: translate3d(0, -0.2em, 0) scale(1.08);
+    box-shadow: var(--glow-strength) var(--acc), var(--s), var(--inner-glow);
+    color: var(--ah);
+  }
+  
+  &:active {
+    transform: translate3d(0, 0, 0) scale(0.92);
   }
 }
 
@@ -307,7 +324,7 @@ button {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 8s linear infinite;
+  animation: gradient-bounce 8s linear infinite;
   text-shadow: var(--text-shadow-strength);
   letter-spacing: -0.5px;
   transition: all var(--t-slow);
@@ -330,7 +347,7 @@ button {
   font-size: clamp(0.6rem, 0.85vw, 1rem);
   border: var(--border-width) solid transparent;
   background: var(--gl);
-  transition: all var(--t);
+  transition: all var(--t-bounce);
   will-change: transform;
   position: relative;
   overflow: hidden;
@@ -352,8 +369,8 @@ button {
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translate3d(0, -0.1em, 0);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
+    transform: translate3d(0, -0.1em, 0) scale(1.05);
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s), var(--inner-glow);
     border-color: var(--acc);
 
     &::after {
@@ -362,13 +379,16 @@ button {
   }
 
   &:not(.active):hover {
-    border-color: var(--acc);
-    transform: translate3d(0, -0.1em, 0);
-    box-shadow: var(--s-light);
+    transform: translate3d(0, -0.1em, 0) scale(1.05);
+    box-shadow: var(--s-light), var(--inner-glow);
 
     &::after {
       opacity: 0.15;
     }
+  }
+  
+  &:active {
+    transform: translate3d(0, 0, 0) scale(0.95);
   }
 }
 
@@ -391,14 +411,15 @@ button {
   backface-visibility: hidden;
 
   &:focus-within {
-    transform: translate3d(0, -0.1em, 0);
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    transform: translate3d(0, -0.1em, 0) scale(1.01);
+    box-shadow: var(--sh), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    border-color: var(--ah);
   }
 }
 
 .search-box:hover {
-  transform: translate3d(0, -0.1em, 0);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+  transform: translate3d(0, -0.1em, 0) scale(1.01);
+  box-shadow: var(--sh), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 }
 
 #search {
@@ -427,13 +448,15 @@ button {
 .search-icon {
   font-size: clamp(1rem, 1.2vw, 1.8rem);
   color: var(--dim);
-  transition: all var(--t);
-}
+  transition: all var(--t-bounce);
+  will-change: transform;
 
-.search-box:focus-within .search-icon,
-.search-box:hover .search-icon {
-  color: var(--acc);
-  transform: scale(1.05);
+  .search-box:focus-within &,
+  .search-box:hover & {
+    color: var(--ah);
+    transform: scale(1.1) rotate(-5deg);
+    filter: drop-shadow(0 0 4px rgba(var(--ah-rgb), 0.6));
+  }
 }
 
 /* --- Premium Time Display --- */
@@ -458,10 +481,20 @@ button {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 12s ease infinite alternate;
+  animation: gradient-bounce 12s ease infinite alternate;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
   transition: all var(--t-slow);
   letter-spacing: -1px;
+  
+  &:hover {
+    animation: time-pulse 1.2s ease infinite alternate;
+  }
+}
+
+@keyframes time-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
 }
 
 #date {
@@ -471,6 +504,11 @@ button {
   text-transform: uppercase;
   letter-spacing: clamp(0.25px, 0.08vw, 2px);
   transition: all var(--t-slow);
+  
+  &:hover {
+    transform: translateY(-2px);
+    color: var(--ah);
+  }
 }
 
 /* --- Premium Weather Link Section --- */
@@ -493,6 +531,12 @@ button {
   margin-bottom: var(--fluid-padding-m);
   color: var(--fg);
   text-shadow: var(--text-shadow-strength);
+  transition: all var(--t);
+  
+  &:hover {
+    transform: translateY(-2px);
+    color: var(--ah);
+  }
 }
 
 .weather-link-button {
@@ -507,7 +551,7 @@ button {
   color: var(--fg);
   font-weight: 600;
   font-size: clamp(0.75rem, var(--fluid-max-font), 1.2rem);
-  transition: all var(--t);
+  transition: all var(--t-bounce);
   box-shadow: var(--s-light), var(--inner-shadow);
   will-change: transform;
   position: relative;
@@ -528,14 +572,28 @@ button {
   }
 
   &:hover {
-    transform: translate3d(0, -0.2em, 0);
+    transform: translate3d(0, -0.2em, 0) scale(1.03);
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    box-shadow: var(--s), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 
     &::before {
       opacity: 0.2;
     }
+    
+    .weather-icon {
+      animation: weather-bounce 0.8s ease infinite alternate;
+    }
   }
+  
+  &:active {
+    transform: translate3d(0, 0, 0) scale(0.97);
+  }
+}
+
+@keyframes weather-bounce {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
 }
 
 .weather-link-button .weather-icon {
@@ -546,8 +604,8 @@ button {
 }
 
 .weather-link-button:hover .weather-icon {
-  transform: scale(1.1);
-  filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.4));
+  color: var(--ah);
+  filter: drop-shadow(0 0 8px rgba(var(--ah-rgb), 0.5));
 }
 
 .weather-notice {
@@ -555,6 +613,12 @@ button {
   font-size: clamp(0.55rem, var(--fluid-min-font), 0.9rem);
   color: var(--dim);
   opacity: 0.8;
+  transition: all var(--t);
+  
+  &:hover {
+    transform: scale(1.02);
+    color: var(--ah);
+  }
 }
 
 /* --- Premium Quote Section --- */
@@ -570,6 +634,10 @@ button {
   flex-shrink: 1;
   overflow: hidden;
   transition: all var(--t-slow);
+  
+  &:hover {
+    transform: translateY(-3px);
+  }
 }
 
 #quote-text {
@@ -577,7 +645,7 @@ button {
   font-weight: 600;
   margin-bottom: clamp(0.15rem, 0.25vw, 0.6rem);
   color: var(--fg);
-  transition: all var(--t-slow);
+  transition: all var(--t-bounce);
   line-height: 1.4;
   text-shadow: var(--text-shadow-strength);
   position: relative;
@@ -590,6 +658,7 @@ button {
     font-size: 1.2em;
     position: relative;
     top: 0.1em;
+    transition: all var(--t);
   }
 
   &::before {
@@ -599,17 +668,32 @@ button {
   &::after {
     margin-left: 0.2em;
   }
+  
+  &:hover {
+    transform: scale(1.02);
+    text-shadow: 0 3px 8px rgba(var(--acc-rgb), 0.3);
+    
+    &::before, &::after {
+      color: var(--ah);
+      opacity: 1;
+    }
+  }
 }
 
 #quote-author {
   font-size: clamp(0.55rem, var(--fluid-min-font), 1.05rem);
   color: var(--dim);
-  transition: all var(--t-slow);
+  transition: all var(--t-bounce);
   font-style: italic;
   opacity: 0.9;
 
   &::before {
     content: '— ';
+  }
+  
+  &:hover {
+    transform: translateX(5px);
+    color: var(--ah);
   }
 }
 
@@ -634,6 +718,12 @@ button {
   text-align: center;
   color: var(--dim);
   text-shadow: var(--text-shadow-strength);
+  transition: all var(--t);
+  
+  &:hover {
+    transform: translateY(-2px);
+    color: var(--ah);
+  }
 }
 
 .apps-container {
@@ -658,7 +748,7 @@ button {
   text-align: center;
   text-decoration: none;
   color: var(--fg);
-  transition: all var(--t);
+  transition: all var(--t-bounce);
   position: relative;
   overflow: visible;
   box-shadow: var(--s-light), var(--inner-shadow);
@@ -688,19 +778,29 @@ button {
   }
 
   &:hover {
-    transform: translate3d(0, -0.2em, 0);
-    border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    transform: translate3d(0, -0.2em, 0) scale(1.08);
+    box-shadow: var(--s), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     z-index: 2;
+    border-color: var(--ah);
 
     &::before {
       opacity: 0.3;
     }
     
     .icon {
-      transform: scale(1.1);
+      animation: app-bounce 0.6s ease infinite alternate;
+      color: var(--ah);
     }
   }
+  
+  &:active {
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+}
+
+@keyframes app-bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
 }
 
 .app-card .icon {
@@ -712,6 +812,7 @@ button {
   transition: all var(--t);
   line-height: 1;
   will-change: transform;
+  color: var(--acc);
 }
 
 .app-card .label {
@@ -724,6 +825,12 @@ button {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  transition: all var(--t);
+  
+  .app-card:hover & {
+    color: var(--ah);
+    transform: translateY(2px);
+  }
 }
 
 /* --- Responsive Design --- */
