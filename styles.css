@@ -1,138 +1,296 @@
-/* iOS Quantum Design - Premium Glassmorphism Interface */
+/* MKWEB OS 8: Quantum Design - Premium No-Scroll Interface */
 
 :root {
-  /* iOS Color Scheme */
-  --ios-bg: #f5f5f7;
-  --ios-fg: #1d1d1f;
-  --ios-dim: rgba(29, 29, 31, 0.6);
-  --ios-acc: #0071e3;
-  --ios-acc-light: #2997ff;
-  --ios-glass: rgba(255, 255, 255, 0.7);
-  --ios-border: rgba(0, 0, 0, 0.1);
+  /* Quantum Design Variables */
+  --quantum-easing: cubic-bezier(0.16, 1, 0.3, 1);
+  --quantum-duration: 0.6s;
+  --quantum-float: 0.25em;
+  --quantum-scale: 1.08;
+  --quantum-active: 0.95;
+  --quantum-glow: 0 0 20px;
   
-  /* Typography */
-  --ios-text-xs: 12px;
-  --ios-text-sm: 14px;
-  --ios-text-md: 17px;
-  --ios-text-lg: 24px;
-  --ios-text-xl: 32px;
-  --ios-text-xxl: 56px;
+  /* Neu: Color Scheme */
+  --quantum-bg: #0a0a12;
+  --quantum-fg: #f0f0ff;
+  --quantum-dim: rgba(240, 240, 255, 0.6);
+  --quantum-acc: #7b4cff;
+  --quantum-ah: #9d7dff;
+  --quantum-gl: rgba(255, 255, 255, 0.06);
+  --quantum-gb: rgba(255, 255, 255, 0.15);
   
-  /* Spacing */
-  --ios-space-3xs: 4px;
-  --ios-space-2xs: 8px;
-  --ios-space-xs: 12px;
-  --ios-space-sm: 16px;
-  --ios-space-md: 24px;
-  --ios-space-lg: 32px;
-  --ios-space-xl: 48px;
+  /* Typography Scale */
+  --quantum-text-xs: clamp(0.5rem, 0.7vw, 0.9rem);
+  --quantum-text-sm: clamp(0.7rem, 0.9vw, 1.1rem);
+  --quantum-text-md: clamp(1rem, 1.2vw, 1.5rem);
+  --quantum-text-lg: clamp(1.5rem, 2vw, 2.5rem);
+  --quantum-text-xl: clamp(2.5rem, 3.5vw, 5rem);
+  --quantum-text-xxl: clamp(3.5rem, 5vw, 7rem);
+  
+  /* Spacing System */
+  --quantum-space-3xs: clamp(0.15rem, 0.2vw, 0.3rem);
+  --quantum-space-2xs: clamp(0.25rem, 0.3vw, 0.5rem);
+  --quantum-space-xs: clamp(0.4rem, 0.5vw, 0.8rem);
+  --quantum-space-sm: clamp(0.6rem, 0.8vw, 1.2rem);
+  --quantum-space-md: clamp(0.9rem, 1.2vw, 1.8rem);
+  --quantum-space-lg: clamp(1.2rem, 1.6vw, 2.5rem);
+  --quantum-space-xl: clamp(1.8rem, 2.4vw, 3.5rem);
   
   /* Effects */
-  --ios-radius: 14px;
-  --ios-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  --ios-blur: 10px;
-  --ios-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --quantum-radius: 16px;
+  --quantum-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  --quantum-shadow-hover: 0 12px 36px rgba(0,0,0,0.25);
+  --quantum-blur: 12px;
+  --quantum-inner-glow: inset 0 0 12px rgba(255,255,255,0.05);
+  
+  /* Grid */
+  --content-max-width: 1800px;
+}
+
+@keyframes quantum-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-0.3em) scale(1.03); }
+}
+
+@keyframes quantum-pulse {
+  0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--quantum-acc); }
+  50% { opacity: 0.9; text-shadow: 0 0 20px var(--quantum-acc); }
+}
+
+@keyframes quantum-fade {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes quantum-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float-particle {
+  to { transform: translateY(-100vh) rotate(360deg); }
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: clamp(12px, 0.8vw, 16px);
 }
 
 body {
-  background: var(--ios-bg);
-  color: var(--ios-fg);
+  background: var(--quantum-bg);
+  color: var(--quantum-fg);
   height: 100vh;
   width: 100vw;
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  background: linear-gradient(to bottom, #f0f0f7, #e4e4eb);
+  -moz-osx-font-smoothing: grayscale;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
 }
 
-/* iOS Glass Container */
-.ios-glass {
-  background: var(--ios-glass);
-  backdrop-filter: blur(var(--ios-blur));
-  border: 1px solid var(--ios-border);
-  border-radius: var(--ios-radius);
-  box-shadow: var(--ios-shadow);
-  transition: var(--ios-transition);
+/* Quantum Particles Background */
+.quantum-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(123, 76, 255, 0.15);
+  animation: float-particle linear infinite;
 }
 
 .container {
   position: relative;
   z-index: 10;
   height: 100%;
-  padding: var(--ios-space-md);
+  padding: var(--quantum-space-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--ios-space-md);
+  gap: var(--quantum-space-md);
   flex-grow: 1;
   min-height: 0;
 }
 
-/* Header - iOS Style */
+/* Quantum Glass */
+.quantum-glass {
+  background: var(--quantum-gl);
+  backdrop-filter: blur(var(--quantum-blur)) saturate(180%);
+  border: 1px solid var(--quantum-gb);
+  border-radius: var(--quantum-radius);
+  box-shadow: var(--quantum-shadow), var(--quantum-inner-glow);
+  transition: all var(--quantum-duration) var(--quantum-easing);
+  transform: perspective(1000px) translateZ(0);
+  will-change: transform, box-shadow;
+}
+
+.quantum-glass:hover {
+  transform: 
+    perspective(1000px) 
+    translateY(calc(-1 * var(--quantum-float)))
+    translateZ(30px)
+    scale(var(--quantum-scale));
+  box-shadow: var(--quantum-shadow-hover), 0 0 30px rgba(123, 76, 255, 0.3);
+  border-color: rgba(157, 125, 255, 0.3);
+}
+
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
-  padding: var(--ios-space-xs) var(--ios-space-sm);
+  max-width: var(--content-max-width);
+  padding: var(--quantum-space-sm) var(--quantum-space-md);
 }
 
-.time-display {
-  flex: 1;
-  text-align: center;
-}
-
-#time {
-  font-size: var(--ios-text-md);
-  font-weight: 600;
-  color: var(--ios-fg);
+.logo {
+  font-size: var(--quantum-text-lg);
+  font-weight: 800;
+  background: linear-gradient(45deg, var(--quantum-acc), var(--quantum-ah), #ffffff, var(--quantum-acc));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: quantum-gradient 8s ease infinite, quantum-float 5s ease-in-out infinite;
+  text-shadow: 0 0 15px rgba(123, 76, 255, 0.2);
+  letter-spacing: -0.03em;
 }
 
 .controls {
   display: flex;
-  gap: var(--ios-space-2xs);
+  gap: var(--quantum-space-2xs);
   align-items: center;
 }
 
-/* iOS Status Icons */
-.status-icons {
-  display: flex;
-  gap: var(--ios-space-3xs);
-  align-items: center;
-}
-
-.status-icon {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--ios-fg);
+/* Quantum Buttons */
+.quantum-btn {
+  padding: var(--quantum-space-3xs) var(--quantum-space-2xs);
+  border-radius: 12px;
+  background: var(--quantum-gl);
+  color: var(--quantum-fg);
+  border: 1px solid var(--quantum-gb);
+  cursor: pointer;
+  transition: all var(--quantum-duration) var(--quantum-easing);
+  font-size: var(--quantum-text-xs);
+  font-weight: 600;
+  transform: perspective(1000px) translateZ(0);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   position: relative;
+  overflow: hidden;
+  will-change: transform;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 1s ease;
+  }
 }
 
-/* Main Grid - iOS Layout */
+.quantum-btn:hover {
+  transform: 
+    translateY(calc(-1 * var(--quantum-float))) 
+    scale(var(--quantum-scale))
+    perspective(1000px) 
+    translateZ(15px);
+  border-color: var(--quantum-acc);
+  box-shadow: var(--quantum-shadow-hover), 0 0 20px rgba(123, 76, 255, 0.3);
+  
+  &::before {
+    left: 100%;
+  }
+}
+
+.quantum-btn:active {
+  transform: translateY(2px) scale(var(--quantum-active));
+}
+
+.quantum-btn.active {
+  background: var(--quantum-acc);
+  color: white;
+}
+
+.user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  background: var(--quantum-gl);
+  border: 1px solid var(--quantum-gb);
+  color: var(--quantum-acc);
+  cursor: pointer;
+  transition: all var(--quantum-duration) var(--quantum-easing);
+  box-shadow: var(--quantum-shadow);
+  transform: perspective(1000px) translateZ(0);
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(123, 76, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--quantum-duration) ease;
+  }
+}
+
+.user-avatar:hover {
+  transform: 
+    translateY(calc(-1 * var(--quantum-float))) 
+    scale(var(--quantum-scale))
+    perspective(1000px) 
+    translateZ(20px);
+  box-shadow: var(--quantum-shadow-hover), 0 0 25px rgba(123, 76, 255, 0.4);
+  
+  &::after {
+    opacity: 1;
+  }
+}
+
+.hidden-avatar {
+  opacity: 0 !important;
+  transform: scale(0.6) !important;
+  pointer-events: none !important;
+}
+
+/* Main Grid */
 .main-grid {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--ios-space-md);
+  gap: var(--quantum-space-md);
   flex-grow: 1;
   min-height: 0;
   overflow: hidden;
@@ -141,43 +299,216 @@ body {
 .grid-left, .grid-right {
   display: flex;
   flex-direction: column;
-  gap: var(--ios-space-md);
+  gap: var(--quantum-space-md);
   height: 100%;
   flex-grow: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-/* iOS Animated Button - Inspired by Uiverse */
+/* Quantum Time Display */
+.time-display {
+  text-align: center;
+  padding: var(--quantum-space-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: quantum-fade 1.2s var(--quantum-easing);
+}
+
+#time {
+  font-size: var(--quantum-text-xxl);
+  font-weight: 800;
+  margin-bottom: var(--quantum-space-3xs);
+  background: linear-gradient(45deg, var(--quantum-acc), var(--quantum-fg), var(--quantum-ah));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: quantum-gradient 8s ease infinite, quantum-pulse 4s ease-in-out infinite;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+#date {
+  font-size: var(--quantum-text-sm);
+  color: var(--quantum-dim);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Quantum Search */
+.search-section {
+  padding: var(--quantum-space-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: quantum-fade 1.2s var(--quantum-easing) 0.1s both;
+}
+
+.search-engines {
+  display: flex;
+  gap: var(--quantum-space-3xs);
+  margin-bottom: var(--quantum-space-xs);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search-engine {
+  padding: var(--quantum-space-3xs) var(--quantum-space-2xs);
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: var(--quantum-text-xs);
+  border: 1px solid transparent;
+  background: var(--quantum-gl);
+  transition: all var(--quantum-duration) var(--quantum-easing);
+  transform: perspective(1000px) translateZ(0);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border-radius: 100px;
+  padding: var(--quantum-space-xs) var(--quantum-space-sm);
+  transition: all var(--quantum-duration) var(--quantum-easing);
+}
+
+.search-box:focus-within {
+  box-shadow: 0 0 0 2px var(--quantum-acc), var(--quantum-shadow-hover);
+}
+
+#search {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--quantum-fg);
+  font-size: var(--quantum-text-sm);
+  outline: none;
+  padding: 0 var(--quantum-space-2xs);
+  font-weight: 500;
+}
+
+#search::placeholder {
+  color: var(--quantum-dim);
+  font-weight: 400;
+}
+
+/* Quantum Weather */
+.weather-link-section {
+  padding: var(--quantum-space-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: quantum-fade 1.2s var(--quantum-easing) 0.2s both;
+}
+
+.weather-link-section h2 {
+  font-size: var(--quantum-text-md);
+  font-weight: 700;
+  margin-bottom: var(--quantum-space-xs);
+  color: var(--quantum-fg);
+  text-shadow: 0 0 10px rgba(123, 76, 255, 0.2);
+}
+
+.weather-notice {
+  margin-top: var(--quantum-space-xs);
+  font-size: var(--quantum-text-xs);
+  color: var(--quantum-dim);
+}
+
+/* Quantum Quote */
+.quote-section {
+  padding: var(--quantum-space-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: quantum-fade 1.2s var(--quantum-easing) 0.3s both;
+}
+
+#quote-text {
+  font-size: var(--quantum-text-sm);
+  font-weight: 500;
+  margin-bottom: var(--quantum-space-3xs);
+  color: var(--quantum-fg);
+  line-height: 1.6;
+  font-style: italic;
+  max-width: 80%;
+}
+
+#quote-author {
+  font-size: var(--quantum-text-xs);
+  color: var(--quantum-dim);
+  font-weight: 400;
+}
+
+/* Quantum Apps */
+.apps-section {
+  width: 100%;
+  padding: var(--quantum-space-sm);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+  overflow: hidden;
+  animation: quantum-fade 1.2s var(--quantum-easing) 0.4s both;
+}
+
+.apps-section h2 {
+  margin-bottom: var(--quantum-space-xs);
+  font-size: var(--quantum-text-md);
+  font-weight: 700;
+  text-align: center;
+  color: var(--quantum-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.apps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--quantum-space-sm);
+  flex-grow: 1;
+  min-height: 0;
+  padding: var(--quantum-space-2xs);
+  overflow: hidden;
+}
+
+/* iOS Animierter Button */
 .ios-animated-button {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--ios-space-3xs);
-  padding: var(--ios-space-xs) var(--ios-space-md);
+  gap: var(--quantum-space-3xs);
+  padding: var(--quantum-space-xs) var(--quantum-space-md);
   border: 3px solid transparent;
-  font-size: var(--ios-text-sm);
+  font-size: var(--quantum-text-sm);
   background-color: transparent;
   border-radius: 100px;
   font-weight: 600;
-  color: var(--ios-acc);
-  box-shadow: 0 0 0 2px var(--ios-acc);
+  color: var(--quantum-acc);
+  box-shadow: 0 0 0 2px var(--quantum-acc);
   cursor: pointer;
   overflow: hidden;
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  text-decoration: none;
 }
 
 .ios-animated-button svg {
   position: absolute;
   width: 20px;
-  fill: var(--ios-acc);
+  fill: var(--quantum-acc);
   z-index: 9;
   transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .ios-animated-button .arr-1 {
-  right: var(--ios-space-sm);
+  right: var(--quantum-space-sm);
 }
 
 .ios-animated-button .arr-2 {
@@ -191,7 +522,7 @@ body {
   transform: translate(-50%, -50%);
   width: 20px;
   height: 20px;
-  background-color: var(--ios-acc);
+  background-color: var(--quantum-acc);
   border-radius: 50%;
   opacity: 0;
   transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
@@ -207,7 +538,7 @@ body {
 .ios-animated-button:hover {
   box-shadow: 0 0 0 12px transparent;
   color: white;
-  border-radius: var(--ios-radius);
+  border-radius: var(--quantum-radius);
 }
 
 .ios-animated-button:hover .arr-1 {
@@ -215,7 +546,7 @@ body {
 }
 
 .ios-animated-button:hover .arr-2 {
-  left: var(--ios-space-sm);
+  left: var(--quantum-space-sm);
 }
 
 .ios-animated-button:hover .text {
@@ -228,7 +559,7 @@ body {
 
 .ios-animated-button:active {
   scale: 0.95;
-  box-shadow: 0 0 0 4px var(--ios-acc);
+  box-shadow: 0 0 0 4px var(--quantum-acc);
 }
 
 .ios-animated-button:hover .circle {
@@ -237,22 +568,24 @@ body {
   opacity: 1;
 }
 
-/* iOS App Cards - Inspired by Uiverse */
+/* iOS App Cards - Animiert */
 .ios-app-card {
   position: relative;
   width: 100%;
   height: 100%;
   background: white;
-  border-radius: var(--ios-radius);
+  border-radius: var(--quantum-radius);
   overflow: hidden;
-  box-shadow: var(--ios-shadow);
-  transition: var(--ios-transition);
+  box-shadow: var(--quantum-shadow);
+  transition: var(--quantum-transition);
+  aspect-ratio: 1/1;
+  animation: quantum-fade 0.8s var(--quantum-easing) calc(0.1s * var(--i)) both;
 }
 
 .app-background {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--ios-acc), var(--ios-acc-light));
+  background: linear-gradient(135deg, var(--app-color), color-mix(in srgb, var(--app-color) 70%, black));
   opacity: 0.9;
 }
 
@@ -261,30 +594,18 @@ body {
   right: 50%;
   bottom: 50%;
   transform: translate(50%, 50%);
-  transition: var(--ios-transition);
+  transition: var(--quantum-transition);
+  z-index: 2;
 }
 
-.app-logo .logo-svg {
-  fill: white;
-  width: 36px;
-  height: 36px;
-}
-
-.app-icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-}
-
-.app-icon .svg {
-  fill: rgba(255, 255, 255, 0.8);
-  width: 100%;
-  transition: var(--ios-transition);
+.app-logo .material-symbols-outlined {
+  font-size: 2.5rem;
+  color: white;
 }
 
 .app-box {
   position: absolute;
-  padding: var(--ios-space-xs);
+  padding: var(--quantum-space-3xs);
   text-align: right;
   background: rgba(255, 255, 255, 0.3);
   border-top: 2px solid rgba(255, 255, 255, 0.5);
@@ -292,7 +613,7 @@ body {
   border-radius: 10% 13% 42% 0%/10% 12% 75% 0%;
   box-shadow: rgba(100, 100, 111, 0.1) -4px 4px 10px 0px;
   transform-origin: bottom left;
-  transition: var(--ios-transition);
+  transition: var(--quantum-transition);
 }
 
 .app-box::before {
@@ -301,11 +622,8 @@ body {
   inset: 0;
   border-radius: inherit;
   opacity: 0;
-  transition: var(--ios-transition);
-}
-
-.app-box:hover .svg {
-  fill: white;
+  transition: var(--quantum-transition);
+  background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
 }
 
 .box1 {
@@ -313,18 +631,6 @@ body {
   height: 70%;
   bottom: -70%;
   left: -70%;
-}
-
-.box1::before {
-  background: linear-gradient(135deg, #ff2d55, #ff9500);
-}
-
-.box1:hover::before {
-  opacity: 1;
-}
-
-.box1:hover .app-icon .svg {
-  filter: drop-shadow(0 0 5px white);
 }
 
 .box2 {
@@ -335,36 +641,12 @@ body {
   transition-delay: 0.1s;
 }
 
-.box2::before {
-  background: linear-gradient(135deg, #34c759, #30b0c7);
-}
-
-.box2:hover::before {
-  opacity: 1;
-}
-
-.box2:hover .app-icon .svg {
-  filter: drop-shadow(0 0 5px white);
-}
-
 .box3 {
   width: 30%;
   height: 30%;
   bottom: -30%;
   left: -30%;
   transition-delay: 0.2s;
-}
-
-.box3::before {
-  background: linear-gradient(135deg, #af52de, #5856d6);
-}
-
-.box3:hover::before {
-  opacity: 1;
-}
-
-.box3:hover .app-icon .svg {
-  filter: drop-shadow(0 0 5px white);
 }
 
 .box4 {
@@ -377,6 +659,7 @@ body {
 
 .ios-app-card:hover {
   transform: scale(1.05);
+  box-shadow: var(--quantum-shadow-hover);
 }
 
 .ios-app-card:hover .app-box {
@@ -386,176 +669,54 @@ body {
 
 .ios-app-card:hover .app-logo {
   transform: translate(0, 0);
-  bottom: var(--ios-space-sm);
-  right: var(--ios-space-sm);
+  bottom: var(--quantum-space-sm);
+  right: var(--quantum-space-sm);
 }
 
-/* Search Section - iOS Style */
-.search-section {
-  padding: var(--ios-space-sm);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.ios-app-card:hover .app-box::before {
+  opacity: 0.7;
 }
 
-.search-box {
-  display: flex;
-  align-items: center;
-  border-radius: 10px;
-  padding: var(--ios-space-xs);
-  background: white;
-  box-shadow: var(--ios-shadow);
-}
-
-#search {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--ios-fg);
-  font-size: var(--ios-text-md);
-  outline: none;
-  padding: 0 var(--ios-space-xs);
-}
-
-#search::placeholder {
-  color: var(--ios-dim);
-}
-
-/* Weather Section - iOS Style */
-.weather-section {
-  padding: var(--ios-space-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.weather-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--ios-space-2xs);
-}
-
-.weather-temp {
-  font-size: var(--ios-text-xl);
-  font-weight: 600;
-}
-
-.weather-location {
-  font-size: var(--ios-text-md);
-  color: var(--ios-dim);
-}
-
-/* Quote Section - iOS Style */
-.quote-section {
-  padding: var(--ios-space-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-#quote-text {
-  font-size: var(--ios-text-md);
-  font-weight: 500;
-  font-style: italic;
-  line-height: 1.5;
-  color: var(--ios-fg);
-}
-
-#quote-author {
-  font-size: var(--ios-text-sm);
-  color: var(--ios-dim);
-  margin-top: var(--ios-space-xs);
-}
-
-/* Apps Section - iOS Style */
-.apps-section {
-  grid-column: 1 / -1;
-  padding: var(--ios-space-sm);
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.apps-section h2 {
-  margin-bottom: var(--ios-space-sm);
-  font-size: var(--ios-text-lg);
-  font-weight: 600;
-  text-align: center;
-  color: var(--ios-fg);
-}
-
-.apps-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: var(--ios-space-md);
-  flex-grow: 1;
-  min-height: 0;
-  padding: var(--ios-space-xs);
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* Mobile Responsive */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .container {
-    padding: var(--ios-space-sm);
+    padding: var(--quantum-space-md);
   }
   
   .main-grid {
     grid-template-columns: 1fr;
     display: flex;
     flex-direction: column;
-    gap: var(--ios-space-sm);
+    gap: var(--quantum-space-sm);
   }
   
   .header {
     flex-direction: column;
-    gap: var(--ios-space-xs);
-    padding: var(--ios-space-2xs);
+    gap: var(--quantum-space-sm);
+    padding: var(--quantum-space-xs);
+  }
+  
+  .logo {
+    margin-bottom: var(--quantum-space-xs);
   }
   
   #time {
-    font-size: var(--ios-text-sm);
+    font-size: var(--quantum-text-xl);
   }
   
   .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   }
   
   .ios-app-card {
     aspect-ratio: 1/1;
   }
-}
-
-/* App Icons */
-.messages-icon { background: linear-gradient(135deg, #34c759, #30b0c7); }
-.music-icon { background: linear-gradient(135deg, #ff2d55, #ff9500); }
-.maps-icon { background: linear-gradient(135deg, #5856d6, #007aff); }
-.health-icon { background: linear-gradient(135deg, #af52de, #ff2d55); }
-.books-icon { background: linear-gradient(135deg, #ff9500, #ffcc00); }
-.camera-icon { background: linear-gradient(135deg, #5ac8fa, #007aff); }
-.weather-icon { background: linear-gradient(135deg, #007aff, #34c759); }
-.notes-icon { background: linear-gradient(135deg, #ffcc00, #ff9500); }
-
-/* SVG Icons - Simplified for CSS */
-.app-logo .logo-svg {
-  background: white;
-  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/></svg>') no-repeat center;
-  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/></svg>') no-repeat center;
-}
-
-/* Arrow SVG for Animated Button */
-.ios-animated-button svg {
-  background: var(--ios-acc);
-  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>') no-repeat center;
-  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>') no-repeat center;
-}
-
-.ios-animated-button:hover svg {
-  background: white;
 }
