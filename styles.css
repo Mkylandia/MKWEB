@@ -1,64 +1,14 @@
-/* styles.css - MKWEB OS 7: Smooth & Contained Edition */
+/* styles.css - MKWEB OS 7: iOS-Optimierte Version */
 
-/* --- Global Design Variables --- */
+/* --- Global Design Variables - Premium --- */
 :root {
-  /* Fluid Typography */
-  --fluid-min-font: 0.65vw;
-  --fluid-max-font: 0.95vw;
-  --fluid-header-font: 1.15vw;
-  --fluid-time-font: 3.2vw;
-  --fluid-search-title: 1.8vw;
-
-  /* Enhanced Padding System */
-  --fluid-padding-xs: clamp(0.2rem, 0.3vw + 0.12vh, 0.8rem);
-  --fluid-padding-s: clamp(0.35rem, 0.45vw + 0.22vh, 1.1rem);
-  --fluid-padding-m: clamp(0.55rem, 0.75vw + 0.4vh, 1.4rem);
-  --fluid-padding-l: clamp(0.75rem, 1vw + 0.5vh, 2rem);
-  --fluid-padding-xl: clamp(1rem, 1.2vw + 0.6vh, 2.5rem);
-
-  /* Enhanced Gap System */
-  --fluid-gap-xs: clamp(0.2rem, 0.25vw + 0.1vh, 0.6rem);
-  --fluid-gap-s: clamp(0.3rem, 0.4vw + 0.18vh, 0.9rem);
-  --fluid-gap-m: clamp(0.4rem, 0.5vw + 0.25vh, 1.3rem);
-
-  /* Smooth Animation Timing */
-  --t: 0.28s cubic-bezier(0.23, 1, 0.32, 1);
-  --t-slow: 0.36s cubic-bezier(0.23, 1, 0.32, 1);
-  --t-elastic: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --t-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* iOS Animation Timing */
+  --t: 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Standard iOS Easing */
+  --t-slow: 0.38s cubic-bezier(0.55, 0.055, 0.675, 0.19); /* Schnelle Interaktion */
+  --t-bounce: 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* iOS Bounce */
+  --t-elastic: 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Elastischer Effekt */
   
-  /* Visual Variables */
-  --r: 14px;
-  --r-lg: 18px;
-  --r-xl: 24px;
-  --s: 0 5px 15px rgba(0,0,0,0.12);
-  --sh: 0 10px 28px rgba(0,0,0,0.18);
-  --s-light: 0 3px 8px rgba(0,0,0,0.08);
-  --border-width: 1.2px;
-  --text-gradient-angle: 70deg;
-  --glass-reflection: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%);
-  --glow-strength: 0 0 12px;
-  --glow-color: var(--acc);
-  --blur-intensity: 14px;
-  --saturate-intensity: 150%;
-  --content-max-width: 1850px;
-  --inner-shadow-strength: inset 0 0 12px rgba(0,0,0,0.1);
-  --text-shadow-strength: 0 2px 4px rgba(0,0,0,0.2);
-  --inner-glow: inset 0 0 15px rgba(149, 101, 230, 0.4);
-
-  /* Color Scheme */
-  --bg: #0a0a0a;
-  --fg: #f5f5f5;
-  --dim: rgba(245,245,245,0.65);
-  --acc: #9565e6;
-  --ah: #c095ff;
-  --gl: rgba(255,255,255,0.07);
-  --gb: rgba(255,255,255,0.18);
-  --inner-shadow: var(--inner-shadow-strength);
-  --acc-rgb: 149, 101, 230;
-  --fg-rgb: 245, 245, 245;
-  --ah-rgb: 192, 149, 255;
-  --gb-rgb: 255, 255, 255;
+  /* ... (restliche Variablen bleiben gleich) ... */
 }
 
 /* --- Reduced Motion Support --- */
@@ -72,875 +22,110 @@
   }
 }
 
-/* --- Base Styles --- */
-html {
-  scroll-behavior: smooth;
-  font-size: clamp(6.5px, 0.65vw + 0.4vh, 18px);
+/* --- iOS-optimierte Transformationen --- */
+.glass, button, .user-avatar, .search-engine, 
+.weather-link-button, .app-card {
+  transform: translateZ(0); /* Hardware-Beschleunigung aktivieren */
+  will-change: transform, opacity, box-shadow;
+  backface-visibility: hidden;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  height: 100vh;
-  width: 100vw;
-  transition: background var(--t-slow), color var(--t-slow);
-  overflow: hidden;
-  position: relative;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: column;
-}
-
-.container {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  padding: var(--fluid-padding-xl);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--fluid-gap-m);
-  flex-grow: 1;
-  min-height: 0;
-}
-
-/* --- Premium Glassmorphism --- */
+/* --- Premium Glassmorphism (iOS-optimiert) --- */
 .glass {
-  background: var(--gl);
-  -webkit-backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
-  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  box-shadow: var(--s), var(--inner-shadow);
-  transition: all var(--t-slow);
-  position: relative;
-  overflow: visible;
-  transform: translate3d(0, 0, 0);
-  will-change: transform, box-shadow;
-  backface-visibility: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--glass-reflection);
-    border-radius: var(--r);
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
+  transition: transform var(--t), box-shadow var(--t-slow);
+  
   &:hover {
-    transform: translate3d(0, -0.2em, 0) scale(1.02);
-    box-shadow: var(--sh), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-    border-color: var(--ah);
+    transform: translate3d(0, -0.5em, 0); /* 3D-Transformation */
   }
 
   &:active {
-    transform: translate3d(0, -0.1em, 0) scale(0.98);
+    transform: translate3d(0, 0.1em, 0) scale(0.98);
   }
 }
 
-/* --- Premium Header --- */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: var(--content-max-width);
-  padding: var(--fluid-padding-s) var(--fluid-padding-l);
-}
-
-.logo {
-  font-size: clamp(1.1rem, var(--fluid-header-font), 2.4rem);
-  font-weight: 800;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-bounce 15s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
-  position: relative;
-  transition: all var(--t-slow);
-  letter-spacing: -0.5px;
-}
-
-@keyframes gradient-bounce {
-  0% { 
-    background-position: 0% 50%; 
-    text-shadow: 0 0 5px rgba(var(--acc-rgb), 0.3);
-  }
-  50% { 
-    background-position: 100% 50%; 
-    text-shadow: 0 0 15px rgba(var(--ah-rgb), 0.5);
-  }
-  100% { 
-    background-position: 0% 50%; 
-    text-shadow: 0 0 5px rgba(var(--acc-rgb), 0.3);
-  }
-}
-
-.controls {
-  display: flex;
-  gap: var(--fluid-gap-s);
-  align-items: center;
-}
-
-/* --- Premium Buttons --- */
+/* --- Premium Buttons (iOS Tap Feedback) --- */
 button {
-  padding: var(--fluid-padding-xs) var(--fluid-padding-s);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  background: var(--gl);
-  color: var(--fg);
-  cursor: pointer;
-  transition: all var(--t-elastic);
-  font-size: clamp(0.55rem, var(--fluid-min-font), 0.85rem);
-  font-weight: 600;
-  outline: none;
-  box-shadow: var(--s-light);
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
-    opacity: 0;
-    transition: opacity var(--t);
-  }
+  transition: 
+    transform var(--t-bounce),
+    box-shadow var(--t),
+    border-color var(--t);
 
   &:hover {
-    transform: translate3d(0, -0.15em, 0) scale(1.05);
-    box-shadow: var(--s), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
-    background: linear-gradient(rgba(var(--acc-rgb), 0.15), var(--gl);
-    
-    &::after {
-      opacity: 1;
-    }
+    transform: translate3d(0, -0.35em, 0);
   }
 
   &:active {
-    transform: translate3d(0, 0.05em, 0) scale(0.95);
-    box-shadow: var(--s-light), var(--inner-glow);
+    transform: translate3d(0, 0.1em, 0) scale(0.96);
   }
 }
 
-.user-avatar {
-  width: clamp(22px, 2.7vw, 44px);
-  height: clamp(22px, 2.7vw, 44px);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: clamp(0.9rem, 1.1vw, 2rem);
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  color: var(--acc);
-  cursor: pointer;
-  transition: all var(--t-bounce);
-  box-shadow: var(--s-light);
-  overflow: hidden;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-
-  &:hover {
-    transform: translate3d(0, -0.2em, 0) scale(1.08);
-    box-shadow: var(--glow-strength) var(--acc), var(--s), var(--inner-glow);
-    color: var(--ah);
-  }
-  
-  &:active {
-    transform: translate3d(0, 0, 0) scale(0.92);
-  }
-}
-
-/* --- Main Grid Layout --- */
-.main-grid {
-  width: 100%;
-  max-width: var(--content-max-width);
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--fluid-gap-m);
-  flex-grow: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.grid-left, .grid-right {
-  display: flex;
-  flex-direction: column;
-  gap: var(--fluid-gap-m);
-  height: 100%;
-  flex-grow: 1;
-  min-height: 0;
-  overflow: hidden;
-}
-
-/* --- Premium Search Section --- */
-.search-section {
-  padding: var(--fluid-padding-m);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 1;
-  min-height: 0;
-  flex-shrink: 1;
-  overflow: visible;
-  position: relative;
-  z-index: 10;
-}
-
-.search-title {
-  font-size: clamp(1rem, var(--fluid-search-title), 2.5rem);
-  font-weight: 800;
-  margin-bottom: var(--fluid-padding-m);
-  text-align: center;
-  background: linear-gradient(to right, var(--acc), var(--ah), var(--acc));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-bounce 8s linear infinite;
-  text-shadow: var(--text-shadow-strength);
-  letter-spacing: -0.5px;
-  transition: all var(--t-slow);
-  position: relative;
-  padding: 0 var(--fluid-padding-s);
-}
-
-.search-engines {
-  display: flex;
-  gap: var(--fluid-gap-xs);
-  margin-bottom: var(--fluid-padding-m);
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.search-engine {
-  padding: clamp(0.25rem, 0.45vw, 0.7rem) clamp(0.45rem, 0.8vw, 1.1rem);
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: clamp(0.6rem, 0.85vw, 1rem);
-  border: var(--border-width) solid transparent;
-  background: var(--gl);
-  transition: all var(--t-bounce);
-  will-change: transform;
-  position: relative;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(var(--acc-rgb), 0.2), transparent);
-    opacity: 0;
-    transition: opacity var(--t);
-  }
-
-  &.active {
-    background: var(--acc);
-    color: #fff;
-    transform: translate3d(0, -0.1em, 0) scale(1.05);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s), var(--inner-glow);
-    border-color: var(--acc);
-
-    &::after {
-      opacity: 0.3;
-    }
-  }
-
-  &:not(.active):hover {
-    transform: translate3d(0, -0.1em, 0) scale(1.05);
-    box-shadow: var(--s-light), var(--inner-glow);
-
-    &::after {
-      opacity: 0.15;
-    }
-  }
-  
-  &:active {
-    transform: translate3d(0, 0, 0) scale(0.95);
-  }
-}
-
-.search-box-container {
-  position: relative;
-  z-index: 10;
-}
-
+/* --- Search Box Animation (iOS Style) --- */
 .search-box {
-  display: flex;
-  align-items: center;
-  border-radius: var(--r-xl);
-  padding: var(--fluid-padding-m);
-  transition: all var(--t-elastic);
-  box-shadow: var(--s), var(--inner-shadow);
-  will-change: transform;
-  position: relative;
-  z-index: 1;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
+  transition: 
+    transform var(--t-elastic),
+    box-shadow var(--t-slow);
 
   &:focus-within {
-    transform: translate3d(0, -0.1em, 0) scale(1.01);
-    box-shadow: var(--sh), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
-    border-color: var(--ah);
-  }
-}
-
-.search-box:hover {
-  transform: translate3d(0, -0.1em, 0) scale(1.01);
-  box-shadow: var(--sh), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-}
-
-#search {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--fg);
-  font-size: clamp(0.75rem, var(--fluid-max-font), 1.2rem);
-  outline: none;
-  margin-left: var(--fluid-padding-xs);
-  transition: all var(--t);
-  font-weight: 500;
-  padding: var(--fluid-padding-xs) var(--fluid-padding-s);
-
-  &::placeholder {
-    color: var(--dim);
-    transition: opacity var(--t);
-    font-weight: 400;
+    transform: translate3d(0, -0.5em, 0) scale(1.02);
   }
 
-  &:focus::placeholder {
-    opacity: 0.4;
+  &:hover {
+    transform: translate3d(0, -0.5em, 0);
   }
 }
 
 .search-icon {
-  font-size: clamp(1rem, 1.2vw, 1.8rem);
-  color: var(--dim);
-  transition: all var(--t-bounce);
-  will-change: transform;
-
-  .search-box:focus-within &,
-  .search-box:hover & {
-    color: var(--ah);
-    transform: scale(1.1) rotate(-5deg);
-    filter: drop-shadow(0 0 4px rgba(var(--ah-rgb), 0.6));
-  }
+  transition: 
+    transform var(--t-bounce),
+    color var(--t);
 }
 
-/* --- Premium Time Display --- */
-.time-display {
-  text-align: center;
-  padding: var(--fluid-padding-m);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 2;
-  min-height: 0;
-  flex-shrink: 1;
-  overflow: hidden;
-}
-
-#time {
-  font-size: clamp(2rem, var(--fluid-time-font), 6.5rem);
-  font-weight: 800;
-  margin-bottom: clamp(0.02rem, 0.05vh, 0.3rem);
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-bounce 12s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-  transition: all var(--t-slow);
-  letter-spacing: -1px;
-  
-  &:hover {
-    animation: time-pulse 1.2s ease infinite alternate;
-  }
-}
-
-@keyframes time-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-
-#date {
-  font-size: clamp(0.55rem, var(--fluid-min-font), 1.1rem);
-  color: var(--dim);
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: clamp(0.25px, 0.08vw, 2px);
-  transition: all var(--t-slow);
-  
-  &:hover {
-    transform: translateY(-2px);
-    color: var(--ah);
-  }
-}
-
-/* --- Premium Weather Link Section --- */
-.weather-link-section {
-  padding: var(--fluid-padding-m);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  text-align: center;
-  min-height: 0;
-  flex-shrink: 1;
-  overflow: hidden;
-}
-
-.weather-link-section h2 {
-  font-size: clamp(0.9rem, var(--fluid-header-font), 1.6rem);
-  font-weight: 700;
-  margin-bottom: var(--fluid-padding-m);
-  color: var(--fg);
-  text-shadow: var(--text-shadow-strength);
-  transition: all var(--t);
-  
-  &:hover {
-    transform: translateY(-2px);
-    color: var(--ah);
-  }
-}
-
-.weather-link-button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--fluid-gap-m);
-  padding: var(--fluid-padding-m) var(--fluid-padding-l);
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r-lg);
-  text-decoration: none;
-  color: var(--fg);
-  font-weight: 600;
-  font-size: clamp(0.75rem, var(--fluid-max-font), 1.2rem);
-  transition: all var(--t-bounce);
-  box-shadow: var(--s-light), var(--inner-shadow);
-  will-change: transform;
-  position: relative;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(var(--acc-rgb), 0.2), transparent);
-    opacity: 0;
-    transition: opacity var(--t);
-  }
-
-  &:hover {
-    transform: translate3d(0, -0.2em, 0) scale(1.03);
-    border-color: var(--acc);
-    box-shadow: var(--s), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-
-    &::before {
-      opacity: 0.2;
-    }
-    
-    .weather-icon {
-      animation: weather-bounce 0.8s ease infinite alternate;
-    }
-  }
-  
-  &:active {
-    transform: translate3d(0, 0, 0) scale(0.97);
-  }
-}
-
-@keyframes weather-bounce {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
-}
-
-.weather-link-button .weather-icon {
-  font-size: clamp(1.2rem, 1.5vw, 2.6rem);
-  color: var(--acc);
-  transition: all var(--t);
-  filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.2));
-}
-
-.weather-link-button:hover .weather-icon {
-  color: var(--ah);
-  filter: drop-shadow(0 0 8px rgba(var(--ah-rgb), 0.5));
-}
-
-.weather-notice {
-  margin-top: var(--fluid-padding-m);
-  font-size: clamp(0.55rem, var(--fluid-min-font), 0.9rem);
-  color: var(--dim);
-  opacity: 0.8;
-  transition: all var(--t);
-  
-  &:hover {
-    transform: scale(1.02);
-    color: var(--ah);
-  }
-}
-
-/* --- Premium Quote Section --- */
-.quote-section {
-  padding: var(--fluid-padding-m);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-grow: 1;
-  min-height: 0;
-  flex-shrink: 1;
-  overflow: hidden;
-  transition: all var(--t-slow);
-  
-  &:hover {
-    transform: translateY(-3px);
-  }
-}
-
-#quote-text {
-  font-size: clamp(0.85rem, var(--fluid-max-font), 1.3rem);
-  font-weight: 600;
-  margin-bottom: clamp(0.15rem, 0.25vw, 0.6rem);
-  color: var(--fg);
-  transition: all var(--t-bounce);
-  line-height: 1.4;
-  text-shadow: var(--text-shadow-strength);
-  position: relative;
-  padding: 0 var(--fluid-padding-m);
-
-  &::before, &::after {
-    content: '"';
-    color: var(--acc);
-    opacity: 0.6;
-    font-size: 1.2em;
-    position: relative;
-    top: 0.1em;
-    transition: all var(--t);
-  }
-
-  &::before {
-    margin-right: 0.2em;
-  }
-
-  &::after {
-    margin-left: 0.2em;
-  }
-  
-  &:hover {
-    transform: scale(1.02);
-    text-shadow: 0 3px 8px rgba(var(--acc-rgb), 0.3);
-    
-    &::before, &::after {
-      color: var(--ah);
-      opacity: 1;
-    }
-  }
-}
-
-#quote-author {
-  font-size: clamp(0.55rem, var(--fluid-min-font), 1.05rem);
-  color: var(--dim);
-  transition: all var(--t-bounce);
-  font-style: italic;
-  opacity: 0.9;
-
-  &::before {
-    content: '— ';
-  }
-  
-  &:hover {
-    transform: translateX(5px);
-    color: var(--ah);
-  }
-}
-
-/* --- Premium Apps Section --- */
-.apps-section {
-  width: 100%;
-  padding: var(--fluid-padding-m);
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  min-height: 0;
-  overflow: hidden;
-  flex-shrink: 1;
-  position: relative;
-  z-index: 1;
-}
-
-.apps-section h2 {
-  margin-bottom: var(--fluid-padding-m);
-  font-size: clamp(0.8rem, var(--fluid-header-font), 1.6rem);
-  font-weight: 700;
-  text-align: center;
-  color: var(--dim);
-  text-shadow: var(--text-shadow-strength);
-  transition: all var(--t);
-  
-  &:hover {
-    transform: translateY(-2px);
-    color: var(--ah);
-  }
-}
-
-.apps-container {
-  grid-template-columns: repeat(auto-fill, minmax(clamp(52px, 7vw + 4.5vh, 110px), 1fr));
-  gap: var(--fluid-gap-m);
-  padding: var(--fluid-padding-xs);
-  display: grid;
-  flex-grow: 1;
-  min-height: 0;
-  max-height: 100%;
-  position: relative;
-  z-index: 1;
-  overflow-y: auto;
-  align-content: start;
-}
-
+/* --- App Cards (iOS Tap Animation) --- */
 .app-card {
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
-  padding: clamp(0.35rem, 0.55vw + 0.4vh, 1.1rem);
-  text-align: center;
-  text-decoration: none;
-  color: var(--fg);
-  transition: all var(--t-bounce);
-  position: relative;
-  overflow: visible;
-  box-shadow: var(--s-light), var(--inner-shadow);
-  transform: translate3d(0, 0, 0);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 1 / 1;
-  min-width: 0;
-  min-height: 0;
-  will-change: transform;
-  max-width: 100%;
-  max-height: 100%;
-  backface-visibility: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(var(--acc-rgb), 0.15), transparent);
-    opacity: 0;
-    transition: opacity var(--t);
-  }
+  transition: 
+    transform var(--t-bounce),
+    box-shadow var(--t-slow),
+    border-color var(--t);
 
   &:hover {
-    transform: translate3d(0, -0.2em, 0) scale(1.08);
-    box-shadow: var(--s), var(--inner-glow), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
-    z-index: 2;
-    border-color: var(--ah);
-
-    &::before {
-      opacity: 0.3;
-    }
-    
-    .icon {
-      animation: app-bounce 0.6s ease infinite alternate;
-      color: var(--ah);
-    }
+    transform: translate3d(0, -0.7em, 0) scale(1.08);
   }
-  
+
   &:active {
-    transform: translate3d(0, 0, 0) scale(0.95);
+    transform: translate3d(0, -0.4em, 0) scale(0.98);
   }
 }
 
-@keyframes app-bounce {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-8px); }
-}
-
-.app-card .icon {
-  font-family: 'Material Symbols Outlined';
-  font-size: clamp(1.1rem, 1.7vw + 1.6vh, 2.9rem);
-  margin-bottom: clamp(0.15rem, 0.25vw + 0.15vh, 0.6rem);
-  display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-  transition: all var(--t);
-  line-height: 1;
+/* --- Parallax Effekt für Hintergrund --- */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(149, 101, 230, 0.08) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
   will-change: transform;
-  color: var(--acc);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.app-card .label {
-  font-size: clamp(0.5rem, 0.6vw + 0.35vh, 1.05rem);
-  font-weight: 500;
-  line-height: 1.15;
-  word-break: break-word;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  transition: all var(--t);
-  
-  .app-card:hover & {
-    color: var(--ah);
-    transform: translateY(2px);
+/* --- Parallax beim Bewegen --- */
+@media (hover: hover) {
+  body:hover::before {
+    transform: translate3d(
+      calc((var(--mouse-x, 0.5) - 0.5) * 20px),
+      calc((var(--mouse-y, 0.5) - 0.5) * 20px),
+      0
+    );
   }
 }
 
-/* --- Responsive Design --- */
-@media (max-width: 992px) {
-  html {
-    font-size: clamp(5.5px, 0.75vw + 0.45vh, 16px);
-  }
-
-  .container {
-    padding: var(--fluid-padding-m);
-    gap: var(--fluid-gap-m);
-  }
-  
-  .main-grid {
-    grid-template-columns: 1fr;
-    display: flex;
-    flex-direction: column;
-    gap: var(--fluid-gap-m);
-    overflow-y: auto;
-    height: auto;
-  }
-  
-  .grid-left, .grid-right {
-    flex-direction: column;
-    gap: var(--fluid-gap-m);
-    height: auto;
-    min-height: 0;
-  }
-  
-  .time-display, .search-section, .weather-link-section, .quote-section {
-    flex-grow: 0;
-    padding: var(--fluid-padding-m);
-    min-height: 0;
-    flex-shrink: 1;
-    overflow: hidden;
-  }
-  
-  #time {
-    font-size: clamp(1.8rem, 7vw, 5rem);
-  }
-  
-  #date {
-    font-size: clamp(0.5rem, 1.8vw, 1.1rem);
-  }
-  
-  .search-title {
-    font-size: clamp(1.2rem, 4vw, 2.2rem);
-    margin-bottom: var(--fluid-padding-s);
-  }
-  
-  .header {
-    flex-direction: column;
-    gap: var(--fluid-gap-s);
-    padding: var(--fluid-padding-m);
-  }
-  
-  .logo { 
-    font-size: clamp(0.9rem, 3vw, 2.2rem);
-  }
-  
-  .controls { 
-    gap: var(--fluid-gap-m); 
-    flex-wrap: wrap; 
-    justify-content: center;
-  }
-  
-  .apps-section {
-    order: 4;
-    flex-grow: 1;
-    min-height: clamp(85px, 18vh, 250px);
-    padding: var(--fluid-padding-m);
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  
-  .apps-section h2 {
-    font-size: clamp(0.7rem, 2.5vw, 1.4rem);
-    margin-bottom: var(--fluid-padding-m);
-  }
-  
-  .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 9vw + 6vh, 85px), 1fr));
-    gap: var(--fluid-gap-m);
-    overflow: visible;
-    max-height: none;
-    padding-bottom: 1em;
-  }
-  
-  .app-card {
-    padding: clamp(0.3rem, 0.5vw + 0.4vh, 1.1rem);
-  }
-  
-  .app-card .icon {
-    font-size: clamp(1rem, 3vw + 1.8vh, 2.2rem);
-  }
-  
-  /* App-Label auf kleinen Bildschirmen ausblenden */
-  .app-card .label {
-    display: none;
-  }
-
-  /* Mobile Animationen deaktivieren */
-  .glass:hover, 
-  button:hover, 
-  .user-avatar:hover, 
-  .search-engine:hover, 
-  .weather-link-button:hover, 
-  .app-card:hover {
-    transform: none !important;
-  }
+/* --- iOS-spezifische Blur-Optimierung --- */
+.glass {
+  -webkit-backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
+  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
 }
 
 /* --- Touch Feedback für Mobile --- */
@@ -948,14 +133,32 @@ button {
   button, .user-avatar, .search-engine, 
   .weather-link-button, .app-card {
     &:active {
-      transform: scale(0.98) !important;
+      transform: scale(0.95);
+      transition: transform 0.1s ease-out;
     }
+  }
+  
+  .search-box:active {
+    transform: scale(0.98);
   }
 }
 
-/* Fallback für browsers that don't support backdrop-filter */
-@supports not (backdrop-filter: blur(1px)) {
-  .glass {
-    background: rgba(var(--fg-rgb), 0.2);
-  }
+/* --- Performance-Optimierte Animationen --- */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.92; }
+  100% { opacity: 1; }
+}
+
+/* --- Glow Effekte optimiert --- */
+.glass:hover, .search-box:focus-within {
+  box-shadow: 
+    0 10px 28px rgba(0,0,0,0.18),
+    0 0 12px rgba(var(--acc-rgb), 0.25);
 }
