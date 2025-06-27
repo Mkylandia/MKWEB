@@ -38,6 +38,11 @@
   --content-max-width: 1800px;
   --inner-shadow-strength: inset 0 0 5px rgba(0,0,0,0.03); /* Lighter inner shadow */
 
+  /* --- Neue Animations-Variablen --- */
+  --t-hover: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Neue Timing-Funktion für Hover */
+  --t-active: 0.1s ease-out; /* Schnellere Active-Animation */
+  --hover-scale: 1.05; /* Einheitlicher Skalierungsfaktor */
+
   /* --- Themed Variables (Nur noch Dark Theme) --- */
   --bg: #0d0d0d;
   --fg: #e0e0e0;
@@ -160,6 +165,7 @@ body {
   padding: var(--fluid-padding-s) var(--fluid-padding-l); /* Reduziertes Padding */
 }
 
+/* --- Verbesserte Logo Animation --- */
 .logo {
   font-size: clamp(1rem, var(--fluid-header-font), 2.2rem); /* Feinjustiert */
   font-weight: 800;
@@ -168,7 +174,7 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate;
+  animation: gradient 8s ease-in-out infinite alternate, float 3s ease-in-out infinite alternate;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
   position: relative;
 }
@@ -178,13 +184,18 @@ body {
   100% { background-position: 100% 50%; }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.15em); }
+}
+
 .controls {
   display: flex;
   gap: var(--fluid-gap-s); /* Feinjustiert */
   align-items: center;
 }
 
-/* --- Buttons Styling - Simplified --- */
+/* --- Buttons Styling - Verbesserte Animationen --- */
 button {
   padding: var(--fluid-padding-xs) var(--fluid-padding-s); /* Feinjustiert */
   border: var(--border-width) solid var(--gb);
@@ -192,7 +203,11 @@ button {
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
+  transition: 
+    border-color var(--t),
+    transform var(--t-hover),
+    box-shadow var(--t-hover),
+    background var(--t);
   font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
   font-weight: 600;
   outline: none;
@@ -203,14 +218,15 @@ button {
   transform: none;
 
   &:active {
-    transform: translateY(0.1em) scale(0.99);
+    transform: translateY(0.1em) scale(0.98);
     box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
     background: rgba(var(--gl-rgb), 0.05);
+    transition: all var(--t-active);
   }
 }
 
 button:hover {
-  transform: translateY(-0.2em);
+  transform: translateY(-0.25em) scale(var(--hover-scale));
   border-color: var(--acc);
   box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 }
@@ -227,14 +243,17 @@ button:hover {
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
   cursor: pointer;
-  transition: all var(--t);
+  transition: 
+    transform var(--t-hover),
+    box-shadow var(--t-hover),
+    border-color var(--t);
   box-shadow: var(--s-light);
   overflow: hidden;
   transform: none;
 }
 
 .user-avatar:hover {
-  transform: translateY(-0.3em);
+  transform: translateY(-0.3em) scale(var(--hover-scale));
   border-color: var(--acc);
   box-shadow: var(--glow-strength) var(--acc), var(--s);
 }
@@ -296,19 +315,19 @@ button:hover {
   font-size: clamp(0.55rem, 0.8vw, 0.9rem); /* Suchauswahl bleibt so, wie sie war. */
   border: var(--border-width) solid transparent;
   background: var(--gl);
-  transition: all var(--t);
+  transition: all var(--t-hover);
 
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-0.15em); /* Simpler active effect */
+    transform: translateY(-0.15em) scale(1.05); /* Verbesserter active effect */
     box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); /* Lighter glow */
     border-color: var(--acc);
   }
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-0.1em); /* Simpler hover effect */
+    transform: translateY(-0.1em) scale(1.03); /* Verbesserter hover effect */
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light); /* Lighter inset shadow */
   }
 }
@@ -318,7 +337,7 @@ button:hover {
   align-items: center;
   border-radius: 30px;
   padding: var(--fluid-padding-s); /* Feinjustiert */
-  transition: all var(--t);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: var(--s), var(--inner-shadow);
 }
 
@@ -342,7 +361,7 @@ button:hover {
   color: var(--dim);
 }
 
-/* --- Time Display --- */
+/* --- Time Display - Verbesserte Animationen --- */
 .time-display {
   text-align: center;
   padding: var(--fluid-padding-s); /* Feinjustiert */
@@ -365,8 +384,13 @@ button:hover {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate;
+  animation: gradient 8s ease-in-out infinite alternate, pulse 4s ease-in-out infinite;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
 }
 
 #date {
@@ -410,12 +434,12 @@ button:hover {
     color: var(--fg);
     font-weight: 600;
     font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
-    transition: all var(--t);
+    transition: all var(--t-hover);
     box-shadow: var(--s-light), var(--inner-shadow);
 }
 
 .weather-link-button:hover {
-    transform: translateY(-0.3em);
+    transform: translateY(-0.3em) scale(var(--hover-scale));
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
@@ -423,7 +447,7 @@ button:hover {
 .weather-link-button .weather-icon {
     font-size: clamp(1rem, 1.2vw, 2.2rem); /* Feinjustiert */
     color: var(--acc);
-    transition: all var(--t);
+    transition: transform var(--t-hover);
 }
 
 .weather-link-button:hover .weather-icon {
@@ -467,7 +491,7 @@ button:hover {
 /* Ende Zitate Sektion Styles */
 
 
-/* --- Apps & Bookmarks Section --- */
+/* --- Apps & Bookmarks Section - Verbesserte Animationen --- */
 .apps-section {
   width: 100%;
   padding: var(--fluid-padding-s); /* Feinjustiert */
@@ -511,7 +535,10 @@ button:hover {
   text-align: center;
   text-decoration: none;
   color: var(--fg);
-  transition: all var(--t);
+  transition: 
+    transform var(--t-hover),
+    box-shadow var(--t-hover),
+    border-color var(--t);
   position: relative;
   overflow: hidden; /* Sicherstellen, dass nichts überläuft */
   box-shadow: var(--s-light), var(--inner-shadow);
@@ -526,7 +553,7 @@ button:hover {
 }
 
 .app-card:hover {
-  transform: translateY(-0.5em);
+  transform: translateY(-0.5em) scale(var(--hover-scale));
   border-color: var(--acc);
   box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
 }
@@ -539,7 +566,7 @@ button:hover {
   margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-  transition: all 0.15s ease-out;
+  transition: transform 0.4s var(--t-hover) 0.05s;
   line-height: 1; /* Wichtig, um den vertikalen Raum des Icons zu kontrollieren */
 }
 
