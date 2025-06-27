@@ -1,4 +1,4 @@
-/* styles.css - MKWEB OS 7: Pop-Animation Edition */
+/* styles.css - MKWEB OS 7: Smooth & Contained Edition */
 
 /* --- Global Design Variables --- */
 :root {
@@ -21,11 +21,10 @@
   --fluid-gap-s: clamp(0.3rem, 0.4vw + 0.18vh, 0.9rem);
   --fluid-gap-m: clamp(0.4rem, 0.5vw + 0.25vh, 1.3rem);
 
-  /* POP Animation Timing */
-  --t: 0.22s cubic-bezier(0.25, 0.8, 0.5, 1.2);
-  --t-slow: 0.3s cubic-bezier(0.2, 0.8, 0.4, 1.3);
-  --t-bounce: 0.25s cubic-bezier(0.47, 1.64, 0.41, 0.8);
-  --t-elastic: 0.35s cubic-bezier(0.18, 1.5, 0.32, 1.3);
+  /* Smooth Animation Timing */
+  --t: 0.28s cubic-bezier(0.23, 1, 0.32, 1);
+  --t-slow: 0.36s cubic-bezier(0.23, 1, 0.32, 1);
+  --t-elastic: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   
   /* Visual Variables */
   --r: 14px;
@@ -45,7 +44,7 @@
   --inner-shadow-strength: inset 0 0 12px rgba(0,0,0,0.1);
   --text-shadow-strength: 0 2px 4px rgba(0,0,0,0.2);
 
-  /* Color Scheme (Lila Hintergrund entfernt) */
+  /* Color Scheme */
   --bg: #0a0a0a;
   --fg: #f5f5f5;
   --dim: rgba(245,245,245,0.65);
@@ -142,13 +141,12 @@ body {
   }
 
   &:hover {
-    transform: translate3d(0, -0.7em, 0) scale(1.05);
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    transform: translate3d(0, -0.2em, 0);
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
   }
 
   &:active {
-    transform: translate3d(0, -0.2em, 0) scale(0.98);
-    transition: transform 0.15s ease-out;
+    transform: translate3d(0, -0.1em, 0);
   }
 }
 
@@ -170,7 +168,7 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate, pulse 2.5s ease infinite alternate;
+  animation: gradient 15s ease infinite alternate;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
   position: relative;
   transition: all var(--t-slow);
@@ -181,12 +179,6 @@ body {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-@keyframes pulse {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
 }
 
 .controls {
@@ -203,7 +195,7 @@ button {
   background: var(--gl);
   color: var(--fg);
   cursor: pointer;
-  transition: all var(--t-bounce);
+  transition: all var(--t);
   font-size: clamp(0.55rem, var(--fluid-min-font), 0.85rem);
   font-weight: 600;
   outline: none;
@@ -228,9 +220,9 @@ button {
   }
 
   &:hover {
-    transform: translate3d(0, -0.45em, 0) scale(1.08);
+    transform: translate3d(0, -0.15em, 0);
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
     
     &::after {
       opacity: 1;
@@ -238,8 +230,7 @@ button {
   }
 
   &:active {
-    transform: translate3d(0, 0.1em, 0) scale(0.92);
-    box-shadow: var(--s-light), inset 0 3px 6px rgba(0,0,0,0.2);
+    transform: translate3d(0, 0.05em, 0);
   }
 }
 
@@ -255,7 +246,7 @@ button {
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
   cursor: pointer;
-  transition: all var(--t-bounce);
+  transition: all var(--t);
   box-shadow: var(--s-light);
   overflow: hidden;
   will-change: transform;
@@ -263,7 +254,7 @@ button {
   backface-visibility: hidden;
 
   &:hover {
-    transform: translate3d(0, -0.6em, 0) scale(1.12);
+    transform: translate3d(0, -0.2em, 0);
     border-color: var(--acc);
     box-shadow: var(--glow-strength) var(--acc), var(--s);
   }
@@ -304,7 +295,6 @@ button {
   overflow: visible;
   position: relative;
   z-index: 10;
-  margin-bottom: 1em;
 }
 
 .search-title {
@@ -340,7 +330,7 @@ button {
   font-size: clamp(0.6rem, 0.85vw, 1rem);
   border: var(--border-width) solid transparent;
   background: var(--gl);
-  transition: all var(--t-bounce);
+  transition: all var(--t);
   will-change: transform;
   position: relative;
   overflow: hidden;
@@ -362,8 +352,8 @@ button {
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translate3d(0, -0.35em, 0) scale(1.1);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4), var(--s);
+    transform: translate3d(0, -0.1em, 0);
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
     border-color: var(--acc);
 
     &::after {
@@ -373,7 +363,7 @@ button {
 
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translate3d(0, -0.3em, 0) scale(1.05);
+    transform: translate3d(0, -0.1em, 0);
     box-shadow: var(--s-light);
 
     &::after {
@@ -385,7 +375,6 @@ button {
 .search-box-container {
   position: relative;
   z-index: 10;
-  margin-top: 1em;
 }
 
 .search-box {
@@ -398,19 +387,18 @@ button {
   will-change: transform;
   position: relative;
   z-index: 1;
-  margin-top: 0.5em;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
 
   &:focus-within {
-    transform: translate3d(0, -0.5em, 0) scale(1.05);
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
+    transform: translate3d(0, -0.1em, 0);
+    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
   }
 }
 
 .search-box:hover {
-  transform: translate3d(0, -0.5em, 0) scale(1.03);
-  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+  transform: translate3d(0, -0.1em, 0);
+  box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 }
 
 #search {
@@ -439,13 +427,13 @@ button {
 .search-icon {
   font-size: clamp(1rem, 1.2vw, 1.8rem);
   color: var(--dim);
-  transition: all var(--t-bounce);
+  transition: all var(--t);
 }
 
 .search-box:focus-within .search-icon,
 .search-box:hover .search-icon {
   color: var(--acc);
-  transform: scale(1.15) rotate(10deg);
+  transform: scale(1.05);
 }
 
 /* --- Premium Time Display --- */
@@ -470,7 +458,7 @@ button {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 12s ease infinite alternate, pulse 3.5s ease infinite alternate;
+  animation: gradient 12s ease infinite alternate;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
   transition: all var(--t-slow);
   letter-spacing: -1px;
@@ -519,7 +507,7 @@ button {
   color: var(--fg);
   font-weight: 600;
   font-size: clamp(0.75rem, var(--fluid-max-font), 1.2rem);
-  transition: all var(--t-bounce);
+  transition: all var(--t);
   box-shadow: var(--s-light), var(--inner-shadow);
   will-change: transform;
   position: relative;
@@ -540,9 +528,9 @@ button {
   }
 
   &:hover {
-    transform: translate3d(0, -0.6em, 0) scale(1.08);
+    transform: translate3d(0, -0.2em, 0);
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
 
     &::before {
       opacity: 0.2;
@@ -553,13 +541,13 @@ button {
 .weather-link-button .weather-icon {
   font-size: clamp(1.2rem, 1.5vw, 2.6rem);
   color: var(--acc);
-  transition: all var(--t-bounce);
-  filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.3));
+  transition: all var(--t);
+  filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.2));
 }
 
 .weather-link-button:hover .weather-icon {
-  transform: scale(1.25) rotate(10deg);
-  filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.5));
+  transform: scale(1.1);
+  filter: drop-shadow(var(--glow-strength) rgba(var(--acc-rgb), 0.4));
 }
 
 .weather-notice {
@@ -670,7 +658,7 @@ button {
   text-align: center;
   text-decoration: none;
   color: var(--fg);
-  transition: all var(--t-bounce);
+  transition: all var(--t);
   position: relative;
   overflow: visible;
   box-shadow: var(--s-light), var(--inner-shadow);
@@ -683,7 +671,6 @@ button {
   min-width: 0;
   min-height: 0;
   will-change: transform;
-  margin-top: 0.5em;
   max-width: 100%;
   max-height: 100%;
   backface-visibility: hidden;
@@ -701,24 +688,18 @@ button {
   }
 
   &:hover {
-    transform: translate3d(0, -0.8em, 0) scale(1.12);
+    transform: translate3d(0, -0.2em, 0);
     border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.5);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     z-index: 2;
 
     &::before {
       opacity: 0.3;
     }
     
-    .label {
-      opacity: 1;
-      transform: translateY(0);
+    .icon {
+      transform: scale(1.1);
     }
-  }
-
-  &:active {
-    transform: translate3d(0, -0.4em, 0) scale(0.95);
-    transition: transform 0.15s ease-out;
   }
 }
 
@@ -728,13 +709,9 @@ button {
   margin-bottom: clamp(0.15rem, 0.25vw + 0.15vh, 0.6rem);
   display: block;
   text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-  transition: all var(--t-bounce);
+  transition: all var(--t);
   line-height: 1;
   will-change: transform;
-}
-
-.app-card:hover .icon {
-  transform: scale(1.25) rotate(10deg);
 }
 
 .app-card .label {
@@ -747,10 +724,9 @@ button {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  transition: all 0.2s ease;
 }
 
-/* --- Responsive Design (Enhanced) --- */
+/* --- Responsive Design --- */
 @media (max-width: 992px) {
   html {
     font-size: clamp(5.5px, 0.75vw + 0.45vh, 16px);
@@ -838,7 +814,6 @@ button {
   
   .app-card {
     padding: clamp(0.3rem, 0.5vw + 0.4vh, 1.1rem);
-    margin-top: 0.4em;
   }
   
   .app-card .icon {
@@ -850,20 +825,7 @@ button {
     display: none;
   }
 
-  .search-section {
-    margin-bottom: 0.5em;
-    padding-bottom: 1em;
-  }
-
-  .search-box {
-    margin-top: 0.3em;
-  }
-
-  .search-box:focus-within {
-    transform: translate3d(0, -0.3em, 0) scale(1.03);
-  }
-  
-  /* POP Animationen auf mobilen Geräten anpassen */
+  /* Mobile Animationen deaktivieren */
   .glass:hover, 
   button:hover, 
   .user-avatar:hover, 
@@ -879,13 +841,8 @@ button {
   button, .user-avatar, .search-engine, 
   .weather-link-button, .app-card {
     &:active {
-      transform: scale(0.92) !important;
-      transition: transform 0.1s ease-out !important;
+      transform: scale(0.98) !important;
     }
-  }
-  
-  .search-box:active {
-    transform: scale(0.98) !important;
   }
 }
 
