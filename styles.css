@@ -1,69 +1,65 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Final Version with Harmonized Animations */
+/* styles.css - MKWEB OS 7.5: Velocity Edition - Faster Animations, Bolder Design */
 
-/* --- Global Design & Animation Variables - Refined for OS 7 --- */
+/* --- Global Design & Animation Variables - OS 7.5 --- */
 :root {
-  /* Skalierungs-Faktoren */
+  /* Skalierungs-Faktoren (unverändert) */
   --fluid-min-font: 0.6vw;
   --fluid-max-font: 0.9vw;
   --fluid-header-font: 1.1vw;
   --fluid-time-font: 3vw;
 
-  /* Fluid Clamps für Padding */
+  /* Clamps für Padding & Gaps (unverändert) */
   --fluid-padding-xs: clamp(0.15rem, 0.25vw + 0.1vh, 0.7rem);
   --fluid-padding-s: clamp(0.3rem, 0.4vw + 0.2vh, 1rem);
   --fluid-padding-m: clamp(0.5rem, 0.7vw + 0.35vh, 1.3rem);
   --fluid-padding-l: clamp(0.7rem, 0.9vw + 0.45vh, 1.8rem);
   --fluid-padding-xl: clamp(0.9rem, 1.1vw + 0.55vh, 2.3rem);
-
-  /* Fluid Clamps für Gaps */
   --fluid-gap-xs: clamp(0.15rem, 0.2vw + 0.08vh, 0.5rem);
   --fluid-gap-s: clamp(0.25rem, 0.35vw + 0.15vh, 0.8rem);
   --fluid-gap-m: clamp(0.35rem, 0.45vw + 0.2vh, 1.2rem);
 
-  /* --- Harmonisierte Animations-Variablen --- */
-  --t-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);     /* Für schnelle Reaktionen (z.B. :active) */
-  --t-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);   /* Standard-Transition für Hover-Effekte */
-  --t-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);     /* Für subtile, langsame Hintergrund-Effekte */
-  --t-elastic: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Elastischer Effekt für besondere Akzente */
+  /* --- NEU: Schnellere, dynamischere Animations-Variablen --- */
+  --t-quick: 0.1s ease-out; /* Für :active-Zustände */
+  --t-snap: 0.25s cubic-bezier(0.16, 1, 0.3, 1); /* Schneller Standard für Hover */
+  --t-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Elastischer Effekt */
 
-  /* Einheitliche Skalierungs- & Bewegungsfaktoren */
-  --hover-scale: 1.05;
-  --active-scale: 0.97;
-  --hover-translate-y: -4px;
-  --active-translate-y: 1px;
+  /* --- NEU: Verbesserte Interaktions-Variablen --- */
+  --hover-scale: 1.08; /* Stärkere Skalierung */
+  --active-scale: 0.96; /* Deutlicheres Feedback beim Klick */
+  --hover-translate-y: -6px; /* Mehr "Lift" */
+  --hover-rotate: -2deg; /* Subtile 3D-Neigung */
 
-  /* Design-Elemente */
-  --r: 12px;
+  /* --- VERBESSERT: Design-Elemente & Effekte --- */
+  --r: 14px; /* Etwas runder */
   --border-width: 1px;
-  --text-gradient-angle: 65deg;
+  --text-gradient-angle: 75deg;
   --content-max-width: 1800px;
   
   /* Schatten & Glühen */
-  --s: 0 4px 12px rgba(0,0,0,0.08);
-  --sh: 0 8px 20px rgba(0,0,0,0.12); /* Hover-Schatten leicht intensiviert für besseres Feedback */
-  --s-light: 0 2px 6px rgba(0,0,0,0.05);
-  --inner-shadow-strength: inset 0 0 5px rgba(0,0,0,0.03);
-  --glow-strength: 0 0 8px; /* Leicht erhöhte Unschärfe für weicheres Glühen */
-  --glow-hover-strength: 0 0 12px;
+  --s: 0 6px 15px rgba(0,0,0,0.1);
+  --sh: 0 10px 25px rgba(0,0,0,0.15); /* Tieferer Hover-Schatten */
+  --s-light: 0 3px 8px rgba(0,0,0,0.07);
+  --inner-shadow-strength: inset 0 1px 2px 0 rgba(255,255,255,0.05); /* Prononcierterer innerer Schatten */
+  --glow-strength: 0 0 10px;
+  --glow-hover-strength: 0 0 15px;
 
-  /* Glassmorphism */
-  --glass-reflection: transparent;
-  --blur-intensity: 8px;
-  --saturate-intensity: 120%;
+  /* Crystal-Glass Effekt */
+  --blur-intensity: 12px; /* Stärkerer Blur */
+  --saturate-intensity: 150%; /* Lebendigere Farben dahinter */
 
-  /* --- Themed Variables (Dark Theme) --- */
-  --bg: #0d0d0d;
-  --fg: #e0e0e0;
-  --dim: rgba(224,224,224,0.5);
-  --acc: #8a4ed4;
+  /* --- VERBESSERT: Themed Variables mit Dual-Akzent --- */
+  --bg: #0A0A0A; /* Noch dunklerer Hintergrund */
+  --fg: #e9e9e9;
+  --dim: rgba(224,224,224,0.55);
+  --acc: #8a4ed4;  /* Primär-Akzent: Violett */
+  --acc-2: #00f2ff; /* NEU: Sekundär-Akzent: Cyan */
   --ah: #b080ff;
-  --gl: rgba(255,255,255,0.03);
-  --gb: rgba(255,255,255,0.1);
+  --gl: rgba(255,255,255,0.04);
+  --gb: rgba(255,255,255,0.12); /* Hellere Glas-Ränder */
   --inner-shadow: var(--inner-shadow-strength);
   --acc-rgb: 138, 78, 212;
-  --fg-rgb: 224, 224, 224;
-  --ah-rgb: 176, 128, 255;
-  --gb-rgb: 255, 255, 255;
+  --acc-2-rgb: 0, 242, 255;
+  --fg-rgb: 233, 233, 233;
 }
 
 
@@ -86,7 +82,7 @@ body {
   color: var(--fg);
   height: 100vh;
   width: 100vw;
-  transition: background var(--t-medium), color var(--t-medium);
+  transition: background var(--t-snap), color var(--t-snap);
   overflow: hidden;
   position: relative;
   text-rendering: optimizeLegibility;
@@ -95,9 +91,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-/* --- Removed Background Elements --- */
-.background-shape, .grain { display: none; }
 
 .container {
   position: relative;
@@ -112,53 +105,61 @@ body {
   min-height: 0;
 }
 
-/* --- Glassmorphism Base Style with Harmonized Transitions --- */
+/* --- VERBESSERT: "Crystal-Glass" Effekt mit Glint-Animation --- */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s), var(--inner-shadow);
-  /* Harmonisierte Transition für alle .glass Elemente */
   transition: 
-    background var(--t-medium), 
-    border-color var(--t-medium), 
-    box-shadow var(--t-medium), 
-    transform var(--t-medium);
+    background var(--t-snap), 
+    border-color var(--t-snap), 
+    box-shadow var(--t-snap), 
+    transform var(--t-snap);
   position: relative;
   overflow: hidden;
+  will-change: transform; /* Performance-Optimierung */
 
+  /* NEU: Glint/Shine-Effekt beim Hover */
   &::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--glass-reflection);
-    pointer-events: none;
-    opacity: 0;
-    transition: none;
+    top: 0;
+    left: -150%; /* Startet außerhalb */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    transform: skewX(-30deg);
+    transition: left var(--t-bounce);
   }
 
-  &:hover {
-    transform: translateY(var(--hover-translate-y));
-    box-shadow: var(--sh), var(--glow-hover-strength) rgba(var(--acc-rgb), 0.2);
+  &:hover::after {
+    left: 150%; /* Wischt durch das Element */
   }
 
-  /* Der Glüheffekt nutzt nun ebenfalls die harmonisierten Variablen */
+  /* Glühender Rand mit Dual-Akzent */
   &::before {
     content: '';
     position: absolute;
     top: -1px; left: -1px; right: -1px; bottom: -1px;
     border-radius: calc(var(--r) + 1px);
-    background: linear-gradient(45deg, var(--acc), var(--ah));
+    background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--acc-2));
     z-index: -1;
     opacity: 0;
-    filter: blur(5px);
-    transition: opacity var(--t-medium), filter var(--t-medium);
+    filter: blur(8px);
+    transition: opacity var(--t-snap), filter var(--t-snap);
+  }
+  
+  &:hover {
+    transform: translateY(var(--hover-translate-y)) rotate(var(--hover-rotate));
+    border-color: rgba(var(--acc-2-rgb), 0.5);
+    box-shadow: var(--sh), var(--glow-hover-strength) rgba(var(--acc-rgb), 0.25);
   }
 
   &:hover::before {
-    opacity: 0.5;
-    filter: blur(8px); /* Etwas weicherer Blur beim Hover */
+    opacity: 0.7;
+    filter: blur(12px);
   }
 }
 
@@ -172,19 +173,17 @@ body {
   padding: var(--fluid-padding-s) var(--fluid-padding-l);
 }
 
-/* --- Harmonized Logo Animation --- */
+/* --- Verbessertes Logo mit Dual-Akzent-Animation --- */
 .logo {
   font-size: clamp(1rem, var(--fluid-header-font), 2.2rem);
   font-weight: 800;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 200% 200%;
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc-2), var(--acc));
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
-  position: relative;
-  /* Die Animationen sind nun langsamer und weicher für eine ruhigere Optik */
-  animation: gradient 12s ease-in-out infinite alternate, float 6s ease-in-out infinite alternate;
+  text-shadow: var(--glow-strength) rgba(var(--acc-2-rgb), 0.2);
+  animation: gradient 6s ease-in-out infinite alternate, float 5s ease-in-out infinite alternate;
 }
 
 @keyframes gradient {
@@ -192,11 +191,9 @@ body {
   100% { background-position: 100% 50%; }
 }
 
-/* Sanftere, subtilere Schwebe-Animation */
 @keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-  100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0) rotate(1deg); }
+  50% { transform: translateY(-4px) rotate(-1deg); }
 }
 
 .controls {
@@ -205,7 +202,7 @@ body {
   align-items: center;
 }
 
-/* --- Buttons Styling with Harmonized Animations --- */
+/* --- Buttons mit schnellem, taktilem Feedback --- */
 button {
   padding: var(--fluid-padding-xs) var(--fluid-padding-s);
   border: var(--border-width) solid var(--gb);
@@ -220,25 +217,22 @@ button {
   position: relative;
   z-index: 1;
   overflow: hidden;
-  /* Übergänge für Hover und Active getrennt definiert */
   transition: 
-    transform var(--t-medium), 
-    box-shadow var(--t-medium), 
-    border-color var(--t-medium),
-    background var(--t-medium);
+    transform var(--t-snap), 
+    box-shadow var(--t-snap), 
+    border-color var(--t-snap),
+    background var(--t-snap);
 
   &:hover {
-    transform: translateY(calc(var(--hover-translate-y) / 2)) scale(var(--hover-scale)); /* Subtilerer Y-Translate */
-    border-color: var(--acc);
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
+    transform: translateY(-3px) scale(1.05);
+    border-color: var(--acc-2);
+    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-2-rgb), 0.4);
   }
 
   &:active {
-    transform: translateY(var(--active-translate-y)) scale(var(--active-scale));
+    transform: translateY(1px) scale(var(--active-scale));
     box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
-    background: rgba(var(--gb-rgb), 0.05);
-    /* Nutzt die schnelle Transition für sofortiges Feedback */
-    transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+    transition: all var(--t-quick);
   }
 }
 
@@ -255,29 +249,23 @@ button {
   color: var(--acc);
   cursor: pointer;
   box-shadow: var(--s-light);
-  overflow: hidden;
-  /* Harmonisierte Transition */
-  transition: 
-    transform var(--t-elastic), /* Nutzt den elastischen Effekt für einen netten Akzent */
-    box-shadow var(--t-medium),
-    border-color var(--t-medium);
-}
+  transition: all var(--t-bounce);
 
-.user-avatar:hover {
-  transform: translateY(var(--hover-translate-y)) scale(var(--hover-scale));
-  border-color: var(--acc);
-  box-shadow: var(--glow-hover-strength) var(--acc), var(--s);
+  &:hover {
+    transform: translateY(var(--hover-translate-y)) scale(1.1) rotate(5deg);
+    border-color: var(--acc);
+    box-shadow: var(--glow-hover-strength) var(--acc), var(--s);
+  }
 }
 
 .hidden-avatar {
   opacity: 0 !important;
   transform: scale(0.6) !important;
   pointer-events: none !important;
-  transition: opacity var(--t-medium), transform var(--t-medium) !important;
 }
 
 
-/* --- Main Grid Layout --- */
+/* --- Main Grid Layout (unverändert) --- */
 .main-grid {
   width: 100%;
   max-width: var(--content-max-width);
@@ -306,10 +294,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 1;
-  min-height: 0;
-  flex-shrink: 1;
-  overflow: hidden;
+  flex-grow: 1; min-height: 0; flex-shrink: 1; overflow: hidden;
 }
 
 .search-engines {
@@ -327,21 +312,20 @@ button {
   font-size: clamp(0.55rem, 0.8vw, 0.9rem);
   border: var(--border-width) solid transparent;
   background: var(--gl);
-  /* Harmonisierte Transition */
-  transition: all var(--t-medium);
+  transition: all var(--t-snap);
 
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s);
+    transform: translateY(-2px) scale(1.1);
+    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--sh);
     border-color: var(--acc);
   }
 
   &:not(.active):hover {
+    transform: translateY(-2px) scale(1.05);
     border-color: var(--acc);
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light);
+    box-shadow: var(--s-light);
   }
 }
 
@@ -350,227 +334,122 @@ button {
   align-items: center;
   border-radius: 30px;
   padding: var(--fluid-padding-s);
-  /* Nutzt die elastische Transition für einen Pop-Effekt */
-  transition: transform var(--t-elastic), box-shadow var(--t-medium), border-color var(--t-medium);
+  transition: all var(--t-bounce);
   box-shadow: var(--s), var(--inner-shadow);
-}
 
-.search-box:focus-within {
-  border-color: var(--acc);
-  transform: scale(1.01); /* Leichter Skalierungseffekt für Fokus */
-  box-shadow: var(--glow-hover-strength) rgba(var(--acc-rgb), 0.3), var(--sh);
+  &:focus-within {
+    border-color: var(--acc-2);
+    transform: scale(1.02);
+    box-shadow: var(--glow-hover-strength) rgba(var(--acc-2-rgb), 0.4), var(--sh);
+  }
 }
 
 #search {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--fg);
+  flex: 1; border: none; background: transparent; color: var(--fg);
   font-size: clamp(0.6rem, var(--fluid-max-font), 1rem);
-  outline: none;
-  margin-left: var(--fluid-padding-xs);
+  outline: none; margin-left: var(--fluid-padding-xs);
 }
 
-#search::placeholder {
-  color: var(--dim);
-}
+#search::placeholder { color: var(--dim); }
 
-/* --- Time Display with Harmonized Animations --- */
+/* --- Time Display mit energetischer Animation --- */
 .time-display {
-  text-align: center;
-  padding: var(--fluid-padding-s);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 2;
-  min-height: 0;
-  flex-shrink: 1;
-  overflow: hidden;
+  text-align: center; padding: var(--fluid-padding-s); display: flex;
+  flex-direction: column; justify-content: center; flex-grow: 2;
+  min-height: 0; flex-shrink: 1; overflow: hidden;
 }
 
 #time {
   font-size: clamp(1.8rem, var(--fluid-time-font), 6rem);
   font-weight: 800;
   margin-bottom: clamp(0.01rem, 0.04vh, 0.25rem);
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
+  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc-2));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-  /* Ruhigere, langsamere Animationen */
-  animation: gradient 12s ease-in-out infinite alternate, pulse 8s ease-in-out infinite;
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
+  animation: gradient 8s ease-in-out infinite alternate, pulse 4s ease-in-out infinite;
 }
 
-/* Subtilere Puls-Animation */
 @keyframes pulse {
-  0%, 100% { 
-    opacity: 1;
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-  }
-  50% { 
-    opacity: 0.95; 
-    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.1);
-  }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.01); }
 }
 
 #date {
   font-size: clamp(0.5rem, var(--fluid-min-font), 1rem);
-  color: var(--dim);
-  font-weight: 300;
-  text-transform: uppercase;
+  color: var(--dim); font-weight: 300; text-transform: uppercase;
   letter-spacing: clamp(0.2px, 0.07vw, 1.8px);
 }
 
-/* --- Weather Link Section Styles --- */
-.weather-link-section {
-    padding: var(--fluid-padding-s);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    text-align: center;
-    min-height: 0;
-    flex-shrink: 1;
-    overflow: hidden;
+/* --- Wetter & Zitate Sektionen (Stil angepasst) --- */
+.weather-link-section, .quote-section {
+  padding: var(--fluid-padding-s); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  flex-grow: 1; min-height: 0; flex-shrink: 1; overflow: hidden;
 }
-
-.weather-link-section h2 {
-    font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem);
-    font-weight: 700;
-    margin-bottom: var(--fluid-padding-s);
-    color: var(--fg);
+.weather-link-section h2, .quote-section #quote-text {
+  font-size: clamp(0.75rem, var(--fluid-header-font), 1.4rem);
+  font-weight: 700; margin-bottom: var(--fluid-padding-s); color: var(--fg);
 }
-
+#quote-text { font-weight: 600; }
+.weather-notice, #quote-author {
+  font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); color: var(--dim);
+}
 .weather-link-button {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--fluid-gap-s);
-    padding: var(--fluid-padding-s) var(--fluid-padding-m);
-    background: var(--gl);
-    border: var(--border-width) solid var(--gb);
-    border-radius: var(--r);
-    text-decoration: none;
-    color: var(--fg);
-    font-weight: 600;
-    font-size: clamp(0.6rem, var(--fluid-max-font), 1rem);
-    box-shadow: var(--s-light), var(--inner-shadow);
-    /* Harmonisierte Transition */
-    transition: all var(--t-medium);
-}
-
-.weather-link-button:hover {
-    transform: translateY(var(--hover-translate-y)) scale(var(--hover-scale));
+  display: inline-flex; align-items: center; gap: var(--fluid-gap-s);
+  padding: var(--fluid-padding-s) var(--fluid-padding-m); background: var(--gl);
+  border: var(--border-width) solid var(--gb); border-radius: var(--r);
+  text-decoration: none; color: var(--fg); font-weight: 600;
+  font-size: clamp(0.6rem, var(--fluid-max-font), 1rem);
+  transition: all var(--t-bounce); box-shadow: var(--s-light), var(--inner-shadow);
+  &:hover {
+    transform: translateY(var(--hover-translate-y)) scale(var(--hover-scale)) rotate(-3deg);
     border-color: var(--acc);
-    box-shadow: var(--sh), var(--glow-hover-strength) rgba(var(--acc-rgb), 0.25);
+    box-shadow: var(--sh), var(--glow-hover-strength) rgba(var(--acc-rgb), 0.3);
+  }
 }
-
 .weather-link-button .weather-icon {
-    font-size: clamp(1rem, 1.2vw, 2.2rem);
-    color: var(--acc);
-    /* Harmonisierte Transition */
-    transition: transform var(--t-medium);
+  font-size: clamp(1rem, 1.2vw, 2.2rem); color: var(--acc-2);
+  transition: transform var(--t-snap);
 }
+.weather-link-button:hover .weather-icon { transform: scale(1.2) rotate(10deg); }
 
-.weather-link-button:hover .weather-icon {
-    transform: scale(1.15); /* Etwas mehr "Pop" für das Icon */
-}
-
-.weather-notice {
-    margin-top: var(--fluid-padding-s);
-    font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem);
-    color: var(--dim);
-}
-
-
-/* --- Quote Section Styles --- */
-.quote-section {
-  padding: var(--fluid-padding-s);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-grow: 1;
-  min-height: 0;
-  flex-shrink: 1;
-  overflow: hidden;
-}
-
-#quote-text {
-  font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem);
-  font-weight: 600;
-  margin-bottom: clamp(0.1rem, 0.2vw, 0.5rem);
-  color: var(--fg);
-}
-
-#quote-author {
-  font-size: clamp(0.45rem, var(--fluid-min-font), 0.9rem);
-  color: var(--dim);
-}
-
-
-/* --- Apps & Bookmarks Section with Harmonized Animations --- */
+/* --- Apps Section mit dynamischen 3D-Karten --- */
 .apps-section {
-  width: 100%;
-  padding: var(--fluid-padding-s);
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  min-height: 0;
-  overflow: hidden;
-  flex-shrink: 1;
+  width: 100%; padding: var(--fluid-padding-s); display: flex;
+  flex-direction: column; flex-grow: 1; min-height: 0;
+  overflow: hidden; flex-shrink: 1;
 }
 
 .apps-section h2 {
-  margin-bottom: var(--fluid-padding-s);
-  font-size: clamp(0.7rem, var(--fluid-header-font), 1.4rem);
-  font-weight: 700;
-  text-align: center;
-  color: var(--dim);
+  margin-bottom: var(--fluid-padding-s); font-size: clamp(0.7rem, var(--fluid-header-font), 1.4rem);
+  font-weight: 700; text-align: center; color: var(--dim);
 }
 
 .apps-container {
     grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr));
-    gap: var(--fluid-gap-s);
-    overflow: hidden;
-    padding: var(--fluid-padding-xs);
-    flex-grow: 1;
-    min-height: 0;
-    display: grid;
-    max-height: 100%;
+    gap: var(--fluid-gap-s); overflow: hidden; padding: var(--fluid-padding-xs);
+    flex-grow: 1; min-height: 0; display: grid; max-height: 100%;
 }
 
 .app-card {
-  background: var(--gl);
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
+  /* Ist bereits ein .glass Element, erbt also alle Effekte */
   padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem);
-  text-align: center;
-  text-decoration: none;
-  color: var(--fg);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--s-light), var(--inner-shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 1 / 1;
-  min-width: 0;
-  min-height: 0;
-  /* Harmonisierte Transition, die elastische Kurve sorgt für einen schönen Sprung-Effekt */
-  transition: 
-    transform var(--t-elastic),
-    box-shadow var(--t-medium),
-    border-color var(--t-medium);
-}
+  text-decoration: none; color: var(--fg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  aspect-ratio: 1 / 1; min-width: 0; min-height: 0;
+  /* Nutzt die Bounce-Transition für einen verspielten Effekt */
+  transition: all var(--t-bounce);
 
-.app-card:hover {
-  transform: translateY(calc(var(--hover-translate-y) * 1.5)) scale(var(--hover-scale)); /* Etwas mehr Bewegung für die App-Icons */
-  border-color: var(--acc);
-  box-shadow: var(--sh), var(--glow-hover-strength) rgba(var(--acc-rgb), 0.25);
+  &:hover {
+    /* Überschreibt den Standard .glass hover für einen stärkeren Effekt */
+    transform: translateY(calc(var(--hover-translate-y) * 1.5)) scale(1.1) rotate(var(--hover-rotate));
+    border-color: var(--acc);
+    box-shadow: var(--sh), var(--glow-hover-strength) rgba(var(--acc-rgb), 0.3);
+  }
 }
 
 .app-card .icon {
@@ -578,122 +457,65 @@ button {
   font-size: clamp(0.9rem, 1.5vw + 1.5vh, 2.5rem);
   margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2);
   line-height: 1;
-  /* Die Icon-Animation nutzt nun die Standard-Transition und eine leichte Verzögerung */
-  transition: transform var(--t-medium) 0.05s;
+  transition: transform var(--t-snap);
 }
 
 .app-card:hover .icon {
-  transform: scale(1.15); /* Stärkerer Skalierungseffekt auf dem Icon für mehr Feedback */
+  transform: scale(1.2) rotate(5deg);
 }
 
 .app-card .label {
   font-size: clamp(0.4rem, 0.5vw + 0.3vh, 0.9rem);
-  font-weight: 500;
-  line-height: 1.1;
-  word-break: break-word;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-weight: 500; line-height: 1.1; word-break: break-word;
+  text-overflow: ellipsis; overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 
-/* --- SR-Only class for accessibility --- */
+/* --- SR-Only & Media Queries (unverändert) --- */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
 }
 
-
-/* --- Media Queries for Layout Change --- */
 @media (max-width: 992px) {
-  html {
-    font-size: clamp(5px, 0.7vw + 0.4vh, 15px);
-  }
-
-  .container {
-      padding: var(--fluid-padding-m);
-      gap: var(--fluid-gap-m);
-  }
+  html { font-size: clamp(5px, 0.7vw + 0.4vh, 15px); }
+  .container { padding: var(--fluid-padding-m); gap: var(--fluid-gap-m); }
   .main-grid {
-      grid-template-columns: 1fr;
-      display: flex;
-      flex-direction: column;
-      gap: var(--fluid-gap-m);
-      overflow-y: auto; 
-      height: auto;
+      grid-template-columns: 1fr; display: flex; flex-direction: column;
+      gap: var(--fluid-gap-m); overflow-y: auto; height: auto;
   }
   .grid-left, .grid-right {
-      flex-direction: column;
-      gap: var(--fluid-gap-m);
-      height: auto;
-      min-height: 0;
+      flex-direction: column; gap: var(--fluid-gap-m); height: auto; min-height: 0;
   }
-
   .time-display, .search-section, .weather-link-section, .quote-section {
-      flex-grow: 0;
-      padding: var(--fluid-padding-s);
-      min-height: 0;
-      flex-shrink: 1;
-      overflow: hidden;
+      flex-grow: 0; padding: var(--fluid-padding-s); min-height: 0;
+      flex-shrink: 1; overflow: hidden;
   }
-
-  #time {
-      font-size: clamp(1.5rem, 6vw, 4rem);
-  }
-  #date {
-      font-size: clamp(0.4rem, 1.5vw, 0.9rem);
-  }
-
+  #time { font-size: clamp(1.5rem, 6vw, 4rem); }
+  #date { font-size: clamp(0.4rem, 1.5vw, 0.9rem); }
   .header {
-      flex-direction: column;
-      gap: var(--fluid-gap-s);
-      padding: var(--fluid-padding-s);
+      flex-direction: column; gap: var(--fluid-gap-s); padding: var(--fluid-padding-s);
   }
   .logo { font-size: clamp(0.8rem, 2.5vw, 1.8rem); }
   .controls { gap: var(--fluid-gap-s); flex-wrap: wrap; justify-content: center; }
-
   .apps-section {
-      order: 4;
-      flex-grow: 1;
-      min-height: clamp(70px, 14vh, 220px);
-      padding: var(--fluid-padding-s);
-      overflow-y: auto;
+      order: 4; flex-grow: 1; min-height: clamp(70px, 14vh, 220px);
+      padding: var(--fluid-padding-s); overflow-y: auto;
   }
   .apps-section h2 {
-      font-size: clamp(0.6rem, 2.2vw, 1.2rem);
-      margin-bottom: var(--fluid-padding-s);
+      font-size: clamp(0.6rem, 2.2vw, 1.2rem); margin-bottom: var(--fluid-padding-s);
   }
   .apps-container {
       grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 8vw + 5vh, 75px), 1fr));
-      gap: var(--fluid-gap-s);
-      overflow: hidden;
-      max-height: none;
+      gap: var(--fluid-gap-s); overflow: hidden; max-height: none;
   }
-  .app-card {
-      padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem);
-  }
-  .app-card .icon {
-      font-size: clamp(0.8rem, 2.5vw + 1.5vh, 1.8rem);
-  }
-  .app-card .label {
-      font-size: clamp(0.35rem, 1.2vw + 0.5vh, 0.6rem);
-      line-height: 1.1;
-  }
+  .app-card { padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem); }
+  .app-card .icon { font-size: clamp(0.8rem, 2.5vw + 1.5vh, 1.8rem); }
+  .app-card .label { font-size: clamp(0.35rem, 1.2vw + 0.5vh, 0.6rem); line-height: 1.1; }
 }
 
-/* --- Fallback for legacy browsers --- */
 @supports not (backdrop-filter: blur(1px)) {
-  .glass {
-    background: rgba(var(--fg-rgb), 0.15);
-  }
+  .glass { background: rgba(var(--fg-rgb), 0.15); }
 }
