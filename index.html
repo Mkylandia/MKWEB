@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MKWEB OS 8 Quantum - Premium Single-Screen Dashboard">
-  <title>MKWEB OS 8 Quantum</title>
+  <meta name="description" content="MKWEB OS 7 Compact - Ihr personalisiertes, leistungsstarkes Single-Screen-Dashboard.">
+  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, minimalistisch, animiert, performance, mkweb, produktivität, startseite, single page">
+  <meta name="author" content="MKWEB">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourwebsite.com/">
+  <meta property="og:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
+  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Single-Screen-Dashboard.">
+  <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourwebsite.com/">
+  <meta property="twitter:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
+  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Single-Screen-Dashboard.">
+  <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg">
+  <title>MKWEB OS 7 - Kompaktes Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,15 +25,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 </head>
 <body data-theme="dark">
-  <div class="quantum-particles"></div>
-  
   <div class="container">
-    <header class="header quantum-glass">
-      <div class="logo" aria-label="MKWEB OS 8 Quantum">MKWEB OS 8</div>
+    <header class="header glass">
+      <div class="logo" aria-label="MKWEB OS 7 Logo">MKWEB OS 7</div>
       <div class="controls">
-        <button id="fullscreen-btn" class="quantum-btn" title="Vollbild umschalten">🚀 Vollbild</button>
-        <button id="user-avatar-toggle" class="quantum-btn" title="Avatar ein-/ausblenden">🙈 Avatar</button>
-        <div id="user-avatar" class="user-avatar quantum-glass" aria-label="Benutzer-Avatar">
+        <button id="fullscreen-btn" class="glass" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
+        <button id="user-avatar-toggle" class="glass" aria-label="Benutzer-Avatar ein-/ausblenden">🙈 Avatar ausblenden</button>
+        <div id="user-avatar" class="user-avatar glass" aria-hidden="false" role="img" aria-label="Benutzer-Avatar">
           <span class="material-symbols-outlined">person</span>
         </div>
       </div>
@@ -28,269 +39,93 @@
 
     <main class="main-grid">
       <div class="grid-left">
-        <section class="time-display quantum-glass">
-          <div id="time">00:00</div>
-          <div id="date">Montag, 1. Januar</div>
+        <section class="time-display glass">
+          <h2 class="sr-only">Aktuelle Uhrzeit und Datum</h2>
+          <div id="time"></div>
+          <div id="date"></div>
         </section>
 
-        <section class="weather-link-section quantum-glass">
-          <h2>Aktuelles Wetter</h2>
-          <a href="https://www.google.com/search?q=wetter+Heidenheim" target="_blank" class="ios-animated-button">
-            <span class="text">Wetter ansehen</span>
-            <span class="circle"></span>
-            <svg class="arr-1" viewBox="0 0 24 24">
-              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path>
-            </svg>
-            <svg class="arr-2" viewBox="0 0 24 24">
-              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path>
-            </svg>
-          </a>
-          <p class="weather-notice">Klicke für Wetter in Heidenheim</p>
+        <section class="weather-link-section glass">
+            <h2>Aktuelles Wetter</h2>
+            <a href="https://www.google.com/search?q=wetter+Heidenheim" target="_blank" rel="noopener noreferrer" class="weather-link-button glass">
+                <span class="material-symbols-outlined weather-icon">cloudy_snowing</span>
+                Wetter in Heidenheim ansehen
+            </a>
+            <p class="weather-notice">Klicke, um das aktuelle Wetter auf Google anzuzeigen.</p>
         </section>
-      </div>
+        </div>
 
       <div class="grid-right">
-        <section class="search-section quantum-glass">
-          <div class="search-engines">
-            <button class="search-engine quantum-btn active" data-engine="google">Google</button>
-            <button class="search-engine quantum-btn" data-engine="yandex">Yandex</button>
-            <button class="search-engine quantum-btn" data-engine="bing">Bing</button>
-            <button class="search-engine quantum-btn" data-engine="duckduckgo">DuckDuckGo</button>
-            <button class="search-engine quantum-btn" data-engine="youtube">YouTube</button>
-            <button class="search-engine quantum-btn" data-engine="github">GitHub</button>
+        <section class="search-section glass">
+          <h2 class="sr-only">Websuche</h2>
+          <div class="search-engines" role="group" aria-label="Suchmaschinen auswählen">
+            <button class="search-engine glass" data-engine="google" aria-pressed="true">Google</button>
+            <button class="search-engine glass" data-engine="yandex" aria-pressed="false">Yandex</button>
+            <button class="search-engine glass" data-engine="bing" aria-pressed="false">Bing</button>
+            <button class="search-engine glass" data-engine="duckduckgo" aria-pressed="false">DuckDuckGo</button>
+            <button class="search-engine glass" data-engine="youtube" aria-pressed="false">YouTube</button>
+            <button class="search-engine glass" data-engine="github" aria-pressed="false">GitHub</button>
           </div>
-          <div class="search-box quantum-glass">
-            <span class="material-symbols-outlined icon">search</span>
+          <div class="search-box glass">
+            <span class="material-symbols-outlined icon" aria-hidden="true">search</span>
+            <label for="search" class="sr-only">Suchanfrage eingeben</label>
             <input type="text" id="search" placeholder="Was suchst du heute?" autocomplete="off">
           </div>
         </section>
 
-        <section class="quote-section quantum-glass">
-          <p id="quote-text">Das Leben ist das, was passiert, während du eifrig dabei bist, andere Pläne zu machen.</p>
-          <small id="quote-author">- John Lennon</small>
+        <section class="quote-section glass">
+          <h2 class="sr-only">Tägliches Zitat</h2>
+          <p id="quote-text"></p>
+          <small id="quote-author"></small>
+        </section>
+        <section class="apps-section glass">
+          <h2 id="apps-heading">✨ Apps & Bookmarks</h2>
+          <div class="apps-container">
+            <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
+              <span class="material-symbols-outlined icon">chat</span><div class="label">ChatGPT</div>
+            </a>
+            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Gemini">
+              <span class="material-symbols-outlined icon">bubble_chart</span><div class="label">Gemini</div>
+            </a>
+            <a class="app-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer" title="Zu Notion">
+              <span class="material-symbols-outlined icon">article</span><div class="label">Notion</div>
+            </a>
+            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Calendar">
+              <span class="material-symbols-outlined icon">calendar_month</span><div class="label">Calendar</div>
+            </a>
+            <a class="app-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail">
+              <span class="material-symbols-outlined icon">mail</span><div class="label">Gmail</div>
+            </a>
+            <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web">
+              <span class="material-symbols-outlined icon">chat_bubble</span><div class="label">WhatsApp</div>
+            </a>
+            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
+              <span class="material-symbols-outlined icon">headphones</span><div class="label">Spotify</div>
+            </a>
+            <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub">
+              <span class="material-symbols-outlined icon">data_object</span><div class="label">GitHub</div>
+            </a>
+            <a class="app-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" title="Zur MDN Web Docs">
+                <span class="material-symbols-outlined icon">menu_book</span><div class="label">MDN Docs</div>
+            </a>
+            <a class="app-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow">
+                <span class="material-symbols-outlined icon">lightbulb</span><div class="label">Stack Overflow</div>
+            </a>
+            <a class="app-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" title="Zu CodePen">
+                <span class="material-symbols-outlined icon">code</span><div class="label">CodePen</div>
+            </a>
+            <a class="app-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" title="Zu Unsplash">
+                <span class="material-symbols-outlined icon">image</span><div class="label">Unsplash</div>
+            </a>
+            <a class="app-card glass" href="https://mkwebnews.vercel.app" target="_blank" rel="noopener noreferrer" title="Zu den aktuellen Nachrichten">
+                <span class="material-symbols-outlined icon">feed</span><div class="label">News</div>
+            </a>
+          </div>
         </section>
       </div>
-      
-      <section class="apps-section quantum-glass">
-        <h2>✨ Apps & Bookmarks</h2>
-        <div class="apps-container">
-          <!-- Animierte App Cards -->
-          <a href="https://chat.openai.com" class="ios-app-card" style="--app-color: #34c759;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">chat</span>
-            </div>
-            <div class="app-box box1">
-              <div class="app-icon">
-                <div class="svg"></div>
-              </div>
-            </div>
-            <div class="app-box box2">
-              <div class="app-icon">
-                <div class="svg"></div>
-              </div>
-            </div>
-            <div class="app-box box3">
-              <div class="app-icon">
-                <div class="svg"></div>
-              </div>
-            </div>
-            <div class="app-box box4"></div>
-          </a>
-          
-          <a href="https://gemini.google.com" class="ios-app-card" style="--app-color: #9d7dff;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">bubble_chart</span>
-            </div>
-            <div class="app-box box1">
-              <div class="app-icon">
-                <div class="svg"></div>
-              </div>
-            </div>
-            <div class="app-box box2">
-              <div class="app-icon">
-                <div class="svg"></div>
-              </div>
-            </div>
-            <div class="app-box box3">
-              <div class="app-icon">
-                <div class="svg"></div>
-              </div>
-            </div>
-            <div class="app-box box4"></div>
-          </a>
-          
-          <!-- Weitere Apps mit individuellen Farben -->
-          <a href="https://notion.so" class="ios-app-card" style="--app-color: #000000;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">article</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://calendar.google.com" class="ios-app-card" style="--app-color: #ff2d55;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">calendar_month</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://mail.google.com" class="ios-app-card" style="--app-color: #ff9500;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">mail</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://web.whatsapp.com" class="ios-app-card" style="--app-color: #34c759;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">chat_bubble</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://spotify.com" class="ios-app-card" style="--app-color: #1ed760;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">headphones</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://github.com" class="ios-app-card" style="--app-color: #9d7dff;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">data_object</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://developer.mozilla.org/de/" class="ios-app-card" style="--app-color: #007aff;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">menu_book</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://stackoverflow.com" class="ios-app-card" style="--app-color: #ff9500;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">lightbulb</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://codepen.io" class="ios-app-card" style="--app-color: #000000;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">code</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://unsplash.com" class="ios-app-card" style="--app-color: #30b0c7;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">image</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-          
-          <a href="https://mkwebnews.vercel.app" class="ios-app-card" style="--app-color: #ff2d55;">
-            <div class="app-background"></div>
-            <div class="app-logo">
-              <span class="material-symbols-outlined">feed</span>
-            </div>
-            <!-- Boxes... -->
-          </a>
-        </div>
-      </section>
     </main>
   </div>
 
-  <script>
-    // Zeit- und Datumsaktualisierung
-    function updateTime() {
-      const now = new Date();
-      const time = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-      const date = now.toLocaleDateString('de-DE', { 
-        weekday: 'long', 
-        day: 'numeric', 
-        month: 'long' 
-      });
-      
-      document.getElementById('time').textContent = time;
-      document.getElementById('date').textContent = date;
-    }
-    
-    // Suchmaschinen-Logik
-    document.querySelectorAll('.search-engine').forEach(button => {
-      button.addEventListener('click', function() {
-        document.querySelectorAll('.search-engine').forEach(btn => {
-          btn.classList.remove('active');
-        });
-        this.classList.add('active');
-      });
-    });
-    
-    // Vollbild-Funktion
-    document.getElementById('fullscreen-btn').addEventListener('click', function() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-        this.textContent = '🚀 Verlassen';
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-          this.textContent = '🚀 Vollbild';
-        }
-      }
-    });
-    
-    // Avatar ein-/ausblenden
-    document.getElementById('user-avatar-toggle').addEventListener('click', function() {
-      const avatar = document.getElementById('user-avatar');
-      avatar.classList.toggle('hidden-avatar');
-      this.textContent = avatar.classList.contains('hidden-avatar') ? '🙊 Avatar' : '🙈 Avatar';
-    });
-    
-    // Partikel-Animation
-    function createParticles() {
-      const container = document.querySelector('.quantum-particles');
-      const particleCount = 30;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        const size = Math.random() * 10 + 2;
-        const posX = Math.random() * 100;
-        const duration = Math.random() * 20 + 10;
-        const delay = Math.random() * 5;
-        
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${posX}%`;
-        particle.style.bottom = `-${size}px`;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `${delay}s`;
-        particle.style.opacity = Math.random() * 0.4 + 0.1;
-        
-        container.appendChild(particle);
-      }
-    }
-    
-    // Initialisierung
-    document.addEventListener('DOMContentLoaded', function() {
-      updateTime();
-      setInterval(updateTime, 60000);
-      createParticles();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
