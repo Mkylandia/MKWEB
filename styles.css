@@ -1,5 +1,5 @@
-/* styles.css - MKWEB OS 7: Ultra-Fluid NO-SCROLL Layout - Optimierte Version */
-/* Mit reduzierten Hover-Effekten und verhindertem Abschneiden */
+/* styles.css - MKWEB OS 7: Clean Minimalist Design */
+/* Entfernte Glow-Effekte und optimierte Übersichtlichkeit */
 
 /* ===== Globale Design Variablen ===== */
 :root {
@@ -31,32 +31,30 @@
   
   --hover-transition: all var(--t-normal) var(--t-timing-bounce);
   --click-transition: all var(--t-fast) var(--t-timing-smooth);
-  --glow-transition: opacity var(--t-slow) ease-out;
   
-  /* Design-Tokens */
+  /* Design-Tokens - Glow entfernt */
   --r: 12px;
   --s: 0 4px 12px rgba(0,0,0,0.08);
   --sh: 0 7px 18px rgba(0,0,0,0.12);
   --s-light: 0 2px 6px rgba(0,0,0,0.05);
   --border-width: 1px;
   --text-gradient-angle: 65deg;
-  --glow-strength: 0 0 10px;
   --blur-intensity: 12px;
   --saturate-intensity: 125%;
   --content-max-width: 1800px;
   --inner-shadow: inset 0 0 6px rgba(0,0,0,0.04);
   
-  /* Farbschema */
-  --bg: #0d0d0d;
-  --fg: #e8e8e8;
-  --dim: rgba(232,232,232,0.55);
+  /* Farbschema - entsättigt */
+  --bg: #0f0f0f;
+  --fg: #e0e0e0;
+  --dim: rgba(224,224,224,0.5);
   --acc: #8a4ed4;
   --ah: #b080ff;
   --gl: rgba(255,255,255,0.05);
   --gb: rgba(255,255,255,0.12);
   
   --acc-rgb: 138, 78, 212;
-  --fg-rgb: 232, 232, 232;
+  --fg-rgb: 224, 224, 224;
   --ah-rgb: 176, 128, 255;
   --gb-rgb: 255, 255, 255;
 }
@@ -101,7 +99,7 @@ body {
   gap: var(--fluid-gap-m);
   flex-grow: 1;
   min-height: 0;
-  overflow: visible; /* Sichtbarer Überlauf für Hover-Effekte */
+  overflow: visible;
 }
 
 .main-grid {
@@ -113,7 +111,7 @@ body {
   gap: var(--fluid-gap-m);
   flex-grow: 1;
   min-height: 0;
-  overflow: visible; /* Sichtbarer Überlauf für Hover-Effekte */
+  overflow: visible;
 }
 
 .grid-left, .grid-right {
@@ -123,10 +121,10 @@ body {
   height: 100%;
   flex-grow: 1;
   min-height: 0;
-  overflow: visible; /* Sichtbarer Überlauf für Hover-Effekte */
+  overflow: visible;
 }
 
-/* ===== Glas-Effekt Komponente ===== */
+/* ===== Glas-Effekt ohne Glow ===== */
 .glass {
   background: var(--gl);
   backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
@@ -135,37 +133,14 @@ body {
   box-shadow: var(--s), var(--inner-shadow);
   transition: var(--hover-transition);
   position: relative;
-  overflow: visible; /* WICHTIG: Sichtbarer Überlauf für Hover-Effekte */
+  overflow: visible;
   transform: translateY(0) scale(1);
   will-change: transform, box-shadow, border-color;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -2px; 
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: calc(var(--r) + 2px);
-    background: linear-gradient(135deg, var(--acc), var(--ah), var(--acc));
-    background-size: 200% 200%;
-    z-index: -1;
-    opacity: 0;
-    transition: var(--glow-transition);
-    filter: blur(10px);
-    animation: gradientShift 8s ease infinite;
-  }
   
-  /* REDUZIERTER HOVER-EFFEKT */
   &:hover {
-    transform: translateY(-3px) scale(1.02); /* Reduzierte Skalierung */
-    box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.45);
-    border-color: rgba(var(--acc-rgb), 0.65);
-    
-    &::before {
-      opacity: 0.85;
-      filter: blur(14px);
-    }
+    transform: translateY(-3px);
+    box-shadow: var(--sh);
+    border-color: var(--acc);
   }
   
   &:active {
@@ -192,7 +167,6 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
   animation: gradient 15s ease infinite alternate;
 }
 
@@ -212,24 +186,6 @@ button {
   cursor: pointer;
   text-align: center;
   box-shadow: var(--s-light);
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(var(--acc-rgb), 0.35) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    transition: all var(--t-normal) var(--t-timing-elastic);
-    border-radius: 50%;
-  }
-  
-  &:hover::before {
-    width: 200%;
-    height: 200%;
-  }
   
   &:active {
     box-shadow: var(--s-light), inset 0 2px 8px rgba(0,0,0,0.2);
@@ -252,27 +208,10 @@ button {
   box-shadow: var(--s-light);
   position: relative;
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: conic-gradient(var(--acc), var(--ah), var(--acc));
-    z-index: -1;
-    opacity: 0;
-    transition: var(--glow-transition);
-    animation: rotate 3s linear infinite;
-  }
-  
-  /* REDUZIERTER HOVER-EFFEKT */
   &:hover {
-    transform: translateY(-3px) scale(1.05) rotate(4deg); /* Reduzierte Skalierung */
+    transform: translateY(-3px);
     border-color: var(--acc);
-    box-shadow: var(--glow-strength) var(--acc), var(--s);
-    
-    &::before {
-      opacity: 0.65;
-    }
+    box-shadow: var(--s);
   }
 }
 
@@ -305,14 +244,14 @@ button {
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-2px); /* Reduzierter Effekt */
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.25), var(--s);
+    transform: translateY(-2px);
+    box-shadow: var(--s);
     border-color: var(--acc);
   }
   
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-2px); /* Reduzierter Effekt */
+    transform: translateY(-2px);
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light);
   }
 }
@@ -324,25 +263,10 @@ button {
   border-radius: 30px;
   padding: var(--fluid-padding-s);
   
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(var(--acc-rgb), 0.08) 50%, transparent);
-    transition: left var(--t-slow) ease-out;
-  }
-  
-  /* REDUZIERTER FOCUS-EFFEKT */
   &:focus-within {
-    transform: scale(1.01) translateY(-2px); /* Reduzierte Skalierung */
-    box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.45), var(--s), 0 12px 28px rgba(0,0,0,0.12);
-    
-    &::before {
-      left: 100%;
-    }
+    transform: translateY(-2px);
+    box-shadow: var(--s);
+    border-color: var(--acc);
   }
 }
 
@@ -381,7 +305,6 @@ button {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 15s ease infinite alternate;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18);
 }
 
 #date {
@@ -427,12 +350,11 @@ button {
     transition: transform var(--t-normal);
   }
   
-  /* REDUZIERTER HOVER-EFFEKT */
   &:hover {
-    transform: translateY(-2px); /* Reduzierte Bewegung */
+    transform: translateY(-2px);
     
     .weather-icon {
-      transform: scale(1.08); /* Reduzierte Skalierung */
+      transform: scale(1.08);
     }
   }
 }
@@ -459,11 +381,14 @@ button {
   font-size: clamp(0.75rem, var(--fluid-max-font), 1.15rem);
   font-weight: 600;
   margin-bottom: clamp(0.12rem, 0.25vw, 0.55rem);
+  font-style: italic;
+  line-height: 1.4;
 }
 
 #quote-author {
   font-size: clamp(0.48rem, var(--fluid-min-font), 0.95rem);
   color: var(--dim);
+  font-weight: 500;
 }
 
 /* ===== Apps Bereich ===== */
@@ -474,7 +399,7 @@ button {
   flex-direction: column;
   flex-grow: 1;
   min-height: 0;
-  overflow: visible; /* Sichtbarer Überlauf für Hover-Effekte */
+  overflow: visible;
 }
 
 .apps-section h2 {
@@ -494,7 +419,7 @@ button {
   display: grid;
   max-height: 100%;
   animation: containerFadeIn var(--t-slow) var(--t-timing-smooth);
-  overflow: visible; /* Sichtbarer Überlauf für Hover-Effekte */
+  overflow: visible;
 }
 
 .app-card {
@@ -513,30 +438,13 @@ button {
   opacity: 0;
   transform: translateY(20px) scale(0.9);
   
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(var(--acc-rgb), 0.12) 50%, transparent);
-    transition: left var(--t-slow) var(--t-timing-smooth);
-  }
-  
-  /* REDUZIERTER HOVER-EFFEKT */
   &:hover {
-    transform: translateY(-5px) scale(1.04); /* Reduzierte Skalierung */
-    box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.35), 0 18px 35px rgba(0,0,0,0.18);
-    
-    &::after {
-      left: 100%;
-    }
+    transform: translateY(-3px);
+    box-shadow: var(--s);
     
     .icon {
-      transform: scale(1.12); /* Reduzierte Skalierung */
+      transform: scale(1.08);
       color: var(--acc);
-      text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.45);
     }
   }
 }
@@ -546,7 +454,6 @@ button {
   font-size: clamp(1rem, 1.6vw + 1.6vh, 2.6rem);
   margin-bottom: clamp(0.12rem, 0.25vw + 0.12vh, 0.55rem);
   display: block;
-  text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.18);
   transition: all var(--t-normal) var(--t-timing-elastic);
 }
 
@@ -662,13 +569,6 @@ button {
   100% { background-position: 100% 50%; }
 }
 
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  25% { background-position: 100% 50%; }
-  50% { background-position: 50% 100%; }
-  75% { background-position: 50% 0%; }
-}
-
 @keyframes containerFadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
@@ -676,10 +576,6 @@ button {
 
 @keyframes cardSlideIn {
   to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes rotate {
-  to { transform: rotate(360deg); }
 }
 
 /* ===== Fallbacks ===== */
