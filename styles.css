@@ -91,7 +91,7 @@ body {
 	height: 100vh; /* Muss 100vh sein, um sicherzustellen, dass die Seite nicht scrollt */
 	width: 100vw;
 	transition: background var(--t), color var(--t);
-	overflow: hidden; /* **GANZ WICHTIG: KEIN SCROLLEN ERLAUCHT!** */
+	overflow: hidden; /* **GANZ WICHTIG: KEIN SCROLLEN ERLAUBT!** */
 	position: relative;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
