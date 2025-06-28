@@ -28,9 +28,9 @@
 	--t-fast: 0.15s;
 	--t-normal: 0.25s;
 	--t-slow: 0.4s;
-	--t-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--t-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* Starker Bounce */
 	--t-timing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	--t-timing-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	--t-timing-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Elastischer Effekt */
 
 	/* Spezifische Animationen */
 	--hover-transition: transform var(--t-normal) var(--t-timing-bounce),
@@ -66,6 +66,10 @@
 	--fg-rgb: 224, 224, 224;
 	--ah-rgb: 176, 128, 255;
 	--gb-rgb: 255, 255, 255;
+
+    /* NEU: Globale Hover Lift/Scale für Konsistenz */
+    --hover-lift: -6px; /* Deutlicherer Lift */
+    --hover-scale: 1.05; /* Deutlichere Skalierung */
 }
 
 
@@ -117,14 +121,14 @@ body {
 	min-height: 0; /* Erlaubt dem Container, zu schrumpfen, wenn die Inhalte es erfordern */
 }
 
-/* 2. Verbesserte .glass Klasse - Ersetze die bestehende */
+/* Verbesserte .glass Klasse */
 .glass {
     background: var(--gl);
     backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
     border: var(--border-width) solid var(--gb);
     border-radius: var(--r);
     box-shadow: var(--s), var(--inner-shadow);
-    transition: var(--hover-transition);
+    transition: var(--hover-transition); /* Nutzt globale Hover-Transition */
     position: relative;
     overflow: hidden;
     transform: translateY(0) scale(1);
@@ -144,7 +148,7 @@ body {
         animation: gradientShift 8s ease-in-out infinite;
     }
     &:hover {
-        transform: translateY(var(--hover-lift)) scale(1.02);
+        transform: translateY(var(--hover-lift)) scale(var(--hover-scale)); /* Nutzt globale Hover-Werte */
         box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
         border-color: rgba(var(--acc-rgb), 0.6);
     }
@@ -193,7 +197,7 @@ body {
 	align-items: center;
 }
 
-/* 4. Verbesserte Button-Animationen - Ersetze die bestehenden Button-Styles */
+/* Verbesserte Button-Animationen */
 button {
     padding: var(--fluid-padding-xs) var(--fluid-padding-s);
     border: var(--border-width) solid var(--gb);
@@ -201,7 +205,7 @@ button {
     background: var(--gl);
     color: var(--fg);
     cursor: pointer;
-    transition: var(--hover-transition);
+    transition: var(--hover-transition); /* Nutzt globale Hover-Transition */
     font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem);
     font-weight: 600;
     outline: none;
@@ -226,13 +230,13 @@ button {
         pointer-events: none;
     }
     &:hover {
-        transform: translateY(var(--hover-lift)) scale(1.05);
+        transform: translateY(-3px) scale(1.08); /* Spezifisch für Button-Pop */
         border-color: var(--acc);
         box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     }
     &:hover::before {
-        width: 200%;
-        height: 200%;
+        width: 250%; /* Etwas größerer Rippel */
+        height: 250%;
     }
     &:active {
         transform: translateY(1px) scale(0.95);
@@ -241,7 +245,7 @@ button {
     }
 }
 
-/* 8. Micro-Animationen für User Avatar - Ersetze die bestehenden .user-avatar Styles */
+/* Micro-Animationen für User Avatar */
 .user-avatar {
     width: clamp(20px, 2.5vw, 40px);
     height: clamp(20px, 2.5vw, 40px);
@@ -254,7 +258,7 @@ button {
     border: var(--border-width) solid var(--gb);
     color: var(--acc);
     cursor: pointer;
-    transition: var(--hover-transition);
+    transition: var(--hover-transition); /* Nutzt globale Hover-Transition */
     box-shadow: var(--s-light);
     overflow: hidden;
     transform: translateY(0) scale(1) rotate(0deg);
@@ -272,7 +276,7 @@ button {
         animation: rotate 3s linear infinite;
     }
     &:hover {
-        transform: translateY(var(--hover-lift)) scale(1.1) rotate(5deg);
+        transform: translateY(var(--hover-lift)) scale(var(--hover-scale)) rotate(5deg);
         border-color: var(--acc);
         box-shadow: var(--glow-strength) var(--acc), var(--s);
     }
@@ -335,38 +339,47 @@ button {
 	padding: clamp(0.2rem, 0.4vw, 0.6rem) clamp(0.4rem, 0.7vw, 1rem);
 	border-radius: 30px;
 	font-weight: 600;
-	font-size: clamp(0.55rem, 0.8vw, 0.9rem); /* Suchauswahl bleibt so, wie sie war. */
+	font-size: clamp(0.55rem, 0.8vw, 0.9rem);
 	border: var(--border-width) solid transparent;
 	background: var(--gl);
-	transition: all var(--t);
+	/* NEU: Explizite Bounce-Transition für search-engine */
+	transition: transform var(--t-normal) var(--t-timing-bounce),
+	            background var(--t-normal) var(--t-timing-smooth),
+	            color var(--t-normal) var(--t-timing-smooth),
+	            box-shadow var(--t-normal) var(--t-timing-smooth),
+	            border-color var(--t-fast) ease-out;
 	transform: translateY(0);
+    will-change: transform, background, box-shadow, border-color;
 
 	&.active {
 		background: var(--acc);
 		color: #fff;
-		transform: translateY(-2px); /* Simpler active effect */
-		box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.2), var(--s); /* Lighter glow */
+		transform: translateY(-4px) scale(1.02); /* Stärkerer Bounce für aktive Auswahl */
+		box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--sh);
 		border-color: var(--acc);
 	}
 
 	&:not(.active):hover {
 		border-color: var(--acc);
-		/* VERBESSERT: Einheitliches, aber subtileres Anheben für diese Elemente */
-		transform: translateY(-2px);
-		box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light); /* Lighter inset shadow */
+		transform: translateY(-2px) scale(1.01); /* Subtilerer Bounce für Hover */
+		box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light);
 	}
 }
 
-/* 6. Verbesserte Search-Box Animationen - Ersetze die bestehenden .search-box Styles */
+/* Verbesserte Search-Box Animationen */
 .search-box {
     display: flex;
     align-items: center;
     border-radius: 30px;
     padding: var(--fluid-padding-s);
-    transition: var(--hover-transition);
+    /* NEU: Explizite Bounce-Transition für search-box focus */
+    transition: transform var(--t-normal) var(--t-timing-bounce),
+                box-shadow var(--t-normal) var(--t-timing-smooth),
+                border-color var(--t-fast) ease-out;
     box-shadow: var(--s), var(--inner-shadow);
     position: relative;
     overflow: hidden;
+    will-change: transform, box-shadow, border-color;
 
     &::before {
         content: '';
@@ -377,17 +390,17 @@ button {
         height: 100%;
         background: linear-gradient(90deg,
             transparent,
-            rgba(var(--acc-rgb), 0.05) 50%,
+            rgba(var(--acc-rgb), 0.1) 50%, /* Etwas stärkerer Schimmer */
             transparent
         );
-        transition: left var(--t-slow) ease-out;
+        transition: left var(--t-slow) var(--t-timing-smooth);
     }
     &:focus-within {
         border-color: var(--acc);
-        transform: scale(1.02) translateY(-2px);
-        box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4),
-                    var(--s),
-                    0 10px 25px rgba(0,0,0,0.1);
+        transform: scale(1.03) translateY(-3px); /* Stärkerer Pop und Lift beim Fokus */
+        box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), /* Stärkerer Glow */
+                    var(--sh),
+                    0 10px 25px rgba(0,0,0,0.15); /* Deutlicherer Schatten */
     }
     &:focus-within::before {
         left: 100%;
@@ -477,13 +490,12 @@ button {
     color: var(--fg);
     font-weight: 600;
     font-size: clamp(0.6rem, var(--fluid-max-font), 1rem); /* Feinjustiert */
-    transition: all var(--t);
+    transition: var(--hover-transition); /* Nutzt globale Hover-Transition */
     box-shadow: var(--s-light), var(--inner-shadow);
     transform: translateY(0);
 }
 
 .weather-link-button:hover {
-    /* VERBESSERT: Einheitliches Anheben */
     transform: translateY(var(--hover-lift));
     border-color: var(--acc);
     box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
@@ -492,11 +504,10 @@ button {
 .weather-link-button .weather-icon {
     font-size: clamp(1rem, 1.2vw, 2.2rem); /* Feinjustiert */
     color: var(--acc);
-    transition: transform var(--t);
+    transition: transform var(--t-normal) var(--t-timing-bounce); /* Bounce für Icon */
 }
 
 .weather-link-button:hover .weather-icon {
-    /* VERBESSERT: Einheitliche Skalierung */
     transform: scale(var(--hover-scale));
 }
 
@@ -557,23 +568,21 @@ button {
 	color: var(--dim);
 }
 
-/* 7. Staggered Animation für Apps-Container - Neue Klasse hinzufügen */
+/* Staggered Animation für Apps-Container */
 .apps-container {
     /* Optimierte grid-template-columns für bessere Icon-Anordnung */
-    /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
-    /* Min-Größe wieder leicht erhöht, VH-Anteil für vertikale Schrumpfung wieder moderater */
-    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht, max leicht reduziert */
-    gap: var(--fluid-gap-s); /* Optimierter, responsiver Abstand zwischen Karten */
-    overflow: hidden; /* **WICHTIG: KEIN INTERNES SCROLLEN!** */
-    padding: var(--fluid-padding-xs); /* Minimales Padding */
-    flex-grow: 1; /* WICHTIG: Apps-Container wächst innerhalb der Apps-Sektion */
+    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr));
+    gap: var(--fluid-gap-s);
+    overflow: hidden;
+    padding: var(--fluid-padding-xs);
+    flex-grow: 1;
     min-height: 0;
     display: grid;
-    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe */
+    max-height: 100%;
     animation: containerFadeIn var(--t-slow) var(--t-timing-smooth);
 }
 
-/* 5. Verbesserte App-Card Animationen - Ersetze die bestehenden .app-card Styles */
+/* Verbesserte App-Card Animationen mit mehr Bounce und Pop */
 .app-card {
     background: var(--gl);
     border: var(--border-width) solid var(--gb);
@@ -582,7 +591,10 @@ button {
     text-align: center;
     text-decoration: none;
     color: var(--fg);
-    transition: var(--hover-transition);
+    /* NEU: Explizite Bounce-Transition für App-Karten */
+    transition: transform var(--t-normal) var(--t-timing-bounce),
+                box-shadow var(--t-normal) var(--t-timing-smooth),
+                border-color var(--t-fast) ease-out;
     position: relative;
     overflow: hidden;
     box-shadow: var(--s-light), var(--inner-shadow);
@@ -616,11 +628,11 @@ button {
         transition: left var(--t-slow) var(--t-timing-smooth);
     }
     &:hover {
-        transform: translateY(-8px) scale(1.08) rotateX(5deg);
+        transform: translateY(-10px) scale(1.1) rotateX(7deg); /* Stärkerer Pop und Rotation */
         border-color: var(--acc);
         box-shadow: var(--s),
-                    var(--glow-strength) rgba(var(--acc-rgb), 0.3),
-                    0 15px 30px rgba(0,0,0,0.15);
+                    var(--glow-strength) rgba(var(--acc-rgb), 0.4),
+                    0 18px 35px rgba(0,0,0,0.2); /* Größerer, dunklerer Schatten */
     }
     &:hover::after {
         left: 100%;
@@ -637,7 +649,7 @@ button {
     margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
     display: block;
     text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-    transition: transform var(--t-normal) var(--t-timing-elastic),
+    transition: transform var(--t-normal) var(--t-timing-elastic), /* Elastic für Icon */
                 color var(--t-fast) ease-out,
                 text-shadow var(--t-normal) ease-out;
     line-height: 1;
@@ -645,21 +657,21 @@ button {
 }
 
 .app-card:hover .icon {
-    transform: scale(1.2) rotateY(15deg);
+    transform: scale(1.3) rotateY(20deg); /* Stärkerer Icon-Pop */
     color: var(--acc);
     text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 }
 
 .app-card .label {
 	/* Größe der Labels: Min-Wert erhöht, VH-Anteil moderater */
-	font-size: clamp(0.4rem, 0.5vw + 0.3vh, 0.9rem); /* Min-Wert erhöht, VH-Anteil moderater */
+	font-size: clamp(0.4rem, 0.5vw + 0.3vh, 0.9rem);
 	font-weight: 500;
-	line-height: 1.1; /* Noch kompakter, aber lesbar */
-	word-break: break-word; /* Verhindert Überlauf bei langen Namen */
-	text-overflow: ellipsis; /* Fügt ... hinzu, wenn Text zu lang ist */
-	overflow: hidden; /* Versteckt überlaufenden Text */
+	line-height: 1.1;
+	word-break: break-word;
+	text-overflow: ellipsis;
+	overflow: hidden;
 	display: -webkit-box;
-	-webkit-line-clamp: 2; /* Beschränkt auf 2 Zeilen */
+	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 }
 
@@ -681,84 +693,79 @@ button {
 /* Bei schmaleren Bildschirmen auf eine Spalte wechseln */
 @media (max-width: 992px) {
 	/* `html` font-size hier überschreiben, um die Skalierung bei kleineren Geräten anzupassen */
-	/* Min-Font und vh-Anteil für mobile wieder moderater */
 	html {
 		font-size: clamp(5px, 0.7vw + 0.4vh, 15px);
 	}
 
 	.container {
-		padding: var(--fluid-padding-m); /* Feinjustiert */
-		gap: var(--fluid-gap-m); /* Feinjustiert */
+		padding: var(--fluid-padding-m);
+		gap: var(--fluid-gap-m);
 	}
 	.main-grid {
 		grid-template-columns: 1fr;
-		display: flex; /* Wechsel zu Flexbox für vertikale Stapelung */
+		display: flex;
 		flex-direction: column;
-		gap: var(--fluid-gap-m); /* Feinjustiert */
-		overflow-y: auto; /* Erlaube hier Scrollen, da der Inhalt sonst überlaufen könnte */
-		height: auto; /* Wichtig, damit Flexbox die Höhe richtig berechnet */
+		gap: var(--fluid-gap-m);
+		overflow-y: auto;
+		height: auto;
 	}
 	.grid-left, .grid-right {
 		flex-direction: column;
-		gap: var(--fluid-gap-m); /* Feinjustiert */
-		height: auto; /* Muss sich an den Inhalt anpassen */
+		gap: var(--fluid-gap-m);
+		height: auto;
 		min-height: 0;
 	}
 
 	/* Diese Sektionen sollen ihre natürliche Höhe behalten */
 	.time-display, .search-section, .weather-link-section, .quote-section {
 		flex-grow: 0;
-		padding: var(--fluid-padding-s); /* Feinjustiert */
+		padding: var(--fluid-padding-s);
 		min-height: 0;
-		flex-shrink: 1; /* Sicherstellen, dass sie schrumpfen können */
+		flex-shrink: 1;
 		overflow: hidden;
 	}
 
 	/* Die Uhr noch größer bei schmaleren Screens */
 	#time {
-		font-size: clamp(1.5rem, 6vw, 4rem); /* **GEÄNDERT: Font-Size für Mobile weiter erhöht!** */
+		font-size: clamp(1.5rem, 6vw, 4rem);
 	}
 	#date {
-		font-size: clamp(0.4rem, 1.5vw, 0.9rem); /* Feinjustiert */
+		font-size: clamp(0.4rem, 1.5vw, 0.9rem);
 	}
 
 	.header {
 		flex-direction: column;
-		gap: var(--fluid-gap-s); /* Feinjustiert */
-		padding: var(--fluid-padding-s); /* Feinjustiert */
+		gap: var(--fluid-gap-s);
+		padding: var(--fluid-padding-s);
 	}
-	.logo { font-size: clamp(0.8rem, 2.5vw, 1.8rem); } /* Feinjustiert */
-	.controls { gap: var(--fluid-gap-s); flex-wrap: wrap; justify-content: center; } /* Feinjustiert */
+	.logo { font-size: clamp(0.8rem, 2.5vw, 1.8rem); }
+	.controls { gap: var(--fluid-gap-s); flex-wrap: wrap; justify-content: center; }
 
 	/* Apps-Sektion bleibt der flexible Bereich */
 	.apps-section {
-		order: 4; /* Stellt sicher, dass es am Ende kommt */
-		flex-grow: 1; /* Nimmt den restlichen Platz ein */
-		min-height: clamp(70px, 14vh, 220px); /* Eine flexible Mindesthöhe, wieder etwas erhöht */
-		padding: var(--fluid-padding-s); /* Feinjustiert */
-		overflow-y: auto; /* **WICHTIG: Hier erlauben wir Scrollen, da sonst bei sehr vielen Apps ein harter Cut stattfindet.** */
+		order: 4;
+		flex-grow: 1;
+		min-height: clamp(70px, 14vh, 220px);
+		padding: var(--fluid-padding-s);
+		overflow-y: auto;
 	}
 	.apps-section h2 {
-		font-size: clamp(0.6rem, 2.2vw, 1.2rem); /* Feinjustiert */
-		margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
+		font-size: clamp(0.6rem, 2.2vw, 1.2rem);
+		margin-bottom: var(--fluid-padding-s);
 	}
 	.apps-container {
-		/* Optimierte grid-template-columns für mobile */
-		/* Min-Größe für mobile Cards wieder erhöht, VH-Anteil für Gap moderater */
-		grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 8vw + 5vh, 75px), 1fr)); /* Min-Größe & VH-Anteil leicht erhöht */
-		gap: var(--fluid-gap-s); /* Feinjustiert, VH-Anteil für Gap moderater */
-		overflow: hidden; /* **Internes Scrollen hier wieder erlauben, wenn Apps-Section scrollt** */
-		max-height: none; /* Deaktivieren der max-height, wenn die Sektion scrollt */
+		grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 8vw + 5vh, 75px), 1fr));
+		gap: var(--fluid-gap-s);
+		overflow: hidden;
+		max-height: none;
 	}
 	.app-card {
-		padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem); /* Optimiertes Padding für mobile, min leicht erhöht */
+		padding: clamp(0.2rem, 0.35vw + 0.25vh, 0.9rem);
 	}
 	.app-card .icon {
-		/* Icons für mobile: Min-Wert erhöht, VH-Anteil moderater */
 		font-size: clamp(0.8rem, 2.5vw + 1.5vh, 1.8rem);
 	}
 	.app-card .label {
-		/* Labels für mobile: Min-Wert erhöht, VH-Anteil moderater */
 		font-size: clamp(0.35rem, 1.2vw + 0.5vh, 0.6rem);
 		line-height: 1.1;
 	}
@@ -771,7 +778,7 @@ button {
 	}
 }
 
-/* 3. Neue Keyframe-Animationen hinzufügen */
+/* Keyframe-Animationen */
 @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
     25% { background-position: 100% 50%; }
