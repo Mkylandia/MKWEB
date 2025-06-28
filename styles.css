@@ -273,7 +273,7 @@ button {
     }
   }
   
-  /* Premium Active-Zustand mit Animation */
+  /* Premium Active-Zustand mit Animation (ohne Checkmark) */
   &.active {
     background: linear-gradient(130deg, var(--acc), #6a2db8);
     color: #fff;
@@ -282,25 +282,6 @@ button {
                 inset 0 2px 4px rgba(255,255,255,0.2);
     animation: selectPulse 0.6s ease-out;
     transform: translateY(-3px) scale(1.08);
-    
-    &::after {
-      content: '✓';
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.8em;
-      background: white;
-      color: var(--acc);
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      animation: checkAppear 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    }
   }
 }
 
@@ -723,20 +704,6 @@ button {
   }
 }
 
-@keyframes checkAppear {
-  0% {
-    opacity: 0;
-    transform: translateY(-50%) scale(0.5) rotate(-30deg);
-  }
-  80% {
-    transform: translateY(-50%) scale(1.1) rotate(10deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(-50%) scale(1) rotate(0);
-  }
-}
-
 /* Neue Glow-Animation für aktive Suchbox */
 @keyframes borderGlow {
   0%, 100% {
@@ -810,13 +777,6 @@ button {
     
     &.active {
       transform: translateY(-2px) scale(1.05);
-      
-      &::after {
-        right: 6px;
-        width: 16px;
-        height: 16px;
-        font-size: 0.7em;
-      }
     }
   }
   
