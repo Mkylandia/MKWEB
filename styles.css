@@ -15,7 +15,7 @@
 	--fluid-padding-s: clamp(0.3rem, 0.4vw + 0.2vh, 1rem);
 	--fluid-padding-m: clamp(0.5rem, 0.7vw + 0.35vh, 1.3rem);
 	--fluid-padding-l: clamp(0.7rem, 0.9vw + 0.45vh, 1.8rem);
-	--fluid-padding-xl: clamp(0.9rem, 1.1vw + 0.55vh, 2.3rem);
+	--fluid-padding-xl: clamp(1rem, 1.2vw + 0.6vh, 2.5rem); /* LEICHT ERHÖHT für mehr Platz */
 
 	/* Clamp für Gaps: min-val, fluid-val (vw/vh-mix), max-val */
 	/* Min-Werte leicht erhöht, vh-Anteile moderat */
@@ -312,7 +312,8 @@ button {
 	height: 100%; /* WICHTIG: Nehmen gesamte Höhe ihrer Spalte ein */
 	flex-grow: 1; /* Nehmen den verfügbaren Platz in der Spalte ein */
 	min-height: 0; /* Erlaubt ihnen, zu schrumpfen */
-	overflow: hidden; /* Verhindert internes Scrollen in den Spalten */
+	flex-shrink: 1; /* Erlaubt den Spalten, zu schrumpfen */
+	overflow: hidden; /* Verhindert internes Scrollen in den Spalten, Inhalt wird von flex-child abgeschnitten */
 }
 
 /* --- Search Section --- */
@@ -555,10 +556,51 @@ button {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1; /* Nimmt den restlichen Platz ein */
-	min-height: 0; /* Erlaubt dieser Sektion, zu schrumpfen */
-	overflow: hidden; /* **WICHTIG: KEIN SCROLLEN AUCH HIER!** Wenn zu viele Apps, werden sie abgeschnitten. */
+	min-height: clamp(100px, 18vh, 250px); /* MIN-HEIGHT ERHÖHT und fluid gemacht */
+	overflow-y: auto; /* **WICHTIG: HIER ERMÖGLICHEN WIR SCROLLEN AUF DEM DESKTOP** */
 	flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
+	position: relative; /* Für den Scroll-Glow */
 }
+
+/* NEU: Scroll-Glow für Apps-Section */
+.apps-section::before,
+.apps-section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 30px; /* Höhe des Glow-Effekts */
+    pointer-events: none;
+    z-index: 10;
+}
+
+.apps-section::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+    opacity: 0; /* Standardmäßig unsichtbar */
+    transition: opacity 0.3s ease-out;
+}
+
+.apps-section::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+    opacity: 0; /* Standardmäßig unsichtbar */
+    transition: opacity 0.3s ease-out;
+}
+
+/* Zeige den oberen Glow, wenn nicht ganz oben gescrollt */
+.apps-section:not(:first-child) { /* Vereinfachte Logik: Immer zeigen, wenn Scrollbar da ist */
+    /* Dies erfordert JS für präzise Erkennung des Scroll-Status */
+    /* Für reines CSS ist es besser, einfach immer zu zeigen, wenn overflow auto ist */
+}
+/* Wenn gescrollt, dann Glow anzeigen (Dies würde JS erfordern) */
+/* Mit reinem CSS können wir es bei overflow einfach immer anzeigen oder mit einem Trick */
+.apps-section:hover::before,
+.apps-section:hover::after {
+    /* Einfach bei Hover anzeigen, da präzise Scroll-Glow ohne JS schwer ist */
+    opacity: 1;
+}
+
 
 .apps-section h2 {
 	margin-bottom: var(--fluid-padding-s); /* Feinjustiert */
@@ -566,6 +608,7 @@ button {
 	font-weight: 700;
 	text-align: center;
 	color: var(--dim);
+	flex-shrink: 0; /* Verhindert, dass der Titel schrumpft */
 }
 
 /* Staggered Animation für Apps-Container */
@@ -573,13 +616,15 @@ button {
     /* Optimierte grid-template-columns für bessere Icon-Anordnung */
     grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr));
     gap: var(--fluid-gap-s);
-    overflow: hidden;
+    /* overflow: hidden;  ENTFERNT, da Apps-Section jetzt scrollt */
     padding: var(--fluid-padding-xs);
     flex-grow: 1;
     min-height: 0;
     display: grid;
-    max-height: 100%;
+    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe innerhalb der scrollenden Sektion */
     animation: containerFadeIn var(--t-slow) var(--t-timing-smooth);
+    align-content: start; /* Richtet den Inhalt oben aus */
+    flex-shrink: 0; /* Verhindert, dass der Container schrumpft, falls er zu viele Spalten hat, die breiter sind als der Parent */
 }
 
 /* Verbesserte App-Card Animationen mit mehr Bounce und Pop */
@@ -587,7 +632,7 @@ button {
     background: var(--gl);
     border: var(--border-width) solid var(--gb);
     border-radius: var(--r);
-    padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem);
+    padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem); /* VERFEINERTES PADDING */
     text-align: center;
     text-decoration: none;
     color: var(--fg);
@@ -706,7 +751,7 @@ button {
 		display: flex;
 		flex-direction: column;
 		gap: var(--fluid-gap-m);
-		overflow-y: auto;
+		overflow-y: auto; /* ERMÖGLICHEN SCROLLEN AUF MOBILE FÜR DAS HAUPT-GRID */
 		height: auto;
 	}
 	.grid-left, .grid-right {
@@ -747,7 +792,7 @@ button {
 		flex-grow: 1;
 		min-height: clamp(70px, 14vh, 220px);
 		padding: var(--fluid-padding-s);
-		overflow-y: auto;
+		overflow-y: auto; /* Bleibt bei Auto auf Mobile */
 	}
 	.apps-section h2 {
 		font-size: clamp(0.6rem, 2.2vw, 1.2rem);
@@ -756,7 +801,7 @@ button {
 	.apps-container {
 		grid-template-columns: repeat(auto-fill, minmax(clamp(40px, 8vw + 5vh, 75px), 1fr));
 		gap: var(--fluid-gap-s);
-		overflow: hidden;
+		overflow: hidden; /* Interner Container selbst hidden, Scrolling über Parent */
 		max-height: none;
 	}
 	.app-card {
