@@ -28,7 +28,7 @@
 	--t-fast: 0.15s;
 	--t-normal: 0.25s;
 	--t-slow: 0.4s;
-	--t-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* Starker Bounce */
+	--t-timing-bounce: cubic-bezier(0.4, 0.9, 0.6, 1.1); /* **DEUTLICH ABGEMILDERT!** */
 	--t-timing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	--t-timing-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Elastischer Effekt */
 
@@ -68,8 +68,8 @@
 	--gb-rgb: 255, 255, 255;
 
     /* NEU: Globale Hover Lift/Scale für Konsistenz */
-    --hover-lift: -6px; /* Deutlicherer Lift */
-    --hover-scale: 1.05; /* Deutlichere Skalierung */
+    --hover-lift: -3px; /* **DEUTLICH ABGEMILDERT!** */
+    --hover-scale: 1.02; /* **DEUTLICH ABGEMILDERT!** */
 }
 
 
@@ -230,7 +230,7 @@ button {
         pointer-events: none;
     }
     &:hover {
-        transform: translateY(-3px) scale(1.08); /* Spezifisch für Button-Pop */
+        transform: translateY(-2px) scale(1.03); /* **ABGEMILDERT!** */
         border-color: var(--acc);
         box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
     }
@@ -313,45 +313,18 @@ button {
 	flex-grow: 1; /* Nehmen den verfügbaren Platz in der Spalte ein */
 	min-height: 0; /* Erlaubt ihnen, zu schrumpfen */
 	flex-shrink: 1; /* Erlaubt den Spalten, zu schrumpfen */
-	overflow-y: auto; /* **NEU: HIER ERMÖGLICHEN WIR SCROLLEN IN DEN SPALTEN** */
-	position: relative; /* Für den Scroll-Glow */
+	overflow: hidden; /* **ZURÜCKGEÄNDERT: Verhindert internes Scrollen in den Spalten** */
+	position: relative;
 }
 
-/* NEU: Scroll-Glow für Grid-Spalten (wenn sie scrollen) */
+/* Scroll-Glow für Grid-Spalten wird entfernt, da sie nicht mehr scrollen */
 .grid-left::before,
 .grid-left::after,
 .grid-right::before,
 .grid-right::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 30px; /* Höhe des Glow-Effekts */
-    pointer-events: none;
-    z-index: 10;
+    display: none;
 }
 
-.grid-left::before, .grid-right::before {
-    top: 0;
-    background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
-}
-
-.grid-left::after, .grid-right::after {
-    bottom: 0;
-    background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
-}
-
-/* Zeige Glow bei Hover über scrollbaren Bereichen, um Scrollbarkeit anzuzeigen */
-.grid-left:hover::before,
-.grid-left:hover::after,
-.grid-right:hover::before,
-.grid-right:hover::after {
-    opacity: 1;
-}
 
 /* --- Search Section --- */
 .search-section {
@@ -392,14 +365,14 @@ button {
 	&.active {
 		background: var(--acc);
 		color: #fff;
-		transform: translateY(-4px) scale(1.02); /* Stärkerer Bounce für aktive Auswahl */
+		transform: translateY(-2px) scale(1.01); /* **ABGEMILDERT!** */
 		box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--sh);
 		border-color: var(--acc);
 	}
 
 	&:not(.active):hover {
 		border-color: var(--acc);
-		transform: translateY(-2px) scale(1.01); /* Subtilerer Bounce für Hover */
+		transform: translateY(-1px) scale(1.005); /* **ABGEMILDERT!** */
 		box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light);
 	}
 }
@@ -435,7 +408,7 @@ button {
     }
     &:focus-within {
         border-color: var(--acc);
-        transform: scale(1.03) translateY(-3px); /* Stärkerer Pop und Lift beim Fokus */
+        transform: scale(1.01) translateY(-1px); /* **ABGEMILDERT!** */
         box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.5), /* Stärkerer Glow */
                     var(--sh),
                     0 10px 25px rgba(0,0,0,0.15); /* Deutlicherer Schatten */
@@ -594,42 +567,15 @@ button {
 	flex-direction: column;
 	flex-grow: 1; /* Nimmt den restlichen Platz ein */
 	min-height: clamp(100px, 18vh, 250px); /* MIN-HEIGHT ERHÖHT und fluid gemacht */
-	overflow-y: auto; /* **WICHTIG: HIER ERMÖGLICHEN WIR SCROLLEN AUF DEM DESKTOP** */
+	overflow: hidden; /* **ZURÜCKGEÄNDERT: Kein Scrollen in der Apps-Sektion auf Desktop** */
 	flex-shrink: 1; /* WICHTIG: Erlaubt dem Element, zu schrumpfen */
-	position: relative; /* Für den Scroll-Glow */
+	position: relative;
 }
 
-/* NEU: Scroll-Glow für Apps-Section */
+/* Scroll-Glow für Apps-Section wird entfernt, da sie nicht mehr scrollt */
 .apps-section::before,
 .apps-section::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 30px; /* Höhe des Glow-Effekts */
-    pointer-events: none;
-    z-index: 10;
-}
-
-.apps-section::before {
-    top: 0;
-    background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
-    opacity: 0; /* Standardmäßig unsichtbar */
-    transition: opacity 0.3s ease-out;
-}
-
-.apps-section::after {
-    bottom: 0;
-    background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
-    opacity: 0; /* Standardmäßig unsichtbar */
-    transition: opacity 0.3s ease-out;
-}
-
-/* Zeige den oberen Glow, wenn nicht ganz oben gescrollt */
-.apps-section:hover::before,
-.apps-section:hover::after {
-    /* Einfach bei Hover anzeigen, da präzise Scroll-Glow ohne JS schwer ist */
-    opacity: 1;
+    display: none;
 }
 
 
@@ -647,12 +593,12 @@ button {
     /* Optimierte grid-template-columns für bessere Icon-Anordnung */
     grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 6.5vw + 4vh, 100px), 1fr));
     gap: var(--fluid-gap-s);
-    /* overflow: hidden;  ENTFERNT, da Apps-Section jetzt scrollt */
+    overflow: hidden; /* **Behält overflow: hidden, da Apps-Section jetzt auch hidden ist** */
     padding: var(--fluid-padding-xs);
     flex-grow: 1;
     min-height: 0;
     display: grid;
-    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe innerhalb der scrollenden Sektion */
+    max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe innerhalb der Sektion */
     animation: containerFadeIn var(--t-slow) var(--t-timing-smooth);
     align-content: start; /* Richtet den Inhalt oben aus */
     flex-shrink: 0; /* Verhindert, dass der Container schrumpft, falls er zu viele Spalten hat, die breiter sind als der Parent */
@@ -704,7 +650,7 @@ button {
         transition: left var(--t-slow) var(--t-timing-smooth);
     }
     &:hover {
-        transform: translateY(-10px) scale(1.1) rotateX(7deg); /* Stärkerer Pop und Rotation */
+        transform: translateY(-5px) scale(1.05) rotateX(3deg); /* **ABGEMILDERT!** */
         border-color: var(--acc);
         box-shadow: var(--s),
                     var(--glow-strength) rgba(var(--acc-rgb), 0.4),
@@ -733,7 +679,7 @@ button {
 }
 
 .app-card:hover .icon {
-    transform: scale(1.3) rotateY(20deg); /* Stärkerer Icon-Pop */
+    transform: scale(1.15) rotateY(10deg); /* **ABGEMILDERT!** */
     color: var(--acc);
     text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 }
@@ -782,7 +728,7 @@ button {
 		display: flex;
 		flex-direction: column;
 		gap: var(--fluid-gap-m);
-		overflow-y: auto; /* ERMÖGLICHEN SCROLLEN AUF MOBILE FÜR DAS HAUPT-GRID */
+		overflow-y: auto; /* **Auf Mobile erlauben wir hier das Scrollen des Haupt-Grids** */
 		height: auto;
 	}
 	.grid-left, .grid-right {
@@ -790,7 +736,7 @@ button {
 		gap: var(--fluid-gap-m);
 		height: auto;
 		min-height: 0;
-		overflow-y: auto; /* Bleibt auch auf Mobile auto, falls Inhalte in einer Spalte zu lang werden */
+		overflow: hidden; /* **Zurück auf hidden, da der Haupt-Grid jetzt scrollt** */
 	}
 
 	/* Entferne Scroll-Glow für mobile, da der gesamte Container scrollt */
@@ -830,7 +776,7 @@ button {
 		flex-grow: 1;
 		min-height: clamp(70px, 14vh, 220px);
 		padding: var(--fluid-padding-s);
-		overflow-y: auto; /* Bleibt bei Auto auf Mobile */
+		overflow: hidden; /* **Zurück auf hidden, da der Haupt-Grid jetzt scrollt** */
 	}
 
     /* Entferne Scroll-Glow für mobile Apps-Section, da der gesamte Container scrollt */
