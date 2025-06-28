@@ -47,7 +47,6 @@
 	--content-max-width: 1800px;
 	--inner-shadow-strength: inset 0 0 5px rgba(0,0,0,0.03);
 	--hover-lift: -5px;
-	--hover-scale: 1.1;
 
 	/* Themed Variables */
 	--bg: #0d0d0d;
@@ -123,7 +122,7 @@ body {
 	transition: var(--hover-transition);
 	position: relative;
 	overflow: hidden;
-	transform: translateY(0) scale(1);
+	transform: translateY(0);
 	will-change: transform, box-shadow, border-color;
 
 	&::before {
@@ -140,16 +139,17 @@ body {
 		animation: gradientShift 8s ease-in-out infinite;
 	}
 	&:hover {
-		transform: translateY(var(--hover-lift)) scale(1.02);
+		transform: translateY(var(--hover-lift));
 		box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 		border-color: rgba(var(--acc-rgb), 0.6);
+		z-index: 5;
 	}
 	&:hover::before {
 		opacity: 0.8;
 		filter: blur(12px);
 	}
 	&:active {
-		transform: translateY(-1px) scale(0.98);
+		transform: translateY(-1px);
 		transition: var(--click-transition);
 	}
 }
@@ -203,7 +203,7 @@ button {
 	box-shadow: var(--s-light);
 	position: relative;
 	overflow: hidden;
-	transform: translateY(0) scale(1);
+	transform: translateY(0);
 	will-change: transform, box-shadow;
 
 	&::before {
@@ -221,7 +221,7 @@ button {
 		pointer-events: none;
 	}
 	&:hover {
-		transform: translateY(var(--hover-lift)) scale(1.05);
+		transform: translateY(var(--hover-lift));
 		border-color: var(--acc);
 		box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 	}
@@ -230,7 +230,7 @@ button {
 		height: 200%;
 	}
 	&:active {
-		transform: translateY(1px) scale(0.95);
+		transform: translateY(1px);
 		transition: var(--click-transition);
 		box-shadow: var(--s-light), inset 0 2px 8px rgba(0,0,0,0.2);
 	}
@@ -252,7 +252,7 @@ button {
 	transition: var(--hover-transition);
 	box-shadow: var(--s-light);
 	overflow: hidden;
-	transform: translateY(0) scale(1) rotate(0deg);
+	transform: translateY(0);
 	position: relative;
 
 	&::before {
@@ -267,7 +267,7 @@ button {
 		animation: rotate 3s linear infinite;
 	}
 	&:hover {
-		transform: translateY(var(--hover-lift)) scale(1.1) rotate(5deg);
+		transform: translateY(var(--hover-lift));
 		border-color: var(--acc);
 		box-shadow: var(--glow-strength) var(--acc), var(--s);
 	}
@@ -376,7 +376,7 @@ button {
 	}
 	&:focus-within {
 		border-color: var(--acc);
-		transform: scale(1.02) translateY(-2px);
+		transform: translateY(-2px);
 		box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4),
 		            var(--s),
 		            0 10px 25px rgba(0,0,0,0.1);
@@ -482,11 +482,11 @@ button {
 .weather-link-button .weather-icon {
 	font-size: clamp(1rem, 1.2vw, 2.2rem);
 	color: var(--acc);
-	transition: transform var(--t);
+	transition: color var(--t-fast) ease-out;
 }
 
 .weather-link-button:hover .weather-icon {
-	transform: scale(var(--hover-scale));
+	color: var(--ah);
 }
 
 .weather-notice {
@@ -565,7 +565,7 @@ button {
 	position: relative;
 	overflow: hidden;
 	box-shadow: var(--s-light), var(--inner-shadow);
-	transform: translateY(0) scale(1) rotateX(0);
+	transform: translateY(0);
 	transform-style: preserve-3d;
 	will-change: transform, box-shadow;
 	display: flex;
@@ -578,7 +578,7 @@ button {
 	animation: cardSlideIn var(--t-normal) var(--t-timing-bounce) forwards;
 	animation-delay: calc(var(--card-index, 0) * 0.05s);
 	opacity: 0;
-	transform: translateY(20px) scale(0.9);
+	transform: translateY(20px);
 
 	&::after {
 		content: '';
@@ -595,17 +595,18 @@ button {
 		transition: left var(--t-slow) var(--t-timing-smooth);
 	}
 	&:hover {
-		transform: translateY(-8px) scale(1.08) rotateX(5deg);
+		transform: translateY(-8px);
 		border-color: var(--acc);
 		box-shadow: var(--s),
 		            var(--glow-strength) rgba(var(--acc-rgb), 0.3),
 		            0 15px 30px rgba(0,0,0,0.15);
+		z-index: 2;
 	}
 	&:hover::after {
 		left: 100%;
 	}
 	&:active {
-		transform: translateY(-2px) scale(1.02) rotateX(2deg);
+		transform: translateY(-2px);
 		transition: var(--click-transition);
 	}
 }
@@ -616,15 +617,12 @@ button {
 	margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
 	display: block;
 	text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-	transition: transform var(--t-normal) var(--t-timing-elastic),
-	            color var(--t-fast) ease-out,
+	transition: color var(--t-fast) ease-out,
 	            text-shadow var(--t-normal) ease-out;
 	line-height: 1;
-	transform: scale(1) rotateY(0);
 }
 
 .app-card:hover .icon {
-	transform: scale(1.2) rotateY(15deg);
 	color: var(--acc);
 	text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 }
@@ -720,7 +718,7 @@ body.loading .loading-indicator {
 }
 
 .fab:hover {
-	transform: scale(1.15) translateY(-5px);
+	transform: translateY(-5px);
 	animation-play-state: paused;
 	box-shadow: 0 6px 20px rgba(var(--acc-rgb), 0.6);
 }
@@ -876,7 +874,7 @@ input:focus, textarea:focus {
 @keyframes cardSlideIn {
 	to {
 		opacity: 1;
-		transform: translateY(0) scale(1);
+		transform: translateY(0);
 	}
 }
 
