@@ -313,7 +313,44 @@ button {
 	flex-grow: 1; /* Nehmen den verfügbaren Platz in der Spalte ein */
 	min-height: 0; /* Erlaubt ihnen, zu schrumpfen */
 	flex-shrink: 1; /* Erlaubt den Spalten, zu schrumpfen */
-	overflow: hidden; /* Verhindert internes Scrollen in den Spalten, Inhalt wird von flex-child abgeschnitten */
+	overflow-y: auto; /* **NEU: HIER ERMÖGLICHEN WIR SCROLLEN IN DEN SPALTEN** */
+	position: relative; /* Für den Scroll-Glow */
+}
+
+/* NEU: Scroll-Glow für Grid-Spalten (wenn sie scrollen) */
+.grid-left::before,
+.grid-left::after,
+.grid-right::before,
+.grid-right::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 30px; /* Höhe des Glow-Effekts */
+    pointer-events: none;
+    z-index: 10;
+}
+
+.grid-left::before, .grid-right::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.grid-left::after, .grid-right::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+/* Zeige Glow bei Hover über scrollbaren Bereichen, um Scrollbarkeit anzuzeigen */
+.grid-left:hover::before,
+.grid-left:hover::after,
+.grid-right:hover::before,
+.grid-right:hover::after {
+    opacity: 1;
 }
 
 /* --- Search Section --- */
@@ -589,12 +626,6 @@ button {
 }
 
 /* Zeige den oberen Glow, wenn nicht ganz oben gescrollt */
-.apps-section:not(:first-child) { /* Vereinfachte Logik: Immer zeigen, wenn Scrollbar da ist */
-    /* Dies erfordert JS für präzise Erkennung des Scroll-Status */
-    /* Für reines CSS ist es besser, einfach immer zu zeigen, wenn overflow auto ist */
-}
-/* Wenn gescrollt, dann Glow anzeigen (Dies würde JS erfordern) */
-/* Mit reinem CSS können wir es bei overflow einfach immer anzeigen oder mit einem Trick */
 .apps-section:hover::before,
 .apps-section:hover::after {
     /* Einfach bei Hover anzeigen, da präzise Scroll-Glow ohne JS schwer ist */
@@ -759,7 +790,14 @@ button {
 		gap: var(--fluid-gap-m);
 		height: auto;
 		min-height: 0;
+		overflow-y: auto; /* Bleibt auch auf Mobile auto, falls Inhalte in einer Spalte zu lang werden */
 	}
+
+	/* Entferne Scroll-Glow für mobile, da der gesamte Container scrollt */
+    .grid-left::before, .grid-left::after,
+    .grid-right::before, .grid-right::after {
+        display: none;
+    }
 
 	/* Diese Sektionen sollen ihre natürliche Höhe behalten */
 	.time-display, .search-section, .weather-link-section, .quote-section {
@@ -794,6 +832,12 @@ button {
 		padding: var(--fluid-padding-s);
 		overflow-y: auto; /* Bleibt bei Auto auf Mobile */
 	}
+
+    /* Entferne Scroll-Glow für mobile Apps-Section, da der gesamte Container scrollt */
+    .apps-section::before, .apps-section::after {
+        display: none;
+    }
+
 	.apps-section h2 {
 		font-size: clamp(0.6rem, 2.2vw, 1.2rem);
 		margin-bottom: var(--fluid-padding-s);
