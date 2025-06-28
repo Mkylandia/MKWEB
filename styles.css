@@ -1,75 +1,70 @@
-/* styles.css - MKWEB OS 7: Clean Minimalist Design */
-/* Entfernte Glow-Effekte und optimierte Übersichtlichkeit */
+/* styles.css - MKWEB OS 7: Ultimate Premium Design */
+/* Verfeinerte Ästhetik mit Premium-Details und harmonischem Layout */
 
-/* ===== Globale Design Variablen ===== */
+/* ===== Globale Premium Variablen ===== */
 :root {
   /* Skalierungsvariablen */
-  --fluid-min-font: 0.65vw;
-  --fluid-max-font: 0.95vw;
-  --fluid-header-font: 1.15vw;
-  --fluid-time-font: 3.2vw;
+  --fluid-min-font: 0.68vw;
+  --fluid-max-font: 0.98vw;
+  --fluid-header-font: 1.2vw;
+  --fluid-time-font: 3.3vw;
   
-  /* Padding-Variablen */
-  --fluid-padding-xs: clamp(0.15rem, 0.25vw + 0.1vh, 0.7rem);
-  --fluid-padding-s: clamp(0.3rem, 0.42vw + 0.22vh, 1.05rem);
-  --fluid-padding-m: clamp(0.52rem, 0.75vw + 0.38vh, 1.35rem);
-  --fluid-padding-l: clamp(0.75rem, 0.95vw + 0.5vh, 1.85rem);
-  --fluid-padding-xl: clamp(0.95rem, 1.15vw + 0.6vh, 2.35rem);
+  /* Premium-Abstände */
+  --fluid-padding-xs: clamp(0.2rem, 0.3vw + 0.15vh, 0.8rem);
+  --fluid-padding-s: clamp(0.38rem, 0.5vw + 0.28vh, 1.15rem);
+  --fluid-padding-m: clamp(0.6rem, 0.85vw + 0.45vh, 1.45rem);
+  --fluid-padding-l: clamp(0.85rem, 1.1vw + 0.6vh, 2rem);
+  --fluid-padding-xl: clamp(1.05rem, 1.3vw + 0.7vh, 2.5rem);
   
-  /* Abstands-Variablen */
-  --fluid-gap-xs: clamp(0.16rem, 0.22vw + 0.09vh, 0.55rem);
-  --fluid-gap-s: clamp(0.27rem, 0.38vw + 0.17vh, 0.85rem);
-  --fluid-gap-m: clamp(0.38rem, 0.48vw + 0.22vh, 1.25rem);
+  /* Elegante Abstände */
+  --fluid-gap-xs: clamp(0.2rem, 0.28vw + 0.12vh, 0.65rem);
+  --fluid-gap-s: clamp(0.32rem, 0.45vw + 0.22vh, 0.95rem);
+  --fluid-gap-m: clamp(0.45rem, 0.58vw + 0.28vh, 1.35rem);
   
-  /* Animationsvariablen */
-  --t-fast: 0.16s;
-  --t-normal: 0.26s;
-  --t-slow: 0.42s;
-  --t-timing-bounce: cubic-bezier(0.32, 1.58, 0.62, 1.05);
-  --t-timing-smooth: cubic-bezier(0.23, 0.48, 0.43, 0.96);
-  --t-timing-elastic: cubic-bezier(0.66, -0.5, 0.25, 1.6);
+  /* Premium-Animationen */
+  --t-fast: 0.2s;
+  --t-normal: 0.3s;
+  --t-slow: 0.48s;
+  --t-timing-bounce: cubic-bezier(0.36, 1.65, 0.66, 1.1);
+  --t-timing-smooth: cubic-bezier(0.26, 0.52, 0.46, 1);
   
-  --hover-transition: all var(--t-normal) var(--t-timing-bounce);
+  --hover-transition: all var(--t-normal) var(--t-timing-smooth);
   --click-transition: all var(--t-fast) var(--t-timing-smooth);
   
-  /* Design-Tokens - Glow entfernt */
-  --r: 12px;
-  --s: 0 4px 12px rgba(0,0,0,0.08);
-  --sh: 0 7px 18px rgba(0,0,0,0.12);
-  --s-light: 0 2px 6px rgba(0,0,0,0.05);
+  /* Design-Tokens */
+  --r: 16px; /* Weichere Rundungen */
+  --s: 0 6px 18px rgba(0,0,0,0.12);
+  --sh: 0 10px 25px rgba(0,0,0,0.18);
+  --s-light: 0 4px 10px rgba(0,0,0,0.08);
   --border-width: 1px;
-  --text-gradient-angle: 65deg;
-  --blur-intensity: 12px;
-  --saturate-intensity: 125%;
   --content-max-width: 1800px;
-  --inner-shadow: inset 0 0 6px rgba(0,0,0,0.04);
   
-  /* Farbschema - entsättigt */
+  /* Premium-Farbschema */
   --bg: #0f0f0f;
-  --fg: #e0e0e0;
-  --dim: rgba(224,224,224,0.5);
-  --acc: #8a4ed4;
-  --ah: #b080ff;
-  --gl: rgba(255,255,255,0.05);
-  --gb: rgba(255,255,255,0.12);
+  --fg: #f5f5f5;
+  --dim: rgba(245,245,245,0.6);
+  --acc: #9a5ce0;
+  --acc-light: #b894ff;
+  --gl: rgba(255,255,255,0.07);
+  --gb: rgba(255,255,255,0.16);
   
-  --acc-rgb: 138, 78, 212;
-  --fg-rgb: 224, 224, 224;
-  --ah-rgb: 176, 128, 255;
-  --gb-rgb: 255, 255, 255;
+  --acc-rgb: 154, 92, 224;
+  --fg-rgb: 245, 245, 245;
 }
 
 /* ===== Basis-Stile ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 html {
   scroll-behavior: smooth;
-  font-size: clamp(6.5px, 0.62vw + 0.38vh, 17.5px);
+  font-size: clamp(7px, 0.68vw + 0.42vh, 18.5px);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -85,6 +80,10 @@ body {
   flex-direction: column;
   position: relative;
   text-rendering: optimizeLegibility;
+  line-height: 1.55;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(35, 20, 60, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 85% 70%, rgba(60, 30, 80, 0.15) 0%, transparent 25%);
 }
 
 /* ===== Container & Layout ===== */
@@ -124,32 +123,31 @@ body {
   overflow: visible;
 }
 
-/* ===== Glas-Effekt ohne Glow ===== */
+/* ===== Premium Glas-Effekt ===== */
 .glass {
   background: var(--gl);
-  backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
+  backdrop-filter: blur(18px) saturate(140%);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
-  box-shadow: var(--s), var(--inner-shadow);
+  box-shadow: var(--s);
   transition: var(--hover-transition);
   position: relative;
   overflow: visible;
-  transform: translateY(0) scale(1);
-  will-change: transform, box-shadow, border-color;
+  transform: translateY(0);
   
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
     box-shadow: var(--sh);
-    border-color: var(--acc);
+    border-color: var(--acc-light);
   }
   
   &:active {
-    transform: translateY(-1px) scale(0.98);
+    transform: translateY(-1px);
     transition: var(--click-transition);
   }
 }
 
-/* ===== Header-Bereich ===== */
+/* ===== Premium Header ===== */
 .header {
   display: flex;
   justify-content: space-between;
@@ -160,14 +158,25 @@ body {
 }
 
 .logo {
-  font-size: clamp(1.05rem, var(--fluid-header-font), 2.25rem);
+  font-size: clamp(1.15rem, var(--fluid-header-font), 2.4rem);
   font-weight: 800;
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 200% 200%;
+  letter-spacing: -0.5px;
+  background: linear-gradient(70deg, var(--acc), var(--acc-light));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate;
+  position: relative;
+  padding-right: 0.5em;
+  
+  &::after {
+    content: "OS";
+    position: relative;
+    font-size: 0.7em;
+    top: -0.3em;
+    margin-left: 0.15em;
+    opacity: 0.8;
+    font-weight: 700;
+  }
 }
 
 .controls {
@@ -176,46 +185,74 @@ body {
   align-items: center;
 }
 
-/* ===== UI-Elemente ===== */
+/* ===== Premium UI-Elemente ===== */
 button {
   @extend .glass;
   padding: var(--fluid-padding-xs) var(--fluid-padding-s);
   color: var(--fg);
-  font-size: clamp(0.52rem, var(--fluid-min-font), 0.85rem);
+  font-size: clamp(0.58rem, var(--fluid-min-font), 0.92rem);
   font-weight: 600;
   cursor: pointer;
   text-align: center;
-  box-shadow: var(--s-light);
+  position: relative;
+  overflow: hidden;
   
-  &:active {
-    box-shadow: var(--s-light), inset 0 2px 8px rgba(0,0,0,0.2);
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--acc);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--t-normal) var(--t-timing-smooth);
+  }
+  
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 }
 
 .user-avatar {
-  width: clamp(22px, 2.6vw, 42px);
-  height: clamp(22px, 2.6vw, 42px);
+  width: clamp(26px, 3vw, 46px);
+  height: clamp(26px, 3vw, 46px);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(0.85rem, 1.05vw, 1.9rem);
+  font-size: clamp(0.95rem, 1.15vw, 2.1rem);
   background: var(--gl);
   border: var(--border-width) solid var(--gb);
   color: var(--acc);
   cursor: pointer;
   transition: var(--hover-transition);
-  box-shadow: var(--s-light);
   position: relative;
-
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, var(--acc) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--t-normal) var(--t-timing-smooth);
+  }
+  
   &:hover {
-    transform: translateY(-3px);
-    border-color: var(--acc);
-    box-shadow: var(--s);
+    transform: translateY(-5px);
+    box-shadow: var(--sh);
+    
+    &::before {
+      opacity: 0.2;
+    }
   }
 }
 
-/* ===== Suchbereich ===== */
+/* ===== Premium Suchbereich ===== */
 .search-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -234,25 +271,24 @@ button {
 }
 
 .search-engine {
-  padding: clamp(0.22rem, 0.42vw, 0.65rem) clamp(0.45rem, 0.75vw, 1.05rem);
+  padding: clamp(0.28rem, 0.48vw, 0.75rem) clamp(0.55rem, 0.85vw, 1.15rem);
   border-radius: 30px;
   font-weight: 600;
-  font-size: clamp(0.58rem, 0.85vw, 0.95rem);
+  font-size: clamp(0.62rem, 0.92vw, 1.05rem);
   background: var(--gl);
   transition: var(--hover-transition);
+  position: relative;
   
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: var(--s);
-    border-color: var(--acc);
   }
   
   &:not(.active):hover {
     border-color: var(--acc);
-    transform: translateY(-2px);
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.1), var(--s-light);
+    transform: translateY(-3px);
   }
 }
 
@@ -260,12 +296,12 @@ button {
   @extend .glass;
   display: flex;
   align-items: center;
-  border-radius: 30px;
+  border-radius: var(--r);
   padding: var(--fluid-padding-s);
   
   &:focus-within {
-    transform: translateY(-2px);
-    box-shadow: var(--s);
+    transform: translateY(-4px);
+    box-shadow: var(--sh);
     border-color: var(--acc);
   }
 }
@@ -275,16 +311,19 @@ button {
   border: none;
   background: transparent;
   color: var(--fg);
-  font-size: clamp(0.65rem, var(--fluid-max-font), 1.05rem);
+  font-size: clamp(0.7rem, var(--fluid-max-font), 1.15rem);
   outline: none;
   margin-left: var(--fluid-padding-xs);
+  padding: 0.2rem 0;
+  letter-spacing: 0.2px;
   
   &::placeholder {
     color: var(--dim);
+    font-weight: 400;
   }
 }
 
-/* ===== Zeit-Anzeige ===== */
+/* ===== Premium Zeit-Anzeige ===== */
 .time-display {
   text-align: center;
   padding: var(--fluid-padding-s);
@@ -296,26 +335,25 @@ button {
 }
 
 #time {
-  font-size: clamp(2rem, var(--fluid-time-font), 6.5rem);
+  font-size: clamp(2.2rem, var(--fluid-time-font), 7rem);
   font-weight: 800;
-  margin-bottom: clamp(0.02rem, 0.05vh, 0.3rem);
-  background: linear-gradient(var(--text-gradient-angle), var(--acc), var(--fg), var(--acc));
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 15s ease infinite alternate;
+  margin-bottom: clamp(0.06rem, 0.07vh, 0.4rem);
+  letter-spacing: -1.5px;
+  color: var(--fg);
+  position: relative;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
 
 #date {
-  font-size: clamp(0.52rem, var(--fluid-min-font), 1.05rem);
+  font-size: clamp(0.58rem, var(--fluid-min-font), 1.15rem);
   color: var(--dim);
-  font-weight: 300;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: clamp(0.25px, 0.08vw, 2px);
+  letter-spacing: clamp(0.35px, 0.12vw, 2.3px);
+  margin-top: -0.2rem;
 }
 
-/* ===== Wetter Sektion ===== */
+/* ===== Premium Wetter Sektion ===== */
 .weather-link-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -328,9 +366,25 @@ button {
 }
 
 .weather-link-section h2 {
-  font-size: clamp(0.8rem, var(--fluid-header-font), 1.45rem);
+  font-size: clamp(0.88rem, var(--fluid-header-font), 1.55rem);
   font-weight: 700;
   margin-bottom: var(--fluid-padding-s);
+  color: var(--fg);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.4rem;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--acc), transparent);
+    opacity: 0.7;
+  }
 }
 
 .weather-link-button {
@@ -342,30 +396,33 @@ button {
   text-decoration: none;
   color: var(--fg);
   font-weight: 600;
-  font-size: clamp(0.65rem, var(--fluid-max-font), 1.05rem);
+  font-size: clamp(0.7rem, var(--fluid-max-font), 1.15rem);
+  transition: var(--hover-transition);
   
   .weather-icon {
-    font-size: clamp(1.05rem, 1.25vw, 2.3rem);
+    font-size: clamp(1.15rem, 1.35vw, 2.5rem);
     color: var(--acc);
     transition: transform var(--t-normal);
   }
   
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
     
     .weather-icon {
-      transform: scale(1.08);
+      transform: scale(1.12);
     }
   }
 }
 
 .weather-notice {
   margin-top: var(--fluid-padding-s);
-  font-size: clamp(0.52rem, var(--fluid-min-font), 0.85rem);
+  font-size: clamp(0.58rem, var(--fluid-min-font), 0.92rem);
   color: var(--dim);
+  max-width: 80%;
+  line-height: 1.45;
 }
 
-/* ===== Zitate Sektion ===== */
+/* ===== Premium Zitate Sektion ===== */
 .quote-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -375,23 +432,52 @@ button {
   text-align: center;
   flex-grow: 1;
   min-height: 0;
+  position: relative;
 }
 
 #quote-text {
-  font-size: clamp(0.75rem, var(--fluid-max-font), 1.15rem);
-  font-weight: 600;
-  margin-bottom: clamp(0.12rem, 0.25vw, 0.55rem);
+  font-size: clamp(0.85rem, var(--fluid-max-font), 1.25rem);
+  font-weight: 500;
+  margin-bottom: clamp(0.18rem, 0.3vw, 0.65rem);
   font-style: italic;
-  line-height: 1.4;
+  line-height: 1.6;
+  max-width: 85%;
+  position: relative;
+  padding: 0 1.2rem;
+  
+  &::before, &::after {
+    content: '"';
+    position: absolute;
+    font-size: 2.2em;
+    line-height: 0;
+    color: var(--acc);
+    opacity: 0.4;
+    font-family: serif;
+  }
+  
+  &::before {
+    top: 0.6em;
+    left: -0.4em;
+  }
+  
+  &::after {
+    bottom: 0.6em;
+    right: -0.4em;
+  }
 }
 
 #quote-author {
-  font-size: clamp(0.48rem, var(--fluid-min-font), 0.95rem);
+  font-size: clamp(0.52rem, var(--fluid-min-font), 1.05rem);
   color: var(--dim);
   font-weight: 500;
+  letter-spacing: 0.6px;
+  
+  &::before {
+    content: "— ";
+  }
 }
 
-/* ===== Apps Bereich ===== */
+/* ===== Premium Apps Bereich ===== */
 .apps-section {
   width: 100%;
   padding: var(--fluid-padding-s);
@@ -404,14 +490,28 @@ button {
 
 .apps-section h2 {
   margin-bottom: var(--fluid-padding-s);
-  font-size: clamp(0.75rem, var(--fluid-header-font), 1.45rem);
+  font-size: clamp(0.85rem, var(--fluid-header-font), 1.55rem);
   font-weight: 700;
   text-align: center;
   color: var(--dim);
+  letter-spacing: 0.6px;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -0.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 1px;
+    background: var(--acc);
+    opacity: 0.4;
+  }
 }
 
 .apps-container {
-  grid-template-columns: repeat(auto-fill, minmax(clamp(50px, 6.8vw + 4.2vh, 102px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(clamp(56px, 7.5vw + 4.8vh, 110px), 1fr));
   gap: var(--fluid-gap-s);
   padding: var(--fluid-padding-xs);
   flex-grow: 1;
@@ -424,8 +524,7 @@ button {
 
 .app-card {
   @extend .glass;
-  padding: clamp(0.35rem, 0.55vw + 0.38vh, 1.05rem);
-  text-align: center;
+  padding: clamp(0.45rem, 0.65vw + 0.45vh, 1.2rem);
   text-decoration: none;
   color: var(--fg);
   display: flex;
@@ -437,13 +536,32 @@ button {
   animation-delay: calc(var(--card-index, 0) * 0.05s);
   opacity: 0;
   transform: translateY(20px) scale(0.9);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--acc);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--t-normal) var(--t-timing-smooth);
+  }
   
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--s);
+    transform: translateY(-6px);
+    box-shadow: var(--sh);
+    
+    &::before {
+      transform: scaleX(1);
+    }
     
     .icon {
-      transform: scale(1.08);
+      transform: scale(1.12);
       color: var(--acc);
     }
   }
@@ -451,21 +569,22 @@ button {
 
 .app-card .icon {
   font-family: 'Material Symbols Outlined';
-  font-size: clamp(1rem, 1.6vw + 1.6vh, 2.6rem);
-  margin-bottom: clamp(0.12rem, 0.25vw + 0.12vh, 0.55rem);
+  font-size: clamp(1.15rem, 1.8vw + 1.8vh, 2.8rem);
+  margin-bottom: clamp(0.18rem, 0.3vw + 0.18vh, 0.65rem);
   display: block;
-  transition: all var(--t-normal) var(--t-timing-elastic);
+  transition: all var(--t-normal) var(--t-timing-smooth);
 }
 
 .app-card .label {
-  font-size: clamp(0.42rem, 0.55vw + 0.32vh, 0.95rem);
+  font-size: clamp(0.48rem, 0.65vw + 0.38vh, 1.05rem);
   font-weight: 500;
-  line-height: 1.15;
+  line-height: 1.25;
   word-break: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  letter-spacing: 0.25px;
 }
 
 /* ===== Hilfsklassen ===== */
@@ -484,7 +603,7 @@ button {
 /* ===== Media Queries ===== */
 @media (max-width: 992px) {
   html {
-    font-size: clamp(5.5px, 0.72vw + 0.42vh, 15.5px);
+    font-size: clamp(6px, 0.78vw + 0.48vh, 16.5px);
   }
 
   .container {
@@ -514,11 +633,11 @@ button {
   }
 
   #time {
-    font-size: clamp(1.6rem, 6.5vw, 4.2rem);
+    font-size: clamp(1.8rem, 7.5vw, 4.8rem);
   }
   
   #date {
-    font-size: clamp(0.45rem, 1.6vw, 0.95rem);
+    font-size: clamp(0.5rem, 1.8vw, 1.05rem);
   }
 
   .header {
@@ -528,7 +647,7 @@ button {
   }
   
   .logo { 
-    font-size: clamp(0.85rem, 2.6vw, 1.85rem); 
+    font-size: clamp(0.95rem, 2.8vw, 2rem); 
   }
   
   .controls { 
@@ -538,49 +657,53 @@ button {
   }
 
   .apps-section {
-    min-height: clamp(75px, 15vh, 225px);
+    min-height: clamp(85px, 17vh, 250px);
     overflow-y: auto;
   }
   
   .apps-section h2 {
-    font-size: clamp(0.65rem, 2.3vw, 1.25rem);
+    font-size: clamp(0.75rem, 2.5vw, 1.35rem);
   }
   
   .apps-container {
-    grid-template-columns: repeat(auto-fill, minmax(clamp(42px, 8.5vw + 5.5vh, 78px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(clamp(48px, 9.5vw + 6.5vh, 86px), 1fr));
   }
   
   .app-card {
-    padding: clamp(0.25rem, 0.38vw + 0.28vh, 0.95rem);
+    padding: clamp(0.32rem, 0.45vw + 0.35vh, 1.05rem);
   }
   
   .app-card .icon {
-    font-size: clamp(0.85rem, 2.6vw + 1.6vh, 1.85rem);
+    font-size: clamp(0.95rem, 2.8vw + 1.8vh, 2rem);
   }
   
   .app-card .label {
-    font-size: clamp(0.38rem, 1.25vw + 0.55vh, 0.65rem);
+    font-size: clamp(0.42rem, 1.4vw + 0.65vh, 0.75rem);
   }
 }
 
-/* ===== Animationen ===== */
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
+/* ===== Premium Animationen ===== */
 @keyframes containerFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(18px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
 @keyframes cardSlideIn {
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
 }
 
 /* ===== Fallbacks ===== */
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(var(--fg-rgb), 0.18);
+    background: rgba(30, 30, 40, 0.55);
   }
 }
