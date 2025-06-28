@@ -24,12 +24,20 @@
 	--fluid-gap-m: clamp(0.35rem, 0.45vw + 0.2vh, 1.2rem);
 
 	/* --- NEU: Zentrale Animations-Variablen für saubere & konsistente Effekte --- */
-	--t-duration: 0.25s; /* Etwas längere Dauer für weichere Animationen */
-	--t-timing: ease-in-out; /* Weicher Start und sanftes Ende für alle Übergänge */
-	--t: var(--t-duration) var(--t-timing); /* Kombinierte Variable für einfache Anwendung */
-	--hover-lift: -4px; /* Einheitliche "Anheben"-Distanz für die meisten Hover-Effekte */
-	--active-press: 2px; /* Einheitliche "Hineindrücken"-Distanz für Klick-Effekte */
-	--hover-scale: 1.08; /* Einheitliche Skalierung für Icons etc. */
+	/* Erweiterte Animation-Variablen */
+	--t-fast: 0.15s;
+	--t-normal: 0.25s;
+	--t-slow: 0.4s;
+	--t-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--t-timing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	--t-timing-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+	/* Spezifische Animationen */
+	--hover-transition: transform var(--t-normal) var(--t-timing-bounce),
+	                    box-shadow var(--t-normal) var(--t-timing-smooth),
+	                    border-color var(--t-fast) ease-out;
+	--click-transition: transform var(--t-fast) var(--t-timing-smooth);
+	--glow-transition: opacity var(--t-slow) ease-out, filter var(--t-slow) ease-out;
 
 	--r: 12px; /* Slightly smaller border-radius */
 	--s: 0 4px 12px rgba(0,0,0,0.08); /* Lighter shadow */
@@ -109,56 +117,45 @@ body {
 	min-height: 0; /* Erlaubt dem Container, zu schrumpfen, wenn die Inhalte es erfordern */
 }
 
-/* --- Glassmorphism Base Style - Cleaner Animations --- */
+/* 2. Verbesserte .glass Klasse - Ersetze die bestehende */
 .glass {
-	background: var(--gl);
-	backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
-	border: var(--border-width) solid var(--gb);
-	border-radius: var(--r);
-	box-shadow: var(--s), var(--inner-shadow);
-	/* VERBESSERT: Explizite, performantere Transitions */
-	transition: background var(--t), border-color var(--t), box-shadow var(--t), transform var(--t);
-	position: relative;
-	overflow: hidden;
-	transform: translateY(0); /* Expliziter Startpunkt für saubere Animation */
+    background: var(--gl);
+    backdrop-filter: blur(var(--blur-intensity)) saturate(var(--saturate-intensity));
+    border: var(--border-width) solid var(--gb);
+    border-radius: var(--r);
+    box-shadow: var(--s), var(--inner-shadow);
+    transition: var(--hover-transition);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0) scale(1);
+    will-change: transform, box-shadow, border-color; /* Performance-Optimierung */
 
-	&::after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: var(--glass-reflection);
-		pointer-events: none;
-		opacity: 0;
-		transition: none;
-	}
-
-	&:hover {
-		/* VERBESSERT: Einheitliches Anheben und subtilerer Schatten */
-		transform: translateY(var(--hover-lift));
-		box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
-	}
-
-	&::before {
-		content: '';
-		position: absolute;
-		top: -1px; left: -1px; right: -1px; bottom: -1px;
-		border-radius: calc(var(--r) + 1px);
-		background: linear-gradient(45deg, var(--acc), var(--ah));
-		z-index: -1;
-		opacity: 0;
-		/* VERBESSERT: Weichere Transition für den Rand-Glow */
-		transition: opacity var(--t-duration) ease-out, filter var(--t-duration) ease-out;
-		filter: blur(8px);
-	}
-
-	&:hover::before {
-		/* VERBESSERT: Subtilerer Glow-Effekt */
-		opacity: 0.6;
-		filter: blur(10px);
-	}
+    &::before {
+        content: '';
+        position: absolute;
+        top: -2px; left: -2px; right: -2px; bottom: -2px;
+        border-radius: calc(var(--r) + 2px);
+        background: linear-gradient(135deg, var(--acc), var(--ah), var(--acc));
+        background-size: 200% 200%;
+        z-index: -1;
+        opacity: 0;
+        transition: var(--glow-transition);
+        filter: blur(8px);
+        animation: gradientShift 8s ease-in-out infinite;
+    }
+    &:hover {
+        transform: translateY(var(--hover-lift)) scale(1.02);
+        box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+        border-color: rgba(var(--acc-rgb), 0.6);
+    }
+    &:hover::before {
+        opacity: 0.8;
+        filter: blur(12px);
+    }
+    &:active {
+        transform: translateY(-1px) scale(0.98);
+        transition: var(--click-transition);
+    }
 }
 
 /* --- Header --- */
@@ -196,63 +193,92 @@ body {
 	align-items: center;
 }
 
-/* --- Buttons Styling - Cleaner Animations --- */
+/* 4. Verbesserte Button-Animationen - Ersetze die bestehenden Button-Styles */
 button {
-	padding: var(--fluid-padding-xs) var(--fluid-padding-s); /* Feinjustiert */
-	border: var(--border-width) solid var(--gb);
-	border-radius: var(--r);
-	background: var(--gl);
-	color: var(--fg);
-	cursor: pointer;
-	/* VERBESSERT: Explizite, performantere Transitions */
-	transition: border-color var(--t), transform var(--t), box-shadow var(--t), background-color var(--t);
-	font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem); /* Feinjustiert */
-	font-weight: 600;
-	outline: none;
-	box-shadow: var(--s-light);
-	position: relative;
-	z-index: 1;
-	overflow: hidden;
-	transform: translateY(0); /* Expliziter Startpunkt */
+    padding: var(--fluid-padding-xs) var(--fluid-padding-s);
+    border: var(--border-width) solid var(--gb);
+    border-radius: var(--r);
+    background: var(--gl);
+    color: var(--fg);
+    cursor: pointer;
+    transition: var(--hover-transition);
+    font-size: clamp(0.5rem, var(--fluid-min-font), 0.8rem);
+    font-weight: 600;
+    outline: none;
+    box-shadow: var(--s-light);
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0) scale(1);
+    will-change: transform, box-shadow;
 
-	&:active {
-		/* VERBESSERT: Einheitlicher "Drücken"-Effekt */
-		transform: translateY(var(--active-press)) scale(0.99);
-		box-shadow: var(--s-light), inset 0 2px 5px rgba(0,0,0,0.15);
-		background: rgba(var(--gl-rgb), 0.05);
-	}
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, rgba(var(--acc-rgb), 0.3) 0%, transparent 70%);
+        transform: translate(-50%, -50%);
+        transition: width var(--t-normal) var(--t-timing-elastic),
+                    height var(--t-normal) var(--t-timing-elastic);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    &:hover {
+        transform: translateY(var(--hover-lift)) scale(1.05);
+        border-color: var(--acc);
+        box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.4);
+    }
+    &:hover::before {
+        width: 200%;
+        height: 200%;
+    }
+    &:active {
+        transform: translateY(1px) scale(0.95);
+        transition: var(--click-transition);
+        box-shadow: var(--s-light), inset 0 2px 8px rgba(0,0,0,0.2);
+    }
 }
 
-button:hover {
-	/* VERBESSERT: Einheitliches Anheben und subtilerer Schatten */
-	transform: translateY(var(--hover-lift));
-	border-color: var(--acc);
-	box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.3);
-}
-
+/* 8. Micro-Animationen für User Avatar - Ersetze die bestehenden .user-avatar Styles */
 .user-avatar {
-	width: clamp(20px, 2.5vw, 40px); /* Avatar wieder leicht größer */
-	height: clamp(20px, 2.5vw, 40px);
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: clamp(0.8rem, 1vw, 1.8rem);
-	background: var(--gl);
-	border: var(--border-width) solid var(--gb);
-	color: var(--acc);
-	cursor: pointer;
-	transition: all var(--t);
-	box-shadow: var(--s-light);
-	overflow: hidden;
-	transform: translateY(0); /* Expliziter Startpunkt */
-}
+    width: clamp(20px, 2.5vw, 40px);
+    height: clamp(20px, 2.5vw, 40px);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(0.8rem, 1vw, 1.8rem);
+    background: var(--gl);
+    border: var(--border-width) solid var(--gb);
+    color: var(--acc);
+    cursor: pointer;
+    transition: var(--hover-transition);
+    box-shadow: var(--s-light);
+    overflow: hidden;
+    transform: translateY(0) scale(1) rotate(0deg);
+    position: relative;
 
-.user-avatar:hover {
-	/* VERBESSERT: Einheitliches Anheben */
-	transform: translateY(var(--hover-lift));
-	border-color: var(--acc);
-	box-shadow: var(--glow-strength) var(--acc), var(--s);
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        background: conic-gradient(var(--acc), var(--ah), var(--acc));
+        z-index: -1;
+        opacity: 0;
+        transition: var(--glow-transition);
+        animation: rotate 3s linear infinite;
+    }
+    &:hover {
+        transform: translateY(var(--hover-lift)) scale(1.1) rotate(5deg);
+        border-color: var(--acc);
+        box-shadow: var(--glow-strength) var(--acc), var(--s);
+    }
+    &:hover::before {
+        opacity: 0.6;
+    }
 }
 
 .hidden-avatar {
@@ -331,20 +357,41 @@ button:hover {
 	}
 }
 
+/* 6. Verbesserte Search-Box Animationen - Ersetze die bestehenden .search-box Styles */
 .search-box {
-	display: flex;
-	align-items: center;
-	border-radius: 30px;
-	padding: var(--fluid-padding-s); /* Feinjustiert */
-	transition: all var(--t);
-	box-shadow: var(--s), var(--inner-shadow);
-}
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    padding: var(--fluid-padding-s);
+    transition: var(--hover-transition);
+    box-shadow: var(--s), var(--inner-shadow);
+    position: relative;
+    overflow: hidden;
 
-.search-box:focus-within {
-	border-color: var(--acc);
-	/* VERBESSERT: Skalierung ist ein sauberer Effekt, leicht vergrößert für besseres Feedback */
-	transform: scale(1.01);
-	box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.3), var(--s);
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+            transparent,
+            rgba(var(--acc-rgb), 0.05) 50%,
+            transparent
+        );
+        transition: left var(--t-slow) ease-out;
+    }
+    &:focus-within {
+        border-color: var(--acc);
+        transform: scale(1.02) translateY(-2px);
+        box-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4),
+                    var(--s),
+                    0 10px 25px rgba(0,0,0,0.1);
+    }
+    &:focus-within::before {
+        left: 100%;
+    }
 }
 
 #search {
@@ -510,6 +557,7 @@ button:hover {
 	color: var(--dim);
 }
 
+/* 7. Staggered Animation für Apps-Container - Neue Klasse hinzufügen */
 .apps-container {
     /* Optimierte grid-template-columns für bessere Icon-Anordnung */
     /* Balance zwischen VH und VW für Skalierung, min-content um Überlappungen zu verhindern */
@@ -522,56 +570,84 @@ button:hover {
     min-height: 0;
     display: grid;
     max-height: 100%; /* Begrenzt die Höhe des Containers auf die verfügbare Höhe */
+    animation: containerFadeIn var(--t-slow) var(--t-timing-smooth);
 }
 
+/* 5. Verbesserte App-Card Animationen - Ersetze die bestehenden .app-card Styles */
 .app-card {
-	background: var(--gl);
-	border: var(--border-width) solid var(--gb);
-	border-radius: var(--r);
-	/* Padding der Karte, um Icons und Labels gut auszurichten */
-	/* Padding wieder etwas erhöht, vh-Anteil moderater */
-	padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem);
-	text-align: center;
-	text-decoration: none;
-	color: var(--fg);
-	/* VERBESSERT: Explizite, performantere Transitions */
-	transition: border-color var(--t), box-shadow var(--t), transform var(--t);
-	position: relative;
-	overflow: hidden; /* Sicherstellen, dass nichts überläuft */
-	box-shadow: var(--s-light), var(--inner-shadow);
-	transform: translateY(0); /* Expliziter Startpunkt */
-	display: flex;
-	flex-direction: column;
-	align-items: center; /* Zentriert Icons und Labels horizontal */
-	justify-content: center; /* Zentriert Icons und Labels vertikal */
-	aspect-ratio: 1 / 1; /* Behält quadratisches Verhältnis */
-	min-width: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
-	min-height: 0; /* Ermöglicht der Karte, zu schrumpfen, falls der Inhalt das erfordert */
-}
+    background: var(--gl);
+    border: var(--border-width) solid var(--gb);
+    border-radius: var(--r);
+    padding: clamp(0.3rem, 0.5vw + 0.35vh, 1rem);
+    text-align: center;
+    text-decoration: none;
+    color: var(--fg);
+    transition: var(--hover-transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--s-light), var(--inner-shadow);
+    transform: translateY(0) scale(1) rotateX(0);
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    min-width: 0;
+    min-height: 0;
+    animation: cardSlideIn var(--t-normal) var(--t-timing-bounce) forwards;
+    animation-delay: calc(var(--card-index, 0) * 0.05s);
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
 
-.app-card:hover {
-	/* VERBESSERT: Etwas stärkeres Anheben für die größeren App-Karten, aber immer noch konsistent */
-	transform: translateY(-6px);
-	border-color: var(--acc);
-	box-shadow: var(--s), var(--glow-strength) rgba(var(--acc-rgb), 0.25);
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+            transparent,
+            rgba(var(--acc-rgb), 0.1) 50%,
+            transparent
+        );
+        transition: left var(--t-slow) var(--t-timing-smooth);
+    }
+    &:hover {
+        transform: translateY(-8px) scale(1.08) rotateX(5deg);
+        border-color: var(--acc);
+        box-shadow: var(--s),
+                    var(--glow-strength) rgba(var(--acc-rgb), 0.3),
+                    0 15px 30px rgba(0,0,0,0.15);
+    }
+    &:hover::after {
+        left: 100%;
+    }
+    &:active {
+        transform: translateY(-2px) scale(1.02) rotateX(2deg);
+        transition: var(--click-transition);
+    }
 }
 
 .app-card .icon {
-	font-family: 'Material Symbols Outlined';
-	/* Größe der Icons: Min-Wert erhöht, VH-Anteil moderater */
-	font-size: clamp(0.9rem, 1.5vw + 1.5vh, 2.5rem); /* Min-Wert erhöht, VH-Anteil wieder moderater */
-	/* Margin-Bottom: Min-Wert und VH-Anteil leicht erhöht */
-	margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
-	display: block;
-	text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
-	/* VERBESSERT: Saubere Transition nur für die Transformation */
-	transition: transform var(--t);
-	line-height: 1; /* Wichtig, um den vertikalen Raum des Icons zu kontrollieren */
+    font-family: 'Material Symbols Outlined';
+    font-size: clamp(0.9rem, 1.5vw + 1.5vh, 2.5rem);
+    margin-bottom: clamp(0.1rem, 0.2vw + 0.1vh, 0.5rem);
+    display: block;
+    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.15);
+    transition: transform var(--t-normal) var(--t-timing-elastic),
+                color var(--t-fast) ease-out,
+                text-shadow var(--t-normal) ease-out;
+    line-height: 1;
+    transform: scale(1) rotateY(0);
 }
 
 .app-card:hover .icon {
-	/* VERBESSERT: Einheitliche Skalierung */
-	transform: scale(var(--hover-scale));
+    transform: scale(1.2) rotateY(15deg);
+    color: var(--acc);
+    text-shadow: var(--glow-strength) rgba(var(--acc-rgb), 0.4);
 }
 
 .app-card .label {
@@ -693,4 +769,42 @@ button:hover {
 	.glass {
 		background: rgba(var(--fg-rgb), 0.15);
 	}
+}
+
+/* 3. Neue Keyframe-Animationen hinzufügen */
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 50% 100%; }
+    75% { background-position: 50% 0%; }
+}
+
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: var(--s), 0 0 5px rgba(var(--acc-rgb), 0.2);
+    }
+    50% {
+        box-shadow: var(--sh), var(--glow-strength) rgba(var(--acc-rgb), 0.6);
+    }
+}
+
+@keyframes containerFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardSlideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes rotate {
+    to { transform: rotate(360deg); }
 }
