@@ -1,5 +1,5 @@
-/* styles.css - MKWEB OS 7: Premium White Design */
-/* Weiße Schrift mit eleganten Umrandungen und verfeinertem Zitat-Design */
+/* styles.css - MKWEB OS 7: Elegant Hover Effects */
+/* Verfeinerte Animationen mit dezenter Umrandung für die Uhr */
 
 /* ===== Globale Design Variablen ===== */
 :root {
@@ -21,12 +21,13 @@
   --fluid-gap-s: clamp(0.27rem, 0.38vw + 0.17vh, 0.85rem);
   --fluid-gap-m: clamp(0.38rem, 0.48vw + 0.22vh, 1.25rem);
   
-  /* Animationen */
-  --t-fast: 0.16s;
-  --t-normal: 0.26s;
-  --t-slow: 0.42s;
-  --t-timing-bounce: cubic-bezier(0.32, 1.58, 0.62, 1.05);
-  --t-timing-smooth: cubic-bezier(0.23, 0.48, 0.43, 0.96);
+  /* Verfeinerte Animationen */
+  --t-fast: 0.18s;
+  --t-normal: 0.28s;
+  --t-slow: 0.45s;
+  --t-timing-bounce: cubic-bezier(0.34, 1.62, 0.64, 1.08);
+  --t-timing-smooth: cubic-bezier(0.25, 0.5, 0.45, 0.98);
+  --t-timing-elastic: cubic-bezier(0.68, -0.55, 0.27, 1.55);
   
   --hover-transition: all var(--t-normal) var(--t-timing-smooth);
   --click-transition: all var(--t-fast) var(--t-timing-smooth);
@@ -39,10 +40,10 @@
   --border-width: 1px;
   --content-max-width: 1800px;
   
-  /* Farbschema mit weißem Text */
+  /* Farbschema */
   --bg: #0d0d0d;
-  --fg: #ffffff; /* Reines Weiß */
-  --dim: rgba(255,255,255,0.6); /* Helleres Grau */
+  --fg: #ffffff;
+  --dim: rgba(255,255,255,0.6);
   --acc: #8a4ed4;
   --ah: #b080ff;
   --gl: rgba(255,255,255,0.05);
@@ -66,7 +67,7 @@ html {
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--fg); /* Alle Texte weiß */
+  color: var(--fg);
 }
 
 body {
@@ -118,10 +119,10 @@ body {
   overflow: visible;
 }
 
-/* ===== Eleganter Glas-Effekt ===== */
+/* ===== Verfeinerter Glas-Effekt mit besseren Animationen ===== */
 .glass {
   background: var(--gl);
-  backdrop-filter: blur(12px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(140%);
   border: var(--border-width) solid var(--gb);
   border-radius: var(--r);
   box-shadow: var(--s);
@@ -133,6 +134,7 @@ body {
   &:hover {
     transform: translateY(-4px);
     box-shadow: var(--sh);
+    border-color: var(--acc);
   }
 }
 
@@ -153,6 +155,12 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  transition: all var(--t-slow) var(--t-timing-smooth);
+  
+  &:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 0 15px rgba(var(--acc-rgb), 0.3);
+  }
 }
 
 .controls {
@@ -161,7 +169,7 @@ body {
   align-items: center;
 }
 
-/* ===== Suchbereich mit Premium-Hover ===== */
+/* ===== Suchbereich mit verbesserten Animationen ===== */
 .search-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -189,29 +197,20 @@ body {
   position: relative;
   border: 1px solid transparent;
   
-  /* Premium-Hover mit eleganter Umrandung */
+  /* Verbesserter Hover-Effekt */
   &:hover {
     border: 1px solid var(--acc);
-    transform: translateY(-2px);
-    box-shadow: 
-      0 4px 10px rgba(var(--acc-rgb), 0.15),
-      inset 0 0 0 1px rgba(255,255,255,0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(var(--acc-rgb), 0.2);
   }
   
   /* Verfeinerter Active-Zustand */
   &.active {
     background: var(--acc);
     color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(var(--acc-rgb), 0.2);
-    border: 1px solid rgba(255,255,255,0.2);
-    
-    &:hover {
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 
-        0 5px 15px rgba(var(--acc-rgb), 0.25),
-        inset 0 0 0 1px rgba(255,255,255,0.15);
-    }
+    transform: translateY(-3px);
+    box-shadow: 0 5px 16px rgba(var(--acc-rgb), 0.25);
+    border: 1px solid rgba(255,255,255,0.25);
   }
 }
 
@@ -221,12 +220,16 @@ body {
   align-items: center;
   border-radius: var(--r);
   padding: var(--fluid-padding-s);
+  transition: 
+    transform var(--t-normal) var(--t-timing-elastic),
+    box-shadow var(--t-normal) var(--t-timing-smooth),
+    border-color var(--t-normal) ease;
   
-  /* Elegante Fokus-Umrandung */
+  /* Verbesserter Fokus-Effekt */
   &:focus-within {
     transform: translateY(-3px);
     box-shadow: var(--sh);
-    border: 1px solid var(--acc);
+    border-color: var(--acc);
   }
 }
 
@@ -244,15 +247,30 @@ body {
   }
 }
 
-/* ===== Zeit-Anzeige ===== */
+/* ===== Premium Zeit-Anzeige mit dezentem Hover-Effekt ===== */
 .time-display {
   text-align: center;
-  padding: var(--fluid-padding-s);
+  padding: var(--fluid-padding-m);
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-grow: 2;
   min-height: 0;
+  transition: var(--hover-transition);
+  position: relative;
+  border-radius: var(--r);
+  
+  /* Dezente Umrandung beim Hover */
+  &:hover {
+    background: rgba(var(--acc-rgb), 0.05);
+    box-shadow: 
+      0 0 0 1px rgba(var(--acc-rgb), 0.2),
+      inset 0 0 20px rgba(var(--acc-rgb), 0.05);
+    
+    #time {
+      text-shadow: 0 0 12px rgba(var(--acc-rgb), 0.25);
+    }
+  }
 }
 
 #time {
@@ -264,6 +282,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -1px;
+  transition: text-shadow var(--t-slow) ease;
 }
 
 #date {
@@ -272,6 +291,11 @@ body {
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: clamp(0.25px, 0.08vw, 2px);
+  transition: color var(--t-normal) ease;
+  
+  .time-display:hover & {
+    color: rgba(255,255,255,0.7);
+  }
 }
 
 /* ===== Premium Zitate Sektion ===== */
@@ -285,6 +309,12 @@ body {
   flex-grow: 1;
   min-height: 0;
   position: relative;
+  transition: all var(--t-slow) ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    background: rgba(var(--acc-rgb), 0.03);
+  }
 }
 
 #quote-text {
@@ -296,26 +326,10 @@ body {
   max-width: 90%;
   position: relative;
   padding: 0 1.5rem;
+  transition: all var(--t-normal) ease;
   
-  /* Elegante Anführungszeichen */
-  &::before, &::after {
-    content: '"';
-    position: absolute;
-    font-size: 3em;
-    line-height: 0;
-    color: var(--acc);
-    opacity: 0.3;
-    font-family: Georgia, serif;
-  }
-  
-  &::before {
-    top: 0.5em;
-    left: -0.3em;
-  }
-  
-  &::after {
-    bottom: 0.3em;
-    right: -0.3em;
+  .quote-section:hover & {
+    text-shadow: 0 0 8px rgba(255,255,255,0.1);
   }
 }
 
@@ -324,14 +338,17 @@ body {
   color: var(--dim);
   font-weight: 500;
   letter-spacing: 0.5px;
-  font-style: normal;
   
   &::before {
     content: "— ";
   }
+  
+  .quote-section:hover & {
+    color: rgba(255,255,255,0.7);
+  }
 }
 
-/* ===== Wetter Sektion mit Premium-Hover ===== */
+/* ===== Wetter Sektion mit verbesserten Animationen ===== */
 .weather-link-section {
   padding: var(--fluid-padding-s);
   display: flex;
@@ -358,24 +375,23 @@ body {
   text-decoration: none;
   font-weight: 600;
   font-size: clamp(0.7rem, var(--fluid-max-font), 1.1rem);
+  transition: var(--hover-transition);
   
-  /* Premium-Hover mit eleganter Umrandung */
+  /* Verbesserter Hover-Effekt */
   &:hover {
     transform: translateY(-4px);
     border: 1px solid var(--acc);
-    box-shadow: 
-      0 6px 18px rgba(var(--acc-rgb), 0.2),
-      inset 0 0 0 1px rgba(255,255,255,0.1);
+    box-shadow: 0 6px 20px rgba(var(--acc-rgb), 0.25);
   }
   
   .weather-icon {
     font-size: clamp(1.1rem, 1.3vw, 2.4rem);
     color: var(--acc);
-    transition: transform var(--t-normal);
+    transition: all var(--t-normal) var(--t-timing-elastic);
   }
   
   &:hover .weather-icon {
-    transform: scale(1.12);
+    transform: scale(1.15) rotate(5deg);
   }
 }
 
@@ -387,7 +403,7 @@ body {
   line-height: 1.5;
 }
 
-/* ===== Apps Bereich mit Premium-Hover ===== */
+/* ===== Apps Bereich mit Premium-Animationen ===== */
 .apps-section {
   width: 100%;
   padding: var(--fluid-padding-s);
@@ -430,22 +446,25 @@ body {
   position: relative;
   border: 1px solid transparent;
   transition: 
-    transform var(--t-normal) var(--t-timing-smooth),
+    transform var(--t-normal) var(--t-timing-elastic),
     box-shadow var(--t-normal) var(--t-timing-smooth),
-    border-color var(--t-normal) var(--t-timing-smooth);
+    border-color var(--t-normal) ease;
   
-  /* Premium-Hover mit eleganter Umrandung */
+  /* Premium-Hover-Animation */
   &:hover {
-    transform: translateY(-6px) scale(1.04);
-    box-shadow: 
-      0 10px 30px rgba(var(--acc-rgb), 0.3),
-      inset 0 0 0 1px rgba(255,255,255,0.1);
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(var(--acc-rgb), 0.3);
     border: 1px solid var(--acc);
     z-index: 2;
     
     .icon {
-      transform: scale(1.15);
+      transform: scale(1.15) rotate(8deg);
       color: var(--acc);
+    }
+    
+    .label {
+      color: var(--fg);
+      text-shadow: 0 0 5px rgba(255,255,255,0.2);
     }
   }
 }
@@ -455,7 +474,7 @@ body {
   font-size: clamp(1.1rem, 1.7vw + 1.7vh, 2.7rem);
   margin-bottom: clamp(0.15rem, 0.3vw + 0.15vh, 0.6rem);
   display: block;
-  transition: all var(--t-normal) var(--t-timing-smooth);
+  transition: all var(--t-normal) var(--t-timing-elastic);
 }
 
 .app-card .label {
@@ -468,6 +487,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-align: center;
+  transition: all var(--t-normal) ease;
 }
 
 /* ===== Media Queries ===== */
@@ -541,6 +561,10 @@ body {
   
   .app-card {
     padding: clamp(0.3rem, 0.42vw + 0.32vh, 1rem);
+    
+    &:hover {
+      transform: translateY(-4px) scale(1.04);
+    }
   }
   
   .app-card .icon {
@@ -551,17 +575,13 @@ body {
     font-size: clamp(0.42rem, 1.4vw + 0.65vh, 0.75rem);
   }
   
-  /* Zitat-Anpassungen für Mobile */
-  .quote-section {
-    padding: var(--fluid-padding-s);
-  }
-  
-  #quote-text {
-    font-size: clamp(0.8rem, 1.1vw + 1vh, 1.1rem);
-    padding: 0 1.2rem;
+  /* Zeit-Anzeige Hover für Mobile */
+  .time-display:hover {
+    background: transparent;
+    box-shadow: none;
     
-    &::before, &::after {
-      font-size: 2.5em;
+    #time {
+      text-shadow: none;
     }
   }
 }
@@ -577,4 +597,34 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* ===== Verfeinerte Keyframe-Animationen ===== */
+@keyframes subtlePulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Anwenden der neuen Animationen */
+.time-display:hover #time {
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+.weather-link-button:hover .weather-icon {
+  animation: float 2s ease-in-out infinite;
 }
