@@ -21,7 +21,6 @@
   --t-normal: 0.32s;
   --t-slow: 0.5s;
   --t-timing-smooth: cubic-bezier(0.26, 0.53, 0.46, 0.99);
-  --t-timing-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --hover-transition: all var(--t-normal) var(--t-timing-smooth);
 
@@ -126,8 +125,6 @@ body {
 .glass:hover {
   box-shadow: var(--sh);
   transform: translateY(-2px) scale(1.015);
-  /* Kein bounce Effekt mehr */
-  /* animation: glassPulse 1.2s var(--t-timing-elastic); entfernt */
 }
 .glass:hover::before {
   content: '';
@@ -166,7 +163,7 @@ body {
 .logo:hover {
   transform: translateY(-2px) scale(1.04) rotate(-1deg);
   text-shadow: 0 0 18px rgba(var(--acc-rgb), 0.12);
-  animation: floatText 1.3s var(--t-timing-elastic);
+  animation: floatText 1.3s var(--t-timing-smooth);
 }
 
 .controls {
@@ -194,8 +191,6 @@ button {
 button:hover {
   transform: translateY(-3px) scale(1.05) rotate(-1.5deg);
   box-shadow: 0 6px 18px rgba(var(--acc-rgb), 0.18);
-  /* Kein bounce Effekt */
-  /* animation: subtlePulse 0.9s cubic-bezier(0.34, 1.65, 0.64, 1.1); entfernt */
 }
 
 .user-avatar {
@@ -268,8 +263,6 @@ button:hover {
 .search-engine:hover {
   transform: translateY(-4px) scale(1.07) rotateX(6deg) rotateZ(-2deg);
   box-shadow: 0 6px 19px 1px rgba(var(--acc-rgb), 0.22);
-  /* Kein Bounce oder Pulse Effekt */
-  /* animation: floatText 1.6s cubic-bezier(0.34, 1.65, 0.64, 1.1); entfernt */
 }
 .search-engine:hover::before {
   opacity: 0.5;
@@ -302,18 +295,18 @@ button:hover {
 .search-box:focus-within {
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 8px 25px 2px rgba(var(--acc-rgb), 0.27);
-  border: 1px solid var(--acc);
-  animation: borderGlow 2.1s cubic-bezier(0.60,1.3,0.3,1) infinite;
+  border: 1.5px solid var(--acc);
+  animation: borderGlow 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
 }
 .search-box:focus-within .search-icon {
   color: var(--ah);
-  transform: scale(1.12) rotate(-2deg);
+  transform: scale(1.15) rotate(-2deg);
 }
 
 .search-icon {
   font-size: clamp(1rem, 1.2vw, 1.8rem);
   color: var(--dim);
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 #search {
@@ -325,7 +318,10 @@ button:hover {
   outline: none;
   margin-left: var(--fluid-padding-xs);
   padding: 0.3rem 0;
-  transition: transform 0.5s cubic-bezier(0.26, 0.53, 0.46, 0.99);
+  min-width: 0;
+  overflow: visible;
+  transition: padding-left 0.45s cubic-bezier(0.85,-0.35,0.18,1.4), 
+              background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 #search::placeholder {
   color: var(--dim);
@@ -335,9 +331,10 @@ button:hover {
   opacity: 0.7;
   transform: translateX(5px) scale(1.03);
 }
-/* NEU: Text verschiebt sich beim Fokus nach rechts */
 #search:focus {
-  transform: translateX(22px);
+  padding-left: 1.3rem;
+  background: rgba(185, 139, 255, 0.045);
+  box-shadow: 0 0 0 3px rgba(var(--acc-rgb), 0.13);
 }
 
 /* ===== Premium Zeit-Anzeige mit Animationen ===== */
@@ -398,12 +395,12 @@ button:hover {
   transition: var(--hover-transition);
 }
 .quote-section:hover #quote-text {
-  text-shadow: 0 0 8px rgba(255,255,255,0.09);
-  animation: subtlePulse 1.7s cubic-bezier(0.34, 1.65, 0.64, 1.1);
+  text-shadow: none;
+  animation: none;
 }
 .quote-section:hover #quote-author {
   color: var(--ah);
-  animation: floatText 1.3s cubic-bezier(0.34, 1.65, 0.64, 1.1);
+  animation: none;
 }
 
 #quote-text {
@@ -437,7 +434,7 @@ button:hover {
 }
 #quote-text:hover::before, #quote-text:hover::after {
   opacity: 0.45;
-  animation: pulse 1.2s cubic-bezier(0.34, 1.65, 0.64, 1.1);
+  animation: none;
 }
 
 #quote-author {
@@ -507,7 +504,7 @@ button:hover {
 .weather-link-button .weather-icon {
   font-size: clamp(1.1rem, 1.3vw, 2.4rem);
   color: var(--acc);
-  transition: all var(--t-normal) var(--t-timing-elastic);
+  transition: all var(--t-normal) var(--t-timing-smooth);
 }
 .weather-link-button:hover .weather-icon {
   transform: scale(1.18) rotate(7deg);
@@ -586,8 +583,6 @@ button:hover {
   transform: translateY(-7px) scale(1.08) rotateZ(2deg);
   box-shadow: 0 12px 35px 3px rgba(var(--acc-rgb), 0.22);
   z-index: 10;
-  /* Kein Bounce oder Pulse */
-  /* animation: subtlePulse 1.2s cubic-bezier(0.34, 1.65, 0.64, 1.1); entfernt */
 }
 .app-card:hover .icon {
   transform: scale(1.15) rotate(7deg);
@@ -604,7 +599,7 @@ button:hover {
   font-size: clamp(1.1rem, 1.7vw + 1.7vh, 2.7rem);
   margin-bottom: clamp(0.15rem, 0.3vw + 0.15vh, 0.6rem);
   display: block;
-  transition: all var(--t-slow) var(--t-timing-elastic);
+  transition: all var(--t-slow) var(--t-timing-smooth);
   will-change: color, transform;
 }
 
@@ -624,10 +619,16 @@ button:hover {
 /* ===== Verfeinerte Animationen ===== */
 @keyframes subtleGlow {
   0%, 100% {
-    text-shadow: 0 0 5px rgba(var(--acc-rgb), 0);
+    text-shadow: 0 0 4px rgba(var(--acc-rgb), 0.12), 0 0 0px #fff1;
+  }
+  20% {
+    text-shadow: 0 0 16px rgba(var(--acc-rgb), 0.30), 0 0 3px #fff2;
   }
   50% {
-    text-shadow: 0 0 22px rgba(var(--acc-rgb), 0.23), 0 0 7px #fff1;
+    text-shadow: 0 0 36px rgba(var(--acc-rgb), 0.42), 0 0 18px #fff3;
+  }
+  80% {
+    text-shadow: 0 0 12px rgba(var(--acc-rgb), 0.18), 0 0 5px #fff2;
   }
 }
 
@@ -635,8 +636,11 @@ button:hover {
   0%, 100% {
     transform: translateY(0);
   }
-  50% {
-    transform: translateY(-9px);
+  35% {
+    transform: translateY(-7px) scale(1.02);
+  }
+  60% {
+    transform: translateY(-14px) scale(1.04);
   }
 }
 
@@ -644,10 +648,10 @@ button:hover {
   0%, 100% {
     transform: scale(1);
   }
-  40% {
-    transform: scale(1.11) rotate(-2deg);
+  30% {
+    transform: scale(1.13) rotate(-1.5deg);
   }
-  80% {
+  60% {
     transform: scale(0.97) rotate(2deg);
   }
 }
@@ -657,22 +661,8 @@ button:hover {
     box-shadow: inset 0 0 0 2px rgba(var(--acc-rgb), 0.15);
   }
   50% {
-    box-shadow: inset 0 0 0 8px rgba(var(--acc-rgb), 0.19);
-  }
-}
-
-@keyframes subtlePulse {
-  0%, 100% {
-    transform: translateY(-2px) scale(1);
-    box-shadow: 0 3px 8px rgba(var(--acc-rgb), 0.13);
-  }
-  40% {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 7px 18px rgba(var(--acc-rgb), 0.22);
-  }
-  80% {
-    transform: translateY(-1px) scale(0.99);
-    box-shadow: 0 2px 7px rgba(var(--acc-rgb), 0.14);
+    box-shadow: 0 0 24px 12px rgba(var(--acc-rgb), 0.22), 
+                inset 0 0 16px 6px rgba(var(--acc-rgb), 0.22);
   }
 }
 
@@ -680,8 +670,8 @@ button:hover {
   0%, 100% {
     transform: translateY(0);
   }
-  40% {
-    transform: translateY(-5px);
+  38% {
+    transform: translateY(-7px) scale(1.04);
   }
 }
 
@@ -692,24 +682,24 @@ button:hover {
     transform: translateY(-3px) scale(1);
   }
   60% {
-    box-shadow: 0 0 0 18px rgba(var(--acc-rgb), 0),
-                0 0 28px rgba(var(--acc-rgb), 0.46);
-    transform: translateY(-3px) scale(1.17);
+    box-shadow: 0 0 0 22px rgba(var(--acc-rgb), 0),
+                0 0 36px rgba(var(--acc-rgb), 0.56);
+    transform: translateY(-3px) scale(1.2);
   }
   100% {
-    box-shadow: 0 0 22px 2px rgba(var(--acc-rgb), 0.39),
-                inset 0 2px 4px rgba(255,255,255,0.22);
-    transform: translateY(-3px) scale(1.12);
+    box-shadow: 0 0 36px 10px rgba(var(--acc-rgb), 0.47),
+                inset 0 2px 12px rgba(255,255,255,0.29);
+    transform: translateY(-3px) scale(1.14);
   }
 }
 
 @keyframes borderGlow {
   0%, 100% {
-    box-shadow: 0 8px 25px 2px rgba(var(--acc-rgb), 0.27),
+    box-shadow: 0 8px 27px 2px rgba(var(--acc-rgb), 0.31),
                 inset 0 0 0 2px var(--acc);
   }
   50% {
-    box-shadow: 0 8px 30px 4px rgba(var(--acc-rgb), 0.41),
+    box-shadow: 0 8px 38px 10px rgba(var(--acc-rgb), 0.52),
                 inset 0 0 0 2px var(--ah);
   }
 }
@@ -719,12 +709,10 @@ button:hover {
   html {
     font-size: clamp(6px, 0.75vw + 0.45vh, 16px);
   }
-
   .container {
     padding: var(--fluid-padding-m);
     gap: var(--fluid-gap-m);
   }
-  
   .main-grid {
     grid-template-columns: 1fr;
     display: flex;
@@ -733,7 +721,6 @@ button:hover {
     overflow-y: auto;
     height: auto;
   }
-  
   .time-display, 
   .search-section, 
   .weather-link-section, 
@@ -741,22 +728,18 @@ button:hover {
     flex-grow: 0;
     padding: var(--fluid-padding-s);
   }
-
   #time {
     font-size: clamp(1.8rem, 7.5vw, 5rem);
   }
-  
   .time-display:hover::before,
   .quote-section:hover::before,
   .app-card:hover::before {
     box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.1);
   }
-  
   .time-display:hover #time {
     animation: none;
     text-shadow: 0 0 8px rgba(var(--acc-rgb), 0.08);
   }
-  
   #quote-text {
     font-size: clamp(0.85rem, 1.2vw + 1vh, 1.15rem);
     padding: 0 1.5rem;
@@ -764,20 +747,20 @@ button:hover {
   #quote-text::before, #quote-text::after {
     font-size: 3em;
   }
-  
   .apps-container {
     grid-template-columns: repeat(auto-fill, minmax(clamp(46px, 9vw + 6vh, 82px), 1fr));
   }
-
   .search-engine {
     padding: 0.35rem 0.9rem;
   }
   .search-engine.active {
     transform: translateY(-2px) scale(1.07);
   }
-  
   .search-box:focus-within {
     transform: translateY(-2px) scale(1.01);
+  }
+  #search:focus {
+    padding-left: 0.8rem;
   }
 }
 
