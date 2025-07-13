@@ -2,7 +2,7 @@
 
 // --- Initial Setup & Settings Management ---
 const SETTINGS_KEY = 'mkweb-settings-os7';
-const settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
+let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google'
@@ -51,7 +51,7 @@ applyAvatarVisibility();
 // --- Search Functionality ---
 let activeEngine = settings.lastActiveEngine;
 
-const activateEngine = (engine) => {
+let activateEngine = (engine) => {
     searchEngines.forEach(btn => {
         const isActive = btn.dataset.engine === engine;
         btn.classList.toggle('active', isActive);
@@ -151,4 +151,80 @@ document.addEventListener('fullscreenchange', () => {
         fullscreenBtn.textContent = '🚀 Vollbild';
         fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
     }
+});
+
+
+// --- Dynamic Island Functionality ---
+const dynamicIslandContainer = document.getElementById('dynamicIslandContainer');
+const dynamicIsland = document.getElementById('dynamicIsland');
+const islandIcon = document.getElementById('islandIcon');
+const islandTitle = document.getElementById('islandTitle');
+const islandSubtitle = document.getElementById('islandSubtitle');
+const islandDismissBtn = document.getElementById('islandDismissBtn');
+const islandWaveform = document.getElementById('islandWaveform');
+
+const engineIcons = {
+    google: 'search',
+    yandex: 'travel_explore',
+    bing: 'search',
+    duckduckgo: 'search_hands_free',
+    youtube: 'play_circle',
+    github: 'code'
+};
+
+// Funktion zum Aktualisieren der Insel
+const updateIsland = (icon, title, subtitle, showWave = false) => {
+    islandIcon.textContent = icon;
+    islandTitle.textContent = title;
+    islandSubtitle.textContent = subtitle;
+    islandWaveform.style.display = showWave ? 'flex' : 'none';
+};
+
+// Click-Event zum Erweitern/Verkleinern
+dynamicIsland.addEventListener('click', (e) => {
+    // Verhindern, dass der Klick auf den Button die Insel schließt
+    if (e.target.closest('#islandDismissBtn')) return;
+    dynamicIsland.classList.toggle('expanded');
+});
+
+// Insel ausblenden
+islandDismissBtn.addEventListener('click', () => {
+    dynamicIslandContainer.classList.add('hidden');
+});
+
+// Suchmaschinen-Logik erweitern
+const originalActivateEngine = activateEngine; // Alte Funktion speichern
+activateEngine = (engine) => {
+    originalActivateEngine(engine); // Alte Funktion aufrufen
+    const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
+    updateIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
+    if (dynamicIsland.classList.contains('expanded')) {
+        setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+    }
+};
+
+// Such-Event erweitern
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const query = searchInput.value.trim();
+        if (query) {
+            updateIsland('arrow_forward', 'Weiterleitung...', `Suche nach "${query}"`, true);
+            dynamicIsland.classList.add('expanded');
+            // Nach kurzer Zeit zur normalen Ansicht zurückkehren
+            setTimeout(() => {
+                activateEngine(settings.lastActiveEngine);
+                dynamicIsland.classList.remove('expanded');
+            }, 2500);
+        }
+    }
+});
+
+// Initialer Zustand beim Laden der Seite
+document.addEventListener('DOMContentLoaded', () => {
+    // Kleine Verzögerung, um sicherzustellen, dass alles geladen ist
+    setTimeout(() => {
+        if (!dynamicIslandContainer.classList.contains('hidden')) {
+           activateEngine(settings.lastActiveEngine);
+        }
+    }, 100);
 });
