@@ -216,7 +216,7 @@ searchInput.addEventListener('keypress', (e) => {
                 window.open(url, '_blank');
                 searchInput.value = ''; // Clear search input
                 resetIslandToDefault(); // Revert island to default after search
-            }, 1800); // Slightly less delay than island display to ensure smooth transition
+            }, 800); // Slightly less delay than island display to ensure smooth transition
         }
     }
 });
