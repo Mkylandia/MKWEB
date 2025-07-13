@@ -6,7 +6,7 @@ let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google',
-    dynamicIslandVisible: true // NEW: Setting to remember island visibility
+    dynamicIslandHidden: false // Standardmäßig sichtbar beim Start
 };
 
 // Function to save settings
@@ -17,7 +17,7 @@ const saveSettings = () => {
 
 // --- DOM Element Caching (Performance) ---
 const fullscreenBtn = document.getElementById('fullscreen-btn');
-const userAvatar = document.getElementById('user-avatar');
+const userAvatar = document.getElementById('user-avatar'); // Kann null sein, wenn kein Avatar-Element existiert
 const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
 const searchInput = document.getElementById('search');
 const searchEngines = document.querySelectorAll('.search-engine');
@@ -25,244 +25,336 @@ const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
-// NEW: Reopen Island Button
-const reopenIslandBtn = document.getElementById('reopen-island-btn');
 
+// Dynamic Island Elemente
+const dynamicIslandContainer = document.getElementById('dynamic-island-container');
+const dynamicIsland = document.getElementById('dynamic-island');
+const islandMainIcon = document.getElementById('island-main-icon');
+const islandTitle = document.getElementById('island-title');
+const islandMessage = document.getElementById('island-message');
+const islandStatus = document.getElementById('island-status');
+const islandDismissBtn = document.getElementById('island-dismiss-btn');
+const reopenIslandButton = document.getElementById('reopen-island-btn'); // Neuer Button
 
 // --- User Avatar & Toggle Logic ---
 const applyAvatarVisibility = () => {
-    if (settings.showAvatar) {
-        userAvatar.classList.remove('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'false');
-        userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
-    } else {
-        userAvatar.classList.add('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'true');
-        userAvatarToggleBtn.textContent = '🐵 Avatar einblenden';
+    if (userAvatar) { // Prüfen, ob das Element existiert
+        if (settings.showAvatar) {
+            userAvatar.classList.remove('hidden-avatar');
+            userAvatar.setAttribute('aria-hidden', 'false');
+            userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
+        } else {
+            userAvatar.classList.add('hidden-avatar');
+            userAvatar.setAttribute('aria-hidden', 'true');
+            userAvatarToggleBtn.textContent = '🐵 Avatar anzeigen';
+        }
     }
 };
 
-userAvatarToggleBtn.addEventListener('click', () => {
-    settings.showAvatar = !settings.showAvatar;
-    saveSettings();
-    applyAvatarVisibility();
-});
-
+if (userAvatarToggleBtn) { // Prüfen, ob der Button existiert
+    userAvatarToggleBtn.addEventListener('click', () => {
+        settings.showAvatar = !settings.showAvatar;
+        saveSettings();
+        applyAvatarVisibility();
+    });
+}
 applyAvatarVisibility();
 
 
-// --- Search Functionality ---
-let activeEngine = settings.lastActiveEngine;
-
-let activateEngine = (engine) => {
-    searchEngines.forEach(btn => {
-        const isActive = btn.dataset.engine === engine;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', isActive);
+// --- Fullscreen Toggle ---
+if (fullscreenBtn) { // Prüfen, ob der Button existiert
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
     });
-    activeEngine = engine;
-    settings.lastActiveEngine = engine;
-    saveSettings();
+}
+
+
+// --- Search Engine Logic ---
+const searchEnginesMap = {
+    google: 'https://www.google.com/search?q=',
+    duckduckgo: 'https://duckduckgo.com/?q=',
+    youtube: 'https://www.youtube.com/results?search_query=',
+    wikipedia: 'https://de.wikipedia.org/w/index.php?search=',
+    github: 'https://github.com/search?q='
 };
 
-searchEngines.forEach(btn => {
-    btn.addEventListener('click', () => activateEngine(btn.dataset.engine));
-});
+const engineIcons = {
+    google: 'travel_explore',
+    duckduckgo: 'search',
+    youtube: 'play_circle',
+    wikipedia: 'article',
+    github: 'data_object'
+};
 
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        const query = searchInput.value.trim();
-        if (query) {
-            let url = '';
-            switch (activeEngine) {
-                case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
-                case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
-                case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
-                case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
-                case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
-                default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-            }
-            window.open(url, '_blank');
-            // NEW: Update island for search action
-            showDynamicIsland('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
-            dynamicIsland.classList.add('expanded');
-            setTimeout(() => {
-                hideDynamicIsland();
-                activateEngine(settings.lastActiveEngine); // Revert to original island content
-            }, 3000); // Keep island for 3 seconds after search
-        }
+const activateEngine = (engine) => {
+    // Entferne 'active' von allen Buttons
+    searchEngines.forEach(btn => btn.classList.remove('active'));
+
+    // Füge 'active' zum geklickten Button hinzu
+    const targetButton = document.querySelector(`.search-engine[data-engine="${engine}"]`);
+    if (targetButton) {
+        targetButton.classList.add('active');
+        settings.lastActiveEngine = engine;
+        saveSettings();
     }
+};
+
+searchEngines.forEach(engineBtn => {
+    engineBtn.addEventListener('click', () => {
+        const engine = engineBtn.dataset.engine;
+        activateEngine(engine);
+        // Dynamic Island aktualisieren bei Suchmaschinenwechsel
+        const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
+        updateIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
+        if (dynamicIsland.classList.contains('expanded')) {
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+        }
+    });
 });
 
-activateEngine(activeEngine);
+// Setze die zuletzt aktive Suchmaschine beim Laden
+activateEngine(settings.lastActiveEngine);
 
 
-// --- Time and Date Display ---
+// --- Time and Date ---
 const updateDateTime = () => {
     const now = new Date();
-    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
     dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
 };
 
-setInterval(updateDateTime, 1000);
+// Initial update and set interval
 updateDateTime();
+setInterval(updateDateTime, 1000); // Jede Sekunde aktualisieren
 
 
-// --- Quote of the Day (Local Data) ---
-const quotes = [
-    { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
-    { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
-    { text: "Sei du selbst die Veränderung, die du dir wünschst für diese Welt.", author: "Mahatma Gandhi" },
-    { text: "Was immer du tun kannst oder träumst es zu können, fang damit an.", author: "Johann Wolfgang von Goethe" },
-    { text: "Glück ist nicht das, was man besitzt, sondern das, was man gibt.", author: "Unbekannt" },
-    { text: "Die Zukunft gehört denen, die an die Schönheit ihrer Träume glauben.", author: "Eleanor Roosevelt" },
-    { text: "Handle so, dass die Maxime deines Willens jederzeit zugleich als Prinzip einer allgemeinen Gesetzgebung gelten könnte.", author: "Immanuel Kant" },
-    { text: "Es ist nicht genug zu wissen, man muss es auch anwenden; es ist nicht genug zu wollen, man muss es auch tun.", author: "Johann Wolfgang von Goethe" },
-    { text: "Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.", author: "Peter F. Drucker" },
-    { text: "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.", author: "Albert Einstein" }
-];
-
-const displayRandomQuote = () => {
-    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        const randomQuote = quotes[randomIndex];
-        quoteTextElement.textContent = `"${randomQuote.text}"`;
-        quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+// --- Quotes ---
+const fetchQuote = async () => {
+    try {
+        const response = await fetch('https://api.quotable.io/random');
+        const data = await response.json();
+        quoteTextElement.textContent = `"${data.content}"`;
+        quoteAuthorElement.textContent = `- ${data.author}`;
+    } catch (error) {
+        console.error('Fehler beim Abrufen des Zitats:', error);
+        quoteTextElement.textContent = '"Lebe, als würdest du sterben müssen, lerne, als würdest du ewig leben."';
+        quoteAuthorElement.textContent = '- Mahatma Gandhi';
     }
 };
-
-// Display a new quote every hour, and on page load
-setInterval(displayRandomQuote, 3600000); // Alle Stunde
-document.addEventListener('DOMContentLoaded', displayRandomQuote);
+fetchQuote(); // Zitat beim Laden abrufen
 
 
-// --- Fullscreen Toggle ---
-fullscreenBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-        });
-    } else {
-        document.exitFullscreen().catch(err => {
-            console.error(`Error attempting to disable full-screen mode: ${err.message} (${err.name})`);
-        });
-    }
-});
+// --- Dynamic Island Functions ---
+let islandHideTimeout;
 
-document.addEventListener('fullscreenchange', () => {
-    if (document.fullscreenElement) {
-        fullscreenBtn.textContent = 'Shrink';
-        fullscreenBtn.setAttribute('title', 'Vollbild verlassen');
-    } else {
-        fullscreenBtn.textContent = '🚀 Vollbild';
-        fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
-    }
-});
-
-
-// --- Dynamic Island Functionality ---
-const dynamicIslandContainer = document.getElementById('dynamicIslandContainer');
-const dynamicIsland = document.getElementById('dynamicIsland');
-const islandIcon = document.getElementById('islandIcon');
-const islandTitle = document.getElementById('islandTitle');
-const islandSubtitle = document.getElementById('islandSubtitle');
-const islandDismissBtn = document.getElementById('islandDismissBtn');
-const islandWaveform = document.getElementById('islandWaveform');
-
-const engineIcons = {
-    google: 'search',
-    yandex: 'travel_explore',
-    bing: 'search',
-    duckduckgo: 'search_hands_free',
-    youtube: 'play_circle',
-    github: 'code'
-};
-
-// NEW: Function to show the dynamic island
-const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    islandIcon.textContent = icon;
+const updateIsland = (icon, title, message, showWaveform = false) => {
+    islandMainIcon.textContent = icon;
     islandTitle.textContent = title;
-    islandSubtitle.textContent = subtitle;
-    islandWaveform.style.display = showWave ? 'flex' : 'none';
+    islandMessage.textContent = message;
+
+    if (showWaveform) {
+        islandStatus.innerHTML = `
+            <div class="island-waveform">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        `;
+    } else {
+        islandStatus.innerHTML = '';
+    }
+
     dynamicIslandContainer.classList.remove('hidden');
-    reopenIslandBtn.style.display = 'none'; // Hide reopen button when island is visible
-    settings.dynamicIslandVisible = true;
+    settings.dynamicIslandHidden = false; // Island ist jetzt sichtbar
     saveSettings();
+
+    clearTimeout(islandHideTimeout);
+    islandHideTimeout = setTimeout(() => {
+        dynamicIslandContainer.classList.add('hidden');
+        settings.dynamicIslandHidden = true; // Island ist jetzt versteckt
+        saveSettings();
+        reopenIslandButton.classList.add('visible'); // Reopen-Button sichtbar machen
+        dynamicIsland.classList.remove('expanded'); // Sicherstellen, dass es nicht erweitert bleibt
+    }, 5000); // 5 Sekunden sichtbar
 };
 
-// NEW: Function to hide the dynamic island
-const hideDynamicIsland = () => {
-    dynamicIslandContainer.classList.add('hidden');
-    dynamicIsland.classList.remove('expanded'); // Ensure it's not expanded when hidden
-    reopenIslandBtn.style.display = 'block'; // Show reopen button when island is hidden
-    settings.dynamicIslandVisible = false;
-    saveSettings();
-};
-
-
-// Click-Event zum Erweitern/Verkleinern
-dynamicIsland.addEventListener('click', (e) => {
-    // Verhindern, dass der Klick auf den Button die Insel schließt
-    if (e.target.closest('#islandDismissBtn')) return;
+const toggleIslandExpanded = () => {
     dynamicIsland.classList.toggle('expanded');
+    clearTimeout(islandHideTimeout); // Verhindert automatisches Ausblenden beim Erweitern
+    if (!dynamicIsland.classList.contains('expanded')) {
+        // Wenn es geschlossen wird, starte den Hide-Timeout neu
+        islandHideTimeout = setTimeout(() => {
+            dynamicIslandContainer.classList.add('hidden');
+            settings.dynamicIslandHidden = true;
+            saveSettings();
+            reopenIslandButton.classList.add('visible');
+        }, 1000); // Nach 1 Sekunde ausblenden, wenn manuell geschlossen
+    }
+};
+
+dynamicIsland.addEventListener('click', (e) => {
+    if (!islandDismissBtn.contains(e.target)) { // Nicht erweitern, wenn Dismiss geklickt wird
+        toggleIslandExpanded();
+    }
 });
 
-// Insel ausblenden (Dismiss button)
 islandDismissBtn.addEventListener('click', () => {
-    hideDynamicIsland();
+    dynamicIslandContainer.classList.add('hidden');
+    settings.dynamicIslandHidden = true;
+    saveSettings();
+    reopenIslandButton.classList.add('visible');
+    dynamicIsland.classList.remove('expanded'); // Sicherstellen, dass es nicht erweitert bleibt
+    clearTimeout(islandHideTimeout); // Timeout löschen, da manuell ausgeblendet
 });
 
-// NEW: Reopen Island button click event
-reopenIslandBtn.addEventListener('click', () => {
-    showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Suchmaschine', `Aktiv: ${settings.lastActiveEngine.charAt(0).toUpperCase() + settings.lastActiveEngine.slice(1)}`);
+// Neuer Button zum Wiederherstellen der Dynamic Island
+reopenIslandButton.addEventListener('click', () => {
+    dynamicIslandContainer.classList.remove('hidden');
+    settings.dynamicIslandHidden = false;
+    saveSettings();
+    reopenIslandButton.classList.remove('visible'); // Button wieder verstecken
+    fetchWeatherAndDisplay(); // Wetter beim Wiederöffnen aktualisieren
 });
 
 
-// Suchmaschinen-Logik erweitern
-const originalActivateEngine = activateEngine; // Alte Funktion speichern
-activateEngine = (engine) => {
-    originalActivateEngine(engine); // Alte Funktion aufrufen
-    const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
-    // NEW: Only update island if it's visible, otherwise just update settings
-    if (settings.dynamicIslandVisible) {
-        showDynamicIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
-        if (dynamicIsland.classList.contains('expanded')) {
-            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
-        }
+// --- Wetter-Funktionen für Dynamic Island ---
+const weatherIconMap = {
+    0: 'clear_day',        // Clear sky
+    1: 'partly_cloudy_day',// Mainly clear
+    2: 'partly_cloudy_day',// Partly cloudy
+    3: 'cloud',            // Overcast
+    45: 'foggy',           // Fog and rime fog
+    48: 'foggy',           // Fog and rime fog
+    51: 'rainy_light',     // Drizzle: Light
+    53: 'rainy',           // Drizzle: Moderate
+    55: 'rainy_heavy',     // Drizzle: Dense intensity
+    56: 'freezing_rain',   // Freezing Drizzle: Light
+    57: 'freezing_rain',   // Freezing Drizzle: Dense intensity
+    61: 'rainy_light',     // Rain: Slight
+    63: 'rainy',           // Rain: Moderate
+    65: 'rainy_heavy',     // Rain: Heavy intensity
+    66: 'freezing_rain',   // Freezing Rain: Light
+    67: 'freezing_rain',   // Freezing Rain: Heavy intensity
+    71: 'weather_snowy',   // Snow fall: Slight
+    73: 'weather_snowy',   // Snow fall: Moderate
+    75: 'weather_snowy',   // Snow fall: Heavy intensity
+    77: 'weather_snowy',   // Snow grains
+    80: 'thunderstorm',    // Rain showers: Slight
+    81: 'thunderstorm',    // Rain showers: Moderate
+    82: 'thunderstorm',    // Rain showers: Violent
+    85: 'weather_snowy',   // Snow showers: Slight
+    86: 'weather_snowy',   // Snow showers: Heavy
+    95: 'thunderstorm',    // Thunderstorm: Slight or moderate
+    96: 'thunderstorm',    // Thunderstorm with slight hail
+    99: 'thunderstorm'     // Thunderstorm with heavy hail
+};
+
+function getWeatherIcon(weatherCode) {
+    return weatherIconMap[weatherCode] || 'thermostat'; // Standard-Icon, wenn kein Match
+}
+
+const fetchWeatherAndDisplay = () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&forecast_days=1&timezone=auto`;
+
+            try {
+                const response = await fetch(weatherApiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("Weather data:", data); // Zum Debuggen
+
+                if (data.current_weather) {
+                    const temp = data.current_weather.temperature;
+                    const weatherCode = data.current_weather.weathercode;
+                    const windSpeed = data.current_weather.windspeed;
+                    const icon = getWeatherIcon(weatherCode);
+
+                    let message = `${temp}°C, Wind: ${windSpeed} km/h`;
+                    // Optional: Wetterbeschreibung basierend auf Code hinzufügen (für Open-Meteo nur Codes)
+                    // Könnte hier eine eigene Map für Textbeschreibungen erstellen, wenn gewünscht
+
+                    updateIsland(icon, 'Wetter aktuell', message);
+                } else {
+                    updateIsland('cloud_off', 'Wetter Fehler', 'Keine Wetterdaten verfügbar.');
+                }
+
+            } catch (error) {
+                console.error('Fehler beim Abrufen der Wetterdaten:', error);
+                updateIsland('cloud_off', 'Wetter Fehler', 'Konnte Wetter nicht abrufen.');
+            }
+        }, (error) => {
+            console.error('Geolocation Fehler:', error);
+            let errorMessage = 'Standort unbekannt.';
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage = 'Standortzugriff verweigert.';
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage = 'Standortinformationen nicht verfügbar.';
+                    break;
+                case error.TIMEOUT:
+                    errorMessage = 'Standortabfrage Zeitüberschreitung.';
+                    break;
+            }
+            updateIsland('location_off', 'Standortfehler', errorMessage);
+        });
+    } else {
+        updateIsland('location_off', 'Fehler', 'Geolocation nicht unterstützt.');
     }
 };
 
-// Initialer Zustand beim Laden der Seite
+// --- Such-Event erweitern (mit Delay) ---
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const query = searchInput.value.trim();
+        if (query) {
+            updateIsland('arrow_forward', 'Weiterleitung...', `Suche nach "${query}"`, true);
+            dynamicIsland.classList.add('expanded'); // Insel erweitern, um Animation zu zeigen
+
+            // Kurzer Delay vor der Weiterleitung
+            setTimeout(() => {
+                const activeEngine = settings.lastActiveEngine;
+                const searchUrl = searchEnginesMap[activeEngine] + encodeURIComponent(query);
+                window.open(searchUrl, '_blank');
+                // Nach der Weiterleitung Insel wieder auf den normalen Zustand zurücksetzen
+                setTimeout(() => {
+                    dynamicIsland.classList.remove('expanded');
+                    // Ggf. wieder die zuletzt aktive Engine anzeigen oder Wetter
+                    // Hier entscheiden, ob man wieder auf die Engine Info oder Wetter zurückspringt
+                    if (!settings.dynamicIslandHidden) { // Nur wenn Island nicht manuell ausgeblendet wurde
+                         activateEngine(settings.lastActiveEngine); // Zeigt wieder aktive Engine an
+                    }
+                }, 1000); // Kurzer Delay, bevor Insel zurückgesetzt wird
+            }, 1500); // 1.5 Sekunden Verzögerung vor der eigentlichen Suche
+        }
+    }
+});
+
+
+// --- Initialer Zustand beim Laden der Seite ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Small delay to ensure everything is loaded
-    setTimeout(() => {
-        if (settings.dynamicIslandVisible) {
-           showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Willkommen!', 'Wähle eine Suchmaschine aus.');
-        } else {
-            hideDynamicIsland(); // Ensure it's hidden if setting says so
-        }
-    }, 100);
-
-    // Initial display of the "reopen" button based on settings
-    if (!settings.dynamicIslandVisible) {
-        reopenIslandBtn.style.display = 'block';
+    // Sicherstellen, dass der Reopen-Button korrekt initialisiert wird
+    if (settings.dynamicIslandHidden) {
+        dynamicIslandContainer.classList.add('hidden');
+        reopenIslandButton.classList.add('visible');
+    } else {
+        dynamicIslandContainer.classList.remove('hidden');
+        reopenIslandButton.classList.remove('visible');
+        // Kleine Verzögerung, um sicherzustellen, dass alles geladen ist, dann Wetter anzeigen
+        setTimeout(() => {
+            fetchWeatherAndDisplay(); // Wetter beim Start anzeigen
+        }, 500);
     }
 });
-
-// Example of how to use showDynamicIsland for other useful notifications:
-// Call this function whenever you have a new notification
-const showNotification = (icon, title, subtitle, duration = 5000) => {
-    showDynamicIsland(icon, title, subtitle);
-    dynamicIsland.classList.add('expanded'); // Auto-expand for notifications
-    setTimeout(() => {
-        hideDynamicIsland();
-    }, duration);
-};
-
-// Example usage:
-// showNotification('notifications', 'Neue Nachricht', 'Du hast eine ungelesene E-Mail!');
-// showNotification('cloud', 'Wetter Update', 'Sonnig in Heidenheim!', false); // No waveform for weather
