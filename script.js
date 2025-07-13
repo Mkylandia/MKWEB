@@ -6,8 +6,8 @@ let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google',
-    dynamicIslandVisible: true, // NEW: Setting to remember island visibility
-    weatherLocation: 'Heidenheim' // NEW: Default weather location
+    dynamicIslandVisible: true, // Setting to remember island visibility
+    weatherLocation: 'Heidenheim' // Default weather location
 };
 
 // Function to save settings
@@ -27,7 +27,6 @@ const dateElement = document.getElementById('date');
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
 const weatherLinkButton = document.querySelector('.weather-link-button'); // Added for weather click
-// NEW: Reopen Island Button
 const reopenIslandBtn = document.getElementById('reopen-island-btn');
 
 
@@ -67,7 +66,7 @@ let activateEngine = (engine) => {
     saveSettings();
 };
 
-// ADDED: Event listeners for search engine selection buttons
+// Event listeners for search engine selection buttons
 searchEngines.forEach(button => {
     button.addEventListener('click', () => {
         activateEngine(button.dataset.engine);
@@ -85,13 +84,13 @@ searchInput.addEventListener('keypress', (e) => {
                 case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
                 case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
                 case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                // FIX: Corrected YouTube URL
+                // FIX: Corrected YouTube URL to a proper search URL
                 case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break;
                 case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
                 default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
             
-            // NEW: Show Dynamic Island with search animation before opening URL
+            // Show Dynamic Island with search animation before opening URL
             showDynamicIsland('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
             dynamicIsland.classList.add('expanded');
 
@@ -114,7 +113,7 @@ const updateDateTime = () => {
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-    // Ensure elements exist before updating content
+    // Ensure elements exist before updating content to prevent errors
     if (timeElement) {
         timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
     }
@@ -200,7 +199,7 @@ const engineIcons = {
 
 // Function to show the dynamic island
 const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    // Ensure all elements exist before manipulating them
+    // Ensure all elements exist before manipulating them for robustness
     if (islandIcon && islandTitle && islandSubtitle && islandWaveform && dynamicIslandContainer && reopenIslandBtn) {
         islandIcon.textContent = icon;
         islandTitle.textContent = title;
@@ -215,7 +214,7 @@ const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
 
 // Function to hide the dynamic island
 const hideDynamicIsland = () => {
-    if (dynamicIslandContainer && dynamicIsland && reopenIslandBtn) {
+    if (dynamicIslandContainer && dynamicIsland && reopenIslandBtn) { // Ensure elements exist
         dynamicIslandContainer.classList.add('hidden');
         dynamicIsland.classList.remove('expanded'); // Ensure it's not expanded when hidden
         reopenIslandBtn.style.display = 'block'; // Show reopen button when island is hidden
@@ -314,7 +313,7 @@ const getWeatherIcon = (weatherCondition) => {
 };
 
 // Event listener for the weather link button
-if (weatherLinkButton) { // Ensure weatherLinkButton exists
+if (weatherLinkButton) { // Ensure weatherLinkButton exists before adding listener
     weatherLinkButton.addEventListener('click', async (e) => {
         e.preventDefault(); // Prevent default link behavior
         
@@ -351,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial display of the "reopen" button based on settings
     if (!settings.dynamicIslandVisible) {
-        if (reopenIslandBtn) { // Ensure button exists
+        if (reopenIslandBtn) { // Ensure button exists before trying to access its style
             reopenIslandBtn.style.display = 'block';
         }
     }
