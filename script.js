@@ -1,4 +1,4 @@
-// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations (Enhanced)
+// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations - LIGHTWEIGHT VERSION
 
 // --- Initial Setup & Settings Management ---
 const SETTINGS_KEY = 'mkweb-settings-os7';
@@ -6,7 +6,6 @@ let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google',
-    dynamicIslandVisible: true, // ALWAYS VISIBLE by default as per user request
     weatherLocation: 'Heidenheim' // NEW: Default weather location
 };
 
@@ -37,7 +36,6 @@ const islandTitle = document.getElementById('islandTitle');
 const islandSubtitle = document.getElementById('islandSubtitle');
 const islandDismissBtn = document.getElementById('islandDismissBtn');
 const islandWaveform = document.getElementById('islandWaveform');
-const reopenIslandBtn = document.getElementById('reopen-island-btn'); // Renamed from previous to manage visibility if added back
 
 // --- Dynamic Island State Management ---
 let islandTimeoutId = null; // To clear previous timeouts
@@ -88,6 +86,7 @@ const updateDynamicIsland = (icon, title, subtitle, showWave = false) => {
     islandSubtitle.textContent = subtitle;
     islandWaveform.style.display = showWave ? 'flex' : 'none';
     currentIslandState = { icon, title, subtitle, showWave }; // Store current state
+    dynamicIsland.classList.remove('expanded'); // Collapse by default when content changes
     clearTimeout(islandTimeoutId); // Clear any pending timeouts
 };
 
@@ -98,7 +97,6 @@ const resetIslandToDefault = () => {
         defaultIslandContent.title,
         defaultIslandContent.getSubtitle()
     );
-    dynamicIsland.classList.remove('expanded'); // Collapse from expanded state
     startIslandTimeDateCycle(); // Restart time/date cycle after transient event
 };
 
@@ -202,127 +200,141 @@ searchInput.addEventListener('keypress', (e) => {
         if (query) {
             let url = '';
             switch (activeEngine) {
-                case 'google':
-                    url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-                    break;
-                case 'yandex':
-                    url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`;
-                    break;
-                case 'bing':
-                    url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
-                    break;
-                case 'duckduckgo':
-                    url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
-                    break;
-                case 'youtube':
-                    url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; // Corrected YouTube URL
-                    break;
-                case 'github':
-                    url = `https://github.com/search?q=${encodeURIComponent(query)}`;
-                    break;
-                default:
-                    url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
+                case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
+                case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
+                case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
+                default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
-
+            
             // Show Dynamic Island with search animation before opening URL
             showTransientIslandContent('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true, 2000); // 2 second display
-
+            
             setTimeout(() => {
                 window.open(url, '_blank');
                 searchInput.value = ''; // Clear search input
                 resetIslandToDefault(); // Revert island to default after search
-            }, 2000); // Wait for island animation to finish before opening URL
+            }, 1800); // Slightly less delay than island display to ensure smooth transition
         }
     }
 });
 
-// Set initial active engine
-activateEngine(settings.lastActiveEngine);
+activateEngine(activeEngine); // Initialize active engine and island display
+
+
+// --- Time and Date Display (Main Section) ---
+const updateDateTime = () => {
+    const now = new Date();
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
+    dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
+};
+
+setInterval(updateDateTime, 1000);
+updateDateTime();
+
+
+// --- Quote of the Day (Local Data) ---
+const quotes = [
+    { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
+    { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
+    { text: "Sei du selbst die Veränderung, die du dir wünschst für diese Welt.", author: "Mahatma Gandhi" },
+    { text: "Was immer du tun kannst oder träumst es zu können, fang damit an.", author: "Johann Wolfgang von Goethe" },
+    { text: "Glück ist nicht das, was man besitzt, sondern das, was man gibt.", author: "Unbekannt" },
+    { text: "Die Zukunft gehört denen, die an die Schönheit ihrer Träume glauben.", author: "Eleanor Roosevelt" },
+    { text: "Handle so, dass die Maxime deines Willens jederzeit zugleich als Prinzip einer allgemeinen Gesetzgebung gelten könnte.", author: "Immanuel Kant" },
+    { text: "Es ist nicht genug zu wissen, man muss es auch anwenden; es ist nicht genug zu wollen, man muss es auch tun.", author: "Johann Wolfgang von Goethe" },
+    { text: "Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.", author: "Peter F. Drucker" },
+    { text: "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.", author: "Albert Einstein" }
+];
+
+const displayRandomQuote = () => {
+    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const randomQuote = quotes[randomIndex];
+        quoteTextElement.textContent = `"${randomQuote.text}"`;
+        quoteAuthorElement.textContent = `- ${randomQuote.author}`;
+    }
+};
+
+// Display a new quote every hour, and on page load
+setInterval(displayRandomQuote, 3600000); // Alle Stunde
+document.addEventListener('DOMContentLoaded', displayRandomQuote);
 
 
 // --- Fullscreen Toggle ---
 fullscreenBtn.addEventListener('click', () => {
     if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-        fullscreenBtn.textContent = ' shrinking_button Vollbild beenden';
+        document.documentElement.requestFullscreen().catch(err => {
+            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        });
     } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-            fullscreenBtn.textContent = '🚀 Vollbild';
-        }
+        document.exitFullscreen().catch(err => {
+            console.error(`Error attempting to disable full-screen mode: ${err.message} (${err.name})`);
+        });
+    }
+});
+
+document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+        fullscreenBtn.textContent = 'Shrink';
+        fullscreenBtn.setAttribute('title', 'Vollbild verlassen');
+    } else {
+        fullscreenBtn.textContent = '🚀 Vollbild';
+        fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
     }
 });
 
 
-// --- Quote of the Day Functionality ---
-const fetchQuote = async () => {
-    try {
-        const response = await fetch('https://api.quotable.io/random');
-        const data = await response.json();
-        quoteTextElement.textContent = data.content;
-        quoteAuthorElement.textContent = data.author;
-    } catch (error) {
-        console.error('Fehler beim Laden des Zitats:', error);
-        quoteTextElement.textContent = 'Glück ist keine Station, an der man ankommt, sondern eine Art zu reisen.';
-        quoteAuthorElement.textContent = 'Margaret Lee Runbeck';
+// --- Dynamic Island Click-Event & Dismiss ---
+dynamicIsland.addEventListener('click', (e) => {
+    // Prevent dismiss button from toggling expansion
+    if (e.target.closest('#islandDismissBtn')) return;
+    dynamicIsland.classList.toggle('expanded');
+});
+
+islandDismissBtn.addEventListener('click', () => {
+    dynamicIsland.classList.remove('expanded'); // Just collapse it, don't hide
+    // If it's showing transient content, clear timeout and revert
+    if (islandTimeoutId) {
+        clearTimeout(islandTimeoutId);
+        resetIslandToDefault();
     }
-};
-
-// Initial quote fetch and set interval
-fetchQuote();
-setInterval(fetchQuote, 30000); // Fetch a new quote every 30 seconds
+});
 
 
-// --- Weather Data Fetching ---
+// --- Weather Functionality ---
 const fetchWeather = async (location) => {
-    const API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual API key
-    if (API_KEY === 'YOUR_OPENWEATHERMAP_API_KEY') {
-        console.warn('OpenWeatherMap API Key ist nicht gesetzt. Wetterdaten werden nicht geladen.');
-        return null;
-    }
-    try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${API_KEY}&units=metric&lang=de`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        const weatherIconCode = data.weather[0].icon;
-        const materialSymbol = mapWeatherIconToMaterialSymbol(weatherIconCode);
+    // --- MOCK DATA FOR DEMONSTRATION ---
+    const mockWeather = {
+        'Heidenheim': { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim' },
+        'Berlin': { temp: 18, description: 'Regen', icon: 'rainy', location: 'Berlin' },
+        'London': { temp: 15, description: 'Nebel', icon: 'foggy', location: 'London' }
+    };
 
-        return {
-            icon: materialSymbol,
-            temp: Math.round(data.main.temp),
-            description: data.weather[0].description,
-            location: data.name
-        };
-    } catch (error) {
-        console.error('Fehler beim Abrufen der Wetterdaten:', error);
-        return null;
-    }
+    return new Promise(resolve => {
+        setTimeout(() => {
+            const data = mockWeather[location] || mockWeather['Heidenheim'];
+            resolve(data);
+        }, 800); // Simulate network delay
+    });
 };
 
-// Map OpenWeatherMap icons to Material Symbols
-const mapWeatherIconToMaterialSymbol = (iconCode) => {
-    switch (iconCode) {
-        case '01d': return 'light_mode'; // clear sky day
-        case '01n': return 'dark_mode'; // clear sky night
-        case '02d': return 'partly_cloudy_day'; // few clouds day
-        case '02n': return 'partly_cloudy_night'; // few clouds night
-        case '03d':
-        case '03n': return 'cloud'; // scattered clouds
-        case '04d':
-        case '04n': return 'cloudy'; // broken clouds
-        case '09d':
-        case '09n': return 'cloud_download'; // shower rain
-        case '10d': return 'rainy'; // rain day
-        case '10n': return 'thunderstorm'; // rain night (changed to thunderstorm for more impact)
-        case '11d':
-        case '11n': return 'thunderstorm'; // thunderstorm
-        case '13d':
-        case '13n': return 'ac_unit'; // snow
-        case '50d':
-        case '50n': return 'foggy'; // mist
-        default: return 'cloud'; // default icon
+const getWeatherIcon = (weatherCondition) => {
+    switch (weatherCondition.toLowerCase()) {
+        case 'clear': return 'sunny';
+        case 'clouds': return 'cloud';
+        case 'rain': return 'rainy';
+        case 'snow': return 'ac_unit';
+        case 'thunderstorm': return 'thunderstorm';
+        case 'drizzle': return 'grain';
+        case 'mist':
+        case 'fog': return 'foggy';
+        default: return 'cloudy_snowing'; // Default icon
     }
 };
 
@@ -331,32 +343,31 @@ weatherLinkButton.addEventListener('click', async (e) => {
     e.preventDefault(); // Prevent default link behavior
     
     // Show loading state in Dynamic Island
-    showTransientIslandContent('refresh', 'Wetter wird geladen...', 'Bitte warten...', true, 4000); // 4 sec loading display
+    showTransientIslandContent('refresh', 'Wetter wird geladen...', 'Bitte warten...', true, 2500); // Show for 2.5 seconds
 
     const weatherData = await fetchWeather(settings.weatherLocation); // Use saved location
     if (weatherData) {
-        // Update island with actual weather data after loading
-        updateDynamicIsland(
-            weatherData.icon,
+        showTransientIslandContent(
+            getWeatherIcon(weatherData.icon), // Use actual icon from mock data
             `${weatherData.temp}°C`,
-            `${weatherData.description} in ${weatherData.location}`
+            `${weatherData.description} in ${weatherData.location}`,
+            false, // No waveform for final weather display
+            4000 // Display weather for 4 seconds
         );
-        dynamicIsland.classList.add('expanded'); // Keep expanded for a bit longer
-        setTimeout(() => resetIslandToDefault(), 4000); // Revert after 4 seconds
     } else {
-        updateDynamicIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar.');
-        dynamicIsland.classList.add('expanded');
-        setTimeout(() => resetIslandToDefault(), 3000);
+        showTransientIslandContent('error', 'Fehler', 'Wetterdaten nicht verfügbar.', false, 3000);
     }
 });
 
 
-// --- App Card Interaction (Dynamic Island integration) ---
+// --- App Card Hover Effect for Dynamic Island ---
 appCards.forEach(card => {
     let hoverTimeout;
-
     card.addEventListener('mouseenter', () => {
-        clearTimeout(hoverTimeout); // Clear any existing timeout
+        // Clear any ongoing time/date cycle or previous transient display
+        clearInterval(islandCycleInterval);
+        clearTimeout(islandTimeoutId);
+
         hoverTimeout = setTimeout(() => {
             const appName = card.dataset.appName || 'App';
             const appIcon = card.dataset.appIcon || 'apps';
@@ -367,9 +378,13 @@ appCards.forEach(card => {
 
     card.addEventListener('mouseleave', () => {
         clearTimeout(hoverTimeout); // Clear the hover timeout if mouse leaves before it triggers
-        // If it was expanded by hover, collapse after a short delay and reset content
-        setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
-        resetIslandToDefault(); // Revert to default when mouse leaves
+        if (!dynamicIsland.classList.contains('expanded')) { // Only reset if not manually expanded
+             resetIslandToDefault(); // Revert to default when mouse leaves
+        } else {
+            // If it was expanded, collapse after a short delay, but keep default content
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+            resetIslandToDefault(); // Ensure default content is set even if expanded
+        }
     });
 
     // Handle click on app card to ensure island resets after opening app
@@ -379,27 +394,15 @@ appCards.forEach(card => {
 });
 
 
-// Initialer Zustand beim Laden der Seite
+// --- Initial State on Page Load ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Small delay to ensure everything is loaded, then ensure island is visible and starts cycling
-    setTimeout(() => {
-        dynamicIsland.classList.remove('expanded'); // Start compact
-        // Set initial content to default search engine info
-        updateDynamicIsland(
-            engineIcons[settings.lastActiveEngine] || defaultIslandContent.icon,
-            defaultIslandContent.title,
-            defaultIslandContent.getSubtitle()
-        );
-        startIslandTimeDateCycle(); // Start the time/date cycle
-    }, 100);
+    // Start the time/date cycle by default
+    startIslandTimeDateCycle();
 
-    // No need for 'reopenIslandBtn' logic as island is always visible
-    if (reopenIslandBtn) { // Safety check
-        reopenIslandBtn.style.display = 'none';
-    }
-
-    // Handle dismiss button click for Dynamic Island
-    islandDismissBtn.addEventListener('click', () => {
-        resetIslandToDefault(); // Reset to default state
-    });
+    // Set initial content to default search engine info
+    updateDynamicIsland(
+        engineIcons[settings.lastActiveEngine] || defaultIslandContent.icon,
+        defaultIslandContent.title,
+        defaultIslandContent.getSubtitle()
+    );
 });
