@@ -74,7 +74,13 @@
             </a>
             <p class="weather-notice">Klicke, um das aktuelle Wetter in der Dynamic Island anzuzeigen.</p>
         </section>
-        </div>
+
+        <section class="quote-section glass">
+            <h2>Zitat des Tages</h2>
+            <p id="quote-text"></p>
+            <p id="quote-author"></p>
+        </section>
+      </div>
 
       <div class="grid-right">
         <section class="search-section glass">
@@ -88,31 +94,25 @@
             <button class="search-engine glass" data-engine="github" aria-pressed="false">GitHub</button>
           </div>
           <div class="search-box glass">
-            <span class="material-symbols-outlined icon" aria-hidden="true">search</span>
-            <label for="search" class="sr-only">Suchanfrage eingeben</label>
-            <input type="text" id="search" placeholder="Was suchst du heute?" autocomplete="off">
+            <span class="material-symbols-outlined search-icon">search</span>
+            <input type="text" id="search" placeholder="Was suchst du?">
           </div>
         </section>
 
-        <section class="quote-section glass">
-          <h2 class="sr-only">Tägliches Zitat</h2>
-          <p id="quote-text"></p>
-          <small id="quote-author"></small>
-        </section>
-        <section class="apps-section glass">
-          <h2 id="apps-heading">✨ Apps & Bookmarks</h2>
-          <div class="apps-container">
+        <section class="app-section glass">
+          <h2>Schnellzugriffe</h2>
+          <div class="app-grid">
             <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT" data-app-name="ChatGPT" data-app-icon="chat">
               <span class="material-symbols-outlined icon">chat</span><div class="label">ChatGPT</div>
             </a>
-            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Gemini" data-app-name="Gemini" data-app-icon="bubble_chart">
+            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gemini" data-app-name="Gemini" data-app-icon="bubble_chart">
               <span class="material-symbols-outlined icon">bubble_chart</span><div class="label">Gemini</div>
             </a>
             <a class="app-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer" title="Zu Notion" data-app-name="Notion" data-app-icon="article">
               <span class="material-symbols-outlined icon">article</span><div class="label">Notion</div>
             </a>
-            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Calendar" data-app-name="Calendar" data-app-icon="calendar_month">
-              <span class="material-symbols-outlined icon">calendar_month</span><div class="label">Calendar</div>
+            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Kalender" data-app-name="Calendar" data-app-icon="calendar_month">
+              <span class="material-symbols-outlined icon">calendar_month</span><div class="label">Kalender</div>
             </a>
             <a class="app-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail" data-app-name="Gmail" data-app-icon="mail">
               <span class="material-symbols-outlined icon">mail</span><div class="label">Gmail</div>
@@ -120,7 +120,7 @@
             <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web" data-app-name="WhatsApp" data-app-icon="chat_bubble">
               <span class="material-symbols-outlined icon">chat_bubble</span><div class="label">WhatsApp</div>
             </a>
-            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify" data-app-name="Spotify" data-app-icon="headphones">
+            <a class="app-card glass" href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify" data-app-name="Spotify" data-app-icon="headphones">
               <span class="material-symbols-outlined icon">headphones</span><div class="label">Spotify</div>
             </a>
             <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub" data-app-name="GitHub" data-app-icon="data_object">
