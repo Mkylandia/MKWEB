@@ -856,6 +856,7 @@ button:hover {
     white-space: nowrap; /* Prevent title from wrapping */
     text-overflow: ellipsis; /* Ellipsis for overflowing title */
     overflow: hidden; /* Hide overflow */
+    transition: opacity var(--t-normal) ease-in-out; /* Added for smoother transitions */
 }
 
 #islandSubtitle {
@@ -864,6 +865,7 @@ button:hover {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    transition: opacity var(--t-normal) ease-in-out; /* Added for smoother transitions */
 }
 
 .island-status {
