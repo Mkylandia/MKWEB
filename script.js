@@ -6,7 +6,7 @@ let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google',
-    // dynamicIslandVisible: true, // REMOVED: Dynamic Island is always visible now
+    dynamicIslandVisible: true, // NEW: Setting to remember island visibility
     weatherLocation: 'Heidenheim' // NEW: Default weather location
 };
 
@@ -27,8 +27,8 @@ const dateElement = document.getElementById('date');
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
 const weatherLinkButton = document.querySelector('.weather-link-button'); // Added for weather click
-// REMOVED: Reopen Island Button - no longer needed as it's always visible
-// const reopenIslandBtn = document.getElementById('reopen-island-btn');
+// NEW: Reopen Island Button
+const reopenIslandBtn = document.getElementById('reopen-island-btn');
 
 
 // --- User Avatar & Toggle Logic ---
@@ -65,14 +65,6 @@ let activateEngine = (engine) => {
     activeEngine = engine;
     settings.lastActiveEngine = engine;
     saveSettings();
-
-    // Always update the Dynamic Island when search engine changes
-    const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
-    showDynamicIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
-    // Collapse island if it's currently expanded after a new selection
-    if (dynamicIsland.classList.contains('expanded')) {
-        setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
-    }
 };
 
 // ADDED: Event listeners for search engine selection buttons
@@ -93,25 +85,27 @@ searchInput.addEventListener('keypress', (e) => {
                 case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
                 case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
                 case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
+                // FIX: Corrected YouTube URL
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break;
                 case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
                 default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
             
-            // Show Dynamic Island with search animation before opening URL
-            showDynamicIsland('search', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
+            // NEW: Show Dynamic Island with search animation before opening URL
+            showDynamicIsland('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
             dynamicIsland.classList.add('expanded');
 
             setTimeout(() => {
                 window.open(url, '_blank');
-                // Revert island to show active engine or a default message after search completes
-                activateEngine(settings.lastActiveEngine); // Revert to original island content visually
+                // Revert island to original state or hide after search
+                hideDynamicIsland(); // Hide after opening the new tab
+                activateEngine(settings.lastActiveEngine); // Revert to original island content visually if it reappears
             }, 1200); // 1.2 second delay to see animation
         }
     }
 });
 
-activateEngine(activeEngine); // Initialize with the last active engine
+activateEngine(activeEngine);
 
 
 // --- Time and Date Display ---
@@ -120,8 +114,13 @@ const updateDateTime = () => {
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-    timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
-    dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
+    // Ensure elements exist before updating content
+    if (timeElement) {
+        timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
+    }
+    if (dateElement) {
+        dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
+    }
 };
 
 setInterval(updateDateTime, 1000);
@@ -143,7 +142,8 @@ const quotes = [
 ];
 
 const displayRandomQuote = () => {
-    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
+    // Check if elements exist to prevent errors if they are not found
+    if (quoteTextElement && quoteAuthorElement) {
         const randomIndex = Math.floor(Math.random() * quotes.length);
         const randomQuote = quotes[randomIndex];
         quoteTextElement.textContent = `"${randomQuote.text}"`;
@@ -190,53 +190,78 @@ const islandDismissBtn = document.getElementById('islandDismissBtn');
 const islandWaveform = document.getElementById('islandWaveform');
 
 const engineIcons = {
-    google: 'travel_explore', // Changed to differentiate from general search icon
+    google: 'search',
     yandex: 'travel_explore',
-    bing: 'travel_explore',
-    duckduckgo: 'travel_explore',
+    bing: 'search',
+    duckduckgo: 'search_hands_free',
     youtube: 'play_circle',
     github: 'code'
 };
 
-// Function to show/update the dynamic island content
+// Function to show the dynamic island
 const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    islandIcon.textContent = icon;
-    islandTitle.textContent = title;
-    islandSubtitle.textContent = subtitle;
-    // Waveform display is now controlled by the 'showWave' parameter
-    islandWaveform.style.display = showWave ? 'flex' : 'none';
-    // dynamicIslandContainer.classList.remove('hidden'); // No longer hiding/showing the container
+    // Ensure all elements exist before manipulating them
+    if (islandIcon && islandTitle && islandSubtitle && islandWaveform && dynamicIslandContainer && reopenIslandBtn) {
+        islandIcon.textContent = icon;
+        islandTitle.textContent = title;
+        islandSubtitle.textContent = subtitle;
+        islandWaveform.style.display = showWave ? 'flex' : 'none';
+        dynamicIslandContainer.classList.remove('hidden');
+        reopenIslandBtn.style.display = 'none'; // Hide reopen button when island is visible
+        settings.dynamicIslandVisible = true;
+        saveSettings();
+    }
 };
 
-// Function to collapse the dynamic island (replaces hideDynamicIsland)
-const collapseDynamicIsland = () => {
-    dynamicIsland.classList.remove('expanded');
-    // Revert to showing the currently active search engine information
-    const engineName = settings.lastActiveEngine.charAt(0).toUpperCase() + settings.lastActiveEngine.slice(1);
-    showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
+// Function to hide the dynamic island
+const hideDynamicIsland = () => {
+    if (dynamicIslandContainer && dynamicIsland && reopenIslandBtn) {
+        dynamicIslandContainer.classList.add('hidden');
+        dynamicIsland.classList.remove('expanded'); // Ensure it's not expanded when hidden
+        reopenIslandBtn.style.display = 'block'; // Show reopen button when island is hidden
+        settings.dynamicIslandVisible = false;
+        saveSettings();
+    }
 };
 
 
 // Click-Event zum Erweitern/Verkleinern
 dynamicIsland.addEventListener('click', (e) => {
-    // Prevent click on dismiss button from expanding/collapsing the island
-    if (e.target.closest('#islandDismissBtn')) {
-        return;
-    }
+    // Prevent click on dismiss button from closing the island
+    if (e.target.closest('#islandDismissBtn')) return;
     dynamicIsland.classList.toggle('expanded');
 });
 
-// Insel verkleinern (Dismiss button)
-islandDismissBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent click from bubbling to dynamicIsland and re-expanding
-    collapseDynamicIsland();
+// Hide island (Dismiss button)
+islandDismissBtn.addEventListener('click', () => {
+    hideDynamicIsland();
 });
 
+// Reopen Island button click event
+reopenIslandBtn.addEventListener('click', () => {
+    showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Suchmaschine', `Aktiv: ${settings.lastActiveEngine.charAt(0).toUpperCase() + settings.lastActiveEngine.slice(1)}`);
+});
+
+
+// Extend search engine logic
+const originalActivateEngine = activateEngine; // Save old function
+activateEngine = (engine) => {
+    originalActivateEngine(engine); // Call old function
+    const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
+    // Only update island if it's visible, otherwise just update settings
+    if (settings.dynamicIslandVisible) {
+        showDynamicIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
+        if (dynamicIsland.classList.contains('expanded')) {
+            // Keep expanded briefly, then collapse
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+        }
+    }
+};
 
 // --- Weather Functionality ---
 // Placeholder for weather data fetch
 const fetchWeather = async (location) => {
-    // In a real application, you would make an API call here.
+    // In a real application, you would make an real API call here.
     // Example using OpenWeatherMap (you'd need an API key):
     // const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
     // const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${apiKey}&units=metric&lang=de`;
@@ -268,7 +293,7 @@ const fetchWeather = async (location) => {
         setTimeout(() => {
             const data = mockWeather[location] || mockWeather['Heidenheim'];
             resolve(data);
-        }, 1500); // Simulate network delay for weather
+        }, 500); // Simulate network delay
     });
 };
 
@@ -289,38 +314,45 @@ const getWeatherIcon = (weatherCondition) => {
 };
 
 // Event listener for the weather link button
-weatherLinkButton.addEventListener('click', async (e) => {
-    e.preventDefault(); // Prevent default link behavior
-    
-    // Show loading state in Dynamic Island
-    showDynamicIsland('refresh', 'Wetter wird geladen...', 'Bitte warten...', true);
-    dynamicIsland.classList.add('expanded');
+if (weatherLinkButton) { // Ensure weatherLinkButton exists
+    weatherLinkButton.addEventListener('click', async (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        
+        // Show loading state in Dynamic Island
+        showDynamicIsland('refresh', 'Wetter wird geladen...', 'Bitte warten...', true);
+        dynamicIsland.classList.add('expanded');
 
-    const weatherData = await fetchWeather(settings.weatherLocation); // Use saved location
-    if (weatherData) {
-        showDynamicIsland(
-            getWeatherIcon(weatherData.icon), // Use actual weather icon logic here
-            `${weatherData.temp}°C`,
-            `${weatherData.description} in ${weatherData.location}`
-        );
-        setTimeout(() => collapseDynamicIsland(), 8000); // Keep expanded for 8 seconds for weather info
-    } else {
-        showDynamicIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar.');
-        setTimeout(() => collapseDynamicIsland(), 3000); // Collapse after 3 seconds on error
-    }
-});
+        const weatherData = await fetchWeather(settings.weatherLocation); // Use saved location
+        if (weatherData) {
+            showDynamicIsland(
+                weatherData.icon,
+                `${weatherData.temp}°C`,
+                `${weatherData.description} in ${weatherData.location}`
+            );
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 4000); // Keep expanded for 4 seconds
+        } else {
+            showDynamicIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar.');
+            setTimeout(() => hideDynamicIsland(), 3000);
+        }
+    });
+}
 
 
-// Initialer Zustand beim Laden der Seite
+// Initial state on page load
 document.addEventListener('DOMContentLoaded', () => {
     // Small delay to ensure everything is loaded
     setTimeout(() => {
-        // Dynamic Island now always starts visible with a welcome message
-        showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Willkommen!', 'Wähle eine Suchmaschine aus.');
+        if (settings.dynamicIslandVisible) {
+           showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Willkommen!', 'Wähle eine Suchmaschine aus.');
+        } else {
+            hideDynamicIsland(); // Ensure it's hidden if setting says so
+        }
     }, 100);
 
-    // REMOVED: No "reopen" button needed as island is always visible
-    // if (!settings.dynamicIslandVisible) {
-    //     reopenIslandBtn.style.display = 'block';
-    // }
+    // Initial display of the "reopen" button based on settings
+    if (!settings.dynamicIslandVisible) {
+        if (reopenIslandBtn) { // Ensure button exists
+            reopenIslandBtn.style.display = 'block';
+        }
+    }
 });
