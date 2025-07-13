@@ -675,212 +675,6 @@ button:hover {
   }
 }
 
-/* ===== Dynamic Island - Nützliche Erweiterung ===== */
-.dynamic-island-container {
-    position: fixed;
-    top: var(--fluid-padding-m);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000; /* Erhöht, um über allem zu liegen */
-    perspective: 1000px;
-    /* Always visible - removed 'hidden' class logic */
-    opacity: 1; /* Ensure it's always opaque */
-    pointer-events: auto; /* Ensure it's always interactive */
-    transition: transform 0.4s var(--t-timing-smooth), opacity 0.4s var(--t-timing-smooth);
-    animation: pulse-effect 4s infinite ease-in-out; /* Permanent subtle pulse */
-}
-
-/* No longer need .hidden for functionality, but keeping for potential future opacity changes */
-.dynamic-island-container.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.dynamic-island {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--fluid-gap-s);
-    padding: var(--fluid-padding-s);
-    background-color: var(--bg);
-    border-radius: 50px;
-    box-shadow: var(--s);
-    border: 1px solid var(--gb);
-    color: var(--fg);
-    cursor: pointer;
-    transition: all 0.5s var(--t-timing-elastic);
-    width: 220px; /* Startbreite */
-    position: relative; /* For the new pseudo-element border glow */
-    overflow: hidden; /* Important for border-radius on the pseudo-element */
-}
-
-/* Permanent gradient border effect */
-.dynamic-island::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 52px; /* Slightly larger than island border-radius */
-    background: conic-gradient(from var(--angle), var(--acc) 0%, var(--ah) 25%, transparent 50%, var(--acc) 75%, var(--ah) 100%);
-    background-size: 200% 200%;
-    z-index: -1;
-    opacity: 0.7;
-    filter: blur(8px); /* Soften the glow */
-    animation: border-glow-permanent 8s linear infinite; /* Animation for the glow */
-    transition: opacity 0.3s ease;
-}
-
-.dynamic-island:hover::before {
-    opacity: 1; /* More pronounced glow on hover */
-    filter: blur(6px);
-}
-
-.dynamic-island.expanded {
-    width: 380px;
-    background: rgba(var(--fg-rgb), 0.08); /* Slightly different background when expanded */
-    box-shadow: var(--sh);
-}
-.dynamic-island.expanded::before {
-    filter: blur(10px); /* More blur when expanded */
-    opacity: 0.8;
-}
-
-
-.island-content {
-    display: flex;
-    align-items: center;
-    gap: var(--fluid-gap-s);
-    overflow: hidden;
-    white-space: nowrap;
-    flex-grow: 1; /* Allow content to take available space */
-}
-
-#islandIcon {
-    font-size: 1.5rem;
-    color: var(--acc);
-    transition: transform 0.4s var(--t-timing-elastic), color 0.3s ease;
-}
-.dynamic-island.expanded #islandIcon {
-    transform: scale(1.1);
-    color: var(--ah);
-}
-
-.island-details {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    flex-shrink: 1; /* Allow text to shrink if necessary */
-    min-width: 0; /* Important for text-overflow ellipsis */
-}
-
-#islandTitle {
-    font-weight: 700;
-    font-size: var(--fluid-min-font);
-    color: var(--fg); /* Ensure good contrast */
-    transition: color 0.3s ease;
-}
-.dynamic-island.expanded #islandTitle {
-    color: var(--fg); /* Keep color consistent or change as desired */
-}
-
-#islandSubtitle {
-    font-size: calc(var(--fluid-min-font) * 0.85);
-    color: var(--dim);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    transition: color 0.3s ease;
-}
-.dynamic-island.expanded #islandSubtitle {
-    color: rgba(var(--fg-rgb), 0.8); /* Slightly brighter when expanded */
-}
-
-.island-status {
-    display: flex;
-    align-items: center;
-    gap: var(--fluid-gap-s);
-    flex-shrink: 0; /* Prevent status from shrinking */
-}
-
-.island-waveform {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    height: 20px; /* Define a height for consistent wave animation */
-}
-
-.island-waveform span {
-    width: 4px;
-    height: 100%; /* Fill parent height */
-    background: linear-gradient(130deg, var(--acc), var(--ah));
-    border-radius: 2px;
-    animation: wave 1.5s ease-in-out infinite alternate;
-    transform-origin: bottom; /* Make bars grow from bottom */
-}
-
-.island-waveform span:nth-child(2) { animation-delay: -0.3s; }
-.island-waveform span:nth-child(3) { animation-delay: -0.6s; }
-.island-waveform span:nth-child(4) { animation-delay: -0.9s; }
-
-.island-dismiss {
-    display: none; /* Will be flex only in expanded mode */
-    background: rgba(var(--fg-rgb), 0.1);
-    border: none;
-    border-radius: 50%;
-    width: 28px; /* Slightly larger dismiss button */
-    height: 28px;
-    min-width: 28px; /* Ensure it doesn't shrink */
-    min-height: 28px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    padding: 0; /* Override button padding */
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-.island-dismiss .material-symbols-outlined {
-    font-size: 18px; /* Slightly larger icon */
-    color: var(--dim);
-    transition: color 0.3s ease;
-}
-.island-dismiss:hover {
-    background: rgba(var(--fg-rgb), 0.2);
-    transform: scale(1.1); /* Slight pop on hover */
-    box-shadow: 0 0 8px rgba(var(--acc-rgb), 0.2);
-}
-.island-dismiss:hover .material-symbols-outlined {
-    color: var(--fg);
-}
-
-.dynamic-island.expanded .island-dismiss {
-    display: flex;
-}
-
-.dynamic-island:not(.expanded) .island-waveform {
-    display: none; /* Hide waveform when not expanded */
-}
-
-@keyframes wave {
-    0%, 100% { transform: scaleY(0.2); }
-    50% { transform: scaleY(1); }
-}
-
-@keyframes pulse-effect {
-    0%, 100% { transform: translateX(-50%) scale(1); }
-    50% { transform: translateX(-50%) scale(1.015); } /* Subtle scale pulse */
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes border-glow-permanent {
-  to { --angle: 360deg; }
-}
-
-
 /* ===== Media Queries ===== */
 @media (max-width: 992px) {
   html {
@@ -946,33 +740,6 @@ button:hover {
   .search-box:focus-within {
     transform: translateY(-2px);
   }
-
-  /* Dynamic Island adjustments for smaller screens */
-  .dynamic-island {
-      width: 180px; /* Smaller default width on mobile */
-  }
-  .dynamic-island.expanded {
-      width: 90vw; /* Take more width when expanded on mobile */
-      max-width: 320px; /* Cap max width */
-  }
-  .island-dismiss {
-      width: 24px;
-      height: 24px;
-      min-width: 24px;
-      min-height: 24px;
-  }
-  .island-dismiss .material-symbols-outlined {
-      font-size: 16px;
-  }
-  #islandIcon {
-      font-size: 1.2rem;
-  }
-  #islandTitle {
-      font-size: clamp(0.5rem, 1.5vw, 0.8rem);
-  }
-  #islandSubtitle {
-      font-size: clamp(0.4rem, 1.2vw, 0.7rem);
-  }
 }
 
 /* ===== Hilfsklassen ===== */
@@ -986,4 +753,164 @@ button:hover {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* ===== Dynamic Island - Nützliche Erweiterung ===== */
+.dynamic-island-container {
+    position: fixed;
+    top: var(--fluid-padding-m);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; /* Erhöht, um über allem zu liegen */
+    perspective: 1000px;
+    transition: transform 0.4s var(--t-timing-smooth), opacity 0.4s var(--t-timing-smooth);
+    opacity: 1; /* Always visible */
+}
+
+/* No longer needed:
+.dynamic-island-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+*/
+
+.dynamic-island {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fluid-gap-s);
+    padding: var(--fluid-padding-s);
+    background-color: var(--bg);
+    border-radius: 50px;
+    box-shadow: var(--s);
+    border: 1px solid var(--gb);
+    color: var(--fg);
+    cursor: pointer;
+    transition: all 0.5s var(--t-timing-elastic), width 0.5s var(--t-timing-smooth);
+    width: 220px; /* Startbreite */
+}
+
+.dynamic-island:hover {
+    box-shadow: var(--sh);
+    border-color: var(--acc);
+    animation: borderPulseGlow 2s infinite ease-in-out;
+}
+
+.dynamic-island.expanded {
+    width: 380px;
+    box-shadow: var(--sh);
+    border-color: var(--acc);
+}
+
+.island-content {
+    display: flex;
+    align-items: center;
+    gap: var(--fluid-gap-s);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#islandIcon {
+    font-size: 1.5rem;
+    color: var(--acc);
+    transition: transform 0.4s var(--t-timing-elastic);
+}
+
+.dynamic-island.expanded #islandIcon {
+    transform: scale(1.1);
+}
+
+
+.island-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#islandTitle {
+    font-weight: 700;
+    font-size: var(--fluid-min-font);
+}
+
+#islandSubtitle {
+    font-size: calc(var(--fluid-min-font) * 0.85);
+    color: var(--dim);
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.island-status {
+    display: flex;
+    align-items: center;
+    gap: var(--fluid-gap-s);
+}
+
+.island-waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 20px; /* Ensure consistent height for waveform */
+}
+
+.island-waveform span {
+    width: 4px;
+    height: 100%; /* Fill parent height */
+    background: linear-gradient(130deg, var(--acc), var(--ah));
+    border-radius: 2px;
+    transform-origin: bottom; /* For a more natural wave */
+    animation: wave 1.5s ease-in-out infinite alternate;
+}
+
+.island-waveform span:nth-child(2) { animation-delay: -0.3s; }
+.island-waveform span:nth-child(3) { animation-delay: -0.6s; }
+.island-waveform span:nth-child(4) { animation-delay: -0.9s; }
+
+.island-dismiss {
+    background: rgba(var(--fg-rgb), 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex; /* Always flex */
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Override button padding */
+    transition: background 0.3s ease, transform 0.3s var(--t-timing-smooth);
+    opacity: 0; /* Hidden by default */
+    pointer-events: none; /* Not interactive when hidden */
+}
+.island-dismiss .material-symbols-outlined {
+    font-size: 16px;
+    color: var(--dim);
+}
+.island-dismiss:hover {
+    background: rgba(var(--fg-rgb), 0.2);
+    transform: scale(1.1);
+    box-shadow: none; /* Override button hover */
+}
+
+.dynamic-island.expanded .island-dismiss {
+    opacity: 1; /* Visible when expanded */
+    pointer-events: auto; /* Interactive when expanded */
+}
+
+.dynamic-island.expanded .island-waveform {
+    display: flex; /* Always display waveform when expanded */
+}
+
+/* New animation for dynamic island border */
+@keyframes borderPulseGlow {
+  0% {
+    border-color: var(--gb);
+    box-shadow: var(--s);
+  }
+  50% {
+    border-color: var(--acc);
+    box-shadow: 0 0 18px rgba(var(--acc-rgb), 0.3);
+  }
+  100% {
+    border-color: var(--gb);
+    box-shadow: var(--s);
+  }
 }
