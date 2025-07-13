@@ -82,14 +82,23 @@ const appIcons = { // Mapping for app icons (based on material symbols)
 };
 
 
-// Function to update the Dynamic Island content
+// Function to update the Dynamic Island content with fade transition
 const updateDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    islandIcon.textContent = icon;
-    islandTitle.textContent = title;
-    islandSubtitle.textContent = subtitle;
-    islandWaveform.style.display = showWave ? 'flex' : 'none';
-    currentIslandState = { icon, title, subtitle, showWave }; // Store current state
-    clearTimeout(islandTimeoutId); // Clear any pending transient content timeouts
+    // Add a class to trigger fade out for existing content
+    dynamicIsland.classList.add('fading-content');
+
+    // After a short delay (matching CSS transition for fade out), change content
+    setTimeout(() => {
+        islandIcon.textContent = icon;
+        islandTitle.textContent = title;
+        islandSubtitle.textContent = subtitle;
+        islandWaveform.style.display = showWave ? 'flex' : 'none';
+        currentIslandState = { icon, title, subtitle, showWave }; // Store current state
+
+        // Remove the fade-out class to allow new content to fade in
+        dynamicIsland.classList.remove('fading-content');
+        clearTimeout(islandTimeoutId); // Clear any pending transient content timeouts
+    }, 150); // Half of 300ms transition for smoother mid-fade content swap
 };
 
 // NEW: Function to schedule the time/date cycle after an idle period
