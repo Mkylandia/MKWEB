@@ -1,342 +1,226 @@
-// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations - LIGHTWEIGHT VERSION
+// script.js - MKWEB OS 7: Ultra-Optimized Functionality & Enhanced Dynamic Animations
+// VERSION MIT PERMANENTER, FUNKTIONSREICHER DYNAMIC ISLAND
 
-// --- Initial Setup & Settings Management ---
+// --- Initial Setup & Settings ---
 const SETTINGS_KEY = 'mkweb-settings-os7';
 let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
-    theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google',
-    dynamicIslandVisible: true, // NEW: Setting to remember island visibility
-    weatherLocation: 'Heidenheim' // NEW: Default weather location
+    weatherLocation: 'Heidenheim'
 };
+const saveSettings = () => localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
 
-// Function to save settings
-const saveSettings = () => {
-    localStorage?.setItem(SETTINGS_KEY, JSON.stringify(settings));
-};
-
-
-// --- DOM Element Caching (Performance) ---
-const fullscreenBtn = document.getElementById('fullscreen-btn');
-const userAvatar = document.getElementById('user-avatar');
-const userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
+// --- DOM Element Caching ---
 const searchInput = document.getElementById('search');
 const searchEngines = document.querySelectorAll('.search-engine');
 const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
-const weatherLinkButton = document.querySelector('.weather-link-button'); // Added for weather click
-// NEW: Reopen Island Button
-const reopenIslandBtn = document.getElementById('reopen-island-btn');
+const weatherLinkButton = document.querySelector('.weather-link-button');
+
+// --- Dynamic Island DOM Elements ---
+const dynamicIsland = document.getElementById('dynamicIsland');
+const islandViews = document.querySelectorAll('.island-view');
+// Default/Compact View
+const islandDefaultView = document.getElementById('islandDefaultView');
+const compactIcon = document.getElementById('compactIcon');
+const compactTitle = document.getElementById('compactTitle');
+const compactSubtitle = document.getElementById('compactSubtitle');
+const islandWaveform = document.querySelector('.island-waveform');
+// Media View
+const islandMediaView = document.getElementById('islandMediaView');
+const mediaAlbumArt = document.getElementById('mediaAlbumArt');
+const mediaTitle = document.getElementById('mediaTitle');
+const mediaArtist = document.getElementById('mediaArtist');
+const mediaPlayPauseBtn = document.getElementById('mediaPlayPauseBtn');
+// Weather View
+const islandWeatherView = document.getElementById('islandWeatherView');
+const weatherIconLarge = document.getElementById('weatherIconLarge');
+const weatherTemp = document.getElementById('weatherTemp');
+const weatherLocation = document.getElementById('weatherLocation');
+const weatherForecast = document.getElementById('weatherForecast');
 
 
-// --- User Avatar & Toggle Logic ---
-const applyAvatarVisibility = () => {
-    if (settings.showAvatar) {
-        userAvatar.classList.remove('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'false');
-        userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
-    } else {
-        userAvatar.classList.add('hidden-avatar');
-        userAvatar.setAttribute('aria-hidden', 'true');
-        userAvatarToggleBtn.textContent = '🐵 Avatar einblenden';
+// --- CORE DYNAMIC ISLAND LOGIC ---
+let currentIslandView = 'default';
+let isIslandExpanded = false;
+
+// Zentrale Funktion zum Wechseln der Insel-Ansicht
+const setIslandView = (viewName, data = {}) => {
+    currentIslandView = viewName;
+    // Alle Views ausblenden
+    islandViews.forEach(v => v.classList.remove('active-view'));
+
+    // Ziel-View aktivieren und mit Daten füllen
+    switch (viewName) {
+        case 'media':
+            islandMediaView.classList.add('active-view');
+            compactIcon.textContent = 'music_note';
+            compactTitle.textContent = data.title || "Wiedergabe";
+            compactSubtitle.textContent = data.artist || "Mediensteuerung";
+            mediaTitle.textContent = data.title || "Unbekannter Titel";
+            mediaArtist.textContent = data.artist || "Unbekannter Künstler";
+            mediaAlbumArt.src = data.art || 'https://picsum.photos/id/40/100/100';
+            break;
+
+        case 'weather':
+            islandWeatherView.classList.add('active-view');
+            compactIcon.textContent = data.icon || 'thermostat';
+            compactTitle.textContent = `${data.temp}° in ${data.location}`;
+            compactSubtitle.textContent = data.description;
+            // Detaillierte Ansicht füllen
+            weatherIconLarge.textContent = data.icon || 'thermostat';
+            weatherTemp.textContent = `${data.temp}°`;
+            weatherLocation.textContent = `${data.location} - ${data.description}`;
+            weatherForecast.innerHTML = (data.forecast || []).map(day => `
+                <div class="forecast-day">
+                    <span>${day.day}</span>
+                    <i class="material-symbols-outlined">${day.icon}</i>
+                    <span>${day.temp}°</span>
+                </div>
+            `).join('');
+            break;
+
+        case 'search': // Fallback zu Default
+        default:
+            islandDefaultView.classList.add('active-view');
+            compactIcon.textContent = data.icon || 'search';
+            compactTitle.textContent = data.title || "Suchmaschine";
+            compactSubtitle.textContent = data.subtitle || "Bereit für deine Eingabe";
+            break;
     }
 };
 
-userAvatarToggleBtn.addEventListener('click', () => {
-    settings.showAvatar = !settings.showAvatar;
-    saveSettings();
-    applyAvatarVisibility();
+// Event Listener zum Erweitern/Zuklappen
+dynamicIsland.addEventListener('click', (e) => {
+    // Klicks auf interaktive Elemente ignorieren
+    if (e.target.closest('button, a')) return;
+    
+    isIslandExpanded = !isIslandExpanded;
+    dynamicIsland.classList.toggle('expanded', isIslandExpanded);
+    if (!isIslandExpanded) {
+        // Beim Zuklappen sicherstellen, dass die Default-Ansicht aktiv ist
+        // (außer bei Media, die bleibt kompakt sichtbar)
+        if(currentIslandView !== 'media') {
+             setIslandView('default', {
+                icon: engineIcons[settings.lastActiveEngine] || 'search',
+                title: "Suchmaschine",
+                subtitle: `Aktiv: ${settings.lastActiveEngine.charAt(0).toUpperCase() + settings.lastActiveEngine.slice(1)}`
+            });
+        }
+    }
 });
-
-applyAvatarVisibility();
 
 
 // --- Search Functionality ---
 let activeEngine = settings.lastActiveEngine;
+const engineIcons = {
+    google: 'search', yandex: 'travel_explore', bing: 'search',
+    duckduckgo: 'search_hands_free', youtube: 'play_circle', github: 'code'
+};
 
-let activateEngine = (engine) => {
-    searchEngines.forEach(btn => {
-        const isActive = btn.dataset.engine === engine;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', isActive);
-    });
+const activateEngine = (engine) => {
+    searchEngines.forEach(btn => btn.classList.toggle('active', btn.dataset.engine === engine));
     activeEngine = engine;
     settings.lastActiveEngine = engine;
     saveSettings();
+    // Insel-Anzeige aktualisieren
+    const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
+    setIslandView('default', { icon: engineIcons[engine], title: 'Suchmaschine', subtitle: `Aktiv: ${engineName}` });
 };
-
-// ADDED: Event listeners for search engine selection buttons
-searchEngines.forEach(button => {
-    button.addEventListener('click', () => {
-        activateEngine(button.dataset.engine);
-    });
-});
-
 
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         const query = searchInput.value.trim();
         if (query) {
-            let url = '';
-            switch (activeEngine) {
-                case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
-                case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
-                case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
-                case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
-                case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
-                default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-            }
+            const url = `https://www.${activeEngine}.com/${activeEngine === 'google' ? 'search?q=' : 'results?search_query='}${encodeURIComponent(query)}`;
+            setIslandView('default', { icon: 'arrow_forward', title: 'Suche läuft...', subtitle: `Öffne "${query}"` });
+            islandWaveform.style.display = 'flex';
             
-            // NEW: Show Dynamic Island with search animation before opening URL
-            showDynamicIsland('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
-            dynamicIsland.classList.add('expanded');
-
             setTimeout(() => {
                 window.open(url, '_blank');
-                // Revert island to original state or hide after search
-                hideDynamicIsland(); // Hide after opening the new tab
-                activateEngine(settings.lastActiveEngine); // Revert to original island content visually if it reappears
-            }, 1200); // 1.2 second delay to see animation
+                islandWaveform.style.display = 'none';
+                activateEngine(settings.lastActiveEngine); // Reset island
+            }, 1200);
         }
     }
 });
-
+searchEngines.forEach(button => button.addEventListener('click', () => activateEngine(button.dataset.engine)));
 activateEngine(activeEngine);
 
 
-// --- Time and Date Display ---
+// --- Time, Date, Quote, Fullscreen (Unverändert) ---
 const updateDateTime = () => {
-    const now = new Date();
-    const timeOptions = { hour: '2-digit', minute: '2-digit' };
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-    timeElement.textContent = now.toLocaleTimeString('de-DE', timeOptions);
-    dateElement.textContent = now.toLocaleDateString('de-DE', dateOptions);
+    timeElement.textContent = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    dateElement.textContent = new Date().toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 };
-
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
-
-// --- Quote of the Day (Local Data) ---
-const quotes = [
-    { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
-    { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
-    { text: "Sei du selbst die Veränderung, die du dir wünschst für diese Welt.", author: "Mahatma Gandhi" },
-    { text: "Was immer du tun kannst oder träumst es zu können, fang damit an.", author: "Johann Wolfgang von Goethe" },
-    { text: "Glück ist nicht das, was man besitzt, sondern das, was man gibt.", author: "Unbekannt" },
-    { text: "Die Zukunft gehört denen, die an die Schönheit ihrer Träume glauben.", author: "Eleanor Roosevelt" },
-    { text: "Handle so, dass die Maxime deines Willens jederzeit zugleich als Prinzip einer allgemeinen Gesetzgebung gelten könnte.", author: "Immanuel Kant" },
-    { text: "Es ist nicht genug zu wissen, man muss es auch anwenden; es ist nicht genug zu wollen, man muss es auch tun.", author: "Johann Wolfgang von Goethe" },
-    { text: "Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.", author: "Peter F. Drucker" },
-    { text: "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.", author: "Albert Einstein" }
-];
-
+const quotes = [{ text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" }, { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" }];
 const displayRandomQuote = () => {
-    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        const randomQuote = quotes[randomIndex];
-        quoteTextElement.textContent = `"${randomQuote.text}"`;
-        quoteAuthorElement.textContent = `- ${randomQuote.author}`;
-    }
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteTextElement.textContent = `"${randomQuote.text}"`;
+    quoteAuthorElement.textContent = `- ${randomQuote.author}`;
 };
-
-// Display a new quote every hour, and on page load
-setInterval(displayRandomQuote, 3600000); // Alle Stunde
+setInterval(displayRandomQuote, 3600000);
 document.addEventListener('DOMContentLoaded', displayRandomQuote);
 
-
-// --- Fullscreen Toggle ---
-fullscreenBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-        });
-    } else {
-        document.exitFullscreen().catch(err => {
-            console.error(`Error attempting to disable full-screen mode: ${err.message} (${err.name})`);
-        });
-    }
+document.getElementById('fullscreen-btn').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
 });
 
-document.addEventListener('fullscreenchange', () => {
-    if (document.fullscreenElement) {
-        fullscreenBtn.textContent = 'Shrink';
-        fullscreenBtn.setAttribute('title', 'Vollbild verlassen');
-    } else {
-        fullscreenBtn.textContent = '🚀 Vollbild';
-        fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
-    }
-});
-
-
-// --- Dynamic Island Functionality ---
-const dynamicIslandContainer = document.getElementById('dynamicIslandContainer');
-const dynamicIsland = document.getElementById('dynamicIsland');
-const islandIcon = document.getElementById('islandIcon');
-const islandTitle = document.getElementById('islandTitle');
-const islandSubtitle = document.getElementById('islandSubtitle');
-const islandDismissBtn = document.getElementById('islandDismissBtn');
-const islandWaveform = document.getElementById('islandWaveform');
-
-const engineIcons = {
-    google: 'search',
-    yandex: 'travel_explore',
-    bing: 'search',
-    duckduckgo: 'search_hands_free',
-    youtube: 'play_circle',
-    github: 'code'
-};
-
-// Function to show the dynamic island
-const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    islandIcon.textContent = icon;
-    islandTitle.textContent = title;
-    islandSubtitle.textContent = subtitle;
-    islandWaveform.style.display = showWave ? 'flex' : 'none';
-    dynamicIslandContainer.classList.remove('hidden');
-    reopenIslandBtn.style.display = 'none'; // Hide reopen button when island is visible
-    settings.dynamicIslandVisible = true;
-    saveSettings();
-};
-
-// Function to hide the dynamic island
-const hideDynamicIsland = () => {
-    dynamicIslandContainer.classList.add('hidden');
-    dynamicIsland.classList.remove('expanded'); // Ensure it's not expanded when hidden
-    reopenIslandBtn.style.display = 'block'; // Show reopen button when island is hidden
-    settings.dynamicIslandVisible = false;
-    saveSettings();
-};
-
-
-// Click-Event zum Erweitern/Verkleinern
-dynamicIsland.addEventListener('click', (e) => {
-    // Verhindern, dass der Klick auf den Button die Insel schließt
-    if (e.target.closest('#islandDismissBtn')) return;
-    dynamicIsland.classList.toggle('expanded');
-});
-
-// Insel ausblenden (Dismiss button)
-islandDismissBtn.addEventListener('click', () => {
-    hideDynamicIsland();
-});
-
-// Reopen Island button click event
-reopenIslandBtn.addEventListener('click', () => {
-    showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Suchmaschine', `Aktiv: ${settings.lastActiveEngine.charAt(0).toUpperCase() + settings.lastActiveEngine.slice(1)}`);
-});
-
-
-// Suchmaschinen-Logik erweitern
-const originalActivateEngine = activateEngine; // Alte Funktion speichern
-activateEngine = (engine) => {
-    originalActivateEngine(engine); // Alte Funktion aufrufen
-    const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
-    // Only update island if it's visible, otherwise just update settings
-    if (settings.dynamicIslandVisible) {
-        showDynamicIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
-        if (dynamicIsland.classList.contains('expanded')) {
-            // Keep expanded briefly, then collapse
-            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
-        }
-    }
-};
 
 // --- Weather Functionality ---
-// Placeholder for weather data fetch
 const fetchWeather = async (location) => {
-    // In a real application, you would make an API call here.
-    // Example using OpenWeatherMap (you'd need an API key):
-    // const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${apiKey}&units=metric&lang=de`;
-    // try {
-    //     const response = await fetch(url);
-    //     const data = await response.json();
-    //     if (data.cod === 200) {
-    //         const temp = Math.round(data.main.temp);
-    //         const description = data.weather[0].description;
-    //         const icon = getWeatherIcon(data.weather[0].icon); // Custom function to map weather codes to Material Symbols
-    //         return { temp, description, icon, location: data.name };
-    //     } else {
-    //         console.error('Weather API error:', data.message);
-    //         return null;
-    //     }
-    // } catch (error) {
-    //     console.error('Failed to fetch weather:', error);
-    //     return null;
-    // }
-
     // --- MOCK DATA FOR DEMONSTRATION ---
     const mockWeather = {
-        'Heidenheim': { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim' },
-        'Berlin': { temp: 18, description: 'Regen', icon: 'rainy', location: 'Berlin' },
-        'London': { temp: 15, description: 'Nebel', icon: 'foggy', location: 'London' }
+        'Heidenheim': { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim', forecast: [{day:'Mo', icon:'sunny', temp:24}, {day:'Di', icon:'rainy', temp:18}, {day:'Mi', icon:'thunderstorm', temp:16}] },
     };
-
-    return new Promise(resolve => {
-        setTimeout(() => {
-            const data = mockWeather[location] || mockWeather['Heidenheim'];
-            resolve(data);
-        }, 500); // Simulate network delay
-    });
+    return new Promise(resolve => setTimeout(() => resolve(mockWeather[location]), 800));
 };
 
-// Function to get appropriate Material Symbols icon for weather (mockup)
-const getWeatherIcon = (weatherCondition) => {
-    // This would be more complex with actual API data, mapping codes to icons
-    switch (weatherCondition.toLowerCase()) {
-        case 'clear': return 'sunny';
-        case 'clouds': return 'cloud';
-        case 'rain': return 'rainy';
-        case 'snow': return 'ac_unit';
-        case 'thunderstorm': return 'thunderstorm';
-        case 'drizzle': return 'grain';
-        case 'mist':
-        case 'fog': return 'foggy';
-        default: return 'cloudy_snowing'; // Default icon
-    }
-};
-
-// Event listener for the weather link button
 weatherLinkButton.addEventListener('click', async (e) => {
-    e.preventDefault(); // Prevent default link behavior
-    
-    // Show loading state in Dynamic Island
-    showDynamicIsland('refresh', 'Wetter wird geladen...', 'Bitte warten...', true);
+    e.preventDefault();
+    isIslandExpanded = true;
     dynamicIsland.classList.add('expanded');
-
-    const weatherData = await fetchWeather(settings.weatherLocation); // Use saved location
+    setIslandView('default', { icon: 'refresh', title: 'Wetter wird geladen...', subtitle: 'Bitte warten...' });
+    
+    const weatherData = await fetchWeather(settings.weatherLocation);
     if (weatherData) {
-        showDynamicIsland(
-            weatherData.icon,
-            `${weatherData.temp}°C`,
-            `${weatherData.description} in ${weatherData.location}`
-        );
-        setTimeout(() => dynamicIsland.classList.remove('expanded'), 4000); // Keep expanded for 4 seconds
+        setIslandView('weather', weatherData);
     } else {
-        showDynamicIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar.');
-        setTimeout(() => hideDynamicIsland(), 3000);
+        setIslandView('default', { icon: 'error', title: 'Fehler', subtitle: 'Wetterdaten nicht verfügbar.' });
     }
 });
 
 
-// Initialer Zustand beim Laden der Seite
-document.addEventListener('DOMContentLoaded', () => {
-    // Small delay to ensure everything is loaded
-    setTimeout(() => {
-        if (settings.dynamicIslandVisible) {
-           showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Willkommen!', 'Wähle eine Suchmaschine aus.');
-        } else {
-            hideDynamicIsland(); // Ensure it's hidden if setting says so
-        }
-    }, 100);
+// --- Media Player Demo Functionality ---
+const showMediaBtn = document.getElementById('showMediaBtn');
+let isPlaying = false;
+showMediaBtn.addEventListener('click', () => {
+    isIslandExpanded = true;
+    dynamicIsland.classList.add('expanded');
+    setIslandView('media', { 
+        title: "Chasing Sunsets", 
+        artist: "Digital Dreams", 
+        art: 'https://picsum.photos/id/1015/100/100' 
+    });
+    isPlaying = false;
+    mediaPlayPauseBtn.querySelector('.material-symbols-outlined').textContent = 'play_arrow';
+    islandWaveform.style.display = 'none';
+});
 
-    // Initial display of the "reopen" button based on settings
-    if (!settings.dynamicIslandVisible) {
-        reopenIslandBtn.style.display = 'block';
-    }
+mediaPlayPauseBtn.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    mediaPlayPauseBtn.querySelector('.material-symbols-outlined').textContent = isPlaying ? 'pause' : 'play_arrow';
+    islandWaveform.style.display = isPlaying ? 'flex' : 'none';
+});
+
+
+// --- Initial Page Load State ---
+document.addEventListener('DOMContentLoaded', () => {
+    setIslandView('default', { icon: 'auto_awesome', title: `Willkommen, User!`, subtitle: `MKWEB OS 7 ist bereit.`})
 });
