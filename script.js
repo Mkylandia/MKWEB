@@ -26,9 +26,7 @@ const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
-const weatherLinkButton = document.querySelector('.weather-link-button');
-const weatherLocationInput = document.getElementById('weather-location'); // NEW: Weather location input
-const currentWeatherLocationDisplay = document.getElementById('current-weather-location-display'); // NEW: Display for current location
+const weatherLinkButton = document.querySelector('.weather-link-button'); // Added for weather click
 // NEW: Reopen Island Button
 const reopenIslandBtn = document.getElementById('reopen-island-btn');
 
@@ -69,10 +67,10 @@ let activateEngine = (engine) => {
     saveSettings();
 };
 
+// ADDED: Event listeners for search engine selection buttons
 searchEngines.forEach(button => {
     button.addEventListener('click', () => {
         activateEngine(button.dataset.engine);
-        // Do not hide or collapse island here, user controls it
     });
 });
 
@@ -87,19 +85,21 @@ searchInput.addEventListener('keypress', (e) => {
                 case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
                 case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
                 case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break;
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
                 case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
                 default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
             
-            // Show Dynamic Island with search animation before opening URL
+            // NEW: Show Dynamic Island with search animation before opening URL
             showDynamicIsland('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
             dynamicIsland.classList.add('expanded');
 
             setTimeout(() => {
                 window.open(url, '_blank');
-                // REMOVED: hideDynamicIsland() here. User must dismiss manually.
-            }, 1200);
+                // Revert island to original state or hide after search
+                hideDynamicIsland(); // Hide after opening the new tab
+                activateEngine(settings.lastActiveEngine); // Revert to original island content visually if it reappears
+            }, 1200); // 1.2 second delay to see animation
         }
     }
 });
@@ -136,7 +136,7 @@ const quotes = [
 ];
 
 const displayRandomQuote = () => {
-    if (quoteTextElement && quoteAuthorElement) {
+    if (quoteTextElement && quoteAuthorElement) { // Check if elements exist
         const randomIndex = Math.floor(Math.random() * quotes.length);
         const randomQuote = quotes[randomIndex];
         quoteTextElement.textContent = `"${randomQuote.text}"`;
@@ -144,7 +144,8 @@ const displayRandomQuote = () => {
     }
 };
 
-setInterval(displayRandomQuote, 3600000);
+// Display a new quote every hour, and on page load
+setInterval(displayRandomQuote, 3600000); // Alle Stunde
 document.addEventListener('DOMContentLoaded', displayRandomQuote);
 
 
@@ -190,21 +191,23 @@ const engineIcons = {
     github: 'code'
 };
 
+// Function to show the dynamic island
 const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
     islandIcon.textContent = icon;
     islandTitle.textContent = title;
     islandSubtitle.textContent = subtitle;
     islandWaveform.style.display = showWave ? 'flex' : 'none';
     dynamicIslandContainer.classList.remove('hidden');
-    reopenIslandBtn.style.display = 'none';
+    reopenIslandBtn.style.display = 'none'; // Hide reopen button when island is visible
     settings.dynamicIslandVisible = true;
     saveSettings();
 };
 
+// Function to hide the dynamic island
 const hideDynamicIsland = () => {
     dynamicIslandContainer.classList.add('hidden');
-    dynamicIsland.classList.remove('expanded');
-    reopenIslandBtn.style.display = 'block';
+    dynamicIsland.classList.remove('expanded'); // Ensure it's not expanded when hidden
+    reopenIslandBtn.style.display = 'block'; // Show reopen button when island is hidden
     settings.dynamicIslandVisible = false;
     saveSettings();
 };
@@ -212,6 +215,7 @@ const hideDynamicIsland = () => {
 
 // Click-Event zum Erweitern/Verkleinern
 dynamicIsland.addEventListener('click', (e) => {
+    // Verhindern, dass der Klick auf den Button die Insel schließt
     if (e.target.closest('#islandDismissBtn')) return;
     dynamicIsland.classList.toggle('expanded');
 });
@@ -228,117 +232,111 @@ reopenIslandBtn.addEventListener('click', () => {
 
 
 // Suchmaschinen-Logik erweitern
-const originalActivateEngine = activateEngine;
+const originalActivateEngine = activateEngine; // Alte Funktion speichern
 activateEngine = (engine) => {
-    originalActivateEngine(engine);
+    originalActivateEngine(engine); // Alte Funktion aufrufen
     const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
+    // Only update island if it's visible, otherwise just update settings
     if (settings.dynamicIslandVisible) {
         showDynamicIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
-        // REMOVED: setTimeout to collapse here. User must dismiss manually.
+        if (dynamicIsland.classList.contains('expanded')) {
+            // Keep expanded briefly, then collapse
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+        }
     }
 };
 
 // --- Weather Functionality ---
+// Placeholder for weather data fetch
 const fetchWeather = async (location) => {
+    // In a real application, you would make an API call here.
+    // Example using OpenWeatherMap (you'd need an API key):
+    // const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${apiKey}&units=metric&lang=de`;
+    // try {
+    //     const response = await fetch(url);
+    //     const data = await response.json();
+    //     if (data.cod === 200) {
+    //         const temp = Math.round(data.main.temp);
+    //         const description = data.weather[0].description;
+    //         const icon = getWeatherIcon(data.weather[0].icon); // Custom function to map weather codes to Material Symbols
+    //         return { temp, description, icon, location: data.name };
+    //     } else {
+    //         console.error('Weather API error:', data.message);
+    //         return null;
+    //     }
+    // } catch (error) {
+    //     console.error('Failed to fetch weather:', error);
+    //     return null;
+    // }
+
+    // --- MOCK DATA FOR DEMONSTRATION ---
     const mockWeather = {
         'Heidenheim': { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim' },
         'Berlin': { temp: 18, description: 'Regen', icon: 'rainy', location: 'Berlin' },
-        'London': { temp: 15, description: 'Nebel', icon: 'foggy', location: 'London' },
-        'New York': { temp: 25, description: 'Sonnig', icon: 'sunny', location: 'New York' },
-        'Paris': { temp: 20, description: 'Wolkig', icon: 'partly_cloudy', location: 'Paris' },
-        'Tokyo': { temp: 28, description: 'Klar', icon: 'clear_day', location: 'Tokyo' },
-        'Sydney': { temp: 17, description: 'Windig', icon: 'wind_power', location: 'Sydney' }
+        'London': { temp: 15, description: 'Nebel', icon: 'foggy', location: 'London' }
     };
 
     return new Promise(resolve => {
         setTimeout(() => {
-            // Case-insensitive match, or default to Heidenheim if not found
-            const normalizedLocation = Object.keys(mockWeather).find(key => key.toLowerCase() === location.toLowerCase());
-            const data = normalizedLocation ? mockWeather[normalizedLocation] : mockWeather['Heidenheim'];
+            const data = mockWeather[location] || mockWeather['Heidenheim'];
             resolve(data);
-        }, 500);
+        }, 500); // Simulate network delay
     });
 };
 
+// Function to get appropriate Material Symbols icon for weather (mockup)
 const getWeatherIcon = (weatherCondition) => {
+    // This would be more complex with actual API data, mapping codes to icons
     switch (weatherCondition.toLowerCase()) {
-        case 'clear':
-        case 'clear_day': return 'sunny';
-        case 'clouds':
-        case 'partly_cloudy': return 'cloud';
+        case 'clear': return 'sunny';
+        case 'clouds': return 'cloud';
         case 'rain': return 'rainy';
         case 'snow': return 'ac_unit';
         case 'thunderstorm': return 'thunderstorm';
         case 'drizzle': return 'grain';
         case 'mist':
         case 'fog': return 'foggy';
-        case 'windy':
-        case 'wind_power': return 'wind_power';
-        default: return 'cloudy_snowing';
+        default: return 'cloudy_snowing'; // Default icon
     }
 };
-
-// Update weather location display
-const updateWeatherLocationDisplay = () => {
-    currentWeatherLocationDisplay.textContent = settings.weatherLocation;
-    weatherLocationInput.value = settings.weatherLocation; // Set input value on load
-};
-
-// Event listener for weather location input
-weatherLocationInput.addEventListener('change', () => { // Using 'change' event to save on blur or enter
-    const newLocation = weatherLocationInput.value.trim();
-    if (newLocation) {
-        settings.weatherLocation = newLocation;
-        saveSettings();
-        updateWeatherLocationDisplay(); // Update display immediately
-    }
-});
 
 // Event listener for the weather link button
 weatherLinkButton.addEventListener('click', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default link behavior
     
+    // Show loading state in Dynamic Island
     showDynamicIsland('refresh', 'Wetter wird geladen...', 'Bitte warten...', true);
     dynamicIsland.classList.add('expanded');
 
-    const weatherData = await fetchWeather(settings.weatherLocation);
+    const weatherData = await fetchWeather(settings.weatherLocation); // Use saved location
     if (weatherData) {
         showDynamicIsland(
             weatherData.icon,
             `${weatherData.temp}°C`,
             `${weatherData.description} in ${weatherData.location}`
         );
-        // REMOVED: setTimeout to hide/collapse here. User must dismiss manually.
+        setTimeout(() => dynamicIsland.classList.remove('expanded'), 4000); // Keep expanded for 4 seconds
     } else {
         showDynamicIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar.');
-        // REMOVED: setTimeout to hide here. User must dismiss manually.
+        setTimeout(() => hideDynamicIsland(), 3000);
     }
 });
 
 
 // Initialer Zustand beim Laden der Seite
 document.addEventListener('DOMContentLoaded', () => {
+    // Small delay to ensure everything is loaded
     setTimeout(() => {
         if (settings.dynamicIslandVisible) {
            showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Willkommen!', 'Wähle eine Suchmaschine aus.');
         } else {
-            hideDynamicIsland();
+            hideDynamicIsland(); // Ensure it's hidden if setting says so
         }
     }, 100);
 
+    // Initial display of the "reopen" button based on settings
     if (!settings.dynamicIslandVisible) {
         reopenIslandBtn.style.display = 'block';
     }
-    updateWeatherLocationDisplay(); // Initialize weather location display on load
 });
-
-// Example of how to use showDynamicIsland for other useful notifications:
-const showNotification = (icon, title, subtitle, duration = 5000) => {
-    showDynamicIsland(icon, title, subtitle);
-    dynamicIsland.classList.add('expanded');
-    setTimeout(() => {
-        // Option to auto-hide notifications after a duration, if desired
-        // For general use, if island is controlled manually, this might be removed
-        // hideDynamicIsland();
-    }, duration);
-};
