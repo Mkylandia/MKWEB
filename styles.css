@@ -757,22 +757,20 @@ button:hover {
 
 /* ===== Dynamic Island - Nützliche Erweiterung ===== */
 .dynamic-island-container {
-    position: fixed;
+    position: fixed; /* Changed from absolute to fixed */
     top: var(--fluid-padding-m);
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000; /* Erhöht, um über allem zu liegen */
+    z-index: 1000;
     perspective: 1000px;
-    transition: transform 0.4s var(--t-timing-smooth), opacity 0.4s var(--t-timing-smooth);
-    opacity: 1; /* Always visible */
+    /* Removed opacity and transform transitions for hidden state */
+    transition: all 0.5s var(--t-timing-smooth); /* Smooth transitions for other properties */
+    /* Always visible */
+    opacity: 1;
+    pointer-events: auto;
 }
 
-/* No longer needed:
-.dynamic-island-container.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-*/
+/* Removed .dynamic-island-container.hidden rule */
 
 .dynamic-island {
     display: flex;
@@ -786,20 +784,43 @@ button:hover {
     border: 1px solid var(--gb);
     color: var(--fg);
     cursor: pointer;
-    transition: all 0.5s var(--t-timing-elastic), width 0.5s var(--t-timing-smooth);
+    transition: all 0.5s var(--t-timing-elastic), box-shadow 0.3s ease, border-color 0.3s ease; /* Enhanced transition */
     width: 220px; /* Startbreite */
+    position: relative; /* For glow effect */
 }
 
 .dynamic-island:hover {
-    box-shadow: var(--sh);
-    border-color: var(--acc);
-    animation: borderPulseGlow 2s infinite ease-in-out;
+  box-shadow: 0 0 20px rgba(var(--acc-rgb), 0.25), var(--sh); /* More prominent shadow on hover */
+  border-color: var(--acc); /* Border highlight on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
 }
+
+.dynamic-island::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 52px; /* Slightly larger for glow */
+    background: radial-gradient(circle at center, rgba(var(--acc-rgb), 0.3) 0%, transparent 70%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    pointer-events: none;
+}
+
+.dynamic-island:hover::before {
+    opacity: 1;
+    animation: pulseIslandGlow 2s infinite alternate; /* New glow animation */
+}
+
 
 .dynamic-island.expanded {
     width: 380px;
-    box-shadow: var(--sh);
-    border-color: var(--acc);
+    padding: var(--fluid-padding-s) var(--fluid-padding-m); /* Slightly more padding when expanded */
+    box-shadow: 0 0 30px rgba(var(--acc-rgb), 0.35), var(--sh); /* Stronger shadow when expanded */
+    border-color: var(--ah); /* Stronger border when expanded */
 }
 
 .island-content {
@@ -808,16 +829,18 @@ button:hover {
     gap: var(--fluid-gap-s);
     overflow: hidden;
     white-space: nowrap;
+    flex-grow: 1; /* Allow content to take available space */
 }
 
 #islandIcon {
     font-size: 1.5rem;
     color: var(--acc);
-    transition: transform 0.4s var(--t-timing-elastic);
+    transition: transform 0.4s var(--t-timing-elastic), color 0.3s ease; /* Added color transition */
 }
 
 .dynamic-island.expanded #islandIcon {
-    transform: scale(1.1);
+  transform: scale(1.15); /* Slightly bigger when expanded */
+  color: var(--ah); /* Color change when expanded */
 }
 
 
@@ -830,6 +853,9 @@ button:hover {
 #islandTitle {
     font-weight: 700;
     font-size: var(--fluid-min-font);
+    white-space: nowrap; /* Prevent title from wrapping */
+    text-overflow: ellipsis; /* Ellipsis for overflowing title */
+    overflow: hidden; /* Hide overflow */
 }
 
 #islandSubtitle {
@@ -837,6 +863,7 @@ button:hover {
     color: var(--dim);
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .island-status {
@@ -849,15 +876,14 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 3px;
-    height: 20px; /* Ensure consistent height for waveform */
+    /* Improved wave animation */
 }
 
 .island-waveform span {
     width: 4px;
-    height: 100%; /* Fill parent height */
+    height: 20px;
     background: linear-gradient(130deg, var(--acc), var(--ah));
     border-radius: 2px;
-    transform-origin: bottom; /* For a more natural wave */
     animation: wave 1.5s ease-in-out infinite alternate;
 }
 
@@ -866,51 +892,62 @@ button:hover {
 .island-waveform span:nth-child(4) { animation-delay: -0.9s; }
 
 .island-dismiss {
+    display: none; /* Wird nur im expanded-Modus angezeigt */
     background: rgba(var(--fg-rgb), 0.1);
     border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 28px; /* Slightly larger dismiss button */
+    height: 28px;
     cursor: pointer;
-    display: flex; /* Always flex */
     align-items: center;
     justify-content: center;
-    padding: 0; /* Override button padding */
-    transition: background 0.3s ease, transform 0.3s var(--t-timing-smooth);
-    opacity: 0; /* Hidden by default */
-    pointer-events: none; /* Not interactive when hidden */
+    padding: 0;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 .island-dismiss .material-symbols-outlined {
-    font-size: 16px;
+    font-size: 18px; /* Larger icon */
     color: var(--dim);
+    transition: color 0.3s ease;
 }
 .island-dismiss:hover {
-    background: rgba(var(--fg-rgb), 0.2);
-    transform: scale(1.1);
-    box-shadow: none; /* Override button hover */
+    background: rgba(var(--fg-rgb), 0.25);
+    transform: scale(1.1); /* Pop effect on hover */
+    box-shadow: none;
 }
+.island-dismiss:hover .material-symbols-outlined {
+  color: var(--fg);
+}
+
 
 .dynamic-island.expanded .island-dismiss {
-    opacity: 1; /* Visible when expanded */
-    pointer-events: auto; /* Interactive when expanded */
+    display: flex;
 }
 
-.dynamic-island.expanded .island-waveform {
-    display: flex; /* Always display waveform when expanded */
+/* Ensure waveform is initially hidden and only shown by JS */
+#islandWaveform {
+    display: none;
 }
 
-/* New animation for dynamic island border */
-@keyframes borderPulseGlow {
-  0% {
-    border-color: var(--gb);
-    box-shadow: var(--s);
+/* New Animation for Island Glow */
+@keyframes pulseIslandGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(var(--acc-rgb), 0.4), inset 0 0 10px rgba(var(--acc-rgb), 0.2);
   }
   50% {
-    border-color: var(--acc);
-    box-shadow: 0 0 18px rgba(var(--acc-rgb), 0.3);
+    box-shadow: 0 0 40px rgba(var(--acc-rgb), 0.6), inset 0 0 15px rgba(var(--acc-rgb), 0.3);
   }
-  100% {
-    border-color: var(--gb);
-    box-shadow: var(--s);
-  }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 992px) {
+    .dynamic-island-container {
+        top: var(--fluid-padding-s); /* Adjust top position for smaller screens */
+        width: calc(100% - (2 * var(--fluid-padding-s))); /* Full width minus padding */
+        left: var(--fluid-padding-s);
+        transform: translateX(0%); /* Remove translate X for full width */
+    }
+
+    .dynamic-island.expanded {
+        width: 100%; /* Full width when expanded on smaller screens */
+    }
 }
