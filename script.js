@@ -210,7 +210,7 @@ searchInput.addEventListener('keypress', (e) => {
             }
             
             // Show Dynamic Island with search animation before opening URL
-            showTransientIslandContent('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true, 2000); // 2 second display
+            showTransientIslandContent('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true, 800); // 2 second display
             
             setTimeout(() => {
                 window.open(url, '_blank');
