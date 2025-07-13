@@ -38,8 +38,11 @@ const islandDismissBtn = document.getElementById('islandDismissBtn');
 const islandWaveform = document.getElementById('islandWaveform');
 
 // --- Dynamic Island State Management ---
-let islandTimeoutId = null; // To clear previous timeouts
+let islandTimeoutId = null; // To clear previous timeouts for transient content
 let islandCycleInterval = null; // To manage time/date cycling
+let idleIslandTimerId = null; // NEW: Timer for idle state before time/date cycle
+const IDLE_DELAY = 3000; // NEW: 3 seconds idle before time/date cycle begins
+
 let currentIslandState = {
     icon: 'info',
     title: 'Willkommen!',
@@ -86,8 +89,22 @@ const updateDynamicIsland = (icon, title, subtitle, showWave = false) => {
     islandSubtitle.textContent = subtitle;
     islandWaveform.style.display = showWave ? 'flex' : 'none';
     currentIslandState = { icon, title, subtitle, showWave }; // Store current state
-    // dynamicIsland.classList.remove('expanded'); // <-- Diese Zeile wurde entfernt, um das unerwünschte Zusammenklappen zu verhindern.
-    clearTimeout(islandTimeoutId); // Clear any pending timeouts
+    clearTimeout(islandTimeoutId); // Clear any pending transient content timeouts
+};
+
+// NEW: Function to schedule the time/date cycle after an idle period
+const scheduleIslandTimeDateCycle = () => {
+    clearTimeout(idleIslandTimerId); // Clear any existing idle timer
+    clearInterval(islandCycleInterval); // Ensure no cycle is currently running
+    idleIslandTimerId = setTimeout(() => {
+        startIslandTimeDateCycle(); // Start cycling after idle delay
+    }, IDLE_DELAY);
+};
+
+// NEW: Function to cancel the idle timer and current cycle
+const cancelIslandTimeDateCycleSchedule = () => {
+    clearTimeout(idleIslandTimerId);
+    clearInterval(islandCycleInterval);
 };
 
 // Function to reset the Dynamic Island to its default search engine state
@@ -97,7 +114,8 @@ const resetIslandToDefault = () => {
         defaultIslandContent.title,
         defaultIslandContent.getSubtitle()
     );
-    startIslandTimeDateCycle(); // Restart time/date cycle after transient event
+    dynamicIsland.classList.remove('expanded'); // Ensure it collapses if it was expanded
+    scheduleIslandTimeDateCycle(); // Schedule time/date cycle after reset
 };
 
 
@@ -134,13 +152,13 @@ const startIslandTimeDateCycle = () => {
 
 // Stop time/date cycle and show specific content
 const showTransientIslandContent = (icon, title, subtitle, showWave = false, duration = 3000) => {
-    clearInterval(islandCycleInterval); // Stop the cycling
+    cancelIslandTimeDateCycleSchedule(); // Stop any pending idle start or ongoing cycle
     updateDynamicIsland(icon, title, subtitle, showWave);
     dynamicIsland.classList.add('expanded'); // Expand for transient content
 
     islandTimeoutId = setTimeout(() => {
         dynamicIsland.classList.remove('expanded'); // Collapse after duration
-        resetIslandToDefault(); // Revert to default after duration
+        resetIslandToDefault(); // Revert to default content and schedule time/date cycle
     }, duration);
 };
 
@@ -216,7 +234,7 @@ searchInput.addEventListener('keypress', (e) => {
             setTimeout(() => {
                 window.open(url, '_blank');
                 searchInput.value = ''; // Clear search input
-                resetIslandToDefault(); // Revert island to default after search
+                // resetIslandToDefault() is now called by showTransientIslandContent's timeout
             }, 1800); // Slightly less delay than island display to ensure smooth transition
         }
     }
@@ -296,15 +314,20 @@ dynamicIsland.addEventListener('click', (e) => {
     // Prevent dismiss button from toggling expansion
     if (e.target.closest('#islandDismissBtn')) return;
     dynamicIsland.classList.toggle('expanded');
+    if (dynamicIsland.classList.contains('expanded')) {
+        cancelIslandTimeDateCycleSchedule(); // If manually expanded, stop auto-cycling
+    } else {
+        resetIslandToDefault(); // If manually collapsed, reset and schedule cycle
+    }
 });
 
 islandDismissBtn.addEventListener('click', () => {
-    dynamicIsland.classList.remove('expanded'); // Just collapse it, don't hide
+    dynamicIsland.classList.remove('expanded');
     // If it's showing transient content, clear timeout and revert
     if (islandTimeoutId) {
         clearTimeout(islandTimeoutId);
-        resetIslandToDefault();
     }
+    resetIslandToDefault(); // Always reset to default which schedules the cycle
 });
 
 
@@ -366,8 +389,7 @@ appCards.forEach(card => {
     let hoverTimeout;
     card.addEventListener('mouseenter', () => {
         // Clear any ongoing time/date cycle or previous transient display
-        clearInterval(islandCycleInterval);
-        clearTimeout(islandTimeoutId);
+        cancelIslandTimeDateCycleSchedule(); // Stop any pending idle start or ongoing cycle
 
         hoverTimeout = setTimeout(() => {
             const appName = card.dataset.appName || 'App';
@@ -379,31 +401,25 @@ appCards.forEach(card => {
 
     card.addEventListener('mouseleave', () => {
         clearTimeout(hoverTimeout); // Clear the hover timeout if mouse leaves before it triggers
-        if (!dynamicIsland.classList.contains('expanded')) { // Only reset if not manually expanded
-             resetIslandToDefault(); // Revert to default when mouse leaves
-        } else {
-            // If it was expanded, collapse after a short delay, but keep default content
-            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
-            resetIslandToDefault(); // Ensure default content is set even if expanded
-        }
+        dynamicIsland.classList.remove('expanded'); // Collapse immediately on mouseleave
+        resetIslandToDefault(); // This will schedule the time/date cycle after a delay
     });
 
     // Handle click on app card to ensure island resets after opening app
     card.addEventListener('click', () => {
-        resetIslandToDefault();
+        resetIslandToDefault(); // Also resets after a click
     });
 });
 
 
 // --- Initial State on Page Load ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Start the time/date cycle by default
-    startIslandTimeDateCycle();
-
-    // Set initial content to default search engine info
+    // Set initial content to default search engine info first
     updateDynamicIsland(
         engineIcons[settings.lastActiveEngine] || defaultIslandContent.icon,
         defaultIslandContent.title,
         defaultIslandContent.getSubtitle()
     );
+    // Then schedule the time/date cycle to start after idle delay
+    scheduleIslandTimeDateCycle();
 });
