@@ -81,13 +81,25 @@ const appIcons = { // Mapping for app icons (based on material symbols)
 
 // Function to update the Dynamic Island content
 const updateDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    islandIcon.textContent = icon;
-    islandTitle.textContent = title;
-    islandSubtitle.textContent = subtitle;
-    islandWaveform.style.display = showWave ? 'flex' : 'none';
-    currentIslandState = { icon, title, subtitle, showWave }; // Store current state
-    dynamicIsland.classList.remove('expanded'); // Collapse by default when content changes
-    clearTimeout(islandTimeoutId); // Clear any pending timeouts
+    // Start fade-out before changing content
+    islandIcon.style.opacity = '0';
+    islandTitle.style.opacity = '0';
+    islandSubtitle.style.opacity = '0';
+
+    setTimeout(() => {
+        islandIcon.textContent = icon;
+        islandTitle.textContent = title;
+        islandSubtitle.textContent = subtitle;
+        islandWaveform.style.display = showWave ? 'flex' : 'none';
+        currentIslandState = { icon, title, subtitle, showWave }; // Store current state
+        dynamicIsland.classList.remove('expanded'); // Collapse by default when content changes
+        clearTimeout(islandTimeoutId); // Clear any pending timeouts
+
+        // Fade-in new content
+        islandIcon.style.opacity = '1';
+        islandTitle.style.opacity = '1';
+        islandSubtitle.style.opacity = '1';
+    }, 150); // Small delay for fade-out to be visible before content change
 };
 
 // Function to reset the Dynamic Island to its default search engine state
@@ -210,13 +222,13 @@ searchInput.addEventListener('keypress', (e) => {
             }
             
             // Show Dynamic Island with search animation before opening URL
-            showTransientIslandContent('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true, 800); // 2 second display
+            showTransientIslandContent('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true, 2000); // 2 second display
             
             setTimeout(() => {
                 window.open(url, '_blank');
                 searchInput.value = ''; // Clear search input
                 resetIslandToDefault(); // Revert island to default after search
-            }, 800); // Slightly less delay than island display to ensure smooth transition
+            }, 1800); // Slightly less delay than island display to ensure smooth transition
         }
     }
 });
