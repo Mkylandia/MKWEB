@@ -38,11 +38,8 @@ const islandDismissBtn = document.getElementById('islandDismissBtn');
 const islandWaveform = document.getElementById('islandWaveform');
 
 // --- Dynamic Island State Management ---
-let islandTimeoutId = null; // To clear previous timeouts for transient content
+let islandTimeoutId = null; // To clear previous timeouts
 let islandCycleInterval = null; // To manage time/date cycling
-let idleIslandTimerId = null; // NEW: Timer for idle state before time/date cycle
-const IDLE_DELAY = 3000; // NEW: 3 seconds idle before time/date cycle begins
-
 let currentIslandState = {
     icon: 'info',
     title: 'Willkommen!',
@@ -82,38 +79,27 @@ const appIcons = { // Mapping for app icons (based on material symbols)
 };
 
 
-// Function to update the Dynamic Island content with fade transition
+// Function to update the Dynamic Island content
 const updateDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    // Add a class to trigger fade out for existing content
-    dynamicIsland.classList.add('fading-content');
+    // Start fade-out before changing content
+    islandIcon.style.opacity = '0';
+    islandTitle.style.opacity = '0';
+    islandSubtitle.style.opacity = '0';
 
-    // After a short delay (matching CSS transition for fade out), change content
     setTimeout(() => {
         islandIcon.textContent = icon;
         islandTitle.textContent = title;
         islandSubtitle.textContent = subtitle;
         islandWaveform.style.display = showWave ? 'flex' : 'none';
         currentIslandState = { icon, title, subtitle, showWave }; // Store current state
+        dynamicIsland.classList.remove('expanded'); // Collapse by default when content changes
+        clearTimeout(islandTimeoutId); // Clear any pending timeouts
 
-        // Remove the fade-out class to allow new content to fade in
-        dynamicIsland.classList.remove('fading-content');
-        clearTimeout(islandTimeoutId); // Clear any pending transient content timeouts
-    }, 150); // Half of 300ms transition for smoother mid-fade content swap
-};
-
-// NEW: Function to schedule the time/date cycle after an idle period
-const scheduleIslandTimeDateCycle = () => {
-    clearTimeout(idleIslandTimerId); // Clear any existing idle timer
-    clearInterval(islandCycleInterval); // Ensure no cycle is currently running
-    idleIslandTimerId = setTimeout(() => {
-        startIslandTimeDateCycle(); // Start cycling after idle delay
-    }, IDLE_DELAY);
-};
-
-// NEW: Function to cancel the idle timer and current cycle
-const cancelIslandTimeDateCycleSchedule = () => {
-    clearTimeout(idleIslandTimerId);
-    clearInterval(islandCycleInterval);
+        // Fade-in new content
+        islandIcon.style.opacity = '1';
+        islandTitle.style.opacity = '1';
+        islandSubtitle.style.opacity = '1';
+    }, 150); // Small delay for fade-out to be visible before content change
 };
 
 // Function to reset the Dynamic Island to its default search engine state
@@ -123,8 +109,7 @@ const resetIslandToDefault = () => {
         defaultIslandContent.title,
         defaultIslandContent.getSubtitle()
     );
-    dynamicIsland.classList.remove('expanded'); // Ensure it collapses if it was expanded
-    scheduleIslandTimeDateCycle(); // Schedule time/date cycle after reset
+    startIslandTimeDateCycle(); // Restart time/date cycle after transient event
 };
 
 
@@ -161,13 +146,12 @@ const startIslandTimeDateCycle = () => {
 
 // Stop time/date cycle and show specific content
 const showTransientIslandContent = (icon, title, subtitle, showWave = false, duration = 3000) => {
-    cancelIslandTimeDateCycleSchedule(); // Stop any pending idle start or ongoing cycle
+    clearInterval(islandCycleInterval); // Stop the cycling
     updateDynamicIsland(icon, title, subtitle, showWave);
     dynamicIsland.classList.add('expanded'); // Expand for transient content
 
     islandTimeoutId = setTimeout(() => {
-        dynamicIsland.classList.remove('expanded'); // Collapse after duration
-        resetIslandToDefault(); // Revert to default content and schedule time/date cycle
+        resetIslandToDefault(); // Revert to default after duration
     }, duration);
 };
 
@@ -243,7 +227,7 @@ searchInput.addEventListener('keypress', (e) => {
             setTimeout(() => {
                 window.open(url, '_blank');
                 searchInput.value = ''; // Clear search input
-                // resetIslandToDefault() is now called by showTransientIslandContent's timeout
+                resetIslandToDefault(); // Revert island to default after search
             }, 1800); // Slightly less delay than island display to ensure smooth transition
         }
     }
@@ -323,20 +307,15 @@ dynamicIsland.addEventListener('click', (e) => {
     // Prevent dismiss button from toggling expansion
     if (e.target.closest('#islandDismissBtn')) return;
     dynamicIsland.classList.toggle('expanded');
-    if (dynamicIsland.classList.contains('expanded')) {
-        cancelIslandTimeDateCycleSchedule(); // If manually expanded, stop auto-cycling
-    } else {
-        resetIslandToDefault(); // If manually collapsed, reset and schedule cycle
-    }
 });
 
 islandDismissBtn.addEventListener('click', () => {
-    dynamicIsland.classList.remove('expanded');
+    dynamicIsland.classList.remove('expanded'); // Just collapse it, don't hide
     // If it's showing transient content, clear timeout and revert
     if (islandTimeoutId) {
         clearTimeout(islandTimeoutId);
+        resetIslandToDefault();
     }
-    resetIslandToDefault(); // Always reset to default which schedules the cycle
 });
 
 
@@ -398,7 +377,8 @@ appCards.forEach(card => {
     let hoverTimeout;
     card.addEventListener('mouseenter', () => {
         // Clear any ongoing time/date cycle or previous transient display
-        cancelIslandTimeDateCycleSchedule(); // Stop any pending idle start or ongoing cycle
+        clearInterval(islandCycleInterval);
+        clearTimeout(islandTimeoutId);
 
         hoverTimeout = setTimeout(() => {
             const appName = card.dataset.appName || 'App';
@@ -410,25 +390,31 @@ appCards.forEach(card => {
 
     card.addEventListener('mouseleave', () => {
         clearTimeout(hoverTimeout); // Clear the hover timeout if mouse leaves before it triggers
-        dynamicIsland.classList.remove('expanded'); // Collapse immediately on mouseleave
-        resetIslandToDefault(); // This will schedule the time/date cycle after a delay
+        if (!dynamicIsland.classList.contains('expanded')) { // Only reset if not manually expanded
+             resetIslandToDefault(); // Revert to default when mouse leaves
+        } else {
+            // If it was expanded, collapse after a short delay, but keep default content
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+            resetIslandToDefault(); // Ensure default content is set even if expanded
+        }
     });
 
     // Handle click on app card to ensure island resets after opening app
     card.addEventListener('click', () => {
-        resetIslandToDefault(); // Also resets after a click
+        resetIslandToDefault();
     });
 });
 
 
 // --- Initial State on Page Load ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Set initial content to default search engine info first
+    // Start the time/date cycle by default
+    startIslandTimeDateCycle();
+
+    // Set initial content to default search engine info
     updateDynamicIsland(
         engineIcons[settings.lastActiveEngine] || defaultIslandContent.icon,
         defaultIslandContent.title,
         defaultIslandContent.getSubtitle()
     );
-    // Then schedule the time/date cycle to start after idle delay
-    scheduleIslandTimeDateCycle();
 });
