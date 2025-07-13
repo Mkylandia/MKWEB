@@ -6,7 +6,6 @@ let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
     lastActiveEngine: 'google',
-    // dynamicIslandVisible: true, // REMOVED: Dynamic Island is always visible
     weatherLocation: 'Heidenheim' // NEW: Default weather location
 };
 
@@ -26,9 +25,123 @@ const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
-const weatherLinkButton = document.querySelector('.weather-link-button'); // Added for weather click
-// NEW: Reopen Island Button - REMOVED, as island is always visible
-// const reopenIslandBtn = document.getElementById('reopen-island-btn');
+const weatherLinkButton = document.querySelector('.weather-link-button');
+const appCards = document.querySelectorAll('.app-card'); // NEW: Select all app cards
+
+// --- Dynamic Island Elements ---
+const dynamicIslandContainer = document.getElementById('dynamicIslandContainer');
+const dynamicIsland = document.getElementById('dynamicIsland');
+const islandIcon = document.getElementById('islandIcon');
+const islandTitle = document.getElementById('islandTitle');
+const islandSubtitle = document.getElementById('islandSubtitle');
+const islandDismissBtn = document.getElementById('islandDismissBtn');
+const islandWaveform = document.getElementById('islandWaveform');
+
+// --- Dynamic Island State Management ---
+let islandTimeoutId = null; // To clear previous timeouts
+let islandCycleInterval = null; // To manage time/date cycling
+let currentIslandState = {
+    icon: 'info',
+    title: 'Willkommen!',
+    subtitle: 'Wähle eine Suchmaschine aus.',
+    showWave: false
+};
+
+const defaultIslandContent = {
+    icon: 'search',
+    title: 'Suchmaschine',
+    getSubtitle: () => `Aktiv: ${settings.lastActiveEngine.charAt(0).toUpperCase() + settings.lastActiveEngine.slice(1)}`,
+    showWave: false
+};
+
+const engineIcons = {
+    google: 'travel_explore', // Changed to represent exploration more
+    yandex: 'search',
+    bing: 'search',
+    duckduckgo: 'search_hands_free',
+    youtube: 'play_circle',
+    github: 'code'
+};
+
+const appIcons = { // Mapping for app icons (based on material symbols)
+    'ChatGPT': 'chat',
+    'Gemini': 'bubble_chart',
+    'Notion': 'article',
+    'Calendar': 'calendar_month',
+    'Gmail': 'mail',
+    'WhatsApp': 'chat_bubble',
+    'Spotify': 'headphones',
+    'GitHub': 'data_object',
+    'MDN Docs': 'menu_book',
+    'Stack Overflow': 'lightbulb',
+    'CodePen': 'code',
+    'Unsplash': 'image'
+};
+
+
+// Function to update the Dynamic Island content
+const updateDynamicIsland = (icon, title, subtitle, showWave = false) => {
+    islandIcon.textContent = icon;
+    islandTitle.textContent = title;
+    islandSubtitle.textContent = subtitle;
+    islandWaveform.style.display = showWave ? 'flex' : 'none';
+    currentIslandState = { icon, title, subtitle, showWave }; // Store current state
+    dynamicIsland.classList.remove('expanded'); // Collapse by default when content changes
+    clearTimeout(islandTimeoutId); // Clear any pending timeouts
+};
+
+// Function to reset the Dynamic Island to its default search engine state
+const resetIslandToDefault = () => {
+    updateDynamicIsland(
+        engineIcons[settings.lastActiveEngine] || defaultIslandContent.icon,
+        defaultIslandContent.title,
+        defaultIslandContent.getSubtitle()
+    );
+    startIslandTimeDateCycle(); // Restart time/date cycle after transient event
+};
+
+
+// --- Dynamic Island Time/Date Cycling ---
+let isTimeDisplay = true; // State for time/date cycle
+
+const updateIslandTimeDate = () => {
+    const now = new Date();
+    if (isTimeDisplay) {
+        const timeOptions = { hour: '2-digit', minute: '2-digit' };
+        updateDynamicIsland(
+            'schedule',
+            now.toLocaleTimeString('de-DE', timeOptions),
+            'Aktuelle Uhrzeit',
+            false // No wave for time/date
+        );
+    } else {
+        const dateOptions = { month: 'short', day: 'numeric' };
+        updateDynamicIsland(
+            'calendar_today',
+            now.toLocaleDateString('de-DE', dateOptions),
+            now.toLocaleDateString('de-DE', { weekday: 'long' }),
+            false // No wave for time/date
+        );
+    }
+    isTimeDisplay = !isTimeDisplay; // Toggle for next cycle
+};
+
+const startIslandTimeDateCycle = () => {
+    clearInterval(islandCycleInterval); // Clear any existing cycle
+    updateIslandTimeDate(); // Initial display
+    islandCycleInterval = setInterval(updateIslandTimeDate, 5000); // Cycle every 5 seconds
+};
+
+// Stop time/date cycle and show specific content
+const showTransientIslandContent = (icon, title, subtitle, showWave = false, duration = 3000) => {
+    clearInterval(islandCycleInterval); // Stop the cycling
+    updateDynamicIsland(icon, title, subtitle, showWave);
+    dynamicIsland.classList.add('expanded'); // Expand for transient content
+
+    islandTimeoutId = setTimeout(() => {
+        resetIslandToDefault(); // Revert to default after duration
+    }, duration);
+};
 
 
 // --- User Avatar & Toggle Logic ---
@@ -66,19 +179,20 @@ let activateEngine = (engine) => {
     settings.lastActiveEngine = engine;
     saveSettings();
 
-    // Update Dynamic Island with active engine info
-    const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
-    showDynamicIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`, false);
-    dynamicIsland.classList.remove('expanded'); // Collapse after selecting engine
+    // Update Dynamic Island to show active search engine
+    updateDynamicIsland(
+        engineIcons[engine] || defaultIslandContent.icon,
+        defaultIslandContent.title,
+        defaultIslandContent.getSubtitle()
+    );
 };
 
-// ADDED: Event listeners for search engine selection buttons
+// Event listeners for search engine selection buttons
 searchEngines.forEach(button => {
     button.addEventListener('click', () => {
         activateEngine(button.dataset.engine);
     });
 });
-
 
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
@@ -96,24 +210,21 @@ searchInput.addEventListener('keypress', (e) => {
             }
             
             // Show Dynamic Island with search animation before opening URL
-            showDynamicIsland('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
-            dynamicIsland.classList.add('expanded');
-
+            showTransientIslandContent('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true, 2000); // 2 second display
+            
             setTimeout(() => {
                 window.open(url, '_blank');
-                // Revert island to original state after search
-                const engineName = activeEngine.charAt(0).toUpperCase() + activeEngine.slice(1);
-                showDynamicIsland(engineIcons[activeEngine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`, false);
-                dynamicIsland.classList.remove('expanded'); // Collapse after action
-            }, 1200); // 1.2 second delay to see animation
+                searchInput.value = ''; // Clear search input
+                resetIslandToDefault(); // Revert island to default after search
+            }, 1800); // Slightly less delay than island display to ensure smooth transition
         }
     }
 });
 
-activateEngine(activeEngine); // Initial activation on load
+activateEngine(activeEngine); // Initialize active engine and island display
 
 
-// --- Time and Date Display ---
+// --- Time and Date Display (Main Section) ---
 const updateDateTime = () => {
     const now = new Date();
     const timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -179,79 +290,25 @@ document.addEventListener('fullscreenchange', () => {
 });
 
 
-// --- Dynamic Island Functionality ---
-const dynamicIslandContainer = document.getElementById('dynamicIslandContainer');
-const dynamicIsland = document.getElementById('dynamicIsland');
-const islandIcon = document.getElementById('islandIcon');
-const islandTitle = document.getElementById('islandTitle');
-const islandSubtitle = document.getElementById('islandSubtitle');
-const islandDismissBtn = document.getElementById('islandDismissBtn');
-const islandWaveform = document.getElementById('islandWaveform');
-
-const engineIcons = {
-    google: 'search',
-    yandex: 'travel_explore',
-    bing: 'search',
-    duckduckgo: 'search_hands_free',
-    youtube: 'play_circle',
-    github: 'code'
-};
-
-// Function to show the dynamic island (always visible, just updates content)
-const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    islandIcon.textContent = icon;
-    islandTitle.textContent = title;
-    islandSubtitle.textContent = subtitle;
-    islandWaveform.style.display = showWave ? 'flex' : 'none';
-    dynamicIslandContainer.classList.remove('hidden'); // Ensure it's never hidden by this function
-    dynamicIsland.classList.remove('expanded'); // Reset expanded state on new content
-};
-
-// Function to "hide" the dynamic island (collapses it and reverts content to active engine)
-const hideDynamicIsland = () => {
-    const engineName = activeEngine.charAt(0).toUpperCase() + activeEngine.slice(1);
-    showDynamicIsland(engineIcons[activeEngine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`, false);
-    dynamicIsland.classList.remove('expanded'); // Ensure it's not expanded when "hidden"
-};
-
-
-// Click-Event zum Erweitern/Verkleinern
+// --- Dynamic Island Click-Event & Dismiss ---
 dynamicIsland.addEventListener('click', (e) => {
-    // Prevent the dismiss button click from toggling island expansion
+    // Prevent dismiss button from toggling expansion
     if (e.target.closest('#islandDismissBtn')) return;
     dynamicIsland.classList.toggle('expanded');
 });
 
-// Insel ausblenden (Dismiss button) - now just collapses and resets content
 islandDismissBtn.addEventListener('click', () => {
-    hideDynamicIsland();
+    dynamicIsland.classList.remove('expanded'); // Just collapse it, don't hide
+    // If it's showing transient content, clear timeout and revert
+    if (islandTimeoutId) {
+        clearTimeout(islandTimeoutId);
+        resetIslandToDefault();
+    }
 });
 
 
 // --- Weather Functionality ---
-// Placeholder for weather data fetch
 const fetchWeather = async (location) => {
-    // In a real application, you would make an API call here.
-    // Example using OpenWeatherMap (you'd need an API key):
-    // const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${apiKey}&units=metric&lang=de`;
-    // try {
-    //     const response = await fetch(url);
-    //     const data = await response.json();
-    //     if (data.cod === 200) {
-    //         const temp = Math.round(data.main.temp);
-    //         const description = data.weather[0].description;
-    //         const icon = getWeatherIcon(data.weather[0].icon); // Custom function to map weather codes to Material Symbols
-    //         return { temp, description, icon, location: data.name };
-    //     } else {
-    //         console.error('Weather API error:', data.message);
-    //         return null;
-    //     }
-    // } catch (error) {
-    //     console.error('Failed to fetch weather:', error);
-    //     return null;
-    // }
-
     // --- MOCK DATA FOR DEMONSTRATION ---
     const mockWeather = {
         'Heidenheim': { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim' },
@@ -263,13 +320,11 @@ const fetchWeather = async (location) => {
         setTimeout(() => {
             const data = mockWeather[location] || mockWeather['Heidenheim'];
             resolve(data);
-        }, 1500); // Simulate network delay
+        }, 800); // Simulate network delay
     });
 };
 
-// Function to get appropriate Material Symbols icon for weather (mockup)
 const getWeatherIcon = (weatherCondition) => {
-    // This would be more complex with actual API data, mapping codes to icons
     switch (weatherCondition.toLowerCase()) {
         case 'clear': return 'sunny';
         case 'clouds': return 'cloud';
@@ -288,30 +343,66 @@ weatherLinkButton.addEventListener('click', async (e) => {
     e.preventDefault(); // Prevent default link behavior
     
     // Show loading state in Dynamic Island
-    showDynamicIsland('refresh', 'Wetter wird geladen...', 'Bitte warten...', true);
-    dynamicIsland.classList.add('expanded');
+    showTransientIslandContent('refresh', 'Wetter wird geladen...', 'Bitte warten...', true, 2500); // Show for 2.5 seconds
 
     const weatherData = await fetchWeather(settings.weatherLocation); // Use saved location
     if (weatherData) {
-        showDynamicIsland(
-            weatherData.icon,
+        showTransientIslandContent(
+            getWeatherIcon(weatherData.icon), // Use actual icon from mock data
             `${weatherData.temp}°C`,
-            `${weatherData.description} in ${weatherData.location}`
+            `${weatherData.description} in ${weatherData.location}`,
+            false, // No waveform for final weather display
+            4000 // Display weather for 4 seconds
         );
-        setTimeout(() => dynamicIsland.classList.remove('expanded'), 4000); // Keep expanded for 4 seconds
     } else {
-        showDynamicIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar.', false);
-        setTimeout(() => hideDynamicIsland(), 3000); // Revert to default state after error
+        showTransientIslandContent('error', 'Fehler', 'Wetterdaten nicht verfügbar.', false, 3000);
     }
 });
 
 
-// Initialer Zustand beim Laden der Seite
+// --- App Card Hover Effect for Dynamic Island ---
+appCards.forEach(card => {
+    let hoverTimeout;
+    card.addEventListener('mouseenter', () => {
+        // Clear any ongoing time/date cycle or previous transient display
+        clearInterval(islandCycleInterval);
+        clearTimeout(islandTimeoutId);
+
+        hoverTimeout = setTimeout(() => {
+            const appName = card.dataset.appName || 'App';
+            const appIcon = card.dataset.appIcon || 'apps';
+            updateDynamicIsland(appIcon, appName, 'Starte App...');
+            dynamicIsland.classList.add('expanded'); // Expand on hover
+        }, 300); // Short delay to prevent flickering on quick mouse-overs
+    });
+
+    card.addEventListener('mouseleave', () => {
+        clearTimeout(hoverTimeout); // Clear the hover timeout if mouse leaves before it triggers
+        if (!dynamicIsland.classList.contains('expanded')) { // Only reset if not manually expanded
+             resetIslandToDefault(); // Revert to default when mouse leaves
+        } else {
+            // If it was expanded, collapse after a short delay, but keep default content
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+            resetIslandToDefault(); // Ensure default content is set even if expanded
+        }
+    });
+
+    // Handle click on app card to ensure island resets after opening app
+    card.addEventListener('click', () => {
+        resetIslandToDefault();
+    });
+});
+
+
+// --- Initial State on Page Load ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Small delay to ensure everything is loaded
-    setTimeout(() => {
-       // Initialize island with active search engine info
-       const engineName = activeEngine.charAt(0).toUpperCase() + activeEngine.slice(1);
-       showDynamicIsland(engineIcons[activeEngine] || 'search', 'Willkommen!', `Aktiv: ${engineName}`, false);
-    }, 100);
+    // Start the time/date cycle by default
+    startIslandTimeDateCycle();
+
+    // Set initial content to default search engine info
+    updateDynamicIsland(
+        engineIcons[settings.lastActiveEngine] || defaultIslandContent.icon,
+        defaultIslandContent.title,
+        defaultIslandContent.getSubtitle()
+    );
 });
