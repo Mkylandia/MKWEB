@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MKWEB OS 7 Compact - Ihr personalisiertes, leistungsstarkes Single-Screen-Dashboard.">
+  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, minimalistisch, animiert, performance, mkweb, produktivität, startseite, single page">
+  <meta name="author" content="MKWEB">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourwebsite.com/">
+  <meta property="og:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
+  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Single-Screen-dashboard.">
+  <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourwebsite.com/">
+  <meta property="twitter:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
+  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Single-Screen-dashboard.">
+  <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg">
   <title>MKWEB OS 7 - Kompaktes Dashboard</title>
-  <!-- Meta-Tags, Fonts etc. bleiben unverändert -->
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,93 +26,59 @@
 </head>
 <body data-theme="dark">
 
-  <!-- NEUE, VERBESSERTE DYNAMIC ISLAND STRUKTUR -->
-  <div class="dynamic-island-container">
-    <div class="dynamic-island" id="dynamicIsland">
-
-      <!-- View 1: Default / Search -->
-      <div class="island-view active-view" id="islandDefaultView">
-        <div class="island-compact-content">
-          <div class="compact-text">
-            <i class="material-symbols-outlined" id="compactIcon">search</i>
-            <div class="compact-text-details">
-              <span id="compactTitle">Willkommen!</span>
-              <span id="compactSubtitle">Wähle eine Suchmaschine</span>
-            </div>
-          </div>
-          <div class="island-waveform" style="display: none;">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- View 2: Media Player (erweitert) -->
-      <div class="island-view" id="islandMediaView">
-        <div class="media-header">
-          <img src="https://picsum.photos/id/1011/100/100" alt="Album Art" id="mediaAlbumArt">
-          <div class="media-info">
-            <div id="mediaTitle">Songtitel</div>
-            <div id="mediaArtist">Künstler</div>
-          </div>
-        </div>
-        <div class="media-controls">
-          <button id="mediaPrevBtn" aria-label="Vorheriger Titel"><span class="material-symbols-outlined">skip_previous</span></button>
-          <button id="mediaPlayPauseBtn" class="play-pause-btn" aria-label="Abspielen"><span class="material-symbols-outlined">play_arrow</span></button>
-          <button id="mediaNextBtn" aria-label="Nächster Titel"><span class="material-symbols-outlined">skip_next</span></button>
-        </div>
-      </div>
-
-      <!-- View 3: Wetter (erweitert) -->
-      <div class="island-view" id="islandWeatherView">
-          <div class="weather-main">
-              <i class="material-symbols-outlined" id="weatherIconLarge">thermostat</i>
-              <div class="weather-main-info">
-                  <span id="weatherTemp">--°</span>
-                  <span id="weatherLocation">Lädt...</span>
+  <div class="dynamic-island-container" id="dynamicIslandContainer">
+      <div class="dynamic-island" id="dynamicIsland">
+          <div class="island-content">
+              <i class="material-symbols-outlined" id="islandIcon">info</i>
+              <div class="island-details">
+                  <span id="islandTitle">Willkommen!</span>
+                  <span id="islandSubtitle">Wähle eine Suchmaschine aus.</span>
               </div>
           </div>
-          <div class="weather-forecast" id="weatherForecast">
-              <!-- Forecast Tage werden hier dynamisch eingefügt -->
+          <div class="island-status">
+              <div class="island-waveform" id="islandWaveform">
+                  <span></span><span></span><span></span><span></span>
+              </div>
+              <button class="island-dismiss" id="islandDismissBtn" aria-label="Insel verkleinern">
+                  <span class="material-symbols-outlined">close</span>
+              </button>
           </div>
       </div>
-
-    </div>
   </div>
 
   <div class="container">
     <header class="header glass">
       <div class="logo" aria-label="MKWEB OS 7 Logo">MKWEB OS 7</div>
       <div class="controls">
-        <button id="fullscreen-btn" class="glass" title="Vollbild umschalten">🚀 Vollbild</button>
-        <button id="user-avatar-toggle" class="glass">🙈 Avatar ausblenden</button>
-        <!-- NEU: Media Player Demo Button -->
-        <button id="showMediaBtn" class="glass" title="Media Player Demo"><span class="material-symbols-outlined">music_note</span></button>
-        <div id="user-avatar" class="user-avatar glass" role="img" aria-label="Benutzer-Avatar">
+        <button id="fullscreen-btn" class="glass" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
+        <button id="user-avatar-toggle" class="glass" aria-label="Benutzer-Avatar ein-/ausblenden">🙈 Avatar ausblenden</button>
+        <div id="user-avatar" class="user-avatar glass" aria-hidden="false" role="img" aria-label="Benutzer-Avatar">
           <span class="material-symbols-outlined">person</span>
         </div>
       </div>
     </header>
 
     <main class="main-grid">
-      <!-- Der Rest des Inhalts bleibt unverändert -->
       <div class="grid-left">
         <section class="time-display glass">
           <h2 class="sr-only">Aktuelle Uhrzeit und Datum</h2>
           <div id="time"></div>
           <div id="date"></div>
         </section>
+
         <section class="weather-link-section glass">
             <h2>Aktuelles Wetter</h2>
             <a href="#" class="weather-link-button glass"> 
                 <span class="material-symbols-outlined weather-icon">cloudy_snowing</span>
                 Wetter in Heidenheim ansehen
             </a>
-            <p class="weather-notice">Klicke, um eine detaillierte Wettervorhersage in der Dynamic Island anzuzeigen.</p>
+            <p class="weather-notice">Klicke, um das aktuelle Wetter in der Dynamic Island anzuzeigen.</p>
         </section>
-      </div>
+        </div>
+
       <div class="grid-right">
         <section class="search-section glass">
-         <h2 class="sr-only">Websuche</h2>
+          <h2 class="sr-only">Websuche</h2>
           <div class="search-engines" role="group" aria-label="Suchmaschinen auswählen">
             <button class="search-engine glass" data-engine="google" aria-pressed="true">Google</button>
             <button class="search-engine glass" data-engine="yandex" aria-pressed="false">Yandex</button>
@@ -114,22 +93,52 @@
             <input type="text" id="search" placeholder="Was suchst du heute?" autocomplete="off">
           </div>
         </section>
+
         <section class="quote-section glass">
-          <!-- Quote-Inhalt bleibt unverändert -->
           <h2 class="sr-only">Tägliches Zitat</h2>
           <p id="quote-text"></p>
           <small id="quote-author"></small>
         </section>
         <section class="apps-section glass">
-          <!-- Apps-Inhalt bleibt unverändert -->
           <h2 id="apps-heading">✨ Apps & Bookmarks</h2>
           <div class="apps-container">
-            <!-- App-Karten bleiben unverändert -->
-            <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined icon">chat</span><div class="label">ChatGPT</div></a>
-            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined icon">bubble_chart</span><div class="label">Gemini</div></a>
-            <a class="app-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined icon">article</span><div class="label">Notion</div></a>
-            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined icon">calendar_month</span><div class="label">Calendar</div></a>
-           </div>
+            <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT">
+              <span class="material-symbols-outlined icon">chat</span><div class="label">ChatGPT</div>
+            </a>
+            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Gemini">
+              <span class="material-symbols-outlined icon">bubble_chart</span><div class="label">Gemini</div>
+            </a>
+            <a class="app-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer" title="Zu Notion">
+              <span class="material-symbols-outlined icon">article</span><div class="label">Notion</div>
+            </a>
+            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Calendar">
+              <span class="material-symbols-outlined icon">calendar_month</span><div class="label">Calendar</div>
+            </a>
+            <a class="app-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail">
+              <span class="material-symbols-outlined icon">mail</span><div class="label">Gmail</div>
+            </a>
+            <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web">
+              <span class="material-symbols-outlined icon">chat_bubble</span><div class="label">WhatsApp</div>
+            </a>
+            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify">
+              <span class="material-symbols-outlined icon">headphones</span><div class="label">Spotify</div>
+            </a>
+            <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub">
+              <span class="material-symbols-outlined icon">data_object</span><div class="label">GitHub</div>
+            </a>
+            <a class="app-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" title="Zur MDN Web Docs">
+                <span class="material-symbols-outlined icon">menu_book</span><div class="label">MDN Docs</div>
+            </a>
+            <a class="app-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow">
+                <span class="material-symbols-outlined icon">lightbulb</span><div class="label">Stack Overflow</div>
+            </a>
+            <a class="app-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" title="Zu CodePen">
+                <span class="material-symbols-outlined icon">code</span><div class="label">CodePen</div>
+            </a>
+            <a class="app-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" title="Zu Unsplash">
+                <span class="material-symbols-outlined icon">image</span><div class="label">Unsplash</div>
+            </a>
+         </div>
         </section>
       </div>
     </main>
