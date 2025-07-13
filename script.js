@@ -67,6 +67,14 @@ let activateEngine = (engine) => {
     saveSettings();
 };
 
+// ADDED: Event listeners for search engine selection buttons
+searchEngines.forEach(button => {
+    button.addEventListener('click', () => {
+        activateEngine(button.dataset.engine);
+    });
+});
+
+
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         const query = searchInput.value.trim();
