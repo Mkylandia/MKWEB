@@ -81,25 +81,13 @@ const appIcons = { // Mapping for app icons (based on material symbols)
 
 // Function to update the Dynamic Island content
 const updateDynamicIsland = (icon, title, subtitle, showWave = false) => {
-    // Start fade-out before changing content
-    islandIcon.style.opacity = '0';
-    islandTitle.style.opacity = '0';
-    islandSubtitle.style.opacity = '0';
-
-    setTimeout(() => {
-        islandIcon.textContent = icon;
-        islandTitle.textContent = title;
-        islandSubtitle.textContent = subtitle;
-        islandWaveform.style.display = showWave ? 'flex' : 'none';
-        currentIslandState = { icon, title, subtitle, showWave }; // Store current state
-        dynamicIsland.classList.remove('expanded'); // Collapse by default when content changes
-        clearTimeout(islandTimeoutId); // Clear any pending timeouts
-
-        // Fade-in new content
-        islandIcon.style.opacity = '1';
-        islandTitle.style.opacity = '1';
-        islandSubtitle.style.opacity = '1';
-    }, 150); // Small delay for fade-out to be visible before content change
+    islandIcon.textContent = icon;
+    islandTitle.textContent = title;
+    islandSubtitle.textContent = subtitle;
+    islandWaveform.style.display = showWave ? 'flex' : 'none';
+    currentIslandState = { icon, title, subtitle, showWave }; // Store current state
+    // dynamicIsland.classList.remove('expanded'); // <-- Diese Zeile wurde entfernt, um das unerwünschte Zusammenklappen zu verhindern.
+    clearTimeout(islandTimeoutId); // Clear any pending timeouts
 };
 
 // Function to reset the Dynamic Island to its default search engine state
@@ -151,6 +139,7 @@ const showTransientIslandContent = (icon, title, subtitle, showWave = false, dur
     dynamicIsland.classList.add('expanded'); // Expand for transient content
 
     islandTimeoutId = setTimeout(() => {
+        dynamicIsland.classList.remove('expanded'); // Collapse after duration
         resetIslandToDefault(); // Revert to default after duration
     }, duration);
 };
