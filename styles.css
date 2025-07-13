@@ -754,3 +754,131 @@ button:hover {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ===== Dynamic Island - Nützliche Erweiterung ===== */
+.dynamic-island-container {
+    position: fixed;
+    top: var(--fluid-padding-m);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; /* Erhöht, um über allem zu liegen */
+    perspective: 1000px;
+    transition: transform 0.4s var(--t-timing-smooth), opacity 0.4s var(--t-timing-smooth);
+}
+
+.dynamic-island-container.hidden {
+    transform: translateX(-50%) translateY(-150%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dynamic-island {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fluid-gap-s);
+    padding: var(--fluid-padding-s);
+    background-color: var(--bg);
+    border-radius: 50px;
+    box-shadow: var(--s);
+    border: 1px solid var(--gb);
+    color: var(--fg);
+    cursor: pointer;
+    transition: all 0.5s var(--t-timing-elastic);
+    width: 220px; /* Startbreite */
+}
+
+.dynamic-island.expanded {
+    width: 380px;
+}
+
+.island-content {
+    display: flex;
+    align-items: center;
+    gap: var(--fluid-gap-s);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#islandIcon {
+    font-size: 1.5rem;
+    color: var(--acc);
+    transition: transform 0.4s var(--t-timing-elastic);
+}
+
+.island-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#islandTitle {
+    font-weight: 700;
+    font-size: var(--fluid-min-font);
+}
+
+#islandSubtitle {
+    font-size: calc(var(--fluid-min-font) * 0.85);
+    color: var(--dim);
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.island-status {
+    display: flex;
+    align-items: center;
+    gap: var(--fluid-gap-s);
+}
+
+.island-waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.island-waveform span {
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(130deg, var(--acc), var(--ah));
+    border-radius: 2px;
+    animation: wave 1.5s ease-in-out infinite alternate;
+}
+
+.island-waveform span:nth-child(2) { animation-delay: -0.3s; }
+.island-waveform span:nth-child(3) { animation-delay: -0.6s; }
+.island-waveform span:nth-child(4) { animation-delay: -0.9s; }
+
+.island-dismiss {
+    display: none; /* Wird nur im expanded-Modus angezeigt */
+    background: rgba(var(--fg-rgb), 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Override button padding */
+    transition: background 0.3s ease;
+}
+.island-dismiss .material-symbols-outlined {
+    font-size: 16px;
+}
+.island-dismiss:hover {
+    background: rgba(var(--fg-rgb), 0.2);
+    transform: translateY(0); /* Override button hover */
+    box-shadow: none; /* Override button hover */
+}
+
+.dynamic-island.expanded .island-dismiss {
+    display: flex;
+}
+
+.dynamic-island.expanded #islandWaveform {
+    display: flex;
+}
+
+@keyframes wave {
+    from { transform: scaleY(0.2); }
+    to { transform: scaleY(1); }
+}
