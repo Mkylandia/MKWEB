@@ -1,4 +1,4 @@
-/* styles.css - MKWEB OS 7: Ultimate Elegance (Enhanced) */
+/* styles.css - MKWEB OS 7: Ultimate Elegance */
 /* Premium Suchmaschinen-Auswahl mit klaren, eleganten Animationen */
 
 :root {
@@ -23,8 +23,6 @@
   --t-timing-bounce: cubic-bezier(0.34, 1.65, 0.64, 1.1);
   --t-timing-smooth: cubic-bezier(0.26, 0.53, 0.46, 0.99);
   --t-timing-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --t-timing-ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1.1); /* New timing function */
-
 
   --hover-transition: all var(--t-normal) var(--t-timing-smooth);
 
@@ -73,21 +71,9 @@ body {
   flex-direction: column;
   position: relative;
   text-rendering: optimizeLegibility;
-  /* Enhanced background animation */
   background-image:
     radial-gradient(circle at 20% 30%, rgba(40, 20, 70, 0.05) 0%, transparent 30%),
     radial-gradient(circle at 80% 70%, rgba(60, 30, 90, 0.05) 0%, transparent 30%);
-  background-size: 200% 200%;
-  animation: background-animation 25s ease-in-out infinite alternate;
-}
-
-@keyframes background-animation {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 100% 100%;
-  }
 }
 
 /* ===== Container & Layout ===== */
@@ -136,13 +122,13 @@ body {
   box-shadow: var(--s);
   transition: var(--hover-transition);
   position: relative;
-  overflow: visible; /* Ensure pseudo-elements are visible */
+  overflow: visible;
 }
 .glass:hover {
   box-shadow: var(--sh);
-  transform: translateY(-2px) scale(1.005); /* Subtle scale for more pop */
+  transform: translateY(-2px);
 }
-.glass::before { /* Added for consistent glow, even without hover */
+.glass:hover::before {
   content: '';
   position: absolute;
   top: 0;
@@ -150,23 +136,10 @@ body {
   right: 0;
   bottom: 0;
   border-radius: var(--r);
-  box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.05); /* Fainter initial glow */
+  box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.15);
   pointer-events: none;
   z-index: -1;
-  transition: all var(--t-normal) ease-out; /* Smooth transition for before */
-}
-.glass:hover::before {
-  box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.35); /* Stronger glow on hover */
-  animation: pulseGlow 3s infinite; /* Keep pulse on hover */
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.25), 0 0 15px rgba(var(--acc-rgb), 0.1);
-  }
-  50% {
-    box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.4), 0 0 25px rgba(var(--acc-rgb), 0.2);
-  }
+  animation: pulseGlow 3s infinite;
 }
 
 /* ===== Header-Bereich ===== */
@@ -189,8 +162,8 @@ body {
   transition: all var(--t-slow) var(--t-timing-smooth);
 }
 .logo:hover {
-  transform: translateY(-3px) scale(1.01); /* More pronounced hover */
-  text-shadow: 0 0 20px rgba(var(--acc-rgb), 0.2); /* Stronger shadow */
+  transform: translateY(-2px);
+  text-shadow: 0 0 15px rgba(var(--acc-rgb), 0.1);
 }
 
 .controls {
@@ -215,8 +188,8 @@ button {
   overflow: visible;
 }
 button:hover {
-  transform: translateY(-4px); /* More lift */
-  box-shadow: 0 8px 20px rgba(var(--acc-rgb), 0.2); /* Stronger shadow */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(var(--acc-rgb), 0.15);
 }
 
 .user-avatar {
@@ -235,9 +208,8 @@ button:hover {
   position: relative;
 }
 .user-avatar:hover {
-  transform: translateY(-5px) rotate(5deg); /* Added subtle rotation */
-  box-shadow: 0 10px 25px rgba(var(--acc-rgb), 0.3); /* Stronger shadow */
-  color: var(--ah); /* Color change on hover */
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(var(--acc-rgb), 0.2);
 }
 
 /* ===== Premium Suchmaschinen-Auswahl ===== */
@@ -265,50 +237,40 @@ button:hover {
   font-weight: 600;
   font-size: clamp(0.6rem, 0.88vw, 1rem);
   background: var(--gl);
-  transition: all 0.4s var(--t-timing-ease-out-back); /* Enhanced transition */
+  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   position: relative;
   border: 1px solid transparent;
   transform-style: preserve-3d;
   cursor: pointer;
-  overflow: hidden; /* For smooth background glow */
 }
 .search-engine::before {
   content: '';
   position: absolute;
-  top: -50%; /* Start higher */
-  left: -50%; /* Start further left */
-  width: 200%; /* Cover more area */
-  height: 200%; /* Cover more area */
-  border-radius: 50%; /* Circular glow */
-  background: radial-gradient(circle, rgba(var(--acc-rgb), 0.6) 0%, transparent 70%); /* Stronger radial glow */
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 32px;
+  background: linear-gradient(45deg, var(--acc), var(--ah), var(--acc));
   z-index: -1;
   opacity: 0;
-  transition: opacity 0.5s ease, transform 0.8s ease; /* Transition glow */
-  transform: scale(0); /* Initially hidden */
+  transition: opacity 0.3s ease;
 }
 .search-engine:hover {
-  transform: translateY(-5px) scale(1.06); /* More lift and scale */
-  box-shadow: 0 8px 20px rgba(var(--acc-rgb), 0.25);
-  color: var(--fg); /* Ensure text stays bright */
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(var(--acc-rgb), 0.2);
 }
 .search-engine:hover::before {
-  opacity: 0.6; /* More visible glow */
-  transform: scale(1); /* Reveal glow */
+  opacity: 0.4;
 }
 .search-engine.active {
   background: linear-gradient(130deg, var(--acc), #6a2db8);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.3);
-  box-shadow: 0 0 25px rgba(var(--acc-rgb), 0.4),
-              inset 0 3px 6px rgba(255,255,255,0.25); /* Enhanced shadow */
-  animation: selectPulse 0.8s ease-out; /* Slightly longer pulse */
-  transform: translateY(-4px) scale(1.09); /* More prominent active state */
-}
-
-@keyframes selectPulse {
-  0% { transform: translateY(0) scale(1); box-shadow: none; }
-  50% { transform: translateY(-5px) scale(1.1); box-shadow: 0 0 30px rgba(var(--acc-rgb), 0.5); }
-  100% { transform: translateY(-4px) scale(1.09); box-shadow: 0 0 25px rgba(var(--acc-rgb), 0.4); }
+  box-shadow: 0 0 20px rgba(var(--acc-rgb), 0.3),
+              inset 0 2px 4px rgba(255,255,255,0.2);
+  animation: selectPulse 0.6s ease-out;
+  transform: translateY(-3px) scale(1.08);
 }
 
 /* ===== Suchbox mit deutlicherer Umrandung ===== */
@@ -317,29 +279,29 @@ button:hover {
   align-items: center;
   border-radius: var(--r);
   padding: var(--fluid-padding-s);
-  transition: all var(--t-normal) var(--t-timing-smooth), border-color 0.3s ease; /* Separate border transition */
+  transition: var(--hover-transition);
   border: 1px solid rgba(var(--fg-rgb), 0.1);
   background: var(--gl);
   backdrop-filter: blur(16px) saturate(140%);
   box-shadow: var(--s);
   position: relative;
-  overflow: hidden; /* For inner glow effect */
+  overflow: visible;
 }
 .search-box:focus-within {
-  transform: translateY(-4px) scale(1.005); /* More lift */
-  box-shadow: 0 10px 30px rgba(var(--acc-rgb), 0.35); /* Stronger shadow */
-  border: 1px solid var(--ah); /* Brighter accent color */
-  animation: borderGlow 2s infinite alternate; /* Keep animation infinite */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(var(--acc-rgb), 0.25);
+  border: 1px solid var(--acc);
+  animation: borderGlow 2s infinite;
 }
 .search-box:focus-within .search-icon {
   color: var(--ah);
-  transform: scale(1.2) rotate(-5deg); /* More active icon */
+  transform: scale(1.1);
 }
 
 .search-icon {
   font-size: clamp(1rem, 1.2vw, 1.8rem);
   color: var(--dim);
-  transition: all 0.3s var(--t-timing-elastic); /* Elastic transition */
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 #search {
@@ -357,8 +319,8 @@ button:hover {
   transition: all 0.3s ease;
 }
 #search:focus::placeholder {
-  opacity: 0.6; /* Slightly more transparent */
-  transform: translateX(8px); /* More pronounced slide */
+  opacity: 0.7;
+  transform: translateX(5px);
 }
 
 /* ===== Premium Zeit-Anzeige mit Animationen ===== */
@@ -373,24 +335,13 @@ button:hover {
   transition: var(--hover-transition);
   position: relative;
   border-radius: var(--r);
-  overflow: hidden; /* For background shimmer */
-}
-.time-display:hover {
-    box-shadow: var(--sh); /* Inherit glass hover shadow */
-    transform: translateY(-3px); /* Inherit glass hover transform */
-    background: linear-gradient(135deg, var(--gl), rgba(255,255,255,0.08)); /* Subtle background shift */
 }
 .time-display:hover #time {
-  animation: subtleGlow 3.5s ease-in-out infinite alternate; /* Slightly faster pulse */
-  background: linear-gradient(65deg, var(--ah), var(--acc)); /* Reverse gradient on hover */
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  animation: subtleGlow 4s ease-in-out infinite;
 }
 .time-display:hover #date {
-  color: var(--ah); /* Date color to accent */
-  transform: translateY(0); /* Remove translateY on hover */
-  letter-spacing: clamp(0.5px, 0.2vw, 3px); /* Increased letter spacing */
+  color: rgba(255,255,255,0.8);
+  transform: translateY(2px);
 }
 
 #time {
@@ -403,7 +354,6 @@ button:hover {
   -webkit-text-fill-color: transparent;
   letter-spacing: -1.5px;
   transition: all var(--t-normal) ease;
-  position: relative; /* For glow effect */
 }
 
 #date {
@@ -413,11 +363,6 @@ button:hover {
   text-transform: uppercase;
   letter-spacing: clamp(0.3px, 0.1vw, 2.2px);
   transition: all var(--t-normal) ease;
-}
-
-@keyframes subtleGlow {
-  0%, 100% { filter: brightness(1); text-shadow: 0 0 8px rgba(var(--acc-rgb), 0.2); }
-  50% { filter: brightness(1.2); text-shadow: 0 0 15px rgba(var(--acc-rgb), 0.4); }
 }
 
 /* ===== Premium Zitate Sektion ===== */
@@ -434,12 +379,10 @@ button:hover {
   transition: var(--hover-transition);
 }
 .quote-section:hover #quote-text {
-  text-shadow: 0 0 10px rgba(255,255,255,0.1); /* Stronger shadow */
-  transform: translateY(-3px) scale(1.005); /* Subtle lift and scale */
+  text-shadow: 0 0 6px rgba(255,255,255,0.05);
 }
 .quote-section:hover #quote-author {
   color: var(--ah);
-  transform: translateY(2px); /* Slight movement */
 }
 
 #quote-text {
@@ -451,7 +394,7 @@ button:hover {
   max-width: 85%;
   position: relative;
   padding: 0 1.8rem;
-  transition: all var(--t-normal) ease; /* Smoother transition */
+  transition: all var(--t-slow) ease;
 }
 #quote-text::before, #quote-text::after {
   content: '"';
@@ -461,25 +404,18 @@ button:hover {
   color: var(--acc);
   opacity: 0.2;
   font-family: Georgia, serif;
-  transition: opacity var(--t-normal) ease, transform var(--t-normal) ease; /* Added transform transition */
+  transition: opacity var(--t-normal) ease;
 }
 #quote-text::before {
   top: 0.6em;
   left: -0.4em;
-  transform: rotate(-10deg); /* Initial rotation */
 }
 #quote-text::after {
   bottom: 0.4em;
   right: -0.4em;
-  transform: rotate(10deg); /* Initial rotation */
 }
-#quote-text:hover::before {
-    opacity: 0.4;
-    transform: rotate(-15deg) scale(1.1); /* More pronounced rotation and scale */
-}
-#quote-text:hover::after {
-    opacity: 0.4;
-    transform: rotate(15deg) scale(1.1); /* More pronounced rotation and scale */
+#quote-text:hover::before, #quote-text:hover::after {
+  opacity: 0.4;
 }
 
 #quote-author {
@@ -487,7 +423,7 @@ button:hover {
   color: var(--dim);
   font-weight: 500;
   letter-spacing: 0.6px;
-  transition: color var(--t-normal) ease, transform var(--t-normal) ease;
+  transition: color var(--t-normal) ease;
 }
 #quote-author::before {
   content: "— ";
@@ -506,11 +442,12 @@ button:hover {
   transition: var(--hover-transition);
 }
 .weather-link-section:hover .weather-link-button {
-  animation: float 2.5s ease-in-out infinite alternate; /* Slightly faster float */
+  animation: float 3s ease-in-out infinite;
 }
 .weather-link-section:hover .weather-icon {
-  animation: pulse 1s infinite alternate; /* Faster pulse */
+  animation: pulse 1.5s infinite;
 }
+
 .weather-link-section h2 {
   font-size: clamp(0.85rem, var(--fluid-header-font), 1.5rem);
   font-weight: 700;
@@ -518,9 +455,9 @@ button:hover {
   transition: transform var(--t-normal) ease;
 }
 .weather-link-section h2:hover {
-  transform: translateY(-3px) scale(1.01); /* More lift */
-  color: var(--ah); /* Color change on hover */
+  transform: translateY(-2px);
 }
+
 .weather-link-button {
   display: inline-flex;
   align-items: center;
@@ -536,209 +473,397 @@ button:hover {
   border-radius: var(--r);
   box-shadow: var(--s);
   position: relative;
-  overflow: hidden; /* For inner glow */
+  overflow: visible;
 }
 .weather-link-button:hover {
-  transform: translateY(-4px) scale(1.01); /* More lift */
-  box-shadow: 0 8px 20px rgba(var(--acc-rgb), 0.25);
+  transform: translateY(-4px);
+  border: 1px solid var(--acc);
+  box-shadow: 0 6px 20px rgba(var(--acc-rgb), 0.25);
 }
-.weather-link-button::before { /* Inner glow on hover */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: var(--r);
-  box-shadow: inset 0 0 10px rgba(var(--acc-rgb), 0.2);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.weather-link-button:hover::before {
-  opacity: 1;
-}
-
-.weather-icon {
-  font-size: clamp(1.2rem, 1.5vw, 2rem);
+.weather-link-button .weather-icon {
+  font-size: clamp(1.1rem, 1.3vw, 2.4rem);
   color: var(--acc);
-  transition: color var(--t-normal) ease, transform var(--t-normal) ease;
+  transition: all var(--t-normal) var(--t-timing-elastic);
 }
 .weather-link-button:hover .weather-icon {
-  color: var(--ah);
-  transform: rotate(15deg) scale(1.1); /* Rotate and scale on hover */
+  transform: scale(1.15) rotate(5deg);
 }
 
-/* ===== Premium App-Karten ===== */
-.app-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: var(--fluid-gap-s);
+.weather-notice {
+  margin-top: var(--fluid-padding-s);
+  font-size: clamp(0.55rem, var(--fluid-min-font), 0.9rem);
+  color: var(--dim);
+  max-width: 85%;
+  line-height: 1.5;
+  transition: opacity var(--t-normal) ease;
+}
+.weather-notice:hover {
+  opacity: 0.9;
+}
+
+/* ===== Apps Bereich ===== */
+.apps-section {
   width: 100%;
   padding: var(--fluid-padding-s);
-  align-content: start;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   min-height: 0;
-  overflow-y: auto; /* Allow scrolling if many apps */
-  padding-bottom: var(--fluid-padding-s); /* Ensure padding at bottom for scroll */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  overflow: visible;
+  transition: var(--hover-transition);
 }
-.app-grid::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
-    display: none;
+.apps-section:hover h2 {
+  color: var(--ah);
+}
+
+.apps-section h2 {
+  margin-bottom: var(--fluid-padding-s);
+  font-size: clamp(0.8rem, var(--fluid-header-font), 1.5rem);
+  font-weight: 700;
+  text-align: center;
+  color: var(--dim);
+  letter-spacing: 0.5px;
+  transition: color var(--t-normal) ease;
+}
+
+.apps-container {
+  grid-template-columns: repeat(auto-fill, minmax(clamp(52px, 7vw + 4.3vh, 104px), 1fr));
+  gap: var(--fluid-gap-s);
+  padding: var(--fluid-padding-xs);
+  flex-grow: 1;
+  min-height: 0;
+  display: grid;
+  max-height: 100%;
+  overflow: visible;
 }
 
 .app-card {
+  padding: clamp(0.4rem, 0.6vw + 0.4vh, 1.1rem);
+  text-decoration: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--fluid-padding-s);
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.3s var(--t-timing-ease-out-back); /* More dynamic transition */
+  aspect-ratio: 1 / 1;
   position: relative;
-  border: var(--border-width) solid var(--gb);
-  border-radius: var(--r);
+  border: 1px solid transparent;
   background: var(--gl);
   backdrop-filter: blur(16px) saturate(140%);
+  border-radius: var(--r);
   box-shadow: var(--s);
-  overflow: hidden; /* For new inner glow */
+  transition: transform var(--t-slow) var(--t-timing-bounce),
+              box-shadow var(--t-normal) ease,
+              background var(--t-normal) ease;
 }
 .app-card:hover {
-  transform: translateY(-7px) scale(1.08); /* More lift and scale */
-  box-shadow: 0 12px 30px rgba(var(--acc-rgb), 0.4); /* Stronger shadow */
-  border-color: var(--acc); /* Border highlight on hover */
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.06)); /* Subtle background change */
-}
-.app-card::before { /* Inner glow effect */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: var(--r);
-  box-shadow: inset 0 0 15px rgba(var(--acc-rgb), 0.2);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.app-card:hover::before {
-  opacity: 1;
-}
-
-.app-card .icon {
-  font-size: clamp(1.8rem, 2.2vw, 3.5rem);
-  color: var(--acc);
-  margin-bottom: var(--fluid-gap-xs);
-  transition: all 0.3s var(--t-timing-elastic);
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(var(--acc-rgb), 0.15);
+  z-index: 10;
 }
 .app-card:hover .icon {
-  transform: scale(1.15) rotate(-5deg); /* Icon grows and rotates */
+  transform: scale(1.12) rotate(5deg);
+  color: var(--ah);
+}
+.app-card:hover .label {
   color: var(--ah);
 }
 
-.app-card .label {
-  font-size: clamp(0.6rem, 0.85vw, 1rem);
-  color: var(--fg);
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  transition: color 0.3s ease;
-}
-.app-card:hover .label {
-    color: var(--fg); /* Ensure text stays bright */
+.app-card .icon {
+  font-family: 'Material Symbols Outlined';
+  font-size: clamp(1.1rem, 1.7vw + 1.7vh, 2.7rem);
+  margin-bottom: clamp(0.15rem, 0.3vw + 0.15vh, 0.6rem);
+  display: block;
+  transition: all var(--t-slow) var(--t-timing-elastic);
 }
 
-/* ===== Dynamic Island - Premium Style & Animations ===== */
+.app-card .label {
+  font-size: clamp(0.45rem, 0.6vw + 0.35vh, 1rem);
+  font-weight: 500;
+  line-height: 1.2;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: center;
+  transition: color var(--t-normal) ease;
+}
+
+/* ===== Verfeinerte Animationen ===== */
+@keyframes subtleGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(var(--acc-rgb), 0);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(var(--acc-rgb), 0.2);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.15);
+  }
+  50% {
+    box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.3);
+  }
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(var(--acc-rgb), 0.1);
+  }
+  50% {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(var(--acc-rgb), 0.2);
+  }
+}
+
+@keyframes floatText {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes selectPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--acc-rgb), 0.5),
+                0 0 20px rgba(var(--acc-rgb), 0.3);
+    transform: translateY(-3px) scale(1);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(var(--acc-rgb), 0),
+                0 0 25px rgba(var(--acc-rgb), 0.4);
+    transform: translateY(-3px) scale(1.12);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(var(--acc-rgb), 0.3),
+                inset 0 2px 4px rgba(255,255,255,0.2);
+    transform: translateY(-3px) scale(1.08);
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    box-shadow: 0 8px 25px rgba(var(--acc-rgb), 0.25),
+                inset 0 0 0 1px var(--acc);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(var(--acc-rgb), 0.4),
+                inset 0 0 0 1px var(--ah);
+  }
+}
+
+/* ===== Media Queries ===== */
+@media (max-width: 992px) {
+  html {
+    font-size: clamp(6px, 0.75vw + 0.45vh, 16px);
+  }
+
+  .container {
+    padding: var(--fluid-padding-m);
+    gap: var(--fluid-gap-m);
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: var(--fluid-gap-m);
+    overflow-y: auto;
+    height: auto;
+  }
+
+  .time-display,
+  .search-section,
+  .weather-link-section,
+  .quote-section {
+    flex-grow: 0;
+    padding: var(--fluid-padding-s);
+  }
+
+  #time {
+    font-size: clamp(1.8rem, 7.5vw, 5rem);
+  }
+
+  .time-display:hover::before,
+  .quote-section:hover::before,
+  .app-card:hover::before {
+    box-shadow: inset 0 0 0 1px rgba(var(--acc-rgb), 0.1);
+  }
+
+  .time-display:hover #time {
+    animation: none;
+    text-shadow: 0 0 8px rgba(var(--acc-rgb), 0.08);
+  }
+
+  #quote-text {
+    font-size: clamp(0.85rem, 1.2vw + 1vh, 1.15rem);
+    padding: 0 1.5rem;
+  }
+  #quote-text::before, #quote-text::after {
+    font-size: 3em;
+  }
+
+  .apps-container {
+    grid-template-columns: repeat(auto-fill, minmax(clamp(46px, 9vw + 6vh, 82px), 1fr));
+  }
+
+  .search-engine {
+    padding: 0.35rem 0.9rem;
+  }
+  .search-engine.active {
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .search-box:focus-within {
+    transform: translateY(-2px);
+  }
+}
+
+/* ===== Hilfsklassen ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ===== Dynamic Island - Nützliche Erweiterung ===== */
 .dynamic-island-container {
-    position: fixed;
-    top: 20px; /* Adjusted to be slightly below top edge */
+    position: fixed; /* Changed from absolute to fixed */
+    top: var(--fluid-padding-m);
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    pointer-events: none; /* Allows clicks to pass through if not interacting with island itself */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    perspective: 1000px;
+    /* Removed opacity and transform transitions for hidden state */
+    transition: all 0.5s var(--t-timing-smooth); /* Smooth transitions for other properties */
+    /* Always visible */
+    opacity: 1;
+    pointer-events: auto;
 }
+
+/* Removed .dynamic-island-container.hidden rule */
 
 .dynamic-island {
     display: flex;
     align-items: center;
-    background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(40,40,40,0.95)); /* Darker, more solid background */
-    backdrop-filter: blur(24px) saturate(180%); /* Stronger blur */
-    border: 1px solid rgba(255, 255, 255, 0.12); /* Slightly more prominent border */
-    border-radius: 30px; /* More rounded */
-    padding: 8px 15px; /* Adjusted padding */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4), inset 0 0 10px rgba(255,255,255,0.05); /* Deeper shadow */
+    justify-content: space-between;
+    gap: var(--fluid-gap-s);
+    padding: var(--fluid-padding-s);
+    background-color: var(--bg);
+    border-radius: 50px;
+    box-shadow: var(--s);
+    border: 1px solid var(--gb);
     color: var(--fg);
-    min-width: 60px; /* Smallest default size */
-    height: 38px; /* Fixed height for compact state */
-    overflow: hidden; /* Hide overflowing content */
-    transition: width var(--t-normal) var(--t-timing-smooth),
-                padding var(--t-normal) var(--t-timing-smooth),
-                transform var(--t-normal) var(--t-timing-smooth),
-                height var(--t-normal) var(--t-timing-smooth),
-                background 0.3s ease, box-shadow 0.3s ease; /* Explicit transitions */
-    pointer-events: auto; /* Allow interaction */
-    gap: var(--fluid-gap-s); /* Gap between elements */
-    justify-content: space-between; /* Space out content and status */
-    position: relative;
+    cursor: pointer;
+    transition: all 0.5s var(--t-timing-elastic), box-shadow 0.3s ease, border-color 0.3s ease; /* Enhanced transition */
+    width: 220px; /* Startbreite */
+    position: relative; /* For glow effect */
 }
 
+.dynamic-island:hover {
+  box-shadow: 0 0 20px rgba(var(--acc-rgb), 0.25), var(--sh); /* More prominent shadow on hover */
+  border-color: var(--acc); /* Border highlight on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.dynamic-island::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 52px; /* Slightly larger for glow */
+    background: radial-gradient(circle at center, rgba(var(--acc-rgb), 0.3) 0%, transparent 70%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    pointer-events: none;
+}
+
+.dynamic-island:hover::before {
+    opacity: 1;
+    animation: pulseIslandGlow 2s infinite alternate; /* New glow animation */
+}
+
+
 .dynamic-island.expanded {
-    width: clamp(200px, 20vw, 380px); /* Expanded width */
-    height: 55px; /* Expanded height */
-    padding: 10px 20px; /* Larger padding when expanded */
-    border-radius: 40px; /* More rounded on expand */
-    box-shadow: 0 12px 35px rgba(0,0,0,0.5), inset 0 0 15px rgba(var(--acc-rgb), 0.15); /* More prominent shadow */
-    animation: pulseIslandGlow 3s ease-in-out infinite alternate; /* Apply glow when expanded */
+    width: 380px;
+    padding: var(--fluid-padding-s) var(--fluid-padding-m); /* Slightly more padding when expanded */
+    box-shadow: 0 0 30px rgba(var(--acc-rgb), 0.35), var(--sh); /* Stronger shadow when expanded */
+    border-color: var(--ah); /* Stronger border when expanded */
 }
 
 .island-content {
     display: flex;
     align-items: center;
     gap: var(--fluid-gap-s);
-    flex-grow: 1; /* Allows content to take available space */
-    min-width: 0; /* Ensures content can shrink */
+    overflow: hidden;
+    white-space: nowrap;
+    flex-grow: 1; /* Allow content to take available space */
 }
 
-.island-content .material-symbols-outlined {
-    font-size: 22px; /* Icon size */
-    color: var(--acc); /* Accent color for icon */
-    transition: all 0.3s ease;
+#islandIcon {
+    font-size: 1.5rem;
+    color: var(--acc);
+    transition: transform 0.4s var(--t-timing-elastic), color 0.3s ease; /* Added color transition */
 }
-.dynamic-island.expanded .island-content .material-symbols-outlined {
-    font-size: 28px; /* Larger icon when expanded */
+
+.dynamic-island.expanded #islandIcon {
+  transform: scale(1.15); /* Slightly bigger when expanded */
+  color: var(--ah); /* Color change when expanded */
 }
+
 
 .island-details {
     display: flex;
     flex-direction: column;
-    min-width: 0;
     overflow: hidden;
-    white-space: nowrap;
-}
-
-.island-details span {
-    font-size: clamp(0.7rem, 0.8vw, 1.1rem);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    color: var(--fg);
 }
 
 #islandTitle {
-    font-weight: 600;
-    letter-spacing: -0.3px;
-    transition: all 0.3s ease;
+    font-weight: 700;
+    font-size: var(--fluid-min-font);
+    white-space: nowrap; /* Prevent title from wrapping */
+    text-overflow: ellipsis; /* Ellipsis for overflowing title */
+    overflow: hidden; /* Hide overflow */
 }
+
 #islandSubtitle {
-    font-size: clamp(0.6rem, var(--fluid-min-font) * 0.85, 0.9rem);
+    font-size: calc(var(--fluid-min-font) * 0.85);
     color: var(--dim);
-    transition: all 0.3s ease;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .island-status {
@@ -751,7 +876,7 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 3px;
-    transition: opacity 0.3s ease;
+    /* Improved wave animation */
 }
 
 .island-waveform span {
@@ -759,21 +884,15 @@ button:hover {
     height: 20px;
     background: linear-gradient(130deg, var(--acc), var(--ah));
     border-radius: 2px;
-    animation: wave 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate; /* Smoother wave */
+    animation: wave 1.5s ease-in-out infinite alternate;
 }
 
-.island-waveform span:nth-child(1) { animation-delay: -0.1s; } /* Adjusted delays */
-.island-waveform span:nth-child(2) { animation-delay: -0.25s; }
-.island-waveform span:nth-child(3) { animation-delay: -0.4s; }
-.island-waveform span:nth-child(4) { animation-delay: -0.55s; }
-
-@keyframes wave {
-  0%, 100% { height: 10px; transform: translateY(5px); }
-  50% { height: 30px; transform: translateY(-5px); }
-}
+.island-waveform span:nth-child(2) { animation-delay: -0.3s; }
+.island-waveform span:nth-child(3) { animation-delay: -0.6s; }
+.island-waveform span:nth-child(4) { animation-delay: -0.9s; }
 
 .island-dismiss {
-    display: none; /* Controlled by JS/expanded class */
+    display: none; /* Wird nur im expanded-Modus angezeigt */
     background: rgba(var(--fg-rgb), 0.1);
     border: none;
     border-radius: 50%;
@@ -801,7 +920,7 @@ button:hover {
 
 
 .dynamic-island.expanded .island-dismiss {
-    display: flex; /* Show only in expanded mode */
+    display: flex;
 }
 
 /* Ensure waveform is initially hidden and only shown by JS */
@@ -819,48 +938,16 @@ button:hover {
   }
 }
 
-/* Media queries for smaller screens */
-@media (max-width: 1024px) {
-  .main-grid {
-    grid-template-columns: 1fr;
-    max-height: fit-content;
-  }
+/* Media query for smaller screens */
+@media (max-width: 992px) {
+    .dynamic-island-container {
+        top: var(--fluid-padding-s); /* Adjust top position for smaller screens */
+        width: calc(100% - (2 * var(--fluid-padding-s))); /* Full width minus padding */
+        left: var(--fluid-padding-s);
+        transform: translateX(0%); /* Remove translate X for full width */
+    }
 
-  .container {
-    padding: var(--fluid-padding-m);
-  }
-
-  .header {
-    padding: var(--fluid-padding-s);
-    flex-direction: column;
-    gap: var(--fluid-gap-s);
-  }
-
-  .search-engines {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 768px) {
-  :root {
-    --fluid-padding-xl: 0.8rem;
-    --fluid-padding-l: 0.7rem;
-    --fluid-padding-m: 0.6rem;
-    --fluid-padding-s: 0.5rem;
-    --fluid-padding-xs: 0.3rem;
-  }
-
-  .dynamic-island {
-    max-width: 90%;
-    left: 5%;
-    transform: translateX(0);
-  }
-
-  .dynamic-island.expanded {
-    width: 90%;
-  }
-
-  .logo {
-    font-size: 1.8rem;
-  }
+    .dynamic-island.expanded {
+        width: 100%; /* Full width when expanded on smaller screens */
+    }
 }
