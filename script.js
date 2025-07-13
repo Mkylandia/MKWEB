@@ -5,7 +5,8 @@ const SETTINGS_KEY = 'mkweb-settings-os7';
 let settings = JSON.parse(localStorage?.getItem(SETTINGS_KEY)) || {
     theme: 'dark', // Fester Standardwert
     showAvatar: true,
-    lastActiveEngine: 'google'
+    lastActiveEngine: 'google',
+    dynamicIslandVisible: true // NEW: Setting to remember island visibility
 };
 
 // Function to save settings
@@ -24,6 +25,8 @@ const timeElement = document.getElementById('time');
 const dateElement = document.getElementById('date');
 const quoteTextElement = document.getElementById('quote-text');
 const quoteAuthorElement = document.getElementById('quote-author');
+// NEW: Reopen Island Button
+const reopenIslandBtn = document.getElementById('reopen-island-btn');
 
 
 // --- User Avatar & Toggle Logic ---
@@ -76,11 +79,18 @@ searchInput.addEventListener('keypress', (e) => {
                 case 'yandex': url = `https://yandex.com/search/?text=${encodeURIComponent(query)}`; break;
                 case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
                 case 'duckduckgo': url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`; break;
-                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Korrigierte YouTube URL
+                case 'youtube': url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`; break; // Corrected YouTube URL
                 case 'github': url = `https://github.com/search?q=${encodeURIComponent(query)}`; break;
                 default: url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
             window.open(url, '_blank');
+            // NEW: Update island for search action
+            showDynamicIsland('arrow_forward', 'Suche läuft...', `Öffne Ergebnisse für "${query}"`, true);
+            dynamicIsland.classList.add('expanded');
+            setTimeout(() => {
+                hideDynamicIsland();
+                activateEngine(settings.lastActiveEngine); // Revert to original island content
+            }, 3000); // Keep island for 3 seconds after search
         }
     }
 });
@@ -172,13 +182,27 @@ const engineIcons = {
     github: 'code'
 };
 
-// Funktion zum Aktualisieren der Insel
-const updateIsland = (icon, title, subtitle, showWave = false) => {
+// NEW: Function to show the dynamic island
+const showDynamicIsland = (icon, title, subtitle, showWave = false) => {
     islandIcon.textContent = icon;
     islandTitle.textContent = title;
     islandSubtitle.textContent = subtitle;
     islandWaveform.style.display = showWave ? 'flex' : 'none';
+    dynamicIslandContainer.classList.remove('hidden');
+    reopenIslandBtn.style.display = 'none'; // Hide reopen button when island is visible
+    settings.dynamicIslandVisible = true;
+    saveSettings();
 };
+
+// NEW: Function to hide the dynamic island
+const hideDynamicIsland = () => {
+    dynamicIslandContainer.classList.add('hidden');
+    dynamicIsland.classList.remove('expanded'); // Ensure it's not expanded when hidden
+    reopenIslandBtn.style.display = 'block'; // Show reopen button when island is hidden
+    settings.dynamicIslandVisible = false;
+    saveSettings();
+};
+
 
 // Click-Event zum Erweitern/Verkleinern
 dynamicIsland.addEventListener('click', (e) => {
@@ -187,44 +211,58 @@ dynamicIsland.addEventListener('click', (e) => {
     dynamicIsland.classList.toggle('expanded');
 });
 
-// Insel ausblenden
+// Insel ausblenden (Dismiss button)
 islandDismissBtn.addEventListener('click', () => {
-    dynamicIslandContainer.classList.add('hidden');
+    hideDynamicIsland();
 });
+
+// NEW: Reopen Island button click event
+reopenIslandBtn.addEventListener('click', () => {
+    showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Suchmaschine', `Aktiv: ${settings.lastActiveEngine.charAt(0).toUpperCase() + settings.lastActiveEngine.slice(1)}`);
+});
+
 
 // Suchmaschinen-Logik erweitern
 const originalActivateEngine = activateEngine; // Alte Funktion speichern
 activateEngine = (engine) => {
     originalActivateEngine(engine); // Alte Funktion aufrufen
     const engineName = engine.charAt(0).toUpperCase() + engine.slice(1);
-    updateIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
-    if (dynamicIsland.classList.contains('expanded')) {
-        setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+    // NEW: Only update island if it's visible, otherwise just update settings
+    if (settings.dynamicIslandVisible) {
+        showDynamicIsland(engineIcons[engine] || 'search', 'Suchmaschine', `Aktiv: ${engineName}`);
+        if (dynamicIsland.classList.contains('expanded')) {
+            setTimeout(() => dynamicIsland.classList.remove('expanded'), 300);
+        }
     }
 };
 
-// Such-Event erweitern
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        const query = searchInput.value.trim();
-        if (query) {
-            updateIsland('arrow_forward', 'Weiterleitung...', `Suche nach "${query}"`, true);
-            dynamicIsland.classList.add('expanded');
-            // Nach kurzer Zeit zur normalen Ansicht zurückkehren
-            setTimeout(() => {
-                activateEngine(settings.lastActiveEngine);
-                dynamicIsland.classList.remove('expanded');
-            }, 2500);
+// Initialer Zustand beim Laden der Seite
+document.addEventListener('DOMContentLoaded', () => {
+    // Small delay to ensure everything is loaded
+    setTimeout(() => {
+        if (settings.dynamicIslandVisible) {
+           showDynamicIsland(engineIcons[settings.lastActiveEngine] || 'search', 'Willkommen!', 'Wähle eine Suchmaschine aus.');
+        } else {
+            hideDynamicIsland(); // Ensure it's hidden if setting says so
         }
+    }, 100);
+
+    // Initial display of the "reopen" button based on settings
+    if (!settings.dynamicIslandVisible) {
+        reopenIslandBtn.style.display = 'block';
     }
 });
 
-// Initialer Zustand beim Laden der Seite
-document.addEventListener('DOMContentLoaded', () => {
-    // Kleine Verzögerung, um sicherzustellen, dass alles geladen ist
+// Example of how to use showDynamicIsland for other useful notifications:
+// Call this function whenever you have a new notification
+const showNotification = (icon, title, subtitle, duration = 5000) => {
+    showDynamicIsland(icon, title, subtitle);
+    dynamicIsland.classList.add('expanded'); // Auto-expand for notifications
     setTimeout(() => {
-        if (!dynamicIslandContainer.classList.contains('hidden')) {
-           activateEngine(settings.lastActiveEngine);
-        }
-    }, 100);
-});
+        hideDynamicIsland();
+    }, duration);
+};
+
+// Example usage:
+// showNotification('notifications', 'Neue Nachricht', 'Du hast eine ungelesene E-Mail!');
+// showNotification('cloud', 'Wetter Update', 'Sonnig in Heidenheim!', false); // No waveform for weather
