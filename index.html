@@ -25,6 +25,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 </head>
 <body data-theme="dark">
+
+  <div class="dynamic-island-container" id="dynamicIslandContainer">
+      <div class="dynamic-island" id="dynamicIsland">
+          <div class="island-content">
+              <i class="material-symbols-outlined" id="islandIcon">info</i>
+              <div class="island-details">
+                  <span id="islandTitle">Willkommen!</span>
+                  <span id="islandSubtitle">Wähle eine Suchmaschine aus.</span>
+              </div>
+          </div>
+          <div class="island-status">
+              <div class="island-waveform" id="islandWaveform" style="display: none;">
+                  <span></span><span></span><span></span><span></span>
+              </div>
+              <button class="island-dismiss" id="islandDismissBtn" aria-label="Insel ausblenden">
+                  <span class="material-symbols-outlined">close</span>
+              </button>
+          </div>
+      </div>
+  </div>
+
   <div class="container">
     <header class="header glass">
       <div class="logo" aria-label="MKWEB OS 7 Logo">MKWEB OS 7</div>
