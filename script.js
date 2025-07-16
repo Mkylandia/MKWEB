@@ -1,5 +1,4 @@
 // MKWEB OS 7 - Verbesserte Version mit optimierter Performance und Struktur
-// Erweitert um Theme-Anpassung und verbesserte Dynamic Island
 
 // --- Konfiguration und Konstanten ---
 const CONFIG = {
@@ -9,7 +8,7 @@ const CONFIG = {
     TIME_UPDATE_INTERVAL: 1000,
     ISLAND_CYCLE_INTERVAL: 5000,
     HOVER_DELAY: 300,
-    DEFAULT_THEME: 'dark', // Added default theme
+    DEFAULT_THEME: 'dark',
     DEFAULT_LOCATION: 'Heidenheim'
 };
 
@@ -30,24 +29,16 @@ const WEATHER_ICONS = {
     thunderstorm: 'thunderstorm',
     drizzle: 'grain',
     mist: 'foggy',
+    smoke: 'smoke_free',
+    haze: 'foggy',
+    dust: 'dust',
     fog: 'foggy',
-    default: 'cloudy_snowing'
+    sand: 'storm',
+    ash: 'fireplace',
+    squall: 'wind_power',
+    tornado: 'tornado'
 };
 
-const QUOTES = [
-    { text: "Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.", author: "Steve Jobs" },
-    { text: "Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.", author: "Albert Einstein" },
-    { text: "Sei du selbst die Veränderung, die du dir wünschst für diese Welt.", author: "Mahatma Gandhi" },
-    { text: "Was immer du tun kannst oder träumst es zu können, fang damit an.", author: "Johann Wolfgang von Goethe" },
-    { text: "Glück ist nicht das, was man besitzt, sondern das, was man gibt.", author: "Unbekannt" },
-    { text: "Die Zukunft gehört denen, die an die Schönheit ihrer Träume glauben.", author: "Eleanor Roosevelt" },
-    { text: "Handle so, dass die Maxime deines Willens jederzeit zugleich als Prinzip einer allgemeinen Gesetzgebung gelten könnte.", author: "Immanuel Kant" },
-    { text: "Es ist nicht genug zu wissen, man muss es auch anwenden; es ist nicht genug zu wollen, man muss es auch tun.", author: "Johann Wolfgang von Goethe" },
-    { text: "Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.", author: "Peter F. Drucker" },
-    { text: "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.", author: "Albert Einstein" }
-];
-
-// Define available themes and their properties for easier management
 const THEMES = {
     dark: {
         name: 'Dark',
@@ -76,79 +67,51 @@ const THEMES = {
             '--acc-rgb': '74, 144, 226',
             '--fg-rgb': '51, 51, 51'
         }
+    },
+    ocean: {
+        name: 'Ocean',
+        properties: {
+            '--primary-bg': '#0a1d2e',
+            '--secondary-bg': 'rgba(60, 150, 200, 0.1)',
+            '--primary-text': '#e0f2f7',
+            '--secondary-text': 'rgba(224, 242, 247, 0.7)',
+            '--accent-color-main': '#00bcd4',
+            '--accent-color-light': '#80deea',
+            '--glass-border-color': 'rgba(0, 188, 212, 0.2)',
+            '--acc-rgb': '0, 188, 212',
+            '--fg-rgb': '224, 242, 247'
+        }
+    },
+    forest: {
+        name: 'Forest',
+        properties: {
+            '--primary-bg': '#1a2a22',
+            '--secondary-bg': 'rgba(90, 140, 100, 0.1)',
+            '--primary-text': '#e8f5e9',
+            '--secondary-text': 'rgba(232, 245, 233, 0.7)',
+            '--accent-color-main': '#689f38',
+            '--accent-color-light': '#9ccc65',
+            '--glass-border-color': 'rgba(104, 159, 56, 0.2)',
+            '--acc-rgb': '104, 159, 56',
+            '--fg-rgb': '232, 245, 233'
+        }
     }
-    // Add more themes here if desired, e.g.:
-    // ocean: {
-    //     name: 'Ocean',
-    //     properties: {
-    //         '--primary-bg': '#0a1d2e',
-    //         '--secondary-bg': 'rgba(60, 150, 200, 0.1)',
-    //         '--primary-text': '#e0f2f7',
-    //         '--secondary-text': 'rgba(224, 242, 247, 0.7)',
-    //         '--accent-color-main': '#00bcd4',
-    //         '--accent-color-light': '#80deea',
-    //         '--glass-border-color': 'rgba(0, 188, 212, 0.2)',
-    //         '--acc-rgb': '0, 188, 212',
-    //         '--fg-rgb': '224, 242, 247'
-    //     }
-    // }
 };
 
+// --- Manager Klassen ---
 
-// --- Utility Functions ---
-const utils = {
-    createElement: (tag, className = '', textContent = '') => {
-        const element = document.createElement(tag);
-        if (className) element.className = className;
-        if (textContent) element.textContent = textContent;
-        return element;
-    },
-
-    debounce: (func, wait) => {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    },
-
-    throttle: (func, limit) => {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    },
-
-    formatTime: (date) => date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
-    formatDate: (date) => date.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-    formatShortDate: (date) => ({
-        date: date.toLocaleDateString('de-DE', { month: 'short', day: 'numeric' }),
-        weekday: date.toLocaleDateString('de-DE', { weekday: 'long' })
-    })
-};
-
-// --- Settings Manager ---
 class SettingsManager {
     constructor() {
         this.settings = this.loadSettings();
+        this.applyInitialSettings();
     }
 
     loadSettings() {
         try {
-            const stored = localStorage?.getItem(CONFIG.SETTINGS_KEY);
-            return stored ? JSON.parse(stored) : this.getDefaultSettings();
-        } catch (error) {
-            console.warn('Fehler beim Laden der Einstellungen:', error);
+            const storedSettings = localStorage.getItem(CONFIG.SETTINGS_KEY);
+            return storedSettings ? JSON.parse(storedSettings) : this.getDefaultSettings();
+        } catch (e) {
+            console.error("Fehler beim Laden der Einstellungen aus dem Local Storage:", e);
             return this.getDefaultSettings();
         }
     }
@@ -156,17 +119,16 @@ class SettingsManager {
     getDefaultSettings() {
         return {
             theme: CONFIG.DEFAULT_THEME,
-            showAvatar: true,
-            lastActiveEngine: 'google',
-            weatherLocation: CONFIG.DEFAULT_LOCATION
+            avatarVisible: true,
+            selectedEngine: 'google'
         };
     }
 
-    save() {
+    saveSettings() {
         try {
-            localStorage?.setItem(CONFIG.SETTINGS_KEY, JSON.stringify(this.settings));
-        } catch (error) {
-            console.warn('Fehler beim Speichern der Einstellungen:', error);
+            localStorage.setItem(CONFIG.SETTINGS_KEY, JSON.stringify(this.settings));
+        } catch (e) {
+            console.error("Fehler beim Speichern der Einstellungen im Local Storage:", e);
         }
     }
 
@@ -176,72 +138,73 @@ class SettingsManager {
 
     set(key, value) {
         this.settings[key] = value;
-        this.save();
+        this.saveSettings();
+    }
+
+    applyInitialSettings() {
+        document.documentElement.setAttribute('data-theme', this.get('theme'));
+        document.body.setAttribute('data-theme', this.get('theme')); // Apply to body for full CSS variable application
     }
 }
 
-// --- Dynamic Island Manager ---
 class DynamicIslandManager {
     constructor() {
-        this.container = document.getElementById('dynamicIslandContainer');
         this.island = document.getElementById('dynamicIsland');
-        this.icon = document.getElementById('islandIcon');
-        this.title = document.getElementById('islandTitle');
-        this.subtitle = document.getElementById('islandSubtitle');
-        this.dismissBtn = document.getElementById('islandDismissBtn');
-        this.waveform = document.getElementById('islandWaveform');
+        this.islandIcon = document.getElementById('islandIcon');
+        this.islandTitle = document.getElementById('islandTitle');
+        this.islandSubtitle = document.getElementById('islandSubtitle');
+        this.islandWaveform = document.getElementById('islandWaveform');
+        this.islandDismissBtn = document.getElementById('islandDismissBtn');
 
-        this.state = {
+        this.idleTimer = null;
+        this.islandCycleInterval = null;
+        this.defaultState = {
             icon: 'info',
             title: 'Willkommen!',
             subtitle: 'Wähle eine Suchmaschine aus.',
-            showWave: false
+            mode: 'text' // 'text' or 'waveform'
         };
+        this.currentState = { ...this.defaultState };
+        this.queuedMessages = []; // For messages that can be cycled
 
-        this.timers = {
-            transient: null,
-            cycle: null,
-            idle: null
-        };
-
-        this.isTimeDisplay = true;
-        this.init();
+        this.initDismissButton();
+        this.startIdleTimer();
     }
 
-    init() {
-        this.setupEventListeners();
-        this.resetToDefault();
-        this.scheduleTimeDateCycle();
+    initDismissButton() {
+        if (this.islandDismissBtn) {
+            this.islandDismissBtn.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent island click if dismiss is inside
+                this.collapse();
+                this.resetToDefault();
+            });
+        }
     }
 
-    setupEventListeners() {
-        this.island.addEventListener('click', (e) => {
-            if (e.target.closest('#islandDismissBtn')) return;
-            this.toggleExpanded();
-        });
+    update(icon, title, subtitle, mode = 'text') {
+        this.clearIdleTimer();
+        this.cancelTimeDateCycleSchedule();
+        this.islandIcon.textContent = icon;
+        this.islandTitle.textContent = title;
+        this.islandSubtitle.textContent = subtitle;
 
-        this.dismissBtn.addEventListener('click', () => {
-            this.collapse();
-            this.resetToDefault();
-        });
+        this.currentState = { icon, title, subtitle, mode };
+        this.applyMode(mode);
     }
 
-    update(icon, title, subtitle, showWave = false) {
-        // Apply opacity transition to details for smoother text changes
-        this.title.style.opacity = '0';
-        this.subtitle.style.opacity = '0';
-
-        setTimeout(() => {
-            this.icon.textContent = icon;
-            this.title.textContent = title;
-            this.subtitle.textContent = subtitle;
-            this.waveform.style.display = showWave ? 'flex' : 'none';
-            this.title.style.opacity = '1';
-            this.subtitle.style.opacity = '1';
-        }, 100); // Small delay to allow opacity transition to start
-
-        this.state = { icon, title, subtitle, showWave };
-        this.clearTimer('transient');
+    applyMode(mode) {
+        if (mode === 'waveform') {
+            this.island.classList.add('waveform');
+            this.island.classList.remove('time-date'); // Ensure other classes are removed
+            this.islandWaveform.style.display = 'flex';
+        } else if (mode === 'time-date') {
+            this.island.classList.add('time-date');
+            this.island.classList.remove('waveform');
+            this.islandWaveform.style.display = 'flex'; // Waveform is used for time/date transition
+        } else {
+            this.island.classList.remove('waveform', 'time-date');
+            this.islandWaveform.style.display = 'none';
+        }
     }
 
     expand() {
@@ -250,312 +213,324 @@ class DynamicIslandManager {
 
     collapse() {
         this.island.classList.remove('expanded');
-    }
-
-    toggleExpanded() {
-        this.island.classList.toggle('expanded');
-        if (this.island.classList.contains('expanded')) {
-            this.cancelTimeDateCycleSchedule();
-        } else {
-            this.resetToDefault();
-        }
-    }
-
-    showTransient(icon, title, subtitle, showWave = false, duration = 3000) {
-        this.cancelTimeDateCycleSchedule();
-        this.update(icon, title, subtitle, showWave);
-        this.expand();
-
-        this.timers.transient = setTimeout(() => {
-            this.collapse();
-            this.resetToDefault();
-        }, duration);
+        this.startIdleTimer();
     }
 
     resetToDefault() {
-        const engine = settingsManager.get('lastActiveEngine');
-        const engineConfig = SEARCH_ENGINES[engine] || SEARCH_ENGINES.google;
-        
-        this.update(
-            engineConfig.icon,
-            'Suchmaschine',
-            `Aktiv: ${engine.charAt(0).toUpperCase() + engine.slice(1)}`
-        );
-        this.collapse();
-        this.scheduleTimeDateCycle();
+        this.update(this.defaultState.icon, this.defaultState.title, this.defaultState.subtitle, this.defaultState.mode);
+        this.queuedMessages = [];
     }
 
-    scheduleTimeDateCycle() {
-        this.clearTimer('idle');
-        this.clearTimer('cycle');
-        
-        this.timers.idle = setTimeout(() => {
-            this.startTimeDateCycle();
+    addQueuedMessage(icon, title, subtitle) {
+        this.queuedMessages.push({ icon, title, subtitle });
+    }
+
+    startIdleTimer() {
+        this.clearIdleTimer();
+        this.idleTimer = setTimeout(() => {
+            this.startCyclingMessages();
         }, CONFIG.IDLE_DELAY);
     }
 
-    cancelTimeDateCycleSchedule() {
-        this.clearTimer('idle');
-        this.clearTimer('cycle');
-    }
-
-    startTimeDateCycle() {
-        this.clearTimer('cycle');
-        this.updateTimeDate();
-        this.timers.cycle = setInterval(() => {
-            this.updateTimeDate();
-        }, CONFIG.ISLAND_CYCLE_INTERVAL);
-    }
-
-    updateTimeDate() {
-        const now = new Date();
-        if (this.isTimeDisplay) {
-            this.update(
-                'schedule',
-                utils.formatTime(now),
-                'Aktuelle Uhrzeit'
-            );
-        } else {
-            const dateInfo = utils.formatShortDate(now);
-            this.update(
-                'calendar_today',
-                dateInfo.date,
-                dateInfo.weekday
-            );
+    clearIdleTimer() {
+        if (this.idleTimer) {
+            clearTimeout(this.idleTimer);
+            this.idleTimer = null;
         }
-        this.isTimeDisplay = !this.isTimeDisplay;
     }
 
-    clearTimer(type) {
-        if (this.timers[type]) {
-            if (type === 'cycle') {
-                clearInterval(this.timers[type]);
+    startCyclingMessages() {
+        this.cancelTimeDateCycleSchedule(); // Clear any previous cycles
+
+        const cycleMessages = () => {
+            if (this.queuedMessages.length > 0) {
+                const message = this.queuedMessages.shift();
+                this.update(message.icon, message.title, message.subtitle);
+                this.expand();
+                this.queuedMessages.push(message); // Add back to end for continuous cycle
             } else {
-                clearTimeout(this.timers[type]);
+                // Fallback to time/date if no custom messages
+                this.updateTimeDateMessage();
             }
-            this.timers[type] = null;
+        };
+
+        // Initial call
+        cycleMessages();
+
+        // Set interval for subsequent calls
+        this.islandCycleInterval = setInterval(cycleMessages, CONFIG.ISLAND_CYCLE_INTERVAL);
+    }
+
+    updateTimeDateMessage() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+        const dateString = now.toLocaleDateString('de-DE', { weekday: 'short', month: 'short', day: 'numeric' });
+        this.update('schedule', timeString, dateString, 'time-date'); // Use 'time-date' mode
+        this.expand();
+    }
+
+    cancelTimeDateCycleSchedule() {
+        if (this.islandCycleInterval) {
+            clearInterval(this.islandCycleInterval);
+            this.islandCycleInterval = null;
         }
     }
 }
 
-// --- Search Manager ---
 class SearchManager {
     constructor() {
-        this.input = document.getElementById('search');
-        this.engineButtons = document.querySelectorAll('.search-engine');
-        this.activeEngine = settingsManager.get('lastActiveEngine');
-        this.init();
+        this.searchBox = document.getElementById('search');
+        this.searchEngines = document.querySelectorAll('.search-engine');
+        this.selectedEngine = settingsManager.get('selectedEngine');
+
+        this.initSearch();
+        this.setupEventListeners();
     }
 
-    init() {
-        this.setupEventListeners();
-        this.activateEngine(this.activeEngine);
+    initSearch() {
+        this.updateSelectedEngineButton();
     }
 
     setupEventListeners() {
-        this.engineButtons.forEach(button => {
+        this.searchBox.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                this.performSearch(this.searchBox.value);
+            }
+        });
+
+        this.searchEngines.forEach(button => {
             button.addEventListener('click', () => {
-                this.activateEngine(button.dataset.engine);
+                this.selectedEngine = button.dataset.engine;
+                settingsManager.set('selectedEngine', this.selectedEngine);
+                this.updateSelectedEngineButton();
+                dynamicIsland.update(
+                    SEARCH_ENGINES[this.selectedEngine].icon,
+                    `Engine gewechselt`,
+                    `${THEMES[settingsManager.get('theme')].name} ${this.capitalizeFirstLetter(this.selectedEngine)}`
+                );
+                dynamicIsland.expand();
+                dynamicIsland.startIdleTimer();
             });
         });
-
-        this.input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.performSearch();
-            }
-        });
     }
 
-    activateEngine(engine) {
-        this.engineButtons.forEach(btn => {
-            const isActive = btn.dataset.engine === engine;
-            btn.classList.toggle('active', isActive);
-            btn.setAttribute('aria-pressed', isActive);
+    updateSelectedEngineButton() {
+        this.searchEngines.forEach(button => {
+            button.classList.toggle('active', button.dataset.engine === this.selectedEngine);
+            button.setAttribute('aria-pressed', button.dataset.engine === this.selectedEngine);
         });
-
-        this.activeEngine = engine;
-        settingsManager.set('lastActiveEngine', engine);
-        
-        // Update Dynamic Island
-        dynamicIsland.resetToDefault();
+        this.searchBox.placeholder = `Suche mit ${this.capitalizeFirstLetter(this.selectedEngine)}...`;
     }
 
-    performSearch() {
-        const query = this.input.value.trim();
-        if (!query) return;
+    performSearch(query) {
+        if (!query.trim()) {
+            dynamicIsland.update('error', 'Fehler', 'Bitte gib einen Suchbegriff ein.');
+            dynamicIsland.expand();
+            dynamicIsland.startIdleTimer();
+            return;
+        }
+        const engine = SEARCH_ENGINES[this.selectedEngine];
+        const searchUrl = engine.url + encodeURIComponent(query);
+        window.open(searchUrl, '_blank');
 
-        const engineConfig = SEARCH_ENGINES[this.activeEngine] || SEARCH_ENGINES.google;
-        const url = engineConfig.url + encodeURIComponent(query);
+        dynamicIsland.update(engine.icon, `Suche: "${query.substring(0, 15)}..."`, `via ${this.capitalizeFirstLetter(this.selectedEngine)}`);
+        dynamicIsland.expand();
+        dynamicIsland.startIdleTimer();
+    }
 
-        dynamicIsland.showTransient(
-            'arrow_forward',
-            'Suche läuft...',
-            `Öffne Ergebnisse für "${query}"`,
-            true,
-            800
-        );
-
-        setTimeout(() => {
-            window.open(url, '_blank');
-            this.input.value = '';
-        }, 800);
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 }
 
-// --- Weather Manager ---
 class WeatherManager {
     constructor() {
-        this.button = document.querySelector('.weather-link-button');
-        this.mockData = {
-            'Heidenheim': { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim' },
-            'Berlin': { temp: 18, description: 'Regen', icon: 'rain', location: 'Berlin' },
-            'London': { temp: 15, description: 'Nebel', icon: 'fog', location: 'London' }
-        };
-        this.init();
+        this.weatherLinkButton = document.querySelector('.weather-link-button');
+        this.weatherIconElement = this.weatherLinkButton.querySelector('.weather-icon');
+        this.weatherTextElement = this.weatherLinkButton.querySelector('span:last-child');
+        this.weatherNotice = document.querySelector('.weather-notice');
+
+        this.setupEventListeners();
+        this.getMockWeather(); // Initial mock data
     }
 
-    init() {
-        if (this.button) {
-            this.button.addEventListener('click', this.handleWeatherClick.bind(this));
-        }
-    }
-
-    async handleWeatherClick(e) {
-        e.preventDefault();
-        
-        dynamicIsland.showTransient('refresh', 'Wetter wird geladen...', 'Bitte warten...', true, 2500);
-
-        try {
-            const weatherData = await this.fetchWeather(settingsManager.get('weatherLocation'));
-            if (weatherData) {
-                dynamicIsland.showTransient(
-                    this.getWeatherIcon(weatherData.icon),
-                    `${weatherData.temp}°C`,
-                    `${weatherData.description} in ${weatherData.location}`,
-                    false,
-                    4000
-                );
-            }
-        } catch (error) {
-            dynamicIsland.showTransient('error', 'Fehler', 'Wetterdaten nicht verfügbar.', false, 3000);
-        }
-    }
-
-    async fetchWeather(location) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                const data = this.mockData[location] || this.mockData['Heidenheim'];
-                resolve(data);
-            }, 800);
+    setupEventListeners() {
+        this.weatherLinkButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.getMockWeather();
+            dynamicIsland.update('cloud', 'Wetter Update', `Abgerufen für ${CONFIG.DEFAULT_LOCATION}`);
+            dynamicIsland.expand();
+            dynamicIsland.startIdleTimer();
         });
     }
 
-    getWeatherIcon(condition) {
-        return WEATHER_ICONS[condition.toLowerCase()] || WEATHER_ICONS.default;
+    getMockWeather() {
+        // Simulate API call for weather
+        const mockWeatherData = {
+            main: { temp: (20 + Math.random() * 5 - 2.5).toFixed(1) }, // Random temp around 20
+            weather: [{ main: this.getRandomWeatherCondition() }]
+        };
+        this.updateWeatherDisplay(mockWeatherData);
+    }
+
+    getRandomWeatherCondition() {
+        const conditions = ['clear', 'clouds', 'rain', 'snow', 'thunderstorm', 'drizzle', 'mist'];
+        return conditions[Math.floor(Math.random() * conditions.length)];
+    }
+
+    updateWeatherDisplay(data) {
+        const temp = data.main.temp;
+        const condition = data.weather[0].main.toLowerCase();
+        const icon = WEATHER_ICONS[condition] || 'cloud';
+
+        this.weatherTextElement.textContent = `${temp}°C | ${this.capitalizeFirstLetter(condition)}`;
+        this.weatherIconElement.textContent = icon;
+    }
+
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 }
 
-// --- UI Manager ---
+class QuoteManager {
+    constructor() {
+        this.quoteText = document.getElementById('quote-text');
+        this.quoteAuthor = document.getElementById('quote-author');
+        this.lastQuoteUpdate = 0; // Timestamp of last update
+
+        this.fetchQuote();
+        setInterval(() => this.fetchQuote(), CONFIG.QUOTE_UPDATE_INTERVAL);
+    }
+
+    async fetchQuote() {
+        const now = Date.now();
+        // Prevent fetching too frequently if page is idle for long periods and multiple instances are running
+        if (now - this.lastQuoteUpdate < CONFIG.QUOTE_UPDATE_INTERVAL / 2) {
+             return;
+        }
+
+        try {
+            const response = await fetch('https://api.quotable.io/random?maxLength=100');
+            const data = await response.json();
+            if (data && data.content && data.author) {
+                this.quoteText.textContent = `„${data.content}“`;
+                this.quoteAuthor.textContent = `— ${data.author}`;
+                this.lastQuoteUpdate = now;
+
+                // Update Dynamic Island on new quote
+                dynamicIsland.addQueuedMessage('format_quote', 'Neues Zitat', data.author);
+            }
+        } catch (error) {
+            console.error('Fehler beim Abrufen des Zitats:', error);
+            this.quoteText.textContent = '„Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.“';
+            this.quoteAuthor.textContent = '— Steve Jobs';
+            dynamicIsland.addQueuedMessage('sentiment_dissatisfied', 'Zitat Fehler', 'Konnte Zitat nicht laden.');
+        }
+    }
+}
+
 class UIManager {
     constructor() {
         this.timeElement = document.getElementById('time');
         this.dateElement = document.getElementById('date');
-        this.quoteTextElement = document.getElementById('quote-text');
-        this.quoteAuthorElement = document.getElementById('quote-author');
         this.fullscreenBtn = document.getElementById('fullscreen-btn');
-        this.userAvatar = document.getElementById('user-avatar');
         this.userAvatarToggleBtn = document.getElementById('user-avatar-toggle');
+        this.userAvatar = document.getElementById('user-avatar');
+        this.themeToggleBtn = document.getElementById('theme-toggle-btn');
         this.appCards = document.querySelectorAll('.app-card');
-        this.themeToggleBtn = document.getElementById('theme-toggle-btn'); // New theme toggle button
-        
-        this.init();
-    }
 
-    init() {
-        this.setupDateTime();
-        this.setupQuotes();
-        this.setupFullscreen();
-        this.setupAvatar();
+        this.setupTimeDateUpdates();
+        this.setupFullscreenToggle();
+        this.setupAvatarToggle();
+        this.setupThemeToggle();
         this.setupAppCards();
-        this.setupThemeToggle(); // New: Setup theme toggle
-        this.applyTheme(settingsManager.get('theme')); // Apply initial theme
+        this.applyTheme(settingsManager.get('theme')); // Ensure theme is applied on load
     }
 
-    setupDateTime() {
-        const updateDateTime = () => {
+    setupTimeDateUpdates() {
+        const updateTimeDate = () => {
             const now = new Date();
-            if (this.timeElement) this.timeElement.textContent = utils.formatTime(now);
-            if (this.dateElement) this.dateElement.textContent = utils.formatDate(now);
+            this.timeElement.textContent = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+            this.dateElement.textContent = now.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         };
-
-        updateDateTime();
-        setInterval(updateDateTime, CONFIG.TIME_UPDATE_INTERVAL);
+        updateTimeDate();
+        setInterval(updateTimeDate, CONFIG.TIME_UPDATE_INTERVAL);
     }
 
-    setupQuotes() {
-        const displayRandomQuote = () => {
-            if (!this.quoteTextElement || !this.quoteAuthorElement) return;
-            
-            const randomIndex = Math.floor(Math.random() * QUOTES.length);
-            const quote = QUOTES[randomIndex];
-            
-            this.quoteTextElement.textContent = `"${quote.text}"`;
-            this.quoteAuthorElement.textContent = `- ${quote.author}`;
-        };
-
-        displayRandomQuote();
-        setInterval(displayRandomQuote, CONFIG.QUOTE_UPDATE_INTERVAL);
-    }
-
-    setupFullscreen() {
+    setupFullscreenToggle() {
         if (!this.fullscreenBtn) return;
-
         this.fullscreenBtn.addEventListener('click', () => {
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.error('Vollbild-Fehler:', err);
+                document.documentElement.requestFullscreen().then(() => {
+                    dynamicIsland.update('fullscreen', 'Vollbild', 'Aktiviert');
+                    dynamicIsland.expand();
+                    dynamicIsland.startIdleTimer();
+                }).catch(err => {
+                    dynamicIsland.update('error', 'Vollbild Fehler', err.message);
+                    dynamicIsland.expand();
+                    dynamicIsland.startIdleTimer();
                 });
-            } else {
-                document.exitFullscreen().catch(err => {
-                    console.error('Vollbild-Exit-Fehler:', err);
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen().then(() => {
+                    dynamicIsland.update('fullscreen_exit', 'Vollbild', 'Deaktiviert');
+                    dynamicIsland.expand();
+                    dynamicIsland.startIdleTimer();
+                }).catch(err => {
+                    dynamicIsland.update('error', 'Vollbild Fehler', err.message);
+                    dynamicIsland.expand();
+                    dynamicIsland.startIdleTimer();
                 });
-            }
-        });
-
-        document.addEventListener('fullscreenchange', () => {
-            if (document.fullscreenElement) {
-                this.fullscreenBtn.textContent = 'Shrink';
-                this.fullscreenBtn.setAttribute('title', 'Vollbild verlassen');
-            } else {
-                this.fullscreenBtn.textContent = '🚀 Vollbild';
-                this.fullscreenBtn.setAttribute('title', 'Vollbild umschalten');
             }
         });
     }
 
-    setupAvatar() {
-        if (!this.userAvatar || !this.userAvatarToggleBtn) return;
+    setupAvatarToggle() {
+        if (!this.userAvatarToggleBtn || !this.userAvatar) return;
 
         const applyAvatarVisibility = () => {
-            const showAvatar = settingsManager.get('showAvatar');
-            if (showAvatar) {
-                this.userAvatar.classList.remove('hidden-avatar');
-                this.userAvatar.setAttribute('aria-hidden', 'false');
-                this.userAvatarToggleBtn.textContent = '🙈 Avatar ausblenden';
-            } else {
-                this.userAvatar.classList.add('hidden-avatar');
-                this.userAvatar.setAttribute('aria-hidden', 'true');
-                this.userAvatarToggleBtn.textContent = '🐵 Avatar einblenden';
-            }
+            const isVisible = settingsManager.get('avatarVisible');
+            this.userAvatar.setAttribute('aria-hidden', !isVisible);
+            this.userAvatarToggleBtn.textContent = isVisible ? '🙈 Avatar ausblenden' : '👁️ Avatar anzeigen';
         };
 
         this.userAvatarToggleBtn.addEventListener('click', () => {
-            const currentState = settingsManager.get('showAvatar');
-            settingsManager.set('showAvatar', !currentState);
+            const currentVisibility = settingsManager.get('avatarVisible');
+            settingsManager.set('avatarVisible', !currentVisibility);
             applyAvatarVisibility();
+            dynamicIsland.update('person', 'Avatar', !currentVisibility ? 'Sichtbar' : 'Ausgeblendet');
+            dynamicIsland.expand();
+            dynamicIsland.startIdleTimer();
         });
 
         applyAvatarVisibility();
+    }
+
+    applyTheme(themeName) {
+        const theme = THEMES[themeName];
+        if (theme) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            document.body.setAttribute('data-theme', themeName);
+            // Update button text
+            this.themeToggleBtn.textContent = `🎨 ${theme.name} Theme`;
+        }
+    }
+
+    setupThemeToggle() {
+        if (!this.themeToggleBtn) return;
+
+        this.themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = settingsManager.get('theme');
+            const themeNames = Object.keys(THEMES);
+            const currentThemeIndex = themeNames.indexOf(currentTheme);
+            const nextThemeIndex = (currentThemeIndex + 1) % themeNames.length;
+            const newTheme = themeNames[nextThemeIndex];
+            
+            settingsManager.set('theme', newTheme);
+            this.applyTheme(newTheme);
+            dynamicIsland.update('palette', 'Theme', `"${THEMES[newTheme].name}" aktiv`);
+            dynamicIsland.expand();
+            dynamicIsland.startIdleTimer();
+        });
     }
 
     setupAppCards() {
@@ -575,64 +550,19 @@ class UIManager {
 
             card.addEventListener('mouseleave', () => {
                 clearTimeout(hoverTimeout);
-                // Only collapse if the island is currently expanded due to this hover
-                // and not already in a transient state.
-                if (!dynamicIsland.timers.transient) {
-                    dynamicIsland.collapse();
-                    dynamicIsland.resetToDefault();
-                }
+                dynamicIsland.collapse();
+                dynamicIsland.resetToDefault();
             });
 
             card.addEventListener('click', () => {
-                // When an app is clicked, immediately dismiss any app-related island state
                 dynamicIsland.resetToDefault();
             });
         });
     }
-
-    // New: Theme Toggle Functionality
-    setupThemeToggle() {
-        if (!this.themeToggleBtn) return;
-
-        this.themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = settingsManager.get('theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; // Toggle between dark and light
-            settingsManager.set('theme', newTheme);
-            this.applyTheme(newTheme);
-        });
-    }
-
-    applyTheme(themeName) {
-        const body = document.body;
-        const theme = THEMES[themeName];
-
-        if (theme) {
-            body.setAttribute('data-theme', themeName);
-            for (const [prop, value] of Object.entries(theme.properties)) {
-                document.documentElement.style.setProperty(prop, value);
-            }
-            this.updateThemeToggleButton(themeName);
-        } else {
-            console.warn(`Theme "${themeName}" not found. Applying default dark theme.`);
-            body.setAttribute('data-theme', CONFIG.DEFAULT_THEME);
-            for (const [prop, value] of Object.entries(THEMES[CONFIG.DEFAULT_THEME].properties)) {
-                document.documentElement.style.setProperty(prop, value);
-            }
-            settingsManager.set('theme', CONFIG.DEFAULT_THEME);
-            this.updateThemeToggleButton(CONFIG.DEFAULT_THEME);
-        }
-    }
-
-    updateThemeToggleButton(currentTheme) {
-        if (this.themeToggleBtn) {
-            this.themeToggleBtn.textContent = currentTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
-            this.themeToggleBtn.setAttribute('title', `Switch to ${currentTheme === 'dark' ? 'Light' : 'Dark'} Mode`);
-        }
-    }
 }
 
 // --- Initialisierung ---
-let settingsManager, dynamicIsland, searchManager, weatherManager, uiManager;
+let settingsManager, dynamicIsland, searchManager, weatherManager, quoteManager, uiManager;
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialisiere alle Manager
@@ -640,7 +570,8 @@ document.addEventListener('DOMContentLoaded', () => {
     dynamicIsland = new DynamicIslandManager();
     searchManager = new SearchManager();
     weatherManager = new WeatherManager();
-    uiManager = new UIManager(); // This will now apply the saved theme on load.
+    quoteManager = new QuoteManager();
+    uiManager = new UIManager();
 
     console.log('MKWEB OS 7 - Erfolgreich initialisiert');
 });
