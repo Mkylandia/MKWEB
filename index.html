@@ -3,37 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MKWEB OS 7 Compact - Ihr personalisiertes, leistungsstarkes Single-Screen-Dashboard.">
-  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, minimalistisch, animiert, performance, mkweb, produktivität, startseite, single page">
+  <meta name="description" content="MKWEB OS 7 Custom - Ihr personalisiertes, leistungsstarkes Single-Screen-Dashboard.">
+  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, minimalistisch, animiert, performance, mkweb, produktivität, startseite, single page, customisable">
   <meta name="author" content="MKWEB">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yourwebsite.com/">
-  <meta property="og:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
-  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Single-Screen-dashboard.">
+  <meta property="og:title" content="MKWEB OS 7 - Das anpassbare Dashboard">
+  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Single-Screen-Dashboard.">
   <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg">
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://yourwebsite.com/">
-  <meta property="twitter:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
-  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Single-Screen-dashboard.">
+  <meta property="twitter:title" content="MKWEB OS 7 - Das anpassbare Dashboard">
+  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Single-Screen-Dashboard.">
   <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg">
-  <title>MKWEB OS 7 - Kompaktes Dashboard</title>
+  <title>MKWEB OS 7 - Anpassbares Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 </head>
-<body data-theme="dark">
+<body data-theme="dark-purple">
 
   <div class="dynamic-island-container" id="dynamicIslandContainer">
       <div class="dynamic-island" id="dynamicIsland">
-          <div class="island-content">
-              <i class="material-symbols-outlined" id="islandIcon">info</i>
-              <div class="island-details">
-                  <span id="islandTitle">Willkommen!</span>
-                  <span id="islandSubtitle">Wähle eine Suchmaschine aus.</span>
-              </div>
+          <div class="island-content-fader">
+            <div class="island-content-wrapper active">
+                <div class="island-content">
+                    <i class="material-symbols-outlined" id="islandIcon">info</i>
+                    <div class="island-details">
+                        <span id="islandTitle">Willkommen!</span>
+                        <span id="islandSubtitle">Wähle eine Suchmaschine aus.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="island-content-wrapper">
+                <div class="island-content">
+                    <i class="material-symbols-outlined" id="islandIconNext">info</i>
+                    <div class="island-details">
+                        <span id="islandTitleNext"></span>
+                        <span id="islandSubtitleNext"></span>
+                    </div>
+                </div>
+            </div>
           </div>
           <div class="island-status">
               <div class="island-waveform" id="islandWaveform">
@@ -46,12 +59,43 @@
       </div>
   </div>
 
+  <div class="settings-overlay hidden" id="settingsOverlay">
+      <div class="settings-modal glass" id="settingsModal">
+          <div class="settings-header">
+              <h2>Einstellungen</h2>
+              <button id="settingsCloseBtn" class="glass" aria-label="Einstellungen schließen">
+                  <span class="material-symbols-outlined">close</span>
+              </button>
+          </div>
+          <div class="settings-content">
+              <h3>Farbschema</h3>
+              <div class="theme-selector" id="themeSelector">
+                  <button class="theme-swatch" data-theme="dark-purple" aria-label="Dunkel & Lila"></button>
+                  <button class="theme-swatch" data-theme="dark-cyan" aria-label="Dunkel & Cyan"></button>
+                  <button class="theme-swatch" data-theme="light-blue" aria-label="Hell & Blau"></button>
+                  <button class="theme-swatch" data-theme="forest" aria-label="Waldgrün"></button>
+                  <button class="theme-swatch" data-theme="sunset" aria-label="Sonnenuntergang"></button>
+              </div>
+              <hr class="settings-divider">
+              <h3>Anzeige</h3>
+              <div class="setting-toggle">
+                <label for="avatarToggle">Benutzer-Avatar anzeigen</label>
+                <button id="user-avatar-toggle" class="glass" aria-label="Benutzer-Avatar ein-/ausblenden">
+                    🙈 Avatar ausblenden
+                </button>
+              </div>
+          </div>
+      </div>
+  </div>
+
   <div class="container">
     <header class="header glass">
       <div class="logo" aria-label="MKWEB OS 7 Logo">MKWEB OS 7</div>
       <div class="controls">
         <button id="fullscreen-btn" class="glass" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
-        <button id="user-avatar-toggle" class="glass" aria-label="Benutzer-Avatar ein-/ausblenden">🙈 Avatar ausblenden</button>
+        <button id="settings-btn" class="glass" title="Einstellungen öffnen" aria-label="Einstellungen öffnen">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
         <div id="user-avatar" class="user-avatar glass" aria-hidden="false" role="img" aria-label="Benutzer-Avatar">
           <span class="material-symbols-outlined">person</span>
         </div>
@@ -72,9 +116,9 @@
                 <span class="material-symbols-outlined weather-icon">cloudy_snowing</span>
                 Wetter in Heidenheim ansehen
             </a>
-            <p class="weather-notice">Klicke, um das aktuelle Wetter in der Dynamic Island anzuzeigen.</p>
+            <p class="weather-notice">Klicke, um das Wetter in der Dynamic Island anzuzeigen.</p>
         </section>
-        </div>
+      </div>
 
       <div class="grid-right">
         <section class="search-section glass">
@@ -99,6 +143,7 @@
           <p id="quote-text"></p>
           <small id="quote-author"></small>
         </section>
+
         <section class="apps-section glass">
           <h2 id="apps-heading">✨ Apps & Bookmarks</h2>
           <div class="apps-container">
@@ -120,25 +165,13 @@
             <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web" data-app-name="WhatsApp" data-app-icon="chat_bubble">
               <span class="material-symbols-outlined icon">chat_bubble</span><div class="label">WhatsApp</div>
             </a>
-            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify" data-app-name="Spotify" data-app-icon="headphones">
+            <a id="spotify-app" class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify" data-app-name="Spotify" data-app-icon="headphones">
               <span class="material-symbols-outlined icon">headphones</span><div class="label">Spotify</div>
             </a>
             <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub" data-app-name="GitHub" data-app-icon="data_object">
               <span class="material-symbols-outlined icon">data_object</span><div class="label">GitHub</div>
             </a>
-            <a class="app-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" title="Zur MDN Web Docs" data-app-name="MDN Docs" data-app-icon="menu_book">
-                <span class="material-symbols-outlined icon">menu_book</span><div class="label">MDN Docs</div>
-            </a>
-            <a class="app-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow" data-app-name="Stack Overflow" data-app-icon="lightbulb">
-                <span class="material-symbols-outlined icon">lightbulb</span><div class="label">Stack Overflow</div>
-            </a>
-            <a class="app-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" title="Zu CodePen" data-app-name="CodePen" data-app-icon="code">
-                <span class="material-symbols-outlined icon">code</span><div class="label">CodePen</div>
-            </a>
-            <a class="app-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" title="Zu Unsplash" data-app-name="Unsplash" data-app-icon="image">
-                <span class="material-symbols-outlined icon">image</span><div class="label">Unsplash</div>
-            </a>
-         </div>
+          </div>
         </section>
       </div>
     </main>
