@@ -57,6 +57,8 @@ function updateIsland(icon, title, subtitle, expand = false, showProgress = fals
   
   if (expand) {
     dynamicIsland.classList.add('expanded');
+  } else {
+    dynamicIsland.classList.remove('expanded');
   }
   
   clearTimeout(islandTimeout);
