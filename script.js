@@ -57,8 +57,6 @@ function updateIsland(icon, title, subtitle, expand = false, showProgress = fals
   
   if (expand) {
     dynamicIsland.classList.add('expanded');
-  } else {
-    dynamicIsland.classList.remove('expanded');
   }
   
   clearTimeout(islandTimeout);
@@ -137,10 +135,9 @@ searchInput.addEventListener('keypress', (e) => {
 // Theme Menu Toggle
 themeBtn.addEventListener('click', (e) => {
   e.stopPropagation();
-  const isActive = themeMenu.classList.toggle('active');
-  themeBtn.setAttribute('aria-expanded', String(isActive));
+  themeMenu.classList.toggle('active');
   
-  if (isActive) {
+  if (themeMenu.classList.contains('active')) {
     showIslandNotification('palette', 'Theme-Auswahl', 'Wähle dein Lieblings-Theme', 2000);
   }
 });
@@ -149,7 +146,6 @@ themeBtn.addEventListener('click', (e) => {
 document.addEventListener('click', (e) => {
   if (!themeMenu.contains(e.target) && !themeBtn.contains(e.target)) {
     themeMenu.classList.remove('active');
-    themeBtn.setAttribute('aria-expanded', 'false');
   }
 });
 
@@ -173,7 +169,6 @@ themeOptions.forEach(option => {
     // Close menu
     setTimeout(() => {
       themeMenu.classList.remove('active');
-      themeBtn.setAttribute('aria-expanded', 'false');
     }, 300);
   });
 });
@@ -222,13 +217,13 @@ appCards.forEach(card => {
     
     hoverTimeout = setTimeout(() => {
       updateIsland(appIcon, appName, 'Klicke zum Öffnen', true);
-    }, 350);
+    }, 400);
   });
 
   card.addEventListener('mouseleave', () => {
     clearTimeout(hoverTimeout);
     collapseIsland();
-    setTimeout(resetIslandToDefault, 280);
+    setTimeout(resetIslandToDefault, 300);
   });
 });
 
