@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="MKWEB OS 9 - Dein personalisiertes Dashboard" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MKWEB OS 9 - Dein personalisiertes Dashboard">
   <title>MKWEB OS 9</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="dark">
   <!-- Dynamic Island -->
@@ -27,14 +25,14 @@
       </div>
     </div>
     <div class="island-action">
-      <button class="island-close" id="islandClose" aria-label="Schließen">
+      <button class="island-close" id="islandClose">
         <span class="material-symbols-outlined" style="font-size: 14px;">close</span>
       </button>
     </div>
   </div>
 
   <!-- Theme Menu -->
-  <div class="theme-menu" id="themeMenu" aria-hidden="true">
+  <div class="theme-menu" id="themeMenu">
     <div class="theme-menu-header">
       <span class="material-symbols-outlined" style="font-size: 16px;">palette</span>
       Theme auswählen
@@ -85,118 +83,115 @@
 
   <div class="container">
     <!-- Header -->
-    <header class="header glass" role="banner">
+    <header class="header glass">
       <div class="logo">MKWEB OS 9</div>
       <div class="header-controls">
-        <button class="btn" id="themeBtn" aria-expanded="false" aria-controls="themeMenu">
+        <button class="btn" id="themeBtn">
           <span class="material-symbols-outlined">palette</span>
           Themes
         </button>
         <button class="btn" id="fullscreenBtn">
           <span class="material-symbols-outlined">fullscreen</span>
         </button>
-        <div class="avatar" title="Profil">
+        <div class="avatar">
           <span class="material-symbols-outlined" style="color: white;">person</span>
         </div>
       </div>
     </header>
 
-    <!-- Hauptbereich (füllt verbleibende Höhe, kein Seiten-Scroll) -->
-    <main class="main-area" role="main">
-      <div class="main-grid">
-        <!-- Time Card -->
-        <div class="time-card glass">
-          <div class="time" id="time">12:00</div>
-          <div class="date" id="date">Sonntag, 12. Oktober 2025</div>
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Time Card -->
+      <div class="time-card glass">
+        <div class="time" id="time">12:00</div>
+        <div class="date" id="date">Sonntag, 12. Oktober 2025</div>
+      </div>
+
+      <!-- Search Section -->
+      <div class="search-section glass">
+        <div class="search-engines" id="searchEngines">
+          <button class="search-engine active" data-engine="google">Google</button>
+          <button class="search-engine" data-engine="yandex">Yandex</button>
+          <button class="search-engine" data-engine="bing">Bing</button>
+          <button class="search-engine" data-engine="duckduckgo">DuckDuckGo</button>
+          <button class="search-engine" data-engine="youtube">YouTube</button>
+          <button class="search-engine" data-engine="github">GitHub</button>
         </div>
-
-        <!-- Rechte Spalte: Suche, Info, Apps -->
-        <div class="right-column">
-          <div class="search-section glass">
-            <div class="search-engines" id="searchEngines">
-              <button class="search-engine active" data-engine="google">Google</button>
-              <button class="search-engine" data-engine="yandex">Yandex</button>
-              <button class="search-engine" data-engine="bing">Bing</button>
-              <button class="search-engine" data-engine="duckduckgo">DuckDuckGo</button>
-              <button class="search-engine" data-engine="youtube">YouTube</button>
-              <button class="search-engine" data-engine="github">GitHub</button>
-            </div>
-            <div class="search-box">
-              <span class="material-symbols-outlined search-icon">search</span>
-              <input type="text" id="search" placeholder="Was suchst du heute?" autocomplete="off" />
-            </div>
-          </div>
-
-          <div class="info-grid">
-            <div class="info-card glass">
-              <a href="#" class="weather-btn" id="weatherBtn">
-                <span class="material-symbols-outlined weather-icon">cloudy_snowing</span>
-                Wetter anzeigen
-              </a>
-            </div>
-            <div class="info-card glass">
-              <div class="quote-text" id="quoteText">"Lade Zitat..."</div>
-              <div class="quote-author" id="quoteAuthor">— Unbekannt</div>
-            </div>
-          </div>
-
-          <div class="apps-section glass" aria-label="Apps & Bookmarks">
-            <h2 class="apps-title">✨ Apps & Bookmarks</h2>
-            <div class="apps-grid" id="appsGrid">
-              <!-- App cards -->
-              <a class="app-card" href="https://chat.openai.com" target="_blank" data-name="ChatGPT" data-icon="chat" rel="noopener">
-                <span class="material-symbols-outlined app-icon">chat</span>
-                <span class="app-label">ChatGPT</span>
-              </a>
-              <a class="app-card" href="https://gemini.google.com" target="_blank" data-name="Gemini" data-icon="bubble_chart" rel="noopener">
-                <span class="material-symbols-outlined app-icon">bubble_chart</span>
-                <span class="app-label">Gemini</span>
-              </a>
-              <a class="app-card" href="https://notion.so" target="_blank" data-name="Notion" data-icon="article" rel="noopener">
-                <span class="material-symbols-outlined app-icon">article</span>
-                <span class="app-label">Notion</span>
-              </a>
-              <a class="app-card" href="https://calendar.google.com" target="_blank" data-name="Calendar" data-icon="calendar_month" rel="noopener">
-                <span class="material-symbols-outlined app-icon">calendar_month</span>
-                <span class="app-label">Calendar</span>
-              </a>
-              <a class="app-card" href="https://mail.google.com" target="_blank" data-name="Gmail" data-icon="mail" rel="noopener">
-                <span class="material-symbols-outlined app-icon">mail</span>
-                <span class="app-label">Gmail</span>
-              </a>
-              <a class="app-card" href="https://web.whatsapp.com" target="_blank" data-name="WhatsApp" data-icon="chat_bubble" rel="noopener">
-                <span class="material-symbols-outlined app-icon">chat_bubble</span>
-                <span class="app-label">WhatsApp</span>
-              </a>
-              <a class="app-card" href="https://spotify.com" target="_blank" data-name="Spotify" data-icon="headphones" rel="noopener">
-                <span class="material-symbols-outlined app-icon">headphones</span>
-                <span class="app-label">Spotify</span>
-              </a>
-              <a class="app-card" href="https://github.com" target="_blank" data-name="GitHub" data-icon="code" rel="noopener">
-                <span class="material-symbols-outlined app-icon">code</span>
-                <span class="app-label">GitHub</span>
-              </a>
-              <a class="app-card" href="https://developer.mozilla.org" target="_blank" data-name="MDN" data-icon="menu_book" rel="noopener">
-                <span class="material-symbols-outlined app-icon">menu_book</span>
-                <span class="app-label">MDN Docs</span>
-              </a>
-              <a class="app-card" href="https://stackoverflow.com" target="_blank" data-name="Stack Overflow" data-icon="lightbulb" rel="noopener">
-                <span class="material-symbols-outlined app-icon">lightbulb</span>
-                <span class="app-label">Stack Overflow</span>
-              </a>
-              <a class="app-card" href="https://codepen.io" target="_blank" data-name="CodePen" data-icon="edit_square" rel="noopener">
-                <span class="material-symbols-outlined app-icon">edit_square</span>
-                <span class="app-label">CodePen</span>
-              </a>
-              <a class="app-card" href="https://unsplash.com" target="_blank" data-name="Unsplash" data-icon="image" rel="noopener">
-                <span class="material-symbols-outlined app-icon">image</span>
-                <span class="app-label">Unsplash</span>
-              </a>
-            </div>
-          </div>
+        <div class="search-box">
+          <span class="material-symbols-outlined search-icon">search</span>
+          <input type="text" id="search" placeholder="Was suchst du heute?" autocomplete="off">
         </div>
       </div>
-    </main>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="info-grid">
+      <div class="info-card glass">
+        <a href="#" class="weather-btn" id="weatherBtn">
+          <span class="material-symbols-outlined weather-icon">cloudy_snowing</span>
+          Wetter anzeigen
+        </a>
+      </div>
+      <div class="info-card glass">
+        <div class="quote-text" id="quoteText">"Lade Zitat..."</div>
+        <div class="quote-author" id="quoteAuthor">- Unbekannt</div>
+      </div>
+    </div>
+
+    <!-- Apps Section -->
+    <div class="apps-section glass">
+      <h2 class="apps-title">✨ Apps & Bookmarks</h2>
+      <div class="apps-grid">
+        <a class="app-card" href="https://chat.openai.com" target="_blank" data-name="ChatGPT" data-icon="chat">
+          <span class="material-symbols-outlined app-icon">chat</span>
+          <span class="app-label">ChatGPT</span>
+        </a>
+        <a class="app-card" href="https://gemini.google.com" target="_blank" data-name="Gemini" data-icon="bubble_chart">
+          <span class="material-symbols-outlined app-icon">bubble_chart</span>
+          <span class="app-label">Gemini</span>
+        </a>
+        <a class="app-card" href="https://notion.so" target="_blank" data-name="Notion" data-icon="article">
+          <span class="material-symbols-outlined app-icon">article</span>
+          <span class="app-label">Notion</span>
+        </a>
+        <a class="app-card" href="https://calendar.google.com" target="_blank" data-name="Calendar" data-icon="calendar_month">
+          <span class="material-symbols-outlined app-icon">calendar_month</span>
+          <span class="app-label">Calendar</span>
+        </a>
+        <a class="app-card" href="https://mail.google.com" target="_blank" data-name="Gmail" data-icon="mail">
+          <span class="material-symbols-outlined app-icon">mail</span>
+          <span class="app-label">Gmail</span>
+        </a>
+        <a class="app-card" href="https://web.whatsapp.com" target="_blank" data-name="WhatsApp" data-icon="chat_bubble">
+          <span class="material-symbols-outlined app-icon">chat_bubble</span>
+          <span class="app-label">WhatsApp</span>
+        </a>
+        <a class="app-card" href="https://spotify.com" target="_blank" data-name="Spotify" data-icon="headphones">
+          <span class="material-symbols-outlined app-icon">headphones</span>
+          <span class="app-label">Spotify</span>
+        </a>
+        <a class="app-card" href="https://github.com" target="_blank" data-name="GitHub" data-icon="code">
+          <span class="material-symbols-outlined app-icon">code</span>
+          <span class="app-label">GitHub</span>
+        </a>
+        <a class="app-card" href="https://developer.mozilla.org" target="_blank" data-name="MDN" data-icon="menu_book">
+          <span class="material-symbols-outlined app-icon">menu_book</span>
+          <span class="app-label">MDN Docs</span>
+        </a>
+        <a class="app-card" href="https://stackoverflow.com" target="_blank" data-name="Stack Overflow" data-icon="lightbulb">
+          <span class="material-symbols-outlined app-icon">lightbulb</span>
+          <span class="app-label">Stack Overflow</span>
+        </a>
+        <a class="app-card" href="https://codepen.io" target="_blank" data-name="CodePen" data-icon="edit_square">
+          <span class="material-symbols-outlined app-icon">edit_square</span>
+          <span class="app-label">CodePen</span>
+        </a>
+        <a class="app-card" href="https://unsplash.com" target="_blank" data-name="Unsplash" data-icon="image">
+          <span class="material-symbols-outlined app-icon">image</span>
+          <span class="app-label">Unsplash</span>
+        </a>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
