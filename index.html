@@ -1,150 +1,789 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="MKWEB OS 7 Compact - Ihr personalisiertes, leistungsstarkes Single-Screen-Dashboard.">
-  <meta name="keywords" content="dashboard, web, suche, schnellzugriffe, wetter, minimalistisch, animiert, performance, mkweb, produktivität, startseite, single page">
-  <meta name="author" content="MKWEB">
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourwebsite.com/">
-  <meta property="og:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
-  <meta property="og:description" content="Ihr personalisiertes, leistungsstarkes und visuell ansprechendes Single-Screen-dashboard.">
-  <meta property="og:image" content="https://yourwebsite.com/thumbnail.jpg">
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://yourwebsite.com/">
-  <meta property="twitter:title" content="MKWEB OS 7 - Das Kompakte Dashboard">
-  <meta property="twitter:description" content="Ihr personalisiertes, leistungsstarkes, animiertes Single-Screen-dashboard.">
-  <meta property="twitter:image" content="https://yourwebsite.com/thumbnail.jpg">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MKWEB OS 7 Compact - ein modernes, schnelles und anpassbares Dashboard." />
+  <meta name="theme-color" content="#0e0e0e" />
   <title>MKWEB OS 7 - Kompaktes Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-</head>
-<body data-theme="dark">
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --fg: #f8f8f8;
+      --dim: rgba(248,248,248,.68);
+      --acc: #8a4ed4;
+      --ah: #b080ff;
+      --gl: rgba(255,255,255,.06);
+      --gb: rgba(255,255,255,.14);
+      --acc-rgb: 138, 78, 212;
+      --fg-rgb: 248, 248, 248;
+      --shadow: 0 10px 30px rgba(0,0,0,.18);
+      --shadow-strong: 0 14px 40px rgba(0,0,0,.28);
+      --r: 18px;
+      --gap: clamp(.7rem, 1vw, 1rem);
+      --pad: clamp(.75rem, 1.2vw, 1.25rem);
+      --content: 1600px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --trans: 220ms var(--ease);
+    }
 
-  <div class="dynamic-island-container" id="dynamicIslandContainer">
-      <div class="dynamic-island" id="dynamicIsland">
-          <div class="island-content">
-              <i class="material-symbols-outlined" id="islandIcon">info</i>
-              <div class="island-details">
-                  <span id="islandTitle">Willkommen!</span>
-                  <span id="islandSubtitle">Wähle eine Suchmaschine aus.</span>
-              </div>
-          </div>
-          <div class="island-status">
-              <div class="island-waveform" id="islandWaveform">
-                  <span></span><span></span><span></span><span></span>
-              </div>
-              <button class="island-dismiss" id="islandDismissBtn" aria-label="Insel ausblenden">
-                  <span class="material-symbols-outlined">close</span>
-              </button>
-          </div>
+    html[data-theme="light"] {
+      --bg: #f0f2f5;
+      --fg: #141414;
+      --dim: rgba(20,20,20,.65);
+      --acc: #4285f4;
+      --ah: #669df6;
+      --gl: rgba(0,0,0,.05);
+      --gb: rgba(0,0,0,.1);
+      --acc-rgb: 66,133,244;
+      --fg-rgb: 20,20,20;
+    }
+    html[data-theme="ocean"] {
+      --bg: #0a1128;
+      --fg: #e0f2f7;
+      --dim: rgba(224,242,247,.66);
+      --acc: #0077b6;
+      --ah: #00a8e8;
+      --gl: rgba(255,255,255,.08);
+      --gb: rgba(255,255,255,.18);
+      --acc-rgb: 0,119,182;
+      --fg-rgb: 224,242,247;
+    }
+    html[data-theme="forest"] {
+      --bg: #1e392a;
+      --fg: #e0ffe0;
+      --dim: rgba(224,255,224,.66);
+      --acc: #388e3c;
+      --ah: #4caf50;
+      --gl: rgba(255,255,255,.07);
+      --gb: rgba(255,255,255,.15);
+      --acc-rgb: 56,142,60;
+      --fg-rgb: 224,255,224;
+    }
+
+    * { box-sizing: border-box; }
+    html { font-size: clamp(14px, 0.75vw + 0.4vh, 18px); }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--fg);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(var(--acc-rgb), .12), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(var(--ah), .08), transparent 30%),
+        var(--bg);
+      min-height: 100vh;
+      overflow: hidden;
+      transition: background-color 220ms var(--ease), color 220ms var(--ease);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    button, a, input { font: inherit; }
+    a { color: inherit; }
+    button {
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+      background: none;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+
+    .shell {
+      width: min(100%, var(--content));
+      height: 100vh;
+      margin: 0 auto;
+      padding: clamp(.8rem, 1.4vw, 1.4rem);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
+    .glass {
+      background: var(--gl);
+      border: 1px solid var(--gb);
+      backdrop-filter: blur(18px) saturate(150%);
+      box-shadow: var(--shadow);
+      border-radius: var(--r);
+      transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans), background var(--trans);
+    }
+    .glass:hover { box-shadow: var(--shadow-strong); transform: translateY(-2px); }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--gap);
+      padding: .9rem 1.1rem;
+      flex-shrink: 0;
+    }
+    .logo {
+      font-weight: 900;
+      letter-spacing: -.04em;
+      font-size: clamp(1.2rem, 1.8vw, 2rem);
+      background: linear-gradient(65deg, var(--acc), var(--ah));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .controls { display: flex; gap: .55rem; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .control-btn, .chip-btn, .search-engine, .weather-link, .app-card {
+      transition: transform var(--trans), box-shadow var(--trans), background var(--trans), border-color var(--trans), color var(--trans);
+    }
+    .control-btn, .chip-btn, .search-engine {
+      padding: .55rem .8rem;
+      border-radius: 999px;
+      background: var(--gl);
+      border: 1px solid var(--gb);
+      color: var(--fg);
+      box-shadow: var(--shadow);
+      font-weight: 600;
+      line-height: 1;
+    }
+    .control-btn:hover, .chip-btn:hover, .search-engine:hover, .weather-link:hover, .app-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-strong);
+    }
+    .control-btn:focus-visible, .chip-btn:focus-visible, .search-engine:focus-visible, .weather-link:focus-visible, .app-card:focus-visible, input:focus-visible {
+      outline: 2px solid var(--ah);
+      outline-offset: 2px;
+    }
+
+    .avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--gl);
+      border: 1px solid var(--gb);
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+    .avatar.hidden { display: none; }
+    .avatar .material-symbols-outlined { color: var(--acc); font-size: 1.35rem; }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gap);
+      min-height: 0;
+      flex: 1;
+    }
+    .col { display: flex; flex-direction: column; gap: var(--gap); min-height: 0; }
+
+    .time-card, .quote-card, .weather-card, .search-card, .apps-card {
+      padding: clamp(.9rem, 1.4vw, 1.4rem);
+      min-height: 0;
+    }
+
+    .time-card { flex: 1.1; display: grid; place-items: center; text-align: center; }
+    #time {
+      font-weight: 900;
+      letter-spacing: -.05em;
+      font-size: clamp(3rem, 6vw, 7rem);
+      line-height: .95;
+      margin: 0;
+      background: linear-gradient(65deg, var(--acc), var(--ah));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #date { margin-top: .4rem; color: var(--dim); text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; }
+
+    .weather-card, .quote-card {
+      flex: .9;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+    .weather-card h2, .quote-card h2, .apps-card h2 { margin: 0 0 .7rem 0; font-size: 1rem; color: var(--dim); }
+    .weather-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .8rem 1rem;
+      text-decoration: none;
+      border-radius: 999px;
+      background: var(--gl);
+      border: 1px solid var(--gb);
+      box-shadow: var(--shadow);
+      font-weight: 700;
+    }
+    .weather-link .material-symbols-outlined { color: var(--acc); }
+    .hint { margin-top: .75rem; color: var(--dim); font-size: .9rem; }
+
+    .search-card { display: flex; flex-direction: column; justify-content: center; gap: .9rem; flex: .9; }
+    .search-engines { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+    .search-engine[aria-pressed="true"] {
+      background: linear-gradient(135deg, var(--acc), var(--ah));
+      color: #fff;
+      border-color: rgba(255,255,255,.2);
+    }
+    .search-box {
+      display: flex; align-items: center; gap: .65rem;
+      padding: .9rem 1rem;
+      border-radius: var(--r);
+      background: var(--gl);
+      border: 1px solid var(--gb);
+      box-shadow: var(--shadow);
+    }
+    .search-box .material-symbols-outlined { color: var(--dim); }
+    #search {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--fg);
+      font-size: 1rem;
+    }
+    #search::placeholder { color: var(--dim); }
+
+    .quote {
+      max-width: 36rem;
+      margin: 0;
+      font-size: clamp(1rem, 1.15vw, 1.2rem);
+      line-height: 1.7;
+      font-style: italic;
+      position: relative;
+    }
+    .quote::before, .quote::after {
+      content: '“';
+      position: absolute;
+      font-size: 3.2rem;
+      color: var(--acc);
+      opacity: .14;
+      font-family: Georgia, serif;
+    }
+    .quote::before { top: -.9rem; left: -1rem; }
+    .quote::after { content: '”'; right: -1rem; bottom: -2rem; }
+    .author { margin-top: .8rem; color: var(--dim); font-weight: 600; }
+
+    .apps-card { flex: 1.2; display: flex; flex-direction: column; min-height: 0; }
+    .apps-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .8rem; }
+    .apps-head h2 { margin: 0; }
+    .apps-meta { color: var(--dim); font-size: .9rem; }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+      gap: .7rem;
+      overflow: auto;
+      padding-right: .2rem;
+      min-height: 0;
+    }
+    .app-card {
+      min-height: 92px;
+      border-radius: 18px;
+      text-decoration: none;
+      background: var(--gl);
+      border: 1px solid var(--gb);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: .9rem .55rem;
+      text-align: center;
+    }
+    .app-card .material-symbols-outlined { font-size: 1.6rem; color: var(--acc); transition: transform var(--trans), color var(--trans); }
+    .app-card:hover .material-symbols-outlined { transform: scale(1.12) rotate(4deg); color: var(--ah); }
+    .app-label { font-size: .85rem; font-weight: 600; line-height: 1.15; }
+
+    .island-wrap {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      pointer-events: none;
+    }
+    .island {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .85rem;
+      width: min(92vw, 240px);
+      padding: .65rem .8rem;
+      border-radius: 999px;
+      background: rgba(10,10,10,.88);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 12px 34px rgba(0,0,0,.26);
+      overflow: hidden;
+      cursor: pointer;
+      transition: width 280ms var(--ease), transform 280ms var(--ease), box-shadow 280ms var(--ease);
+      backdrop-filter: blur(18px);
+    }
+    html[data-theme="light"] .island { background: rgba(255,255,255,.88); color: #111; border-color: rgba(0,0,0,.08); }
+    .island.expanded { width: min(92vw, 420px); }
+    .island-main { display: flex; align-items: center; gap: .65rem; min-width: 0; }
+    .island .material-symbols-outlined { color: var(--ah); flex-shrink: 0; }
+    .island-text { display: flex; flex-direction: column; min-width: 0; }
+    .island-title, .island-subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .island-title { font-weight: 800; font-size: .88rem; }
+    .island-subtitle { font-size: .78rem; opacity: .78; }
+    .island-actions { display: flex; align-items: center; gap: .5rem; }
+    .wave {
+      display: none;
+      align-items: center;
+      gap: 3px;
+    }
+    .island.busy .wave { display: flex; }
+    .wave span {
+      width: 4px; height: 18px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--acc), var(--ah));
+      animation: wave 1s ease-in-out infinite;
+    }
+    .wave span:nth-child(2) { animation-delay: .12s; }
+    .wave span:nth-child(3) { animation-delay: .24s; }
+    .wave span:nth-child(4) { animation-delay: .36s; }
+    .dismiss {
+      display: none;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      place-items: center;
+      background: rgba(255,255,255,.08);
+      color: inherit;
+    }
+    html[data-theme="light"] .dismiss { background: rgba(0,0,0,.07); }
+    .island.expanded .dismiss { display: grid; }
+    .dismiss .material-symbols-outlined { font-size: 18px; }
+
+    @keyframes wave {
+      0%,100% { transform: scaleY(.8); opacity: .65; }
+      50% { transform: scaleY(1.25); opacity: 1; }
+    }
+
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .shell { height: auto; min-height: 100vh; }
+      .main { grid-template-columns: 1fr; height: auto; }
+      .time-card { min-height: 30vh; }
+      .apps-grid { grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .header { flex-direction: column; align-items: stretch; }
+      .controls { justify-content: center; }
+      .search-engines { justify-content: flex-start; }
+      .quote::after { right: -.4rem; }
+      .island.expanded { width: min(94vw, 94vw); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="island-wrap" id="islandWrap" aria-live="polite">
+    <div class="island glass" id="island" role="status" aria-label="Statusanzeige">
+      <div class="island-main">
+        <span class="material-symbols-outlined" id="islandIcon">info</span>
+        <div class="island-text">
+          <span class="island-title" id="islandTitle">Willkommen!</span>
+          <span class="island-subtitle" id="islandSubtitle">Wähle eine Suchmaschine aus.</span>
+        </div>
       </div>
+      <div class="island-actions">
+        <div class="wave" id="islandWave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <button class="dismiss" id="islandDismiss" aria-label="Insel ausblenden"><span class="material-symbols-outlined">close</span></button>
+      </div>
+    </div>
   </div>
 
-  <div class="container">
+  <div class="shell">
     <header class="header glass">
-      <div class="logo" aria-label="MKWEB OS 7 Logo">MKWEB OS 7</div>
+      <div class="logo">MKWEB OS 7</div>
       <div class="controls">
-        <button id="theme-toggle-btn" class="glass" title="Theme wechseln" aria-label="Theme wechseln">🎨 Theme</button>
-        <button id="fullscreen-btn" class="glass" title="Vollbild umschalten" aria-label="Vollbild umschalten">🚀 Vollbild</button>
-        <button id="user-avatar-toggle" class="glass" aria-label="Benutzer-Avatar ein-/ausblenden">🙈 Avatar ausblenden</button>
-        <div id="user-avatar" class="user-avatar glass" aria-hidden="false" role="img" aria-label="Benutzer-Avatar">
-          <span class="material-symbols-outlined">person</span>
-        </div>
+        <button class="control-btn" id="themeBtn" aria-label="Theme wechseln">🎨 Theme</button>
+        <button class="control-btn" id="fullBtn" aria-label="Vollbild umschalten">🚀 Vollbild</button>
+        <button class="control-btn" id="avatarBtn" aria-label="Avatar ein- oder ausblenden">🙈 Avatar</button>
+        <div class="avatar" id="avatar" aria-hidden="false"><span class="material-symbols-outlined">person</span></div>
       </div>
     </header>
 
-    <main class="main-grid">
-      <div class="grid-left">
-        <section class="time-display glass">
-          <h2 class="sr-only">Aktuelle Uhrzeit und Datum</h2>
-          <div id="time"></div>
-          <div id="date"></div>
+    <main class="main">
+      <div class="col">
+        <section class="time-card glass">
+          <h2 class="sr-only">Zeit und Datum</h2>
+          <div>
+            <div id="time">00:00</div>
+            <div id="date">Lädt…</div>
+          </div>
         </section>
 
-        <section class="weather-link-section glass">
+        <section class="weather-card glass">
+          <div>
             <h2>Aktuelles Wetter</h2>
-            <a href="#" class="weather-link-button glass"> 
-                <span class="material-symbols-outlined weather-icon">cloudy_snowing</span>
-                Wetter in Heidenheim ansehen
+            <a href="#" class="weather-link" id="weatherLink">
+              <span class="material-symbols-outlined">cloud</span>
+              Wetter in Heidenheim ansehen
             </a>
-            <p class="weather-notice">Klicke, um das aktuelle Wetter in der Dynamic Island anzuzeigen.</p>
+            <div class="hint">Klickt die Karte an, dann zeigt die Dynamic Island das Wetter an.</div>
+          </div>
         </section>
-        </div>
 
-      <div class="grid-right">
-        <section class="search-section glass">
+        <section class="quote-card glass">
+          <div>
+            <h2 class="sr-only">Zitat des Tages</h2>
+            <p class="quote" id="quoteText"></p>
+            <div class="author" id="quoteAuthor"></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col">
+        <section class="search-card glass">
           <h2 class="sr-only">Websuche</h2>
-          <div class="search-engines" role="group" aria-label="Suchmaschinen auswählen">
-            <button class="search-engine glass" data-engine="google" aria-pressed="true">Google</button>
-            <button class="search-engine glass" data-engine="yandex" aria-pressed="false">Yandex</button>
-            <button class="search-engine glass" data-engine="bing" aria-pressed="false">Bing</button>
-            <button class="search-engine glass" data-engine="duckduckgo" aria-pressed="false">DuckDuckGo</button>
-            <button class="search-engine glass" data-engine="youtube" aria-pressed="false">YouTube</button>
-            <button class="search-engine glass" data-engine="github" aria-pressed="false">GitHub</button>
+          <div class="search-engines" role="group" aria-label="Suchmaschine auswählen">
+            <button class="search-engine" data-engine="google" aria-pressed="true">Google</button>
+            <button class="search-engine" data-engine="yandex" aria-pressed="false">Yandex</button>
+            <button class="search-engine" data-engine="bing" aria-pressed="false">Bing</button>
+            <button class="search-engine" data-engine="duckduckgo" aria-pressed="false">DuckDuckGo</button>
+            <button class="search-engine" data-engine="youtube" aria-pressed="false">YouTube</button>
+            <button class="search-engine" data-engine="github" aria-pressed="false">GitHub</button>
           </div>
           <div class="search-box glass">
-            <span class="material-symbols-outlined icon" aria-hidden="true">search</span>
-            <label for="search" class="sr-only">Suchanfrage eingeben</label>
-            <input type="text" id="search" placeholder="Was suchst du heute?" autocomplete="off">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <label class="sr-only" for="search">Suche eingeben</label>
+            <input id="search" type="text" placeholder="Was suchst du heute?" autocomplete="off" />
           </div>
         </section>
 
-        <section class="quote-section glass">
-          <h2 class="sr-only">Tägliches Zitat</h2>
-          <p id="quote-text"></p>
-          <small id="quote-author"></small>
-        </section>
-        <section class="apps-section glass">
-          <h2 id="apps-heading">✨ Apps & Bookmarks</h2>
-          <div class="apps-container">
-            <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" title="Zu ChatGPT" data-app-name="ChatGPT" data-app-icon="chat">
-              <span class="material-symbols-outlined icon">chat</span><div class="label">ChatGPT</div>
+        <section class="apps-card glass">
+          <div class="apps-head">
+            <h2>✨ Apps & Bookmarks</h2>
+            <div class="apps-meta">Schnellzugriffe</div>
+          </div>
+          <div class="apps-grid" id="appsGrid">
+            <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" data-name="ChatGPT" data-icon="chat">
+              <span class="material-symbols-outlined">chat</span><div class="app-label">ChatGPT</div>
             </a>
-            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Gemini" data-app-name="Gemini" data-app-icon="bubble_chart">
-              <span class="material-symbols-outlined icon">bubble_chart</span><div class="label">Gemini</div>
+            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" data-name="Gemini" data-icon="bubble_chart">
+              <span class="material-symbols-outlined">bubble_chart</span><div class="app-label">Gemini</div>
             </a>
-            <a class="app-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer" title="Zu Notion" data-app-name="Notion" data-app-icon="article">
-              <span class="material-symbols-outlined icon">article</span><div class="label">Notion</div>
+            <a class="app-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer" data-name="Notion" data-icon="article">
+              <span class="material-symbols-outlined">article</span><div class="app-label">Notion</div>
             </a>
-            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" title="Zu Google Calendar" data-app-name="Calendar" data-app-icon="calendar_month">
-              <span class="material-symbols-outlined icon">calendar_month</span><div class="label">Calendar</div>
+            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" data-name="Calendar" data-icon="calendar_month">
+              <span class="material-symbols-outlined">calendar_month</span><div class="app-label">Calendar</div>
             </a>
-            <a class="app-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" title="Zu Gmail" data-app-name="Gmail" data-app-icon="mail">
-              <span class="material-symbols-outlined icon">mail</span><div class="label">Gmail</div>
+            <a class="app-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" data-name="Gmail" data-icon="mail">
+              <span class="material-symbols-outlined">mail</span><div class="app-label">Gmail</div>
             </a>
-            <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" title="Zu WhatsApp Web" data-app-name="WhatsApp" data-app-icon="chat_bubble">
-              <span class="material-symbols-outlined icon">chat_bubble</span><div class="label">WhatsApp</div>
+            <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" data-name="WhatsApp" data-icon="chat_bubble">
+              <span class="material-symbols-outlined">chat_bubble</span><div class="app-label">WhatsApp</div>
             </a>
-            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" title="Zu Spotify" data-app-name="Spotify" data-app-icon="headphones">
-              <span class="material-symbols-outlined icon">headphones</span><div class="label">Spotify</div>
+            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" data-name="Spotify" data-icon="headphones">
+              <span class="material-symbols-outlined">headphones</span><div class="app-label">Spotify</div>
             </a>
-            <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" title="Zu GitHub" data-app-name="GitHub" data-app-icon="data_object">
-              <span class="material-symbols-outlined icon">data_object</span><div class="label">GitHub</div>
+            <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" data-name="GitHub" data-icon="data_object">
+              <span class="material-symbols-outlined">data_object</span><div class="app-label">GitHub</div>
             </a>
-            <a class="app-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" title="Zur MDN Web Docs" data-app-name="MDN Docs" data-app-icon="menu_book">
-                <span class="material-symbols-outlined icon">menu_book</span><div class="label">MDN Docs</div>
+            <a class="app-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" data-name="MDN Docs" data-icon="menu_book">
+              <span class="material-symbols-outlined">menu_book</span><div class="app-label">MDN Docs</div>
             </a>
-            <a class="app-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" title="Zu Stack Overflow" data-app-name="Stack Overflow" data-app-icon="lightbulb">
-                <span class="material-symbols-outlined icon">lightbulb</span><div class="label">Stack Overflow</div>
+            <a class="app-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" data-name="Stack Overflow" data-icon="lightbulb">
+              <span class="material-symbols-outlined">lightbulb</span><div class="app-label">Stack Overflow</div>
             </a>
-            <a class="app-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" title="Zu CodePen" data-app-name="CodePen" data-app-icon="code">
-                <span class="material-symbols-outlined icon">code</span><div class="label">CodePen</div>
+            <a class="app-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" data-name="CodePen" data-icon="code">
+              <span class="material-symbols-outlined">code</span><div class="app-label">CodePen</div>
             </a>
-            <a class="app-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" title="Zu Unsplash" data-app-name="Unsplash" data-app-icon="image">
-                <span class="material-symbols-outlined icon">image</span><div class="label">Unsplash</div>
+            <a class="app-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" data-name="Unsplash" data-icon="image">
+              <span class="material-symbols-outlined">image</span><div class="app-label">Unsplash</div>
             </a>
-         </div>
+          </div>
         </section>
       </div>
     </main>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    (() => {
+      const SETTINGS_KEY = 'mkweb-settings-os7-v2';
+      const THEMES = ['dark', 'light', 'ocean', 'forest'];
+      const SEARCH_ENGINES = {
+        google: { url: 'https://www.google.com/search?q=', icon: 'travel_explore', label: 'Google' },
+        yandex: { url: 'https://yandex.com/search/?text=', icon: 'search', label: 'Yandex' },
+        bing: { url: 'https://www.bing.com/search?q=', icon: 'search', label: 'Bing' },
+        duckduckgo: { url: 'https://duckduckgo.com/?q=', icon: 'search_hands_free', label: 'DuckDuckGo' },
+        youtube: { url: 'https://www.youtube.com/results?search_query=', icon: 'play_circle', label: 'YouTube' },
+        github: { url: 'https://github.com/search?q=', icon: 'code', label: 'GitHub' }
+      };
+      const QUOTES = [
+        ['Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.', 'Steve Jobs'],
+        ['Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.', 'Albert Einstein'],
+        ['Sei du selbst die Veränderung, die du dir wünschst für diese Welt.', 'Mahatma Gandhi'],
+        ['Was immer du tun kannst oder träumst es zu können, fang damit an.', 'Johann Wolfgang von Goethe'],
+        ['Glück ist nicht das, was man besitzt, sondern das, was man gibt.', 'Unbekannt'],
+        ['Die Zukunft gehört denen, die an der Schönheit ihrer Träume glauben.', 'Eleanor Roosevelt'],
+        ['Es ist nicht genug zu wissen, man muss es auch anwenden.', 'Johann Wolfgang von Goethe'],
+        ['Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.', 'Peter F. Drucker'],
+        ['Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.', 'Albert Einstein']
+      ];
+      const WEATHER = {
+        heidenheim: { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim' },
+        berlin: { temp: 18, description: 'Regen', icon: 'rainy', location: 'Berlin' },
+        london: { temp: 15, description: 'Nebel', icon: 'foggy', location: 'London' }
+      };
+
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+      const clampTheme = (t) => THEMES.includes(t) ? t : 'dark';
+      const readSettings = () => {
+        try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) ?? {}; }
+        catch { return {}; }
+      };
+      const saveSettings = (settings) => {
+        try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {}
+      };
+      const fmtTime = (d) => d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+      const fmtDate = (d) => d.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const fmtShort = (d) => ({
+        date: d.toLocaleDateString('de-DE', { day: '2-digit', month: 'short' }),
+        weekday: d.toLocaleDateString('de-DE', { weekday: 'long' })
+      });
+      const engineName = (key) => SEARCH_ENGINES[key]?.label ?? 'Google';
+
+      const state = {
+        settings: {
+          theme: 'dark',
+          showAvatar: true,
+          engine: 'google',
+          weatherLocation: 'heidenheim'
+        },
+        islandTimer: null,
+        islandModeTimer: null,
+        quoteTimer: null,
+        timeTimer: null,
+        islandMode: 'default',
+        islandExpanded: false,
+        islandToggleTick: true
+      };
+
+      const els = {
+        html: document.documentElement,
+        island: $('#island'),
+        islandIcon: $('#islandIcon'),
+        islandTitle: $('#islandTitle'),
+        islandSubtitle: $('#islandSubtitle'),
+        islandWave: $('#islandWave'),
+        islandDismiss: $('#islandDismiss'),
+        time: $('#time'),
+        date: $('#date'),
+        quoteText: $('#quoteText'),
+        quoteAuthor: $('#quoteAuthor'),
+        search: $('#search'),
+        themeBtn: $('#themeBtn'),
+        fullBtn: $('#fullBtn'),
+        avatarBtn: $('#avatarBtn'),
+        avatar: $('#avatar'),
+        weatherLink: $('#weatherLink'),
+        engineBtns: $$('.search-engine'),
+        appCards: $$('.app-card')
+      };
+
+      function setIsland(icon, title, subtitle, opts = {}) {
+        els.islandIcon.textContent = icon;
+        els.islandTitle.textContent = title;
+        els.islandSubtitle.textContent = subtitle;
+        els.island.classList.toggle('busy', !!opts.busy);
+      }
+
+      function showIsland(icon, title, subtitle, duration = 2400, opts = {}) {
+        clearTimeout(state.islandTimer);
+        setIsland(icon, title, subtitle, opts);
+        if (opts.expanded ?? true) els.island.classList.add('expanded');
+        state.islandTimer = setTimeout(() => {
+          els.island.classList.remove('expanded');
+          resetIsland();
+        }, duration);
+      }
+
+      function resetIsland() {
+        const engine = state.settings.engine;
+        const cfg = SEARCH_ENGINES[engine] || SEARCH_ENGINES.google;
+        setIsland(cfg.icon, 'Suchmaschine', `Aktiv: ${cfg.label}`);
+        els.island.classList.remove('busy');
+        if (!state.islandExpanded) els.island.classList.remove('expanded');
+      }
+
+      function applyTheme(theme) {
+        const next = clampTheme(theme);
+        els.html.dataset.theme = next;
+        state.settings.theme = next;
+        saveSettings(state.settings);
+        showIsland('palette', 'Theme geändert', `Aktiv: ${next[0].toUpperCase()}${next.slice(1)}`, 1800, { expanded: true });
+      }
+
+      function cycleTheme() {
+        const idx = THEMES.indexOf(state.settings.theme);
+        applyTheme(THEMES[(idx + 1) % THEMES.length]);
+      }
+
+      function updateQuote() {
+        const [text, author] = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+        els.quoteText.textContent = `"${text}"`;
+        els.quoteAuthor.textContent = `— ${author}`;
+      }
+
+      function updateClock() {
+        const now = new Date();
+        els.time.textContent = fmtTime(now);
+        els.date.textContent = fmtDate(now);
+      }
+
+      function selectEngine(engine) {
+        state.settings.engine = SEARCH_ENGINES[engine] ? engine : 'google';
+        saveSettings(state.settings);
+        els.engineBtns.forEach(btn => {
+          const active = btn.dataset.engine === state.settings.engine;
+          btn.setAttribute('aria-pressed', String(active));
+        });
+        resetIsland();
+      }
+
+      function performSearch() {
+        const query = els.search.value.trim();
+        if (!query) return;
+        const engine = SEARCH_ENGINES[state.settings.engine] || SEARCH_ENGINES.google;
+        const url = engine.url + encodeURIComponent(query);
+        showIsland('arrow_forward', 'Suche läuft…', `Öffne Ergebnisse für „${query}“`, 900, { busy: true, expanded: true });
+        window.setTimeout(() => {
+          window.open(url, '_blank', 'noopener,noreferrer');
+          els.search.value = '';
+        }, 700);
+      }
+
+      function fakeWeather(locationKey) {
+        const data = WEATHER[locationKey] || WEATHER.heidenheim;
+        return new Promise(resolve => setTimeout(() => resolve(data), 450));
+      }
+
+      async function onWeatherClick(e) {
+        e.preventDefault();
+        const key = state.settings.weatherLocation;
+        showIsland('cloud_sync', 'Wetter wird geladen…', 'Bitte kurz warten', 2200, { busy: true, expanded: true });
+        try {
+          const w = await fakeWeather(key);
+          const icon = w.icon === 'rain' ? 'rainy' : w.icon;
+          showIsland(icon, `${w.temp}°C`, `${w.description} in ${w.location}`, 3400, { expanded: true });
+        } catch {
+          showIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar', 2200, { expanded: true });
+        }
+      }
+
+      function syncAvatar() {
+        const show = !!state.settings.showAvatar;
+        els.avatar.classList.toggle('hidden', !show);
+        els.avatarBtn.textContent = show ? '🙈 Avatar' : '🐵 Avatar';
+        els.avatar.setAttribute('aria-hidden', String(!show));
+      }
+
+      function toggleAvatar() {
+        state.settings.showAvatar = !state.settings.showAvatar;
+        saveSettings(state.settings);
+        syncAvatar();
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.();
+        } else {
+          document.exitFullscreen?.();
+        }
+      }
+
+      function bindAppHover(card) {
+        let hoverTimer = null;
+        card.addEventListener('mouseenter', () => {
+          clearTimeout(hoverTimer);
+          hoverTimer = setTimeout(() => {
+            const name = card.dataset.name || 'App';
+            const icon = card.dataset.icon || 'apps';
+            setIsland(icon, name, 'Starte App…', { busy: false });
+            els.island.classList.add('expanded');
+          }, 250);
+        });
+        card.addEventListener('mouseleave', () => {
+          clearTimeout(hoverTimer);
+          resetIsland();
+        });
+        card.addEventListener('focus', () => {
+          const name = card.dataset.name || 'App';
+          setIsland(card.dataset.icon || 'apps', name, 'Schnellzugriff');
+          els.island.classList.add('expanded');
+        });
+        card.addEventListener('blur', resetIsland);
+      }
+
+      function init() {
+        state.settings = {
+          ...state.settings,
+          ...readSettings()
+        };
+        state.settings.theme = clampTheme(state.settings.theme);
+        state.settings.engine = SEARCH_ENGINES[state.settings.engine] ? state.settings.engine : 'google';
+        els.html.dataset.theme = state.settings.theme;
+
+        updateClock();
+        updateQuote();
+        resetIsland();
+        syncAvatar();
+        selectEngine(state.settings.engine);
+
+        clearInterval(state.timeTimer);
+        state.timeTimer = setInterval(updateClock, 1000);
+        clearInterval(state.quoteTimer);
+        state.quoteTimer = setInterval(updateQuote, 60 * 60 * 1000);
+
+        els.engineBtns.forEach(btn => btn.addEventListener('click', () => selectEngine(btn.dataset.engine)));
+        els.search.addEventListener('keydown', e => { if (e.key === 'Enter') performSearch(); });
+        els.themeBtn.addEventListener('click', cycleTheme);
+        els.fullBtn.addEventListener('click', toggleFullscreen);
+        els.avatarBtn.addEventListener('click', toggleAvatar);
+        els.weatherLink.addEventListener('click', onWeatherClick);
+        els.islandDismiss.addEventListener('click', (e) => { e.stopPropagation(); els.island.classList.remove('expanded'); resetIsland(); });
+        els.island.addEventListener('click', (e) => {
+          if (e.target.closest('#islandDismiss')) return;
+          state.islandExpanded = !state.islandExpanded;
+          els.island.classList.toggle('expanded', state.islandExpanded);
+          if (!state.islandExpanded) resetIsland();
+        });
+
+        els.appCards.forEach(bindAppHover);
+
+        document.addEventListener('fullscreenchange', () => {
+          els.fullBtn.textContent = document.fullscreenElement ? 'Exit Fullscreen' : '🚀 Vollbild';
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && els.island.classList.contains('expanded')) {
+            state.islandExpanded = false;
+            els.island.classList.remove('expanded');
+            resetIsland();
+          }
+          if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            els.search.focus();
+          }
+        });
+
+        showIsland('info', 'Willkommen!', 'Wähle eine Suchmaschine aus.', 1800, { expanded: true });
+        console.log('MKWEB OS 7 verbessert geladen');
+      }
+
+      init();
+    })();
+  </script>
 </body>
 </html>
