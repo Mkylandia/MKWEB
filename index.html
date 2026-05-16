@@ -16,9 +16,13 @@
       --r-lg: 24px;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
       --t: 200ms var(--ease);
-      --gap: clamp(0.6rem, 0.9vw, 0.85rem);
+      --gap: clamp(0.6rem, 0.9vw, 0.9rem);
       --pad: clamp(0.85rem, 1.1vw, 1.2rem);
+      --shadow: 0 14px 40px rgba(0, 0, 0, 0.16);
+      --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.26);
+      --max: 1680px;
     }
+
     html[data-theme="dark"] {
       --bg: #0b0c12;
       --bg2: #13141e;
@@ -26,14 +30,14 @@
       --bg4: #242538;
       --bg5: #2e2f45;
       --text: #eeeeff;
-      --text2: rgba(220,222,255,0.58);
-      --text3: rgba(220,222,255,0.34);
+      --text2: rgba(220,222,255,0.66);
+      --text3: rgba(220,222,255,0.38);
       --accent: #7b6ef6;
       --accent2: #a89bf8;
-      --accent3: rgba(123,110,246,0.15);
-      --card: rgba(255,255,255,0.04);
-      --card-b: rgba(255,255,255,0.08);
-      --card-hover: rgba(255,255,255,0.07);
+      --accent3: rgba(123,110,246,0.16);
+      --card: rgba(255,255,255,0.05);
+      --card-b: rgba(255,255,255,0.09);
+      --card-hover: rgba(255,255,255,0.08);
       --glow: rgba(123,110,246,0.12);
       --green: #4ade80;
       --orange: #fb923c;
@@ -41,7 +45,9 @@
       --blue: #60a5fa;
       --island-bg: rgba(8,8,16,0.92);
       --island-b: rgba(255,255,255,0.1);
+      --island-text: #fff;
     }
+
     html[data-theme="light"] {
       --bg: #f0f0f8;
       --bg2: #ffffff;
@@ -49,12 +55,12 @@
       --bg4: #eaeaf5;
       --bg5: #ddddef;
       --text: #0f0f1e;
-      --text2: rgba(15,15,30,0.55);
-      --text3: rgba(15,15,30,0.3);
+      --text2: rgba(15,15,30,0.58);
+      --text3: rgba(15,15,30,0.32);
       --accent: #5b4de0;
       --accent2: #7b6ef6;
       --accent3: rgba(91,77,224,0.1);
-      --card: rgba(255,255,255,0.75);
+      --card: rgba(255,255,255,0.8);
       --card-b: rgba(0,0,0,0.07);
       --card-hover: rgba(255,255,255,0.95);
       --glow: rgba(91,77,224,0.07);
@@ -64,6 +70,7 @@
       --blue: #2563eb;
       --island-bg: rgba(255,255,255,0.94);
       --island-b: rgba(0,0,0,0.08);
+      --island-text: #111827;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,12 +85,13 @@
       color: var(--text);
       background: var(--bg);
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
       transition: background 280ms var(--ease), color 280ms var(--ease);
     }
 
-    /* Animated background */
     body::before {
       content: '';
       position: fixed;
@@ -98,53 +106,75 @@
 
     a { text-decoration: none; color: inherit; }
     button { border: 0; background: none; cursor: pointer; font: inherit; color: inherit; }
-    .ms { font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-weight: 400; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; font-feature-settings: 'liga'; -webkit-font-feature-settings: 'liga'; -webkit-font-smoothing: antialiased; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    input, textarea { font: inherit; }
+
+    .ms {
+      font-family: 'Material Symbols Rounded';
+      font-size: 1.15rem;
+      line-height: 1;
+      font-weight: 400;
+      letter-spacing: normal;
+      white-space: nowrap;
+      direction: ltr;
+      font-feature-settings: 'liga';
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
     .ms.fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 
-    .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
 
-    /* ── Shell ── */
     .shell {
       position: relative;
       z-index: 1;
-      width: min(100%, 1680px);
-      height: 100vh;
+      width: min(100%, var(--max));
       margin: 0 auto;
-      padding: clamp(0.7rem, 1.2vw, 1.1rem);
-      display: grid;
-      grid-template-rows: auto 1fr;
-      grid-template-columns: 1fr;
+      padding: clamp(0.75rem, 1.1vw, 1.1rem);
+      display: flex;
+      flex-direction: column;
       gap: var(--gap);
+      min-height: 100vh;
     }
 
-    /* ── Glass ── */
     .glass {
       background: var(--card);
       border: 1px solid var(--card-b);
-      backdrop-filter: blur(24px) saturate(140%);
+      backdrop-filter: blur(24px) saturate(145%);
       border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
       transition: transform var(--t), border-color var(--t), background var(--t), box-shadow var(--t);
     }
     .glass:hover {
       transform: translateY(-2px);
-      border-color: rgba(123,110,246,0.25);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.14), 0 0 0 1px rgba(123,110,246,0.08);
+      border-color: rgba(123,110,246,0.28);
+      box-shadow: var(--shadow-strong);
     }
 
-    /* ── Header ── */
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--gap);
-      padding: 0.7rem 1rem;
-      flex-shrink: 0;
+      padding: 0.75rem 0.95rem;
+      flex-wrap: wrap;
     }
 
     .logo-area {
       display: flex;
       align-items: center;
       gap: 0.7rem;
+      min-width: 0;
     }
     .logo-mark {
       width: 34px;
@@ -157,22 +187,20 @@
     }
     .logo-mark .ms { font-size: 1.1rem; color: #fff; }
     .logo-text {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       letter-spacing: -0.04em;
-      color: var(--text);
+      white-space: nowrap;
     }
-    .logo-text span {
-      color: var(--accent);
-    }
+    .logo-text .accent { color: var(--accent); }
+    .logo-sub { color: var(--text3); font-size: 0.72rem; margin-left: 0.35rem; font-weight: 500; }
 
     .header-center {
-      flex: 1;
-      max-width: 520px;
+      flex: 1 1 360px;
+      max-width: 560px;
+      min-width: 240px;
       margin: 0 auto;
     }
-
-    /* Inline search in header */
     .header-search {
       display: flex;
       align-items: center;
@@ -180,45 +208,45 @@
       background: var(--card);
       border: 1px solid var(--card-b);
       border-radius: 999px;
-      padding: 0.5rem 0.9rem;
-      transition: border-color var(--t), background var(--t), box-shadow var(--t);
+      padding: 0.55rem 0.9rem;
       backdrop-filter: blur(20px);
+      transition: border-color var(--t), background var(--t), box-shadow var(--t);
     }
     .header-search:focus-within {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent3);
       background: var(--bg2);
     }
-    .header-search .ms { color: var(--text2); font-size: 1.1rem; }
+    .header-search .ms { color: var(--text2); font-size: 1.05rem; }
     .header-search input {
       flex: 1;
       border: 0;
       outline: 0;
       background: transparent;
       color: var(--text);
-      font: inherit;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
+      min-width: 0;
     }
     .header-search input::placeholder { color: var(--text3); }
     .engine-pill {
-      padding: 0.22rem 0.6rem;
+      padding: 0.22rem 0.62rem;
       border-radius: 999px;
       background: var(--accent3);
       color: var(--accent2);
       font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.02em;
       white-space: nowrap;
-      transition: background var(--t), color var(--t);
     }
 
     .ctrl-group {
       display: flex;
       gap: 0.45rem;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
     .ctrl-btn {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.35rem;
       padding: 0.5rem 0.8rem;
@@ -228,8 +256,8 @@
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--text2);
-      transition: all var(--t);
       backdrop-filter: blur(16px);
+      transition: all var(--t);
       white-space: nowrap;
     }
     .ctrl-btn .ms { font-size: 1rem; }
@@ -239,21 +267,49 @@
       border-color: rgba(123,110,246,0.3);
       transform: translateY(-1px);
     }
-    .ctrl-btn.active {
-      background: var(--accent3);
-      color: var(--accent2);
-      border-color: rgba(123,110,246,0.3);
-    }
 
-    /* ── Main grid ── */
+    .bookmarks-card {
+      padding: 0.75rem var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .bookmarks-card::-webkit-scrollbar { display: none; }
+    .bm-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text3);
+      flex-shrink: 0;
+    }
+    .bm-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.42rem 0.8rem;
+      border-radius: 999px;
+      background: var(--bg4);
+      border: 1px solid var(--card-b);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text2);
+      white-space: nowrap;
+      transition: all var(--t);
+      flex-shrink: 0;
+    }
+    .bm-item .ms { font-size: 0.9rem; color: var(--text3); }
+    .bm-item:hover { background: var(--bg5); color: var(--text); transform: translateY(-1px); }
+
     .main {
       display: grid;
-      grid-template-columns: 300px 1fr 300px;
-      grid-template-rows: 1fr;
+      grid-template-columns: minmax(240px, 300px) minmax(0, 1.45fr) minmax(240px, 300px);
       gap: var(--gap);
       min-height: 0;
+      flex: 1;
     }
-
     .col {
       display: flex;
       flex-direction: column;
@@ -261,40 +317,51 @@
       min-height: 0;
     }
 
-    /* ── Time Card ── */
-    .time-card {
+    .time-card,
+    .weather-card,
+    .quote-card,
+    .search-card,
+    .apps-card,
+    .notes-card,
+    .todo-card {
       padding: var(--pad);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    }
+
+    .time-card {
+      flex: 1.1;
+      display: grid;
+      place-items: center;
       text-align: center;
-      gap: 0.4rem;
-      flex: 1;
       position: relative;
       overflow: hidden;
+      min-height: 0;
     }
     .time-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 110%, var(--accent3), transparent);
+      background: radial-gradient(ellipse 80% 60% at 50% 110%, var(--accent3), transparent 60%);
       pointer-events: none;
     }
+    .greeting {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent2);
+      position: relative;
+    }
     .time-display {
-      font-size: clamp(3.2rem, 5.5vw, 5.8rem);
+      position: relative;
+      font-size: clamp(3rem, 5.6vw, 5.8rem);
       font-weight: 800;
       letter-spacing: -0.06em;
       line-height: 1;
-      color: var(--text);
-      position: relative;
     }
     .time-seconds {
       font-size: 0.4em;
       color: var(--accent);
       font-weight: 600;
       vertical-align: super;
-      margin-left: 0.1em;
+      margin-left: 0.12em;
     }
     .date-display {
       color: var(--text2);
@@ -302,26 +369,25 @@
       font-weight: 500;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-    }
-    .greeting {
-      font-size: 0.88rem;
-      color: var(--accent2);
-      font-weight: 600;
+      margin-top: 0.3rem;
+      position: relative;
     }
 
-    /* ── Weather ── */
-    .weather-card {
-      padding: var(--pad);
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
     .card-label {
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text3);
+      margin-bottom: 0.7rem;
+    }
+
+    .weather-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+      min-height: 0;
     }
     .weather-main {
       display: flex;
@@ -337,7 +403,7 @@
       place-items: center;
       flex-shrink: 0;
     }
-    .weather-icon .ms { color: var(--accent2); font-size: 1.5rem; }
+    .weather-icon .ms { color: var(--accent2); font-size: 1.45rem; }
     .weather-temp {
       font-size: 2rem;
       font-weight: 800;
@@ -352,7 +418,7 @@
     .weather-details {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
     .w-detail {
       display: flex;
@@ -360,6 +426,7 @@
       gap: 0.35rem;
       font-size: 0.78rem;
       color: var(--text2);
+      min-width: 0;
     }
     .w-detail .ms { font-size: 0.9rem; color: var(--text3); }
     .weather-btn {
@@ -367,7 +434,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      padding: 0.6rem;
+      padding: 0.65rem;
       border-radius: var(--r);
       background: var(--accent3);
       border: 1px solid rgba(123,110,246,0.2);
@@ -383,19 +450,17 @@
       border-color: var(--accent);
       transform: translateY(-1px);
     }
-    .weather-btn .ms { font-size: 1rem; }
 
-    /* ── Quote ── */
     .quote-card {
-      padding: var(--pad);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 0.8rem;
       flex: 1;
+      min-height: 0;
     }
     .quote-text {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       line-height: 1.75;
       color: var(--text2);
       font-style: italic;
@@ -415,6 +480,12 @@
       align-self: flex-start;
       padding-top: 1.2rem;
     }
+    .quote-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+    }
     .quote-author {
       font-size: 0.78rem;
       font-weight: 700;
@@ -432,17 +503,20 @@
       color: var(--text3);
       transition: all var(--t);
       flex-shrink: 0;
-      align-self: flex-end;
     }
-    .quote-refresh .ms { font-size: 0.9rem; }
-    .quote-refresh:hover { color: var(--accent); background: var(--accent3); border-color: rgba(123,110,246,0.3); transform: rotate(180deg); }
+    .quote-refresh:hover {
+      color: var(--accent);
+      background: var(--accent3);
+      border-color: rgba(123,110,246,0.3);
+      transform: rotate(180deg);
+    }
 
-    /* ── Center Column ── */
-    .center-top {
-      padding: var(--pad);
+    .search-card {
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
+      flex: 0.95;
+      min-height: 0;
     }
     .engines-row {
       display: flex;
@@ -450,7 +524,7 @@
       flex-wrap: wrap;
     }
     .eng-btn {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.35rem;
       padding: 0.42rem 0.75rem;
@@ -462,7 +536,6 @@
       color: var(--text2);
       transition: all var(--t);
     }
-    .eng-btn .ms { font-size: 0.85rem; }
     .eng-btn:hover { background: var(--bg5); color: var(--text); }
     .eng-btn.active {
       background: var(--accent);
@@ -490,8 +563,8 @@
       outline: 0;
       background: transparent;
       color: var(--text);
-      font: inherit;
       font-size: 1rem;
+      min-width: 0;
     }
     .search-big input::placeholder { color: var(--text3); }
     .search-go {
@@ -509,10 +582,8 @@
     .search-go .ms { color: #fff; font-size: 1.1rem; }
     .search-go:hover { background: var(--accent2); transform: scale(1.05); }
 
-    /* ── Apps ── */
     .apps-card {
-      padding: var(--pad);
-      flex: 1;
+      flex: 1.1;
       min-height: 0;
       display: flex;
       flex-direction: column;
@@ -522,6 +593,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.7rem;
     }
     .apps-title {
       font-size: 0.78rem;
@@ -534,10 +606,13 @@
       font-size: 0.72rem;
       color: var(--text3);
       font-weight: 500;
+      white-space: nowrap;
     }
     .apps-filter {
       display: flex;
       gap: 0.35rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
     .filter-btn {
       padding: 0.28rem 0.6rem;
@@ -553,14 +628,13 @@
     .filter-btn.active { color: var(--accent2); background: var(--accent3); border-color: rgba(123,110,246,0.2); }
     .apps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
       gap: 0.55rem;
       overflow-y: auto;
       min-height: 0;
       padding-right: 2px;
     }
     .apps-grid::-webkit-scrollbar { width: 4px; }
-    .apps-grid::-webkit-scrollbar-track { background: transparent; }
     .apps-grid::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 4px; }
     .app-tile {
       display: flex;
@@ -568,14 +642,14 @@
       align-items: center;
       justify-content: center;
       gap: 0.4rem;
-      padding: 0.75rem 0.4rem;
+      padding: 0.78rem 0.4rem;
       border-radius: var(--r);
       background: var(--card);
       border: 1px solid var(--card-b);
       text-align: center;
       transition: all var(--t);
       cursor: pointer;
-      min-height: 80px;
+      min-height: 84px;
       position: relative;
       overflow: hidden;
     }
@@ -599,41 +673,40 @@
       transition: transform var(--t), color var(--t);
       position: relative;
     }
-    .app-tile:hover .ms { transform: scale(1.15); color: var(--accent2); }
-    .app-tile-label {
-      font-size: 0.7rem;
+    .app-tile:hover .ms { transform: scale(1.12); color: var(--accent2); }
+    .app-label {
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--text2);
       line-height: 1.2;
       position: relative;
     }
 
-    /* ── Right column ── */
-    /* Quick notes */
-    .notes-card {
-      padding: var(--pad);
+    .notes-card,
+    .todo-card {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      flex: 1.2;
+      gap: 0.7rem;
+      min-height: 0;
+      flex: 1;
     }
-    .notes-header {
+    .notes-header,
+    .todo-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.6rem;
     }
     .notes-area {
       flex: 1;
+      min-height: 130px;
       border: 0;
       outline: 0;
       background: transparent;
       color: var(--text2);
-      font: inherit;
-      font-size: 0.85rem;
       line-height: 1.7;
       resize: none;
       width: 100%;
-      min-height: 0;
     }
     .notes-area::placeholder { color: var(--text3); }
     .notes-footer {
@@ -642,6 +715,7 @@
       justify-content: space-between;
       color: var(--text3);
       font-size: 0.72rem;
+      gap: 0.5rem;
     }
     .save-badge {
       display: flex;
@@ -652,19 +726,11 @@
       font-weight: 600;
       opacity: 0;
       transition: opacity var(--t);
+      white-space: nowrap;
     }
     .save-badge.show { opacity: 1; }
     .save-badge .ms { font-size: 0.85rem; }
 
-    /* Todo */
-    .todo-card {
-      padding: var(--pad);
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      flex: 1;
-      min-height: 0;
-    }
     .todo-input-row {
       display: flex;
       gap: 0.5rem;
@@ -676,8 +742,6 @@
       border-radius: 10px;
       padding: 0.52rem 0.75rem;
       color: var(--text);
-      font: inherit;
-      font-size: 0.82rem;
       outline: 0;
       transition: border-color var(--t), box-shadow var(--t);
     }
@@ -705,16 +769,22 @@
     }
     .todo-list::-webkit-scrollbar { width: 3px; }
     .todo-list::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 4px; }
+    .todo-empty {
+      text-align: center;
+      color: var(--text3);
+      font-size: 0.82rem;
+      padding: 1.4rem 0;
+    }
+    .todo-empty .ms { font-size: 1.8rem; display: block; margin-bottom: 0.35rem; opacity: 0.4; }
     .todo-item {
       display: flex;
       align-items: center;
       gap: 0.55rem;
-      padding: 0.5rem 0.65rem;
+      padding: 0.52rem 0.65rem;
       border-radius: 10px;
       background: var(--bg3);
       border: 1px solid transparent;
       transition: all var(--t);
-      group: true;
     }
     .todo-item:hover { border-color: var(--card-b); }
     .todo-check {
@@ -738,7 +808,7 @@
       color: var(--text2);
       line-height: 1.4;
       transition: all var(--t);
-      cursor: default;
+      overflow-wrap: anywhere;
     }
     .todo-text.done { text-decoration: line-through; color: var(--text3); }
     .todo-del {
@@ -754,42 +824,7 @@
     .todo-del .ms { font-size: 0.85rem; }
     .todo-item:hover .todo-del { opacity: 1; }
     .todo-del:hover { color: var(--red); background: rgba(248,113,113,0.1); }
-    .todo-empty {
-      text-align: center;
-      color: var(--text3);
-      font-size: 0.82rem;
-      padding: 1.5rem 0;
-    }
-    .todo-empty .ms { font-size: 1.8rem; display: block; margin-bottom: 0.4rem; opacity: 0.4; }
 
-    /* Bookmarks quick row */
-    .bookmarks-card {
-      padding: 0.75rem var(--pad);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      overflow-x: auto;
-    }
-    .bookmarks-card::-webkit-scrollbar { display: none; }
-    .bm-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.42rem 0.8rem;
-      border-radius: 999px;
-      background: var(--bg4);
-      border: 1px solid var(--card-b);
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text2);
-      white-space: nowrap;
-      transition: all var(--t);
-    }
-    .bm-item .ms { font-size: 0.9rem; color: var(--text3); }
-    .bm-item:hover { background: var(--bg5); color: var(--text); transform: translateY(-1px); }
-    .bm-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); flex-shrink: 0; }
-
-    /* ── Dynamic Island ── */
     .island-wrap {
       position: fixed;
       top: 0.85rem;
@@ -797,6 +832,9 @@
       transform: translateX(-50%);
       z-index: 100;
       pointer-events: none;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
     .island {
       pointer-events: auto;
@@ -807,74 +845,60 @@
       border-radius: 999px;
       background: var(--island-bg);
       border: 1px solid var(--island-b);
+      color: var(--island-text);
       backdrop-filter: blur(24px) saturate(160%);
       box-shadow: 0 8px 32px rgba(0,0,0,0.24), 0 0 0 1px rgba(123,110,246,0.06);
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 280ms var(--ease);
-      width: auto;
-      max-width: min(92vw, 380px);
+      width: min(92vw, 240px);
       overflow: hidden;
+      transition: width 280ms var(--ease), transform 280ms var(--ease), box-shadow 280ms var(--ease);
+      cursor: pointer;
     }
-    .island.compact { max-width: 200px; }
-    .island.wide { max-width: min(92vw, 460px); }
-    .island-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
-    }
-    .island-dot.pulse {
-      animation: pulse 1.2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.6; }
-    }
-    .island-content {
+    .island.expanded { width: min(92vw, 440px); }
+    .island-main {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
       min-width: 0;
       flex: 1;
     }
-    .island-title {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text);
+    .island-icon {
+      color: var(--accent2);
+      flex-shrink: 0;
+    }
+    .island-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .island-title,
+    .island-subtitle {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .island-sub {
-      font-size: 0.72rem;
-      color: var(--text2);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .island-title { font-size: 0.82rem; font-weight: 700; }
+    .island-subtitle { font-size: 0.72rem; color: var(--text2); }
+    .island-actions { display: flex; align-items: center; gap: 0.5rem; }
     .island-close {
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.08);
       display: grid;
       place-items: center;
+      color: var(--text2);
+      background: rgba(255,255,255,0.08);
       flex-shrink: 0;
-      transition: background var(--t);
     }
-    .island-close:hover { background: rgba(255,255,255,0.14); }
-    .island-close .ms { font-size: 0.8rem; color: var(--text2); }
     html[data-theme="light"] .island-close { background: rgba(0,0,0,0.05); }
-
-    /* Waves */
+    .island-close:hover { color: var(--text); }
     .waves {
-      display: flex;
+      display: none;
       align-items: center;
       gap: 2px;
       height: 18px;
       flex-shrink: 0;
     }
+    .island.busy .waves { display: flex; }
     .waves span {
       width: 3px;
       border-radius: 99px;
@@ -891,636 +915,765 @@
       50% { transform: scaleY(1); opacity: 1; }
     }
 
-    /* ── Focus mode overlay ── */
-    .focus-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      z-index: 200;
-      display: none;
-      place-items: center;
-      backdrop-filter: blur(8px);
+    @media (max-width: 1180px) {
+      .main { grid-template-columns: 1fr 1fr; }
+      .right-stack { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+      .apps-card { min-height: 360px; }
     }
-    .focus-overlay.show { display: grid; }
-    .focus-box {
-      width: min(90vw, 560px);
-      background: var(--bg2);
-      border-radius: var(--r-lg);
-      border: 1px solid var(--card-b);
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-    .focus-time {
-      font-size: clamp(4rem, 10vw, 6rem);
-      font-weight: 800;
-      letter-spacing: -0.06em;
-      color: var(--accent);
-      text-align: center;
-    }
-    .focus-date {
-      text-align: center;
-      color: var(--text2);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    .focus-search {
-      display: flex;
-      gap: 0.6rem;
-      background: var(--bg3);
-      border: 1.5px solid var(--card-b);
-      border-radius: var(--r);
-      padding: 0.85rem 1rem;
-      transition: border-color var(--t), box-shadow var(--t);
-    }
-    .focus-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent3); }
-    .focus-search .ms { color: var(--text2); font-size: 1.2rem; }
-    .focus-search input {
-      flex: 1;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      color: var(--text);
-      font: inherit;
-      font-size: 1.05rem;
-    }
-    .focus-search input::placeholder { color: var(--text3); }
-    .focus-close {
-      align-self: center;
-      padding: 0.5rem 1.2rem;
-      border-radius: 999px;
-      background: var(--bg4);
-      border: 1px solid var(--card-b);
-      color: var(--text2);
-      font: inherit;
-      font-size: 0.82rem;
-      transition: all var(--t);
-      cursor: pointer;
-    }
-    .focus-close:hover { background: var(--bg5); color: var(--text); }
 
-    /* Responsive */
-    @media (max-width: 1100px) {
-      .main {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto;
-      }
-      .col:last-child {
-        grid-column: 1 / -1;
-        flex-direction: row;
-      }
-      body, .shell { overflow: auto; }
-      .shell { height: auto; min-height: 100vh; }
-    }
-    @media (max-width: 720px) {
-      .header { flex-wrap: wrap; gap: 0.6rem; }
-      .header-center { max-width: 100%; order: 3; flex: 1 1 100%; }
+    @media (max-width: 820px) {
+      .header { flex-direction: column; align-items: stretch; }
+      .logo-area, .ctrl-group { justify-content: center; }
+      .header-center { order: 3; max-width: none; flex-basis: 100%; }
       .main { grid-template-columns: 1fr; }
-      .col:last-child { flex-direction: column; }
-      .ctrl-group { flex-wrap: wrap; }
-      .ctrl-btn span:not(.ms) { display: none; }
+      .right-stack { grid-template-columns: 1fr; }
+      .apps-filter { justify-content: flex-start; }
+      .engines-row { justify-content: flex-start; }
+      .search-big { padding: 0.76rem 0.92rem; }
+      .search-go { width: 32px; height: 32px; }
+      .island.expanded { width: min(94vw, 94vw); }
     }
+
+    @media (max-width: 520px) {
+      .shell { padding: 0.65rem; }
+      .header,
+      .time-card,
+      .quote-card,
+      .weather-card,
+      .search-card,
+      .apps-card,
+      .notes-card,
+      .todo-card { padding: 0.8rem; }
+      #time { font-size: 3rem; }
+      .ctrl-btn span.label { display: none; }
+      .engine-pill { display: none; }
+      .search-engine { flex: 1 1 calc(50% - 0.25rem); justify-content: center; }
+      .apps-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+      .app-tile { min-height: 80px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
-
-<!-- Dynamic Island -->
-<div class="island-wrap" aria-live="polite" aria-atomic="true">
-  <div class="island" id="island" role="status">
-    <div class="island-dot" id="islandDot"></div>
-    <div class="island-content">
-      <div class="island-title" id="islandTitle">MKWEB OS 7</div>
-      <div class="island-sub" id="islandSub">Willkommen zurück</div>
-    </div>
-    <div class="waves" id="islandWaves" style="display:none">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <button class="island-close" id="islandClose" aria-label="Schließen">
-      <span class="ms">close</span>
-    </button>
-  </div>
-</div>
-
-<!-- Focus Mode Overlay -->
-<div class="focus-overlay" id="focusOverlay">
-  <div class="focus-box">
-    <div class="focus-time" id="focusTime">00:00</div>
-    <div class="focus-date" id="focusDate"></div>
-    <div class="focus-search">
-      <span class="ms">search</span>
-      <input type="text" id="focusSearch" placeholder="Suchen und Enter drücken…" autocomplete="off" />
-    </div>
-    <button class="focus-close" id="focusCloseBtn">Fokus verlassen  ✕</button>
-  </div>
-</div>
-
-<div class="shell">
-  <!-- Header -->
-  <header class="header glass">
-    <div class="logo-area">
-      <div class="logo-mark"><span class="ms fill">language</span></div>
-      <div class="logo-text">MK<span>WEB</span> <span style="color:var(--text3);font-weight:500;font-size:0.75em;">OS 7</span></div>
-    </div>
-
-    <div class="header-center">
-      <div class="header-search">
-        <span class="ms">search</span>
-        <input type="text" id="headerSearch" placeholder="Suchen… (Ctrl+K)" autocomplete="off" />
-        <div class="engine-pill" id="headerEnginePill">Google</div>
+  <div class="island-wrap" aria-live="polite" aria-atomic="true">
+    <div class="island glass" id="island" role="status">
+      <div class="island-main">
+        <span class="ms fill island-icon" id="islandIcon">info</span>
+        <div class="island-text">
+          <div class="island-title" id="islandTitle">Willkommen!</div>
+          <div class="island-subtitle" id="islandSubtitle">Wähle eine Suchmaschine aus.</div>
+        </div>
+      </div>
+      <div class="island-actions">
+        <div class="waves" id="islandWaves" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <button class="island-close" id="islandClose" aria-label="Schließen"><span class="ms">close</span></button>
       </div>
     </div>
-
-    <div class="ctrl-group">
-      <button class="ctrl-btn" id="themeBtn" aria-label="Theme wechseln">
-        <span class="ms" id="themeIcon">dark_mode</span>
-        <span id="themeLabel">Hell</span>
-      </button>
-      <button class="ctrl-btn" id="focusBtn" aria-label="Fokus-Modus">
-        <span class="ms">center_focus_strong</span>
-        <span>Fokus</span>
-      </button>
-      <button class="ctrl-btn" id="fullBtn" aria-label="Vollbild">
-        <span class="ms" id="fullIcon">fullscreen</span>
-        <span id="fullLabel">Vollbild</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Bookmarks Quick Bar -->
-  <div class="bookmarks-card glass" id="bookmarkBar">
-    <span class="bm-label">Schnell</span>
-    <a class="bm-item" href="https://chat.openai.com" target="_blank" rel="noopener">
-      <span class="ms">chat</span>ChatGPT
-    </a>
-    <a class="bm-item" href="https://github.com" target="_blank" rel="noopener">
-      <span class="ms">code</span>GitHub
-    </a>
-    <a class="bm-item" href="https://mail.google.com" target="_blank" rel="noopener">
-      <span class="ms">mail</span>Gmail
-    </a>
-    <a class="bm-item" href="https://notion.so" target="_blank" rel="noopener">
-      <span class="ms">article</span>Notion
-    </a>
-    <a class="bm-item" href="https://youtube.com" target="_blank" rel="noopener">
-      <span class="ms">play_circle</span>YouTube
-    </a>
-    <a class="bm-item" href="https://calendar.google.com" target="_blank" rel="noopener">
-      <span class="ms">calendar_month</span>Calendar
-    </a>
-    <a class="bm-item" href="https://spotify.com" target="_blank" rel="noopener">
-      <span class="ms">headphones</span>Spotify
-    </a>
-    <a class="bm-item" href="https://www.anthropic.com" target="_blank" rel="noopener">
-      <span class="ms">psychology</span>Claude
-    </a>
   </div>
 
-  <!-- Main -->
-  <main class="main">
-    <!-- Left Column -->
-    <div class="col">
-      <!-- Time -->
-      <section class="time-card glass" id="timeFocusTarget">
-        <div class="greeting" id="greeting">Guten Tag</div>
-        <div class="time-display">
-          <span id="timeClock">00:00</span><span class="time-seconds" id="timeSec">00</span>
-        </div>
-        <div class="date-display" id="dateDisplay">Lädt…</div>
-      </section>
+  <div class="shell">
+    <header class="header glass">
+      <div class="logo-area">
+        <div class="logo-mark"><span class="ms fill">language</span></div>
+        <div class="logo-text"><span class="accent">MKWEB</span> OS 7 <span class="logo-sub">Startseite</span></div>
+      </div>
 
-      <!-- Weather -->
-      <section class="weather-card glass">
-        <div class="card-label">Wetter · Heidenheim</div>
-        <div class="weather-main">
-          <div class="weather-icon"><span class="ms fill" id="weatherIconMs">partly_cloudy_day</span></div>
-          <div>
-            <div class="weather-temp" id="weatherTemp">22°C</div>
-            <div class="weather-desc" id="weatherDesc">Leicht bewölkt</div>
-          </div>
-        </div>
-        <div class="weather-details">
-          <div class="w-detail"><span class="ms">water_drop</span><span id="weatherHum">65%</span></div>
-          <div class="w-detail"><span class="ms">air</span><span id="weatherWind">12 km/h</span></div>
-          <div class="w-detail"><span class="ms">thermostat</span><span id="weatherFeels">Fühlt sich an: 20°C</span></div>
-          <div class="w-detail"><span class="ms">visibility</span><span>Gut</span></div>
-        </div>
-        <button class="weather-btn" id="weatherRefresh">
-          <span class="ms">refresh</span>
-          Wetter aktualisieren
-        </button>
-      </section>
-
-      <!-- Quote -->
-      <section class="quote-card glass">
-        <div class="card-label">Zitat des Tages</div>
-        <div class="quote-text" id="quoteText"></div>
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="quote-author" id="quoteAuthor"></div>
-          <button class="quote-refresh" id="quoteRefresh" aria-label="Neues Zitat">
-            <span class="ms">refresh</span>
-          </button>
-        </div>
-      </section>
-    </div>
-
-    <!-- Center Column -->
-    <div class="col">
-      <!-- Search Card -->
-      <div class="center-top glass">
-        <div class="card-label">Suche</div>
-        <div class="engines-row" id="enginesRow" role="group" aria-label="Suchmaschine">
-          <button class="eng-btn active" data-engine="google"><span class="ms">travel_explore</span>Google</button>
-          <button class="eng-btn" data-engine="duckduckgo"><span class="ms">search_hands_free</span>DuckDuckGo</button>
-          <button class="eng-btn" data-engine="bing"><span class="ms">search</span>Bing</button>
-          <button class="eng-btn" data-engine="youtube"><span class="ms">play_circle</span>YouTube</button>
-          <button class="eng-btn" data-engine="github"><span class="ms">code</span>GitHub</button>
-          <button class="eng-btn" data-engine="ecosia"><span class="ms">eco</span>Ecosia</button>
-        </div>
-        <div class="search-big">
+      <div class="header-center">
+        <div class="header-search">
           <span class="ms">search</span>
-          <input type="text" id="mainSearch" placeholder="Was suchst du heute?" autocomplete="off" />
-          <button class="search-go" id="searchGoBtn" aria-label="Suchen">
-            <span class="ms">arrow_forward</span>
-          </button>
+          <input type="text" id="headerSearch" placeholder="Suchen… (Ctrl+K)" autocomplete="off" />
+          <div class="engine-pill" id="headerEnginePill">Google</div>
         </div>
       </div>
 
-      <!-- Apps -->
-      <section class="apps-card glass">
-        <div class="apps-header">
-          <span class="apps-title">Apps &amp; Bookmarks</span>
-          <div class="apps-filter">
-            <button class="filter-btn active" data-filter="all">Alle</button>
-            <button class="filter-btn" data-filter="tools">Tools</button>
-            <button class="filter-btn" data-filter="social">Social</button>
-            <button class="filter-btn" data-filter="dev">Dev</button>
-          </div>
-        </div>
-        <div class="apps-grid" id="appsGrid"></div>
-      </section>
+      <div class="ctrl-group">
+        <button class="ctrl-btn" id="themeBtn" aria-label="Theme wechseln">
+          <span class="ms" id="themeIcon">dark_mode</span>
+          <span class="label" id="themeLabel">Hell</span>
+        </button>
+        <button class="ctrl-btn" id="focusBtn" aria-label="Fokus-Modus">
+          <span class="ms">center_focus_strong</span>
+          <span class="label">Fokus</span>
+        </button>
+        <button class="ctrl-btn" id="fullBtn" aria-label="Vollbild">
+          <span class="ms" id="fullIcon">fullscreen</span>
+          <span class="label" id="fullLabel">Vollbild</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="bookmarks-card glass" id="bookmarkBar">
+      <span class="bm-label">Schnell</span>
+      <a class="bm-item" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer"><span class="ms">chat</span>ChatGPT</a>
+      <a class="bm-item" href="https://github.com" target="_blank" rel="noopener noreferrer"><span class="ms">code</span>GitHub</a>
+      <a class="bm-item" href="https://mail.google.com" target="_blank" rel="noopener noreferrer"><span class="ms">mail</span>Gmail</a>
+      <a class="bm-item" href="https://notion.so" target="_blank" rel="noopener noreferrer"><span class="ms">article</span>Notion</a>
+      <a class="bm-item" href="https://youtube.com" target="_blank" rel="noopener noreferrer"><span class="ms">play_circle</span>YouTube</a>
+      <a class="bm-item" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer"><span class="ms">calendar_month</span>Calendar</a>
+      <a class="bm-item" href="https://spotify.com" target="_blank" rel="noopener noreferrer"><span class="ms">headphones</span>Spotify</a>
+      <a class="bm-item" href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer"><span class="ms">psychology</span>Claude</a>
     </div>
 
-    <!-- Right Column -->
-    <div class="col">
-      <!-- Notes -->
-      <section class="notes-card glass">
-        <div class="notes-header">
-          <span class="card-label">Schnellnotizen</span>
-          <div class="save-badge" id="saveBadge">
-            <span class="ms">check_circle</span>Gespeichert
+    <main class="main">
+      <div class="col">
+        <section class="time-card glass">
+          <div class="greeting" id="greeting">Guten Tag</div>
+          <div class="time-display"><span id="timeClock">00:00</span><span class="time-seconds" id="timeSec">00</span></div>
+          <div class="date-display" id="dateDisplay">Lädt…</div>
+        </section>
+
+        <section class="weather-card glass">
+          <div class="card-label">Wetter · Heidenheim</div>
+          <div class="weather-main">
+            <div class="weather-icon"><span class="ms fill" id="weatherIconMs">partly_cloudy_day</span></div>
+            <div>
+              <div class="weather-temp" id="weatherTemp">22°C</div>
+              <div class="weather-desc" id="weatherDesc">Leicht bewölkt</div>
+            </div>
           </div>
-        </div>
-        <textarea class="notes-area" id="notesArea" placeholder="Notizen hier tippen… Automatisch gespeichert." rows="8"></textarea>
-        <div class="notes-footer">
-          <span id="noteChars">0 Zeichen</span>
-          <span>Auto-Save</span>
-        </div>
-      </section>
+          <div class="weather-details">
+            <div class="w-detail"><span class="ms">water_drop</span><span id="weatherHum">65%</span></div>
+            <div class="w-detail"><span class="ms">air</span><span id="weatherWind">12 km/h</span></div>
+            <div class="w-detail"><span class="ms">thermostat</span><span id="weatherFeels">Fühlt sich an: 20°C</span></div>
+            <div class="w-detail"><span class="ms">visibility</span><span>Gut</span></div>
+          </div>
+          <button class="weather-btn" id="weatherRefresh"><span class="ms">refresh</span> Wetter aktualisieren</button>
+        </section>
 
-      <!-- Todo -->
-      <section class="todo-card glass">
-        <div class="card-label">Aufgaben</div>
-        <div class="todo-input-row">
-          <input class="todo-input" type="text" id="todoInput" placeholder="Neue Aufgabe hinzufügen…" />
-          <button class="todo-add-btn" id="todoAddBtn" aria-label="Hinzufügen">
-            <span class="ms">add</span>
-          </button>
-        </div>
-        <div class="todo-list" id="todoList"></div>
-      </section>
-    </div>
-  </main>
-</div>
+        <section class="quote-card glass">
+          <div class="card-label">Zitat des Tages</div>
+          <div class="quote-text" id="quoteText"></div>
+          <div class="quote-footer">
+            <div class="quote-author" id="quoteAuthor"></div>
+            <button class="quote-refresh" id="quoteRefresh" aria-label="Neues Zitat"><span class="ms">refresh</span></button>
+          </div>
+        </section>
+      </div>
 
-<script>
-(() => {
-  const SK = 'mkweb-os7-v3';
-  const $ = id => document.getElementById(id);
-  const el = (tag, attrs = {}, ...children) => {
-    const e = document.createElement(tag);
-    Object.entries(attrs).forEach(([k, v]) => {
-      if (k === 'className') e.className = v;
-      else if (k === 'html') e.innerHTML = v;
-      else if (k === 'text') e.textContent = v;
-      else e.setAttribute(k, v);
-    });
-    children.forEach(c => c && e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
-    return e;
-  };
+      <div class="col">
+        <section class="search-card glass">
+          <div class="card-label">Suche</div>
+          <div class="engines-row" id="enginesRow" role="group" aria-label="Suchmaschine">
+            <button class="eng-btn active" data-engine="google"><span class="ms">travel_explore</span>Google</button>
+            <button class="eng-btn" data-engine="duckduckgo"><span class="ms">search_hands_free</span>DuckDuckGo</button>
+            <button class="eng-btn" data-engine="bing"><span class="ms">search</span>Bing</button>
+            <button class="eng-btn" data-engine="youtube"><span class="ms">play_circle</span>YouTube</button>
+            <button class="eng-btn" data-engine="github"><span class="ms">code</span>GitHub</button>
+            <button class="eng-btn" data-engine="ecosia"><span class="ms">eco</span>Ecosia</button>
+          </div>
+          <div class="search-big">
+            <span class="ms">search</span>
+            <input type="text" id="mainSearch" placeholder="Was suchst du heute?" autocomplete="off" />
+            <button class="search-go" id="searchGoBtn" aria-label="Suchen"><span class="ms">arrow_forward</span></button>
+          </div>
+        </section>
 
-  const ENGINES = {
-    google:     { url: 'https://www.google.com/search?q=',                label: 'Google' },
-    duckduckgo: { url: 'https://duckduckgo.com/?q=',                      label: 'DuckDuckGo' },
-    bing:       { url: 'https://www.bing.com/search?q=',                  label: 'Bing' },
-    youtube:    { url: 'https://www.youtube.com/results?search_query=',   label: 'YouTube' },
-    github:     { url: 'https://github.com/search?q=',                    label: 'GitHub' },
-    ecosia:     { url: 'https://www.ecosia.org/search?q=',               label: 'Ecosia' },
-  };
+        <section class="apps-card glass">
+          <div class="apps-header">
+            <span class="apps-title">Apps & Bookmarks</span>
+            <div class="apps-filter">
+              <button class="filter-btn active" data-filter="all">Alle</button>
+              <button class="filter-btn" data-filter="tools">Tools</button>
+              <button class="filter-btn" data-filter="social">Social</button>
+              <button class="filter-btn" data-filter="dev">Dev</button>
+            </div>
+          </div>
+          <div class="apps-grid" id="appsGrid"></div>
+        </section>
+      </div>
 
-  const APPS = [
-    { name:'ChatGPT',      url:'https://chat.openai.com',        icon:'chat',               cat:'tools' },
-    { name:'Claude',       url:'https://claude.ai',               icon:'psychology',         cat:'tools' },
-    { name:'Gemini',       url:'https://gemini.google.com',       icon:'bubble_chart',       cat:'tools' },
-    { name:'Notion',       url:'https://notion.so',               icon:'article',            cat:'tools' },
-    { name:'GitHub',       url:'https://github.com',              icon:'code',               cat:'dev' },
-    { name:'CodePen',      url:'https://codepen.io',              icon:'terminal',           cat:'dev' },
-    { name:'MDN',          url:'https://developer.mozilla.org/de', icon:'menu_book',         cat:'dev' },
-    { name:'Stack Overflow', url:'https://stackoverflow.com',     icon:'lightbulb',          cat:'dev' },
-    { name:'Vercel',       url:'https://vercel.com',              icon:'rocket_launch',      cat:'dev' },
-    { name:'Gmail',        url:'https://mail.google.com',         icon:'mail',               cat:'social' },
-    { name:'WhatsApp',     url:'https://web.whatsapp.com',        icon:'chat_bubble',        cat:'social' },
-    { name:'Calendar',     url:'https://calendar.google.com',     icon:'calendar_month',     cat:'tools' },
-    { name:'Spotify',      url:'https://spotify.com',             icon:'headphones',         cat:'social' },
-    { name:'YouTube',      url:'https://youtube.com',             icon:'play_circle',        cat:'social' },
-    { name:'Unsplash',     url:'https://unsplash.com',            icon:'image',              cat:'tools' },
-    { name:'Figma',        url:'https://figma.com',               icon:'design_services',    cat:'dev' },
-    { name:'Drive',        url:'https://drive.google.com',        icon:'cloud',              cat:'tools' },
-    { name:'Wikipedia',    url:'https://de.wikipedia.org',        icon:'public',             cat:'tools' },
-  ];
+      <div class="col right-stack">
+        <section class="notes-card glass">
+          <div class="notes-header">
+            <span class="card-label">Schnellnotizen</span>
+            <div class="save-badge" id="saveBadge"><span class="ms">check_circle</span>Gespeichert</div>
+          </div>
+          <textarea class="notes-area" id="notesArea" placeholder="Notizen hier tippen… Automatisch gespeichert." rows="8"></textarea>
+          <div class="notes-footer">
+            <span id="noteChars">0 Zeichen</span>
+            <span>Auto-Save</span>
+          </div>
+        </section>
 
-  const QUOTES = [
-    ['Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.', 'Steve Jobs'],
-    ['Fantasie ist wichtiger als Wissen, denn Wissen ist begrenzt.', 'Albert Einstein'],
-    ['Sei du selbst die Veränderung, die du dir wünschst für diese Welt.', 'Mahatma Gandhi'],
-    ['Was immer du tun kannst oder träumst es zu können, fang damit an.', 'Goethe'],
-    ['Die Zukunft gehört denen, die an der Schönheit ihrer Träume glauben.', 'Eleanor Roosevelt'],
-    ['Es ist nicht genug zu wissen, man muss es auch anwenden.', 'Goethe'],
-    ['Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.', 'Peter F. Drucker'],
-    ['In der Mitte jeder Schwierigkeit liegt eine Möglichkeit.', 'Albert Einstein'],
-    ['Kleine Schritte in die richtige Richtung können sich als der größte Schritt deines Lebens herausstellen.', 'Unbekannt'],
-    ['Tu was du kannst, mit dem was du hast, wo immer du bist.', 'Theodore Roosevelt'],
-    ['Code ist Poesie.', 'WordPress'],
-    ['Zuerst löse das Problem. Dann schreibe den Code.', 'John Johnson'],
-  ];
+        <section class="todo-card glass">
+          <div class="todo-head">
+            <span class="card-label">Aufgaben</span>
+            <span class="apps-count" id="todoCount">0 offen</span>
+          </div>
+          <div class="todo-input-row">
+            <input class="todo-input" type="text" id="todoInput" placeholder="Neue Aufgabe hinzufügen…" />
+            <button class="todo-add-btn" id="todoAddBtn" aria-label="Hinzufügen"><span class="ms">add</span></button>
+          </div>
+          <div class="todo-list" id="todoList"></div>
+        </section>
+      </div>
+    </main>
+  </div>
 
-  const WEATHERS = [
-    { temp:22, desc:'Leicht bewölkt', icon:'partly_cloudy_day', hum:'65%', wind:'12 km/h', feels:'20°C' },
-    { temp:18, desc:'Bedeckt',         icon:'cloud',             hum:'78%', wind:'18 km/h', feels:'16°C' },
-    { temp:26, desc:'Sonnig',          icon:'sunny',             hum:'45%', wind:'8 km/h',  feels:'28°C' },
-    { temp:14, desc:'Regen',           icon:'rainy',             hum:'90%', wind:'22 km/h', feels:'11°C' },
-    { temp:8,  desc:'Neblig',          icon:'foggy',             hum:'95%', wind:'5 km/h',  feels:'6°C'  },
-  ];
+  <div class="focus-overlay" id="focusOverlay" hidden></div>
 
-  // Load / save
-  let S;
-  try { S = JSON.parse(localStorage.getItem(SK)) || {}; } catch { S = {}; }
-  S.theme   ??= 'dark';
-  S.engine  ??= 'google';
-  S.notes   ??= '';
-  S.todos   ??= [];
-  const save = () => { try { localStorage.setItem(SK, JSON.stringify(S)); } catch {} };
+  <script>
+    (() => {
+      const SETTINGS_KEY = 'mkweb-os7-v4';
+      const THEME_KEY = 'theme';
+      const ENGINE_KEY = 'engine';
+      const NOTES_KEY = 'notes';
+      const TODOS_KEY = 'todos';
+      const AVATAR_KEY = 'showAvatar';
 
-  // Theme
-  const html = document.documentElement;
-  html.dataset.theme = S.theme;
-  function setTheme(t) {
-    S.theme = t;
-    html.dataset.theme = t;
-    $('themeIcon').textContent = t === 'dark' ? 'light_mode' : 'dark_mode';
-    $('themeLabel').textContent = t === 'dark' ? 'Hell' : 'Dunkel';
-    save();
-    island('palette', t === 'dark' ? 'Dark Mode' : 'Light Mode', 'Theme gewechselt', 1800);
-  }
-  setTheme(S.theme);
-  $('themeBtn').addEventListener('click', () => setTheme(S.theme === 'dark' ? 'light' : 'dark'));
+      const ENGINES = {
+        google: { url: 'https://www.google.com/search?q=', label: 'Google', icon: 'travel_explore' },
+        duckduckgo: { url: 'https://duckduckgo.com/?q=', label: 'DuckDuckGo', icon: 'search_hands_free' },
+        bing: { url: 'https://www.bing.com/search?q=', label: 'Bing', icon: 'search' },
+        youtube: { url: 'https://www.youtube.com/results?search_query=', label: 'YouTube', icon: 'play_circle' },
+        github: { url: 'https://github.com/search?q=', label: 'GitHub', icon: 'code' },
+        ecosia: { url: 'https://www.ecosia.org/search?q=', label: 'Ecosia', icon: 'eco' }
+      };
 
-  // Clock
-  function pad(n) { return String(n).padStart(2, '0'); }
-  const DAYS = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
-  const MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-  function greeting(h) {
-    if (h < 5)  return 'Gute Nacht';
-    if (h < 11) return 'Guten Morgen';
-    if (h < 17) return 'Guten Tag';
-    if (h < 21) return 'Guten Abend';
-    return 'Gute Nacht';
-  }
-  function tick() {
-    const now = new Date();
-    const h = now.getHours(), m = now.getMinutes(), sec = now.getSeconds();
-    $('timeClock').textContent = `${pad(h)}:${pad(m)}`;
-    $('timeSec').textContent = pad(sec);
-    $('dateDisplay').textContent = `${DAYS[now.getDay()]}, ${now.getDate()}. ${MONTHS[now.getMonth()]} ${now.getFullYear()}`;
-    $('greeting').textContent = greeting(h);
-    // Focus overlay
-    $('focusTime').textContent = `${pad(h)}:${pad(m)}`;
-    $('focusDate').textContent = `${DAYS[now.getDay()]}, ${now.getDate()}. ${MONTHS[now.getMonth()]}`;
-  }
-  tick();
-  setInterval(tick, 1000);
+      const APPS = [
+        { name: 'ChatGPT', url: 'https://chat.openai.com', icon: 'chat', cat: 'tools' },
+        { name: 'Claude', url: 'https://claude.ai', icon: 'psychology', cat: 'tools' },
+        { name: 'Gemini', url: 'https://gemini.google.com', icon: 'bubble_chart', cat: 'tools' },
+        { name: 'Notion', url: 'https://notion.so', icon: 'article', cat: 'tools' },
+        { name: 'GitHub', url: 'https://github.com', icon: 'code', cat: 'dev' },
+        { name: 'CodePen', url: 'https://codepen.io', icon: 'terminal', cat: 'dev' },
+        { name: 'MDN', url: 'https://developer.mozilla.org/de', icon: 'menu_book', cat: 'dev' },
+        { name: 'Stack Overflow', url: 'https://stackoverflow.com', icon: 'lightbulb', cat: 'dev' },
+        { name: 'Vercel', url: 'https://vercel.com', icon: 'rocket_launch', cat: 'dev' },
+        { name: 'Gmail', url: 'https://mail.google.com', icon: 'mail', cat: 'social' },
+        { name: 'WhatsApp', url: 'https://web.whatsapp.com', icon: 'chat_bubble', cat: 'social' },
+        { name: 'Calendar', url: 'https://calendar.google.com', icon: 'calendar_month', cat: 'tools' },
+        { name: 'Spotify', url: 'https://spotify.com', icon: 'headphones', cat: 'social' },
+        { name: 'YouTube', url: 'https://youtube.com', icon: 'play_circle', cat: 'social' },
+        { name: 'Unsplash', url: 'https://unsplash.com', icon: 'image', cat: 'tools' },
+        { name: 'Figma', url: 'https://figma.com', icon: 'design_services', cat: 'dev' },
+        { name: 'Drive', url: 'https://drive.google.com', icon: 'cloud', cat: 'tools' },
+        { name: 'Wikipedia', url: 'https://de.wikipedia.org', icon: 'public', cat: 'tools' }
+      ];
 
-  // Island
-  let islandTimer;
-  function island(icon, title, sub, dur = 2400, busy = false) {
-    clearTimeout(islandTimer);
-    $('islandTitle').textContent = title;
-    $('islandSub').textContent = sub;
-    $('islandDot').className = 'island-dot' + (busy ? ' pulse' : '');
-    $('islandWaves').style.display = busy ? 'flex' : 'none';
-    const el = $('island');
-    el.classList.add('wide');
-    islandTimer = setTimeout(() => {
-      el.classList.remove('wide');
-      $('islandTitle').textContent = 'MKWEB OS 7';
-      $('islandSub').textContent = `Suchmaschine: ${ENGINES[S.engine]?.label || 'Google'}`;
-      $('islandDot').className = 'island-dot';
-      $('islandWaves').style.display = 'none';
-    }, dur);
-  }
-  $('islandClose').addEventListener('click', e => {
-    e.stopPropagation();
-    clearTimeout(islandTimer);
-    $('island').classList.remove('wide');
-    $('islandTitle').textContent = 'MKWEB OS 7';
-    $('islandSub').textContent = `Suchmaschine: ${ENGINES[S.engine]?.label || 'Google'}`;
-    $('islandDot').className = 'island-dot';
-    $('islandWaves').style.display = 'none';
-  });
-  setTimeout(() => island('waving_hand', 'Willkommen zurück!', 'Schönen Tag noch.', 2800), 600);
+      const QUOTES = [
+        ['Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.', 'Steve Jobs'],
+        ['Fantasie ist wichtiger als Wissen, denn Wissen ist begrenzt.', 'Albert Einstein'],
+        ['Sei du selbst die Veränderung, die du dir wünschst für diese Welt.', 'Mahatma Gandhi'],
+        ['Was immer du tun kannst oder träumst es zu können, fang damit an.', 'Johann Wolfgang von Goethe'],
+        ['Die Zukunft gehört denen, die an der Schönheit ihrer Träume glauben.', 'Eleanor Roosevelt'],
+        ['Es ist nicht genug zu wissen, man muss es auch anwenden.', 'Johann Wolfgang von Goethe'],
+        ['Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.', 'Peter F. Drucker'],
+        ['In der Mitte jeder Schwierigkeit liegt eine Möglichkeit.', 'Albert Einstein'],
+        ['Kleine Schritte in die richtige Richtung können die größten sein.', 'Unbekannt'],
+        ['Tu was du kannst, mit dem was du hast, wo immer du bist.', 'Theodore Roosevelt']
+      ];
 
-  // Engine
-  function selectEngine(key) {
-    S.engine = key;
-    save();
-    document.querySelectorAll('.eng-btn').forEach(b => b.classList.toggle('active', b.dataset.engine === key));
-    $('headerEnginePill').textContent = ENGINES[key]?.label || key;
-    island('travel_explore', ENGINES[key]?.label || key, 'Suchmaschine gewechselt', 1800);
-  }
-  document.querySelectorAll('.eng-btn').forEach(b => {
-    b.addEventListener('click', () => selectEngine(b.dataset.engine));
-  });
-  selectEngine(S.engine);
+      const WEATHER_STATES = [
+        { temp: 22, desc: 'Leicht bewölkt', icon: 'partly_cloudy_day', hum: '65%', wind: '12 km/h', feels: '20°C' },
+        { temp: 18, desc: 'Bedeckt', icon: 'cloud', hum: '78%', wind: '18 km/h', feels: '16°C' },
+        { temp: 26, desc: 'Sonnig', icon: 'sunny', hum: '45%', wind: '8 km/h', feels: '28°C' },
+        { temp: 14, desc: 'Regen', icon: 'rainy', hum: '90%', wind: '22 km/h', feels: '11°C' },
+        { temp: 8, desc: 'Neblig', icon: 'foggy', hum: '95%', wind: '5 km/h', feels: '6°C' }
+      ];
 
-  // Search
-  function doSearch(query) {
-    const q = (query || '').trim();
-    if (!q) return;
-    const eng = ENGINES[S.engine] || ENGINES.google;
-    island('search', 'Suche…', `"${q}" auf ${eng.label}`, 1000, true);
-    setTimeout(() => window.open(eng.url + encodeURIComponent(q), '_blank', 'noopener'), 600);
-  }
-  [$('mainSearch'), $('headerSearch'), $('focusSearch')].forEach(inp => {
-    if (!inp) return;
-    inp.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(inp.value); });
-  });
-  $('searchGoBtn').addEventListener('click', () => doSearch($('mainSearch').value));
+      const $ = (s, root = document) => root.querySelector(s);
+      const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+      const store = {
+        read() {
+          try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; }
+          catch { return {}; }
+        },
+        write(obj) {
+          try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(obj)); } catch {}
+        }
+      };
 
-  // Weather
-  let wIdx = 0;
-  function showWeather(data) {
-    $('weatherTemp').textContent = data.temp + '°C';
-    $('weatherDesc').textContent = data.desc;
-    $('weatherIconMs').textContent = data.icon;
-    $('weatherHum').textContent = data.hum;
-    $('weatherWind').textContent = data.wind;
-    $('weatherFeels').textContent = 'Fühlt sich an: ' + data.feels;
-    island(data.icon, data.temp + '°C · Heidenheim', data.desc, 3000);
-  }
-  $('weatherRefresh').addEventListener('click', () => {
-    island('cloud_sync', 'Wetter wird geladen…', 'Bitte warten…', 1800, true);
-    setTimeout(() => {
-      wIdx = (wIdx + 1) % WEATHERS.length;
-      showWeather(WEATHERS[wIdx]);
-    }, 900);
-  });
-  showWeather(WEATHERS[0]);
+      const pad = (n) => String(n).padStart(2, '0');
+      const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+      const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+      const greeting = (h) => (h < 5 ? 'Gute Nacht' : h < 11 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : h < 21 ? 'Guten Abend' : 'Gute Nacht');
 
-  // Quote
-  let qIdx = Math.floor(Math.random() * QUOTES.length);
-  function showQuote() {
-    const [text, author] = QUOTES[qIdx];
-    $('quoteText').textContent = text;
-    $('quoteAuthor').textContent = '— ' + author;
-  }
-  showQuote();
-  $('quoteRefresh').addEventListener('click', () => {
-    qIdx = (qIdx + 1) % QUOTES.length;
-    showQuote();
-    island('format_quote', 'Neues Zitat', QUOTES[qIdx][1], 1600);
-  });
+      const state = {
+        theme: 'dark',
+        engine: 'google',
+        showAvatar: true,
+        notes: '',
+        todos: [],
+        activeFilter: 'all',
+        quoteIndex: 0,
+        weatherIndex: 0,
+        islandTimer: null,
+        notesTimer: null,
+        timeTimer: null,
+        quoteTimer: null,
+        autoSearchTimer: null,
+        focusOpen: false
+      };
 
-  // Apps
-  let activeFilter = 'all';
-  function renderApps() {
-    const grid = $('appsGrid');
-    grid.innerHTML = '';
-    const filtered = APPS.filter(a => activeFilter === 'all' || a.cat === activeFilter);
-    filtered.forEach(app => {
-      const tile = el('a', { className: 'app-tile glass', href: app.url, target: '_blank', rel: 'noopener noreferrer', 'data-name': app.name });
-      tile.appendChild(el('span', { className: 'ms fill', text: app.icon, 'aria-hidden': 'true' }));
-      tile.appendChild(el('div', { className: 'app-tile-label', text: app.name }));
-      tile.addEventListener('mouseenter', () => island(app.icon, app.name, 'Wird geöffnet…', 1400));
-      grid.appendChild(tile);
-    });
-  }
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      activeFilter = b.dataset.filter;
-      document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      renderApps();
-    });
-  });
-  renderApps();
+      const els = {
+        html: document.documentElement,
+        island: $('#island'),
+        islandIcon: $('#islandIcon'),
+        islandTitle: $('#islandTitle'),
+        islandSubtitle: $('#islandSubtitle'),
+        islandWaves: $('#islandWaves'),
+        islandClose: $('#islandClose'),
+        themeBtn: $('#themeBtn'),
+        themeIcon: $('#themeIcon'),
+        themeLabel: $('#themeLabel'),
+        focusBtn: $('#focusBtn'),
+        fullBtn: $('#fullBtn'),
+        fullIcon: $('#fullIcon'),
+        fullLabel: $('#fullLabel'),
+        headerSearch: $('#headerSearch'),
+        headerEnginePill: $('#headerEnginePill'),
+        timeClock: $('#timeClock'),
+        timeSec: $('#timeSec'),
+        dateDisplay: $('#dateDisplay'),
+        greeting: $('#greeting'),
+        weatherIconMs: $('#weatherIconMs'),
+        weatherTemp: $('#weatherTemp'),
+        weatherDesc: $('#weatherDesc'),
+        weatherHum: $('#weatherHum'),
+        weatherWind: $('#weatherWind'),
+        weatherFeels: $('#weatherFeels'),
+        weatherRefresh: $('#weatherRefresh'),
+        quoteText: $('#quoteText'),
+        quoteAuthor: $('#quoteAuthor'),
+        quoteRefresh: $('#quoteRefresh'),
+        mainSearch: $('#mainSearch'),
+        searchGoBtn: $('#searchGoBtn'),
+        enginesRow: $('#enginesRow'),
+        appsGrid: $('#appsGrid'),
+        filters: $$('.filter-btn'),
+        notesArea: $('#notesArea'),
+        noteChars: $('#noteChars'),
+        saveBadge: $('#saveBadge'),
+        todoInput: $('#todoInput'),
+        todoAddBtn: $('#todoAddBtn'),
+        todoList: $('#todoList'),
+        todoCount: $('#todoCount'),
+        avatarBtn: $('#avatarBtn'),
+        bookmarkBar: $('#bookmarkBar')
+      };
 
-  // Notes
-  const notesEl = $('notesArea');
-  notesEl.value = S.notes;
-  updateNoteChars();
-  let notesSaveTimer;
-  notesEl.addEventListener('input', () => {
-    S.notes = notesEl.value;
-    updateNoteChars();
-    clearTimeout(notesSaveTimer);
-    notesSaveTimer = setTimeout(() => {
-      save();
-      const badge = $('saveBadge');
-      badge.classList.add('show');
-      setTimeout(() => badge.classList.remove('show'), 2000);
-    }, 800);
-  });
-  function updateNoteChars() {
-    $('noteChars').textContent = notesEl.value.length + ' Zeichen';
-  }
+      function loadState() {
+        const saved = store.read();
+        state.theme = saved[THEME_KEY] || 'dark';
+        state.engine = saved[ENGINE_KEY] || 'google';
+        state.showAvatar = saved[AVATAR_KEY] ?? true;
+        state.notes = saved[NOTES_KEY] || '';
+        state.todos = Array.isArray(saved[TODOS_KEY]) ? saved[TODOS_KEY] : [];
+      }
 
-  // Todos
-  function renderTodos() {
-    const list = $('todoList');
-    list.innerHTML = '';
-    if (!S.todos.length) {
-      list.appendChild(el('div', { className: 'todo-empty' },
-        el('span', { className: 'ms', text: 'task_alt' }),
-        el('span', { text: 'Keine Aufgaben – gut gemacht!' })
-      ));
-      return;
-    }
-    S.todos.forEach((todo, i) => {
-      const item = el('div', { className: 'todo-item' });
-      const check = el('button', { className: 'todo-check' + (todo.done ? ' done' : ''), 'aria-label': 'Erledigt' });
-      check.appendChild(el('span', { className: 'ms', text: 'check' }));
-      check.addEventListener('click', () => {
-        S.todos[i].done = !S.todos[i].done;
-        save(); renderTodos();
-        if (S.todos[i].done) island('task_alt', 'Erledigt!', todo.text.slice(0, 40), 1600);
-      });
-      const txt = el('div', { className: 'todo-text' + (todo.done ? ' done' : ''), text: todo.text });
-      const del = el('button', { className: 'todo-del', 'aria-label': 'Löschen' });
-      del.appendChild(el('span', { className: 'ms', text: 'delete' }));
-      del.addEventListener('click', () => { S.todos.splice(i, 1); save(); renderTodos(); });
-      item.appendChild(check); item.appendChild(txt); item.appendChild(del);
-      list.appendChild(item);
-    });
-  }
-  renderTodos();
-  function addTodo() {
-    const val = $('todoInput').value.trim();
-    if (!val) return;
-    S.todos.push({ text: val, done: false });
-    $('todoInput').value = '';
-    save(); renderTodos();
-    island('add_task', 'Aufgabe hinzugefügt', val.slice(0, 40), 1600);
-  }
-  $('todoAddBtn').addEventListener('click', addTodo);
-  $('todoInput').addEventListener('keydown', e => { if (e.key === 'Enter') addTodo(); });
+      function persist() {
+        store.write({
+          [THEME_KEY]: state.theme,
+          [ENGINE_KEY]: state.engine,
+          [AVATAR_KEY]: state.showAvatar,
+          [NOTES_KEY]: state.notes,
+          [TODOS_KEY]: state.todos
+        });
+      }
 
-  // Fullscreen
-  $('fullBtn').addEventListener('click', () => {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-    else document.exitFullscreen?.();
-  });
-  document.addEventListener('fullscreenchange', () => {
-    const full = !!document.fullscreenElement;
-    $('fullIcon').textContent = full ? 'fullscreen_exit' : 'fullscreen';
-    $('fullLabel').textContent = full ? 'Exit' : 'Vollbild';
-  });
+      function island(icon, title, subtitle, duration = 2400, busy = false) {
+        clearTimeout(state.islandTimer);
+        els.islandIcon.textContent = icon;
+        els.islandTitle.textContent = title;
+        els.islandSubtitle.textContent = subtitle;
+        els.island.classList.toggle('busy', busy);
+        els.islandWaves.style.display = busy ? 'flex' : 'none';
+        els.island.classList.add('expanded');
+        state.islandTimer = setTimeout(() => {
+          els.island.classList.remove('expanded');
+          els.island.classList.remove('busy');
+          els.islandWaves.style.display = 'none';
+          syncIslandDefault();
+        }, duration);
+      }
 
-  // Focus Mode
-  const overlay = $('focusOverlay');
-  $('focusBtn').addEventListener('click', () => overlay.classList.add('show'));
-  $('focusCloseBtn').addEventListener('click', () => overlay.classList.remove('show'));
-  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
-  overlay.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('show'); });
-  overlay.addEventListener('shown', () => $('focusSearch').focus());
+      function syncIslandDefault() {
+        const cfg = ENGINES[state.engine] || ENGINES.google;
+        els.islandIcon.textContent = cfg.icon;
+        els.islandTitle.textContent = 'Suchmaschine';
+        els.islandSubtitle.textContent = `Aktiv: ${cfg.label}`;
+        els.island.classList.remove('busy');
+        els.islandWaves.style.display = 'none';
+      }
 
-  // Keyboard shortcuts
-  document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      if (overlay.classList.contains('show')) $('focusSearch').focus();
-      else $('mainSearch').focus();
-    }
-    if (e.key === 'Escape' && overlay.classList.contains('show')) overlay.classList.remove('show');
-  });
+      function setTheme(theme) {
+        state.theme = theme === 'light' ? 'light' : 'dark';
+        els.html.dataset.theme = state.theme;
+        els.themeIcon.textContent = state.theme === 'dark' ? 'light_mode' : 'dark_mode';
+        els.themeLabel.textContent = state.theme === 'dark' ? 'Hell' : 'Dunkel';
+        persist();
+        island('palette', 'Theme geändert', state.theme === 'dark' ? 'Dark Mode aktiv' : 'Light Mode aktiv', 1800, false);
+      }
 
-  // Initial island
-  $('islandSub').textContent = `Suchmaschine: ${ENGINES[S.engine]?.label || 'Google'}`;
+      function updateClock() {
+        const now = new Date();
+        const h = now.getHours();
+        els.timeClock.textContent = `${pad(h)}:${pad(now.getMinutes())}`;
+        els.timeSec.textContent = pad(now.getSeconds());
+        els.dateDisplay.textContent = `${days[now.getDay()]}, ${now.getDate()}. ${months[now.getMonth()]} ${now.getFullYear()}`;
+        els.greeting.textContent = greeting(h);
+      }
 
-})();
-</script>
+      function updateQuote() {
+        const [text, author] = QUOTES[state.quoteIndex % QUOTES.length];
+        els.quoteText.textContent = text;
+        els.quoteAuthor.textContent = `— ${author}`;
+      }
+
+      function nextQuote() {
+        state.quoteIndex = (state.quoteIndex + 1) % QUOTES.length;
+        updateQuote();
+        persist();
+        island('format_quote', 'Neues Zitat', QUOTES[state.quoteIndex][1], 1600, false);
+      }
+
+      function updateWeather() {
+        const w = WEATHER_STATES[state.weatherIndex % WEATHER_STATES.length];
+        els.weatherIconMs.textContent = w.icon;
+        els.weatherTemp.textContent = `${w.temp}°C`;
+        els.weatherDesc.textContent = w.desc;
+        els.weatherHum.textContent = w.hum;
+        els.weatherWind.textContent = w.wind;
+        els.weatherFeels.textContent = `Fühlt sich an: ${w.feels}`;
+      }
+
+      function nextWeather() {
+        island('cloud_sync', 'Wetter wird geladen…', 'Bitte warten…', 1400, true);
+        window.setTimeout(() => {
+          state.weatherIndex = (state.weatherIndex + 1) % WEATHER_STATES.length;
+          updateWeather();
+          const w = WEATHER_STATES[state.weatherIndex];
+          island(w.icon, `${w.temp}°C · Heidenheim`, w.desc, 2500, false);
+        }, 700);
+      }
+
+      function setEngine(engine) {
+        state.engine = ENGINES[engine] ? engine : 'google';
+        persist();
+        els.headerEnginePill.textContent = ENGINES[state.engine].label;
+        $$('.eng-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.engine === state.engine));
+        syncIslandDefault();
+      }
+
+      function doSearch(query) {
+        const q = (query || '').trim();
+        if (!q) return;
+        const engine = ENGINES[state.engine] || ENGINES.google;
+        island('search', 'Suche läuft…', `Öffne Ergebnisse für „${q}“`, 900, true);
+        window.setTimeout(() => {
+          window.open(engine.url + encodeURIComponent(q), '_blank', 'noopener,noreferrer');
+          els.mainSearch.value = '';
+          els.headerSearch.value = '';
+        }, 650);
+      }
+
+      function renderApps() {
+        const filtered = APPS.filter(app => state.activeFilter === 'all' || app.cat === state.activeFilter);
+        els.appsGrid.innerHTML = '';
+        filtered.forEach(app => {
+          const tile = document.createElement('a');
+          tile.className = 'app-tile glass';
+          tile.href = app.url;
+          tile.target = '_blank';
+          tile.rel = 'noopener noreferrer';
+          tile.dataset.name = app.name;
+          tile.dataset.icon = app.icon;
+
+          const icon = document.createElement('span');
+          icon.className = 'ms fill';
+          icon.textContent = app.icon;
+          icon.setAttribute('aria-hidden', 'true');
+
+          const label = document.createElement('div');
+          label.className = 'app-label';
+          label.textContent = app.name;
+
+          tile.append(icon, label);
+
+          tile.addEventListener('mouseenter', () => {
+            island(app.icon, app.name, 'Wird geöffnet…', 1400, false);
+          });
+
+          els.appsGrid.appendChild(tile);
+        });
+      }
+
+      function updateNoteMeta(showBadge = false) {
+        els.noteChars.textContent = `${els.notesArea.value.length} Zeichen`;
+        if (showBadge) {
+          els.saveBadge.classList.add('show');
+          clearTimeout(updateNoteMeta.hideTimer);
+          updateNoteMeta.hideTimer = setTimeout(() => els.saveBadge.classList.remove('show'), 1400);
+        }
+      }
+
+      function saveNotesDebounced() {
+        clearTimeout(state.notesTimer);
+        state.notesTimer = setTimeout(() => {
+          state.notes = els.notesArea.value;
+          persist();
+          updateNoteMeta(true);
+        }, 550);
+      }
+
+      function renderTodos() {
+        els.todoList.innerHTML = '';
+        const openCount = state.todos.filter(t => !t.done).length;
+        els.todoCount.textContent = `${openCount} offen`;
+
+        if (!state.todos.length) {
+          const empty = document.createElement('div');
+          empty.className = 'todo-empty';
+          empty.innerHTML = '<span class="ms">task_alt</span>Keine Aufgaben – gut gemacht!';
+          els.todoList.appendChild(empty);
+          return;
+        }
+
+        state.todos.forEach((todo, idx) => {
+          const item = document.createElement('div');
+          item.className = 'todo-item';
+
+          const check = document.createElement('button');
+          check.className = `todo-check${todo.done ? ' done' : ''}`;
+          check.setAttribute('aria-label', 'Erledigt');
+          check.innerHTML = '<span class="ms">check</span>';
+          check.addEventListener('click', () => {
+            state.todos[idx].done = !state.todos[idx].done;
+            persist();
+            renderTodos();
+            if (state.todos[idx].done) island('task_alt', 'Erledigt!', todo.text.slice(0, 40), 1500, false);
+          });
+
+          const text = document.createElement('div');
+          text.className = `todo-text${todo.done ? ' done' : ''}`;
+          text.textContent = todo.text;
+
+          const del = document.createElement('button');
+          del.className = 'todo-del';
+          del.setAttribute('aria-label', 'Löschen');
+          del.innerHTML = '<span class="ms">delete</span>';
+          del.addEventListener('click', () => {
+            state.todos.splice(idx, 1);
+            persist();
+            renderTodos();
+          });
+
+          item.append(check, text, del);
+          els.todoList.appendChild(item);
+        });
+      }
+
+      function addTodo() {
+        const text = els.todoInput.value.trim();
+        if (!text) return;
+        state.todos.unshift({ text, done: false });
+        els.todoInput.value = '';
+        persist();
+        renderTodos();
+        island('add_task', 'Aufgabe hinzugefügt', text.slice(0, 40), 1500, false);
+      }
+
+      function syncAvatar() {
+        const avatar = $('.avatar');
+        avatar.style.display = state.showAvatar ? 'grid' : 'none';
+        els.avatarBtn.innerHTML = `<span class="ms">${state.showAvatar ? '🙈' : '🐵'}</span><span class="label">Avatar</span>`;
+      }
+
+      function toggleAvatar() {
+        state.showAvatar = !state.showAvatar;
+        persist();
+        syncAvatar();
+        island('person', state.showAvatar ? 'Avatar sichtbar' : 'Avatar ausgeblendet', state.showAvatar ? 'Wird angezeigt' : 'Wird versteckt', 1500, false);
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+        else document.exitFullscreen?.();
+      }
+
+      function openFocusMode() {
+        const overlay = document.getElementById('focusOverlay');
+        overlay.hidden = false;
+        overlay.innerHTML = `
+          <div class="focus-panel glass" style="width:min(92vw,560px);padding:2rem;display:flex;flex-direction:column;gap:1rem;position:relative;z-index:1;">
+            <div style="text-align:center;font-size:clamp(3.5rem,8vw,6rem);font-weight:800;letter-spacing:-0.06em;color:var(--accent);" id="focusTimeBox">00:00</div>
+            <div style="text-align:center;color:var(--text2);font-size:.9rem;text-transform:uppercase;letter-spacing:.1em;" id="focusDateBox"></div>
+            <div class="search-big" style="background:var(--bg3);border:1.5px solid var(--card-b);">
+              <span class="ms">search</span>
+              <input type="text" id="focusSearch" placeholder="Suchen und Enter drücken…" autocomplete="off" />
+            </div>
+            <button class="ctrl-btn" id="focusCloseBtn" style="justify-content:center;align-self:center;">Fokus verlassen ✕</button>
+          </div>`;
+
+        const now = new Date();
+        const focusClock = $('#focusTimeBox');
+        const focusDate = $('#focusDateBox');
+        const focusSearch = $('#focusSearch');
+        const focusCloseBtn = $('#focusCloseBtn');
+
+        const syncFocus = () => {
+          const n = new Date();
+          focusClock.textContent = `${pad(n.getHours())}:${pad(n.getMinutes())}`;
+          focusDate.textContent = `${days[n.getDay()]}, ${n.getDate()}. ${months[n.getMonth()]} ${n.getFullYear()}`;
+        };
+        syncFocus();
+        const interval = setInterval(syncFocus, 1000);
+        focusSearch.focus();
+
+        const close = () => {
+          clearInterval(interval);
+          overlay.hidden = true;
+          overlay.innerHTML = '';
+          state.focusOpen = false;
+        };
+
+        focusCloseBtn.addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        focusSearch.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(focusSearch.value); });
+        overlay.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+        state.focusOpen = true;
+      }
+
+      function bindGlobalShortcuts() {
+        document.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            if (state.focusOpen) {
+              const input = $('#focusSearch');
+              if (input) input.focus();
+            } else {
+              els.mainSearch.focus();
+            }
+          }
+          if (e.key === 'Escape' && state.focusOpen) {
+            const overlay = document.getElementById('focusOverlay');
+            overlay.hidden = true;
+            overlay.innerHTML = '';
+            state.focusOpen = false;
+          }
+        });
+      }
+
+      function bindAppHover() {
+        $$('.app-tile').forEach(tile => {
+          tile.addEventListener('focus', () => {
+            island(tile.dataset.icon || 'apps', tile.dataset.name || 'App', 'Schnellzugriff', 1200, false);
+          });
+        });
+      }
+
+      function init() {
+        loadState();
+        els.html.dataset.theme = state.theme;
+
+        // Theme
+        setTheme(state.theme);
+        els.themeBtn.addEventListener('click', () => setTheme(state.theme === 'dark' ? 'light' : 'dark'));
+
+        // Clock
+        updateClock();
+        clearInterval(state.timeTimer);
+        state.timeTimer = setInterval(updateClock, 1000);
+
+        // Quotes
+        state.quoteIndex = Math.floor(Math.random() * QUOTES.length);
+        updateQuote();
+        clearInterval(state.quoteTimer);
+        state.quoteTimer = setInterval(() => {
+          state.quoteIndex = (state.quoteIndex + 1) % QUOTES.length;
+          updateQuote();
+        }, 60 * 60 * 1000);
+        els.quoteRefresh.addEventListener('click', nextQuote);
+
+        // Weather
+        updateWeather();
+        els.weatherRefresh.addEventListener('click', nextWeather);
+
+        // Search engines
+        setEngine(state.engine);
+        $$('.eng-btn').forEach(btn => btn.addEventListener('click', () => setEngine(btn.dataset.engine)));
+        els.mainSearch.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(els.mainSearch.value); });
+        els.headerSearch.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(els.headerSearch.value); });
+        els.searchGoBtn.addEventListener('click', () => doSearch(els.mainSearch.value || els.headerSearch.value));
+        els.headerSearch.addEventListener('input', () => { els.mainSearch.value = els.headerSearch.value; });
+        els.mainSearch.addEventListener('input', () => { els.headerSearch.value = els.mainSearch.value; });
+
+        // Apps
+        renderApps();
+        bindAppHover();
+        els.filters.forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.activeFilter = btn.dataset.filter;
+            els.filters.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderApps();
+            bindAppHover();
+          });
+        });
+
+        // Notes
+        els.notesArea.value = state.notes;
+        updateNoteMeta(false);
+        els.notesArea.addEventListener('input', () => {
+          state.notes = els.notesArea.value;
+          updateNoteMeta(false);
+          clearTimeout(state.notesTimer);
+          state.notesTimer = setTimeout(() => {
+            persist();
+            updateNoteMeta(true);
+          }, 450);
+        });
+
+        // Todos
+        renderTodos();
+        els.todoAddBtn.addEventListener('click', addTodo);
+        els.todoInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addTodo(); });
+
+        // Avatar
+        state.showAvatar = !!state.showAvatar;
+        syncAvatar();
+        els.avatarBtn.addEventListener('click', toggleAvatar);
+
+        // Fullscreen
+        els.fullBtn.addEventListener('click', toggleFullscreen);
+        document.addEventListener('fullscreenchange', () => {
+          const full = !!document.fullscreenElement;
+          els.fullIcon.textContent = full ? 'fullscreen_exit' : 'fullscreen';
+          els.fullLabel.textContent = full ? 'Exit' : 'Vollbild';
+        });
+
+        // Focus mode
+        els.focusBtn.addEventListener('click', openFocusMode);
+
+        // Island
+        els.islandClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          clearTimeout(state.islandTimer);
+          els.island.classList.remove('expanded');
+          els.island.classList.remove('busy');
+          els.islandWaves.style.display = 'none';
+          syncIslandDefault();
+        });
+        els.island.addEventListener('click', (e) => {
+          if (e.target.closest('#islandClose')) return;
+          els.island.classList.toggle('expanded');
+          if (!els.island.classList.contains('expanded')) syncIslandDefault();
+        });
+        syncIslandDefault();
+
+        // Misc
+        bindGlobalShortcuts();
+        island('info', 'Willkommen!', 'Deine Startseite ist bereit.', 1800, false);
+      }
+
+      init();
+    })();
+  </script>
+
+  <div id="focusOverlay" class="focus-overlay" hidden></div>
 </body>
 </html>
