@@ -3,787 +3,1524 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MKWEB OS 7 Compact - ein modernes, schnelles und anpassbares Dashboard." />
-  <meta name="theme-color" content="#0e0e0e" />
-  <title>MKWEB OS 7 - Kompaktes Dashboard</title>
+  <meta name="description" content="MKWEB OS 7 — Deine persönliche Startseite" />
+  <meta name="theme-color" content="#0b0c12" />
+  <title>MKWEB OS 7</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0e0e0e;
-      --fg: #f8f8f8;
-      --dim: rgba(248,248,248,.68);
-      --acc: #8a4ed4;
-      --ah: #b080ff;
-      --gl: rgba(255,255,255,.06);
-      --gb: rgba(255,255,255,.14);
-      --acc-rgb: 138, 78, 212;
-      --fg-rgb: 248, 248, 248;
-      --shadow: 0 10px 30px rgba(0,0,0,.18);
-      --shadow-strong: 0 14px 40px rgba(0,0,0,.28);
       --r: 18px;
-      --gap: clamp(.7rem, 1vw, 1rem);
-      --pad: clamp(.75rem, 1.2vw, 1.25rem);
-      --content: 1600px;
-      --ease: cubic-bezier(.2,.8,.2,1);
-      --trans: 220ms var(--ease);
+      --r-lg: 24px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --t: 200ms var(--ease);
+      --gap: clamp(0.6rem, 0.9vw, 0.85rem);
+      --pad: clamp(0.85rem, 1.1vw, 1.2rem);
     }
-
+    html[data-theme="dark"] {
+      --bg: #0b0c12;
+      --bg2: #13141e;
+      --bg3: #1c1d2a;
+      --bg4: #242538;
+      --bg5: #2e2f45;
+      --text: #eeeeff;
+      --text2: rgba(220,222,255,0.58);
+      --text3: rgba(220,222,255,0.34);
+      --accent: #7b6ef6;
+      --accent2: #a89bf8;
+      --accent3: rgba(123,110,246,0.15);
+      --card: rgba(255,255,255,0.04);
+      --card-b: rgba(255,255,255,0.08);
+      --card-hover: rgba(255,255,255,0.07);
+      --glow: rgba(123,110,246,0.12);
+      --green: #4ade80;
+      --orange: #fb923c;
+      --red: #f87171;
+      --blue: #60a5fa;
+      --island-bg: rgba(8,8,16,0.92);
+      --island-b: rgba(255,255,255,0.1);
+    }
     html[data-theme="light"] {
-      --bg: #f0f2f5;
-      --fg: #141414;
-      --dim: rgba(20,20,20,.65);
-      --acc: #4285f4;
-      --ah: #669df6;
-      --gl: rgba(0,0,0,.05);
-      --gb: rgba(0,0,0,.1);
-      --acc-rgb: 66,133,244;
-      --fg-rgb: 20,20,20;
-    }
-    html[data-theme="ocean"] {
-      --bg: #0a1128;
-      --fg: #e0f2f7;
-      --dim: rgba(224,242,247,.66);
-      --acc: #0077b6;
-      --ah: #00a8e8;
-      --gl: rgba(255,255,255,.08);
-      --gb: rgba(255,255,255,.18);
-      --acc-rgb: 0,119,182;
-      --fg-rgb: 224,242,247;
-    }
-    html[data-theme="forest"] {
-      --bg: #1e392a;
-      --fg: #e0ffe0;
-      --dim: rgba(224,255,224,.66);
-      --acc: #388e3c;
-      --ah: #4caf50;
-      --gl: rgba(255,255,255,.07);
-      --gb: rgba(255,255,255,.15);
-      --acc-rgb: 56,142,60;
-      --fg-rgb: 224,255,224;
+      --bg: #f0f0f8;
+      --bg2: #ffffff;
+      --bg3: #f5f5fc;
+      --bg4: #eaeaf5;
+      --bg5: #ddddef;
+      --text: #0f0f1e;
+      --text2: rgba(15,15,30,0.55);
+      --text3: rgba(15,15,30,0.3);
+      --accent: #5b4de0;
+      --accent2: #7b6ef6;
+      --accent3: rgba(91,77,224,0.1);
+      --card: rgba(255,255,255,0.75);
+      --card-b: rgba(0,0,0,0.07);
+      --card-hover: rgba(255,255,255,0.95);
+      --glow: rgba(91,77,224,0.07);
+      --green: #16a34a;
+      --orange: #d97706;
+      --red: #dc2626;
+      --blue: #2563eb;
+      --island-bg: rgba(255,255,255,0.94);
+      --island-b: rgba(0,0,0,0.08);
     }
 
-    * { box-sizing: border-box; }
-    html { font-size: clamp(14px, 0.75vw + 0.4vh, 18px); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: clamp(13px, 0.65vw + 0.4vh, 16px);
+      scroll-behavior: smooth;
+    }
+
     body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--fg);
-      background:
-        radial-gradient(circle at 15% 20%, rgba(var(--acc-rgb), .12), transparent 30%),
-        radial-gradient(circle at 85% 80%, rgba(var(--ah), .08), transparent 30%),
-        var(--bg);
+      font-family: 'Sora', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
       min-height: 100vh;
       overflow: hidden;
-      transition: background-color 220ms var(--ease), color 220ms var(--ease);
-      text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      transition: background 280ms var(--ease), color 280ms var(--ease);
     }
 
-    button, a, input { font: inherit; }
-    a { color: inherit; }
-    button {
-      border: 0;
-      cursor: pointer;
-      color: inherit;
-      background: none;
-    }
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0);
-      white-space: nowrap; border: 0;
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 10% 5%, var(--glow), transparent),
+        radial-gradient(ellipse 40% 40% at 90% 90%, var(--glow), transparent),
+        radial-gradient(ellipse 30% 30% at 50% 50%, rgba(123,110,246,0.04), transparent);
+      pointer-events: none;
+      z-index: 0;
     }
 
+    a { text-decoration: none; color: inherit; }
+    button { border: 0; background: none; cursor: pointer; font: inherit; color: inherit; }
+    .ms { font-family: 'Material Symbols Rounded'; font-size: 1.25rem; line-height: 1; font-weight: 400; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; font-feature-settings: 'liga'; -webkit-font-feature-settings: 'liga'; -webkit-font-smoothing: antialiased; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    .ms.fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+    .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* ── Shell ── */
     .shell {
-      width: min(100%, var(--content));
+      position: relative;
+      z-index: 1;
+      width: min(100%, 1680px);
       height: 100vh;
       margin: 0 auto;
-      padding: clamp(.8rem, 1.4vw, 1.4rem);
-      display: flex;
-      flex-direction: column;
+      padding: clamp(0.7rem, 1.2vw, 1.1rem);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      grid-template-columns: 1fr;
       gap: var(--gap);
     }
 
+    /* ── Glass ── */
     .glass {
-      background: var(--gl);
-      border: 1px solid var(--gb);
-      backdrop-filter: blur(18px) saturate(150%);
-      box-shadow: var(--shadow);
-      border-radius: var(--r);
-      transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans), background var(--trans);
+      background: var(--card);
+      border: 1px solid var(--card-b);
+      backdrop-filter: blur(24px) saturate(140%);
+      border-radius: var(--r-lg);
+      transition: transform var(--t), border-color var(--t), background var(--t), box-shadow var(--t);
     }
-    .glass:hover { box-shadow: var(--shadow-strong); transform: translateY(-2px); }
+    .glass:hover {
+      transform: translateY(-2px);
+      border-color: rgba(123,110,246,0.25);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.14), 0 0 0 1px rgba(123,110,246,0.08);
+    }
 
+    /* ── Header ── */
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--gap);
-      padding: .9rem 1.1rem;
+      padding: 0.7rem 1rem;
       flex-shrink: 0;
     }
-    .logo {
-      font-weight: 900;
-      letter-spacing: -.04em;
-      font-size: clamp(1.2rem, 1.8vw, 2rem);
-      background: linear-gradient(65deg, var(--acc), var(--ah));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .controls { display: flex; gap: .55rem; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-    .control-btn, .chip-btn, .search-engine, .weather-link, .app-card {
-      transition: transform var(--trans), box-shadow var(--trans), background var(--trans), border-color var(--trans), color var(--trans);
-    }
-    .control-btn, .chip-btn, .search-engine {
-      padding: .55rem .8rem;
-      border-radius: 999px;
-      background: var(--gl);
-      border: 1px solid var(--gb);
-      color: var(--fg);
-      box-shadow: var(--shadow);
-      font-weight: 600;
-      line-height: 1;
-    }
-    .control-btn:hover, .chip-btn:hover, .search-engine:hover, .weather-link:hover, .app-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-strong);
-    }
-    .control-btn:focus-visible, .chip-btn:focus-visible, .search-engine:focus-visible, .weather-link:focus-visible, .app-card:focus-visible, input:focus-visible {
-      outline: 2px solid var(--ah);
-      outline-offset: 2px;
-    }
 
-    .avatar {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      display: grid; place-items: center;
-      background: var(--gl);
-      border: 1px solid var(--gb);
-      box-shadow: var(--shadow);
-      flex-shrink: 0;
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
     }
-    .avatar.hidden { display: none; }
-    .avatar .material-symbols-outlined { color: var(--acc); font-size: 1.35rem; }
-
-    .main {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--gap);
-      min-height: 0;
-      flex: 1;
-    }
-    .col { display: flex; flex-direction: column; gap: var(--gap); min-height: 0; }
-
-    .time-card, .quote-card, .weather-card, .search-card, .apps-card {
-      padding: clamp(.9rem, 1.4vw, 1.4rem);
-      min-height: 0;
-    }
-
-    .time-card { flex: 1.1; display: grid; place-items: center; text-align: center; }
-    #time {
-      font-weight: 900;
-      letter-spacing: -.05em;
-      font-size: clamp(3rem, 6vw, 7rem);
-      line-height: .95;
-      margin: 0;
-      background: linear-gradient(65deg, var(--acc), var(--ah));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    #date { margin-top: .4rem; color: var(--dim); text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; }
-
-    .weather-card, .quote-card {
-      flex: .9;
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent);
       display: grid;
       place-items: center;
-      text-align: center;
+      flex-shrink: 0;
     }
-    .weather-card h2, .quote-card h2, .apps-card h2 { margin: 0 0 .7rem 0; font-size: 1rem; color: var(--dim); }
-    .weather-link {
-      display: inline-flex;
-      align-items: center;
-      gap: .55rem;
-      padding: .8rem 1rem;
-      text-decoration: none;
-      border-radius: 999px;
-      background: var(--gl);
-      border: 1px solid var(--gb);
-      box-shadow: var(--shadow);
-      font-weight: 700;
+    .logo-mark .ms { font-size: 1.1rem; color: #fff; }
+    .logo-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
     }
-    .weather-link .material-symbols-outlined { color: var(--acc); }
-    .hint { margin-top: .75rem; color: var(--dim); font-size: .9rem; }
+    .logo-text span {
+      color: var(--accent);
+    }
 
-    .search-card { display: flex; flex-direction: column; justify-content: center; gap: .9rem; flex: .9; }
-    .search-engines { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
-    .search-engine[aria-pressed="true"] {
-      background: linear-gradient(135deg, var(--acc), var(--ah));
-      color: #fff;
-      border-color: rgba(255,255,255,.2);
+    .header-center {
+      flex: 1;
+      max-width: 520px;
+      margin: 0 auto;
     }
-    .search-box {
-      display: flex; align-items: center; gap: .65rem;
-      padding: .9rem 1rem;
-      border-radius: var(--r);
-      background: var(--gl);
-      border: 1px solid var(--gb);
-      box-shadow: var(--shadow);
+
+    /* Inline search in header */
+    .header-search {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--card);
+      border: 1px solid var(--card-b);
+      border-radius: 999px;
+      padding: 0.5rem 0.9rem;
+      transition: border-color var(--t), background var(--t), box-shadow var(--t);
+      backdrop-filter: blur(20px);
     }
-    .search-box .material-symbols-outlined { color: var(--dim); }
-    #search {
-      width: 100%;
+    .header-search:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent3);
+      background: var(--bg2);
+    }
+    .header-search .ms { color: var(--text2); font-size: 1.1rem; }
+    .header-search input {
+      flex: 1;
       border: 0;
       outline: 0;
       background: transparent;
-      color: var(--fg);
-      font-size: 1rem;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.9rem;
     }
-    #search::placeholder { color: var(--dim); }
+    .header-search input::placeholder { color: var(--text3); }
+    .engine-pill {
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      background: var(--accent3);
+      color: var(--accent2);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      transition: background var(--t), color var(--t);
+    }
 
-    .quote {
-      max-width: 36rem;
-      margin: 0;
-      font-size: clamp(1rem, 1.15vw, 1.2rem);
-      line-height: 1.7;
-      font-style: italic;
-      position: relative;
+    .ctrl-group {
+      display: flex;
+      gap: 0.45rem;
+      align-items: center;
     }
-    .quote::before, .quote::after {
-      content: '“';
-      position: absolute;
-      font-size: 3.2rem;
-      color: var(--acc);
-      opacity: .14;
-      font-family: Georgia, serif;
+    .ctrl-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--card-b);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text2);
+      transition: all var(--t);
+      backdrop-filter: blur(16px);
+      white-space: nowrap;
     }
-    .quote::before { top: -.9rem; left: -1rem; }
-    .quote::after { content: '”'; right: -1rem; bottom: -2rem; }
-    .author { margin-top: .8rem; color: var(--dim); font-weight: 600; }
+    .ctrl-btn .ms { font-size: 1rem; }
+    .ctrl-btn:hover {
+      background: var(--card-hover);
+      color: var(--text);
+      border-color: rgba(123,110,246,0.3);
+      transform: translateY(-1px);
+    }
+    .ctrl-btn.active {
+      background: var(--accent3);
+      color: var(--accent2);
+      border-color: rgba(123,110,246,0.3);
+    }
 
-    .apps-card { flex: 1.2; display: flex; flex-direction: column; min-height: 0; }
-    .apps-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .8rem; }
-    .apps-head h2 { margin: 0; }
-    .apps-meta { color: var(--dim); font-size: .9rem; }
-    .apps-grid {
+    /* ── Main grid ── */
+    .main {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
-      gap: .7rem;
-      overflow: auto;
-      padding-right: .2rem;
+      grid-template-columns: 300px 1fr 300px;
+      grid-template-rows: 1fr;
+      gap: var(--gap);
       min-height: 0;
     }
-    .app-card {
-      min-height: 92px;
-      border-radius: 18px;
-      text-decoration: none;
-      background: var(--gl);
-      border: 1px solid var(--gb);
-      box-shadow: var(--shadow);
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      min-height: 0;
+    }
+
+    /* ── Time Card ── */
+    .time-card {
+      padding: var(--pad);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: .4rem;
-      padding: .9rem .55rem;
       text-align: center;
+      gap: 0.4rem;
+      flex: 1;
+      position: relative;
+      overflow: hidden;
     }
-    .app-card .material-symbols-outlined { font-size: 1.6rem; color: var(--acc); transition: transform var(--trans), color var(--trans); }
-    .app-card:hover .material-symbols-outlined { transform: scale(1.12) rotate(4deg); color: var(--ah); }
-    .app-label { font-size: .85rem; font-weight: 600; line-height: 1.15; }
+    .time-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 110%, var(--accent3), transparent);
+      pointer-events: none;
+    }
+    .time-display {
+      font-size: clamp(3.2rem, 5.5vw, 5.8rem);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      color: var(--text);
+      position: relative;
+    }
+    .time-seconds {
+      font-size: 0.4em;
+      color: var(--accent);
+      font-weight: 600;
+      vertical-align: super;
+      margin-left: 0.1em;
+    }
+    .date-display {
+      color: var(--text2);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .greeting {
+      font-size: 0.88rem;
+      color: var(--accent2);
+      font-weight: 600;
+    }
 
+    /* ── Weather ── */
+    .weather-card {
+      padding: var(--pad);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+    .weather-main {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .weather-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--accent3);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .weather-icon .ms { color: var(--accent2); font-size: 1.5rem; }
+    .weather-temp {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .weather-desc {
+      color: var(--text2);
+      font-size: 0.82rem;
+      margin-top: 0.15rem;
+    }
+    .weather-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+    }
+    .w-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
+    .w-detail .ms { font-size: 0.9rem; color: var(--text3); }
+    .weather-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.6rem;
+      border-radius: var(--r);
+      background: var(--accent3);
+      border: 1px solid rgba(123,110,246,0.2);
+      color: var(--accent2);
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all var(--t);
+      cursor: pointer;
+    }
+    .weather-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .weather-btn .ms { font-size: 1rem; }
+
+    /* ── Quote ── */
+    .quote-card {
+      padding: var(--pad);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex: 1;
+    }
+    .quote-text {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text2);
+      font-style: italic;
+      font-weight: 400;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .quote-text::before {
+      content: '"';
+      font-family: Georgia, serif;
+      font-size: 3rem;
+      color: var(--accent);
+      opacity: 0.25;
+      line-height: 0;
+      margin-right: 0.3rem;
+      align-self: flex-start;
+      padding-top: 1.2rem;
+    }
+    .quote-author {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent2);
+      letter-spacing: 0.04em;
+    }
+    .quote-refresh {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg4);
+      border: 1px solid var(--card-b);
+      display: grid;
+      place-items: center;
+      color: var(--text3);
+      transition: all var(--t);
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    .quote-refresh .ms { font-size: 0.9rem; }
+    .quote-refresh:hover { color: var(--accent); background: var(--accent3); border-color: rgba(123,110,246,0.3); transform: rotate(180deg); }
+
+    /* ── Center Column ── */
+    .center-top {
+      padding: var(--pad);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .engines-row {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .eng-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.42rem 0.75rem;
+      border-radius: 999px;
+      background: var(--bg4);
+      border: 1px solid var(--card-b);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text2);
+      transition: all var(--t);
+    }
+    .eng-btn .ms { font-size: 0.85rem; }
+    .eng-btn:hover { background: var(--bg5); color: var(--text); }
+    .eng-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .search-big {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--bg3);
+      border: 1.5px solid var(--card-b);
+      border-radius: var(--r);
+      padding: 0.8rem 1rem;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .search-big:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent3);
+    }
+    .search-big .ms { color: var(--text2); }
+    .search-big input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 1rem;
+    }
+    .search-big input::placeholder { color: var(--text3); }
+    .search-go {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent);
+      border: 0;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--t);
+      flex-shrink: 0;
+    }
+    .search-go .ms { color: #fff; font-size: 1.1rem; }
+    .search-go:hover { background: var(--accent2); transform: scale(1.05); }
+
+    /* ── Apps ── */
+    .apps-card {
+      padding: var(--pad);
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .apps-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .apps-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+    .apps-count {
+      font-size: 0.72rem;
+      color: var(--text3);
+      font-weight: 500;
+    }
+    .apps-filter {
+      display: flex;
+      gap: 0.35rem;
+    }
+    .filter-btn {
+      padding: 0.28rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text3);
+      background: var(--bg4);
+      border: 1px solid transparent;
+      transition: all var(--t);
+    }
+    .filter-btn:hover { color: var(--text2); background: var(--bg5); }
+    .filter-btn.active { color: var(--accent2); background: var(--accent3); border-color: rgba(123,110,246,0.2); }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      gap: 0.55rem;
+      overflow-y: auto;
+      min-height: 0;
+      padding-right: 2px;
+    }
+    .apps-grid::-webkit-scrollbar { width: 4px; }
+    .apps-grid::-webkit-scrollbar-track { background: transparent; }
+    .apps-grid::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 4px; }
+    .app-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.75rem 0.4rem;
+      border-radius: var(--r);
+      background: var(--card);
+      border: 1px solid var(--card-b);
+      text-align: center;
+      transition: all var(--t);
+      cursor: pointer;
+      min-height: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .app-tile::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent3), transparent 60%);
+      opacity: 0;
+      transition: opacity var(--t);
+    }
+    .app-tile:hover {
+      transform: translateY(-3px) scale(1.03);
+      border-color: rgba(123,110,246,0.3);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .app-tile:hover::before { opacity: 1; }
+    .app-tile .ms {
+      font-size: 1.4rem;
+      color: var(--accent);
+      transition: transform var(--t), color var(--t);
+      position: relative;
+    }
+    .app-tile:hover .ms { transform: scale(1.15); color: var(--accent2); }
+    .app-tile-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text2);
+      line-height: 1.2;
+      position: relative;
+    }
+
+    /* ── Right column ── */
+    /* Quick notes */
+    .notes-card {
+      padding: var(--pad);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1.2;
+    }
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .notes-area {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text2);
+      font: inherit;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      resize: none;
+      width: 100%;
+      min-height: 0;
+    }
+    .notes-area::placeholder { color: var(--text3); }
+    .notes-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text3);
+      font-size: 0.72rem;
+    }
+    .save-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--green);
+      font-size: 0.72rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity var(--t);
+    }
+    .save-badge.show { opacity: 1; }
+    .save-badge .ms { font-size: 0.85rem; }
+
+    /* Todo */
+    .todo-card {
+      padding: var(--pad);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      flex: 1;
+      min-height: 0;
+    }
+    .todo-input-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .todo-input {
+      flex: 1;
+      background: var(--bg3);
+      border: 1px solid var(--card-b);
+      border-radius: 10px;
+      padding: 0.52rem 0.75rem;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.82rem;
+      outline: 0;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .todo-input::placeholder { color: var(--text3); }
+    .todo-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent3); }
+    .todo-add-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: all var(--t);
+    }
+    .todo-add-btn .ms { color: #fff; font-size: 1.1rem; }
+    .todo-add-btn:hover { background: var(--accent2); transform: scale(1.05); }
+    .todo-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 0;
+    }
+    .todo-list::-webkit-scrollbar { width: 3px; }
+    .todo-list::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 4px; }
+    .todo-item {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.5rem 0.65rem;
+      border-radius: 10px;
+      background: var(--bg3);
+      border: 1px solid transparent;
+      transition: all var(--t);
+      group: true;
+    }
+    .todo-item:hover { border-color: var(--card-b); }
+    .todo-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 1.5px solid var(--card-b);
+      background: transparent;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--t);
+    }
+    .todo-check .ms { font-size: 0.7rem; color: #fff; opacity: 0; }
+    .todo-check.done { background: var(--accent); border-color: var(--accent); }
+    .todo-check.done .ms { opacity: 1; }
+    .todo-text {
+      flex: 1;
+      font-size: 0.82rem;
+      color: var(--text2);
+      line-height: 1.4;
+      transition: all var(--t);
+      cursor: default;
+    }
+    .todo-text.done { text-decoration: line-through; color: var(--text3); }
+    .todo-del {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: var(--text3);
+      opacity: 0;
+      transition: all var(--t);
+    }
+    .todo-del .ms { font-size: 0.85rem; }
+    .todo-item:hover .todo-del { opacity: 1; }
+    .todo-del:hover { color: var(--red); background: rgba(248,113,113,0.1); }
+    .todo-empty {
+      text-align: center;
+      color: var(--text3);
+      font-size: 0.82rem;
+      padding: 1.5rem 0;
+    }
+    .todo-empty .ms { font-size: 1.8rem; display: block; margin-bottom: 0.4rem; opacity: 0.4; }
+
+    /* Bookmarks quick row */
+    .bookmarks-card {
+      padding: 0.75rem var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      overflow-x: auto;
+    }
+    .bookmarks-card::-webkit-scrollbar { display: none; }
+    .bm-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.42rem 0.8rem;
+      border-radius: 999px;
+      background: var(--bg4);
+      border: 1px solid var(--card-b);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text2);
+      white-space: nowrap;
+      transition: all var(--t);
+    }
+    .bm-item .ms { font-size: 0.9rem; color: var(--text3); }
+    .bm-item:hover { background: var(--bg5); color: var(--text); transform: translateY(-1px); }
+    .bm-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); flex-shrink: 0; }
+
+    /* ── Dynamic Island ── */
     .island-wrap {
       position: fixed;
-      top: 1rem;
+      top: 0.85rem;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 50;
+      z-index: 100;
       pointer-events: none;
     }
     .island {
       pointer-events: auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: .85rem;
-      width: min(92vw, 240px);
-      padding: .65rem .8rem;
+      gap: 0.75rem;
+      padding: 0.6rem 0.9rem;
       border-radius: 999px;
-      background: rgba(10,10,10,.88);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 12px 34px rgba(0,0,0,.26);
-      overflow: hidden;
+      background: var(--island-bg);
+      border: 1px solid var(--island-b);
+      backdrop-filter: blur(24px) saturate(160%);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.24), 0 0 0 1px rgba(123,110,246,0.06);
+      white-space: nowrap;
       cursor: pointer;
-      transition: width 280ms var(--ease), transform 280ms var(--ease), box-shadow 280ms var(--ease);
-      backdrop-filter: blur(18px);
+      transition: all 280ms var(--ease);
+      width: auto;
+      max-width: min(92vw, 380px);
+      overflow: hidden;
     }
-    html[data-theme="light"] .island { background: rgba(255,255,255,.88); color: #111; border-color: rgba(0,0,0,.08); }
-    .island.expanded { width: min(92vw, 420px); }
-    .island-main { display: flex; align-items: center; gap: .65rem; min-width: 0; }
-    .island .material-symbols-outlined { color: var(--ah); flex-shrink: 0; }
-    .island-text { display: flex; flex-direction: column; min-width: 0; }
-    .island-title, .island-subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .island-title { font-weight: 800; font-size: .88rem; }
-    .island-subtitle { font-size: .78rem; opacity: .78; }
-    .island-actions { display: flex; align-items: center; gap: .5rem; }
-    .wave {
-      display: none;
-      align-items: center;
-      gap: 3px;
-    }
-    .island.busy .wave { display: flex; }
-    .wave span {
-      width: 4px; height: 18px; border-radius: 999px;
-      background: linear-gradient(180deg, var(--acc), var(--ah));
-      animation: wave 1s ease-in-out infinite;
-    }
-    .wave span:nth-child(2) { animation-delay: .12s; }
-    .wave span:nth-child(3) { animation-delay: .24s; }
-    .wave span:nth-child(4) { animation-delay: .36s; }
-    .dismiss {
-      display: none;
-      width: 30px; height: 30px;
+    .island.compact { max-width: 200px; }
+    .island.wide { max-width: min(92vw, 460px); }
+    .island-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .island-dot.pulse {
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+    .island-content {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      flex: 1;
+    }
+    .island-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .island-sub {
+      font-size: 0.72rem;
+      color: var(--text2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .island-close {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: grid;
       place-items: center;
-      background: rgba(255,255,255,.08);
-      color: inherit;
+      flex-shrink: 0;
+      transition: background var(--t);
     }
-    html[data-theme="light"] .dismiss { background: rgba(0,0,0,.07); }
-    .island.expanded .dismiss { display: grid; }
-    .dismiss .material-symbols-outlined { font-size: 18px; }
+    .island-close:hover { background: rgba(255,255,255,0.14); }
+    .island-close .ms { font-size: 0.8rem; color: var(--text2); }
+    html[data-theme="light"] .island-close { background: rgba(0,0,0,0.05); }
 
+    /* Waves */
+    .waves {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+    .waves span {
+      width: 3px;
+      border-radius: 99px;
+      background: var(--accent);
+      animation: wave 0.9s ease-in-out infinite;
+    }
+    .waves span:nth-child(1) { height: 10px; }
+    .waves span:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+    .waves span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+    .waves span:nth-child(4) { height: 18px; animation-delay: 0.3s; }
+    .waves span:nth-child(5) { height: 10px; animation-delay: 0.15s; }
     @keyframes wave {
-      0%,100% { transform: scaleY(.8); opacity: .65; }
-      50% { transform: scaleY(1.25); opacity: 1; }
+      0%,100% { transform: scaleY(0.7); opacity: 0.6; }
+      50% { transform: scaleY(1); opacity: 1; }
     }
 
-    @media (max-width: 980px) {
-      body { overflow: auto; }
-      .shell { height: auto; min-height: 100vh; }
-      .main { grid-template-columns: 1fr; height: auto; }
-      .time-card { min-height: 30vh; }
-      .apps-grid { grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); }
+    /* ── Focus mode overlay ── */
+    .focus-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 200;
+      display: none;
+      place-items: center;
+      backdrop-filter: blur(8px);
     }
-    @media (max-width: 640px) {
-      .header { flex-direction: column; align-items: stretch; }
-      .controls { justify-content: center; }
-      .search-engines { justify-content: flex-start; }
-      .quote::after { right: -.4rem; }
-      .island.expanded { width: min(94vw, 94vw); }
+    .focus-overlay.show { display: grid; }
+    .focus-box {
+      width: min(90vw, 560px);
+      background: var(--bg2);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--card-b);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .focus-time {
+      font-size: clamp(4rem, 10vw, 6rem);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: var(--accent);
+      text-align: center;
+    }
+    .focus-date {
+      text-align: center;
+      color: var(--text2);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .focus-search {
+      display: flex;
+      gap: 0.6rem;
+      background: var(--bg3);
+      border: 1.5px solid var(--card-b);
+      border-radius: var(--r);
+      padding: 0.85rem 1rem;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .focus-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent3); }
+    .focus-search .ms { color: var(--text2); font-size: 1.2rem; }
+    .focus-search input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 1.05rem;
+    }
+    .focus-search input::placeholder { color: var(--text3); }
+    .focus-close {
+      align-self: center;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      background: var(--bg4);
+      border: 1px solid var(--card-b);
+      color: var(--text2);
+      font: inherit;
+      font-size: 0.82rem;
+      transition: all var(--t);
+      cursor: pointer;
+    }
+    .focus-close:hover { background: var(--bg5); color: var(--text); }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .main {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+      .col:last-child {
+        grid-column: 1 / -1;
+        flex-direction: row;
+      }
+      body, .shell { overflow: auto; }
+      .shell { height: auto; min-height: 100vh; }
+    }
+    @media (max-width: 720px) {
+      .header { flex-wrap: wrap; gap: 0.6rem; }
+      .header-center { max-width: 100%; order: 3; flex: 1 1 100%; }
+      .main { grid-template-columns: 1fr; }
+      .col:last-child { flex-direction: column; }
+      .ctrl-group { flex-wrap: wrap; }
+      .ctrl-btn span:not(.ms) { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <div class="island-wrap" id="islandWrap" aria-live="polite">
-    <div class="island glass" id="island" role="status" aria-label="Statusanzeige">
-      <div class="island-main">
-        <span class="material-symbols-outlined" id="islandIcon">info</span>
-        <div class="island-text">
-          <span class="island-title" id="islandTitle">Willkommen!</span>
-          <span class="island-subtitle" id="islandSubtitle">Wähle eine Suchmaschine aus.</span>
-        </div>
-      </div>
-      <div class="island-actions">
-        <div class="wave" id="islandWave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <button class="dismiss" id="islandDismiss" aria-label="Insel ausblenden"><span class="material-symbols-outlined">close</span></button>
+
+<!-- Dynamic Island -->
+<div class="island-wrap" aria-live="polite" aria-atomic="true">
+  <div class="island" id="island" role="status">
+    <div class="island-dot" id="islandDot"></div>
+    <div class="island-content">
+      <div class="island-title" id="islandTitle">MKWEB OS 7</div>
+      <div class="island-sub" id="islandSub">Willkommen zurück</div>
+    </div>
+    <div class="waves" id="islandWaves" style="display:none">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <button class="island-close" id="islandClose" aria-label="Schließen">
+      <span class="ms">close</span>
+    </button>
+  </div>
+</div>
+
+<!-- Focus Mode Overlay -->
+<div class="focus-overlay" id="focusOverlay">
+  <div class="focus-box">
+    <div class="focus-time" id="focusTime">00:00</div>
+    <div class="focus-date" id="focusDate"></div>
+    <div class="focus-search">
+      <span class="ms">search</span>
+      <input type="text" id="focusSearch" placeholder="Suchen und Enter drücken…" autocomplete="off" />
+    </div>
+    <button class="focus-close" id="focusCloseBtn">Fokus verlassen  ✕</button>
+  </div>
+</div>
+
+<div class="shell">
+  <!-- Header -->
+  <header class="header glass">
+    <div class="logo-area">
+      <div class="logo-mark"><span class="ms fill">language</span></div>
+      <div class="logo-text">MK<span>WEB</span> <span style="color:var(--text3);font-weight:500;font-size:0.75em;">OS 7</span></div>
+    </div>
+
+    <div class="header-center">
+      <div class="header-search">
+        <span class="ms">search</span>
+        <input type="text" id="headerSearch" placeholder="Suchen… (Ctrl+K)" autocomplete="off" />
+        <div class="engine-pill" id="headerEnginePill">Google</div>
       </div>
     </div>
+
+    <div class="ctrl-group">
+      <button class="ctrl-btn" id="themeBtn" aria-label="Theme wechseln">
+        <span class="ms" id="themeIcon">dark_mode</span>
+        <span id="themeLabel">Hell</span>
+      </button>
+      <button class="ctrl-btn" id="focusBtn" aria-label="Fokus-Modus">
+        <span class="ms">center_focus_strong</span>
+        <span>Fokus</span>
+      </button>
+      <button class="ctrl-btn" id="fullBtn" aria-label="Vollbild">
+        <span class="ms" id="fullIcon">fullscreen</span>
+        <span id="fullLabel">Vollbild</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Bookmarks Quick Bar -->
+  <div class="bookmarks-card glass" id="bookmarkBar">
+    <span class="bm-label">Schnell</span>
+    <a class="bm-item" href="https://chat.openai.com" target="_blank" rel="noopener">
+      <span class="ms">chat</span>ChatGPT
+    </a>
+    <a class="bm-item" href="https://github.com" target="_blank" rel="noopener">
+      <span class="ms">code</span>GitHub
+    </a>
+    <a class="bm-item" href="https://mail.google.com" target="_blank" rel="noopener">
+      <span class="ms">mail</span>Gmail
+    </a>
+    <a class="bm-item" href="https://notion.so" target="_blank" rel="noopener">
+      <span class="ms">article</span>Notion
+    </a>
+    <a class="bm-item" href="https://youtube.com" target="_blank" rel="noopener">
+      <span class="ms">play_circle</span>YouTube
+    </a>
+    <a class="bm-item" href="https://calendar.google.com" target="_blank" rel="noopener">
+      <span class="ms">calendar_month</span>Calendar
+    </a>
+    <a class="bm-item" href="https://spotify.com" target="_blank" rel="noopener">
+      <span class="ms">headphones</span>Spotify
+    </a>
+    <a class="bm-item" href="https://www.anthropic.com" target="_blank" rel="noopener">
+      <span class="ms">psychology</span>Claude
+    </a>
   </div>
 
-  <div class="shell">
-    <header class="header glass">
-      <div class="logo">MKWEB OS 7</div>
-      <div class="controls">
-        <button class="control-btn" id="themeBtn" aria-label="Theme wechseln">🎨 Theme</button>
-        <button class="control-btn" id="fullBtn" aria-label="Vollbild umschalten">🚀 Vollbild</button>
-        <button class="control-btn" id="avatarBtn" aria-label="Avatar ein- oder ausblenden">🙈 Avatar</button>
-        <div class="avatar" id="avatar" aria-hidden="false"><span class="material-symbols-outlined">person</span></div>
-      </div>
-    </header>
+  <!-- Main -->
+  <main class="main">
+    <!-- Left Column -->
+    <div class="col">
+      <!-- Time -->
+      <section class="time-card glass" id="timeFocusTarget">
+        <div class="greeting" id="greeting">Guten Tag</div>
+        <div class="time-display">
+          <span id="timeClock">00:00</span><span class="time-seconds" id="timeSec">00</span>
+        </div>
+        <div class="date-display" id="dateDisplay">Lädt…</div>
+      </section>
 
-    <main class="main">
-      <div class="col">
-        <section class="time-card glass">
-          <h2 class="sr-only">Zeit und Datum</h2>
+      <!-- Weather -->
+      <section class="weather-card glass">
+        <div class="card-label">Wetter · Heidenheim</div>
+        <div class="weather-main">
+          <div class="weather-icon"><span class="ms fill" id="weatherIconMs">partly_cloudy_day</span></div>
           <div>
-            <div id="time">00:00</div>
-            <div id="date">Lädt…</div>
+            <div class="weather-temp" id="weatherTemp">22°C</div>
+            <div class="weather-desc" id="weatherDesc">Leicht bewölkt</div>
           </div>
-        </section>
+        </div>
+        <div class="weather-details">
+          <div class="w-detail"><span class="ms">water_drop</span><span id="weatherHum">65%</span></div>
+          <div class="w-detail"><span class="ms">air</span><span id="weatherWind">12 km/h</span></div>
+          <div class="w-detail"><span class="ms">thermostat</span><span id="weatherFeels">Fühlt sich an: 20°C</span></div>
+          <div class="w-detail"><span class="ms">visibility</span><span>Gut</span></div>
+        </div>
+        <button class="weather-btn" id="weatherRefresh">
+          <span class="ms">refresh</span>
+          Wetter aktualisieren
+        </button>
+      </section>
 
-        <section class="weather-card glass">
-          <div>
-            <h2>Aktuelles Wetter</h2>
-            <a href="#" class="weather-link" id="weatherLink">
-              <span class="material-symbols-outlined">cloud</span>
-              Wetter in Heidenheim ansehen
-            </a>
-            <div class="hint">Klickt die Karte an, dann zeigt die Dynamic Island das Wetter an.</div>
-          </div>
-        </section>
+      <!-- Quote -->
+      <section class="quote-card glass">
+        <div class="card-label">Zitat des Tages</div>
+        <div class="quote-text" id="quoteText"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="quote-author" id="quoteAuthor"></div>
+          <button class="quote-refresh" id="quoteRefresh" aria-label="Neues Zitat">
+            <span class="ms">refresh</span>
+          </button>
+        </div>
+      </section>
+    </div>
 
-        <section class="quote-card glass">
-          <div>
-            <h2 class="sr-only">Zitat des Tages</h2>
-            <p class="quote" id="quoteText"></p>
-            <div class="author" id="quoteAuthor"></div>
-          </div>
-        </section>
+    <!-- Center Column -->
+    <div class="col">
+      <!-- Search Card -->
+      <div class="center-top glass">
+        <div class="card-label">Suche</div>
+        <div class="engines-row" id="enginesRow" role="group" aria-label="Suchmaschine">
+          <button class="eng-btn active" data-engine="google"><span class="ms">travel_explore</span>Google</button>
+          <button class="eng-btn" data-engine="duckduckgo"><span class="ms">search_hands_free</span>DuckDuckGo</button>
+          <button class="eng-btn" data-engine="bing"><span class="ms">search</span>Bing</button>
+          <button class="eng-btn" data-engine="youtube"><span class="ms">play_circle</span>YouTube</button>
+          <button class="eng-btn" data-engine="github"><span class="ms">code</span>GitHub</button>
+          <button class="eng-btn" data-engine="ecosia"><span class="ms">eco</span>Ecosia</button>
+        </div>
+        <div class="search-big">
+          <span class="ms">search</span>
+          <input type="text" id="mainSearch" placeholder="Was suchst du heute?" autocomplete="off" />
+          <button class="search-go" id="searchGoBtn" aria-label="Suchen">
+            <span class="ms">arrow_forward</span>
+          </button>
+        </div>
       </div>
 
-      <div class="col">
-        <section class="search-card glass">
-          <h2 class="sr-only">Websuche</h2>
-          <div class="search-engines" role="group" aria-label="Suchmaschine auswählen">
-            <button class="search-engine" data-engine="google" aria-pressed="true">Google</button>
-            <button class="search-engine" data-engine="yandex" aria-pressed="false">Yandex</button>
-            <button class="search-engine" data-engine="bing" aria-pressed="false">Bing</button>
-            <button class="search-engine" data-engine="duckduckgo" aria-pressed="false">DuckDuckGo</button>
-            <button class="search-engine" data-engine="youtube" aria-pressed="false">YouTube</button>
-            <button class="search-engine" data-engine="github" aria-pressed="false">GitHub</button>
+      <!-- Apps -->
+      <section class="apps-card glass">
+        <div class="apps-header">
+          <span class="apps-title">Apps &amp; Bookmarks</span>
+          <div class="apps-filter">
+            <button class="filter-btn active" data-filter="all">Alle</button>
+            <button class="filter-btn" data-filter="tools">Tools</button>
+            <button class="filter-btn" data-filter="social">Social</button>
+            <button class="filter-btn" data-filter="dev">Dev</button>
           </div>
-          <div class="search-box glass">
-            <span class="material-symbols-outlined" aria-hidden="true">search</span>
-            <label class="sr-only" for="search">Suche eingeben</label>
-            <input id="search" type="text" placeholder="Was suchst du heute?" autocomplete="off" />
-          </div>
-        </section>
+        </div>
+        <div class="apps-grid" id="appsGrid"></div>
+      </section>
+    </div>
 
-        <section class="apps-card glass">
-          <div class="apps-head">
-            <h2>✨ Apps & Bookmarks</h2>
-            <div class="apps-meta">Schnellzugriffe</div>
+    <!-- Right Column -->
+    <div class="col">
+      <!-- Notes -->
+      <section class="notes-card glass">
+        <div class="notes-header">
+          <span class="card-label">Schnellnotizen</span>
+          <div class="save-badge" id="saveBadge">
+            <span class="ms">check_circle</span>Gespeichert
           </div>
-          <div class="apps-grid" id="appsGrid">
-            <a class="app-card glass" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" data-name="ChatGPT" data-icon="chat">
-              <span class="material-symbols-outlined">chat</span><div class="app-label">ChatGPT</div>
-            </a>
-            <a class="app-card glass" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" data-name="Gemini" data-icon="bubble_chart">
-              <span class="material-symbols-outlined">bubble_chart</span><div class="app-label">Gemini</div>
-            </a>
-            <a class="app-card glass" href="https://notion.so" target="_blank" rel="noopener noreferrer" data-name="Notion" data-icon="article">
-              <span class="material-symbols-outlined">article</span><div class="app-label">Notion</div>
-            </a>
-            <a class="app-card glass" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" data-name="Calendar" data-icon="calendar_month">
-              <span class="material-symbols-outlined">calendar_month</span><div class="app-label">Calendar</div>
-            </a>
-            <a class="app-card glass" href="https://mail.google.com" target="_blank" rel="noopener noreferrer" data-name="Gmail" data-icon="mail">
-              <span class="material-symbols-outlined">mail</span><div class="app-label">Gmail</div>
-            </a>
-            <a class="app-card glass" href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" data-name="WhatsApp" data-icon="chat_bubble">
-              <span class="material-symbols-outlined">chat_bubble</span><div class="app-label">WhatsApp</div>
-            </a>
-            <a class="app-card glass" href="https://spotify.com" target="_blank" rel="noopener noreferrer" data-name="Spotify" data-icon="headphones">
-              <span class="material-symbols-outlined">headphones</span><div class="app-label">Spotify</div>
-            </a>
-            <a class="app-card glass" href="https://github.com" target="_blank" rel="noopener noreferrer" data-name="GitHub" data-icon="data_object">
-              <span class="material-symbols-outlined">data_object</span><div class="app-label">GitHub</div>
-            </a>
-            <a class="app-card glass" href="https://developer.mozilla.org/de/" target="_blank" rel="noopener noreferrer" data-name="MDN Docs" data-icon="menu_book">
-              <span class="material-symbols-outlined">menu_book</span><div class="app-label">MDN Docs</div>
-            </a>
-            <a class="app-card glass" href="https://stackoverflow.com" target="_blank" rel="noopener noreferrer" data-name="Stack Overflow" data-icon="lightbulb">
-              <span class="material-symbols-outlined">lightbulb</span><div class="app-label">Stack Overflow</div>
-            </a>
-            <a class="app-card glass" href="https://codepen.io" target="_blank" rel="noopener noreferrer" data-name="CodePen" data-icon="code">
-              <span class="material-symbols-outlined">code</span><div class="app-label">CodePen</div>
-            </a>
-            <a class="app-card glass" href="https://unsplash.com" target="_blank" rel="noopener noreferrer" data-name="Unsplash" data-icon="image">
-              <span class="material-symbols-outlined">image</span><div class="app-label">Unsplash</div>
-            </a>
-          </div>
-        </section>
-      </div>
-    </main>
-  </div>
+        </div>
+        <textarea class="notes-area" id="notesArea" placeholder="Notizen hier tippen… Automatisch gespeichert." rows="8"></textarea>
+        <div class="notes-footer">
+          <span id="noteChars">0 Zeichen</span>
+          <span>Auto-Save</span>
+        </div>
+      </section>
 
-  <script>
-    (() => {
-      const SETTINGS_KEY = 'mkweb-settings-os7-v2';
-      const THEMES = ['dark', 'light', 'ocean', 'forest'];
-      const SEARCH_ENGINES = {
-        google: { url: 'https://www.google.com/search?q=', icon: 'travel_explore', label: 'Google' },
-        yandex: { url: 'https://yandex.com/search/?text=', icon: 'search', label: 'Yandex' },
-        bing: { url: 'https://www.bing.com/search?q=', icon: 'search', label: 'Bing' },
-        duckduckgo: { url: 'https://duckduckgo.com/?q=', icon: 'search_hands_free', label: 'DuckDuckGo' },
-        youtube: { url: 'https://www.youtube.com/results?search_query=', icon: 'play_circle', label: 'YouTube' },
-        github: { url: 'https://github.com/search?q=', icon: 'code', label: 'GitHub' }
-      };
-      const QUOTES = [
-        ['Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.', 'Steve Jobs'],
-        ['Die Logik bringt dich von A nach B. Die Vorstellungskraft bringt dich überall hin.', 'Albert Einstein'],
-        ['Sei du selbst die Veränderung, die du dir wünschst für diese Welt.', 'Mahatma Gandhi'],
-        ['Was immer du tun kannst oder träumst es zu können, fang damit an.', 'Johann Wolfgang von Goethe'],
-        ['Glück ist nicht das, was man besitzt, sondern das, was man gibt.', 'Unbekannt'],
-        ['Die Zukunft gehört denen, die an der Schönheit ihrer Träume glauben.', 'Eleanor Roosevelt'],
-        ['Es ist nicht genug zu wissen, man muss es auch anwenden.', 'Johann Wolfgang von Goethe'],
-        ['Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.', 'Peter F. Drucker'],
-        ['Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.', 'Albert Einstein']
-      ];
-      const WEATHER = {
-        heidenheim: { temp: 22, description: 'Leicht bewölkt', icon: 'cloud', location: 'Heidenheim' },
-        berlin: { temp: 18, description: 'Regen', icon: 'rainy', location: 'Berlin' },
-        london: { temp: 15, description: 'Nebel', icon: 'foggy', location: 'London' }
-      };
+      <!-- Todo -->
+      <section class="todo-card glass">
+        <div class="card-label">Aufgaben</div>
+        <div class="todo-input-row">
+          <input class="todo-input" type="text" id="todoInput" placeholder="Neue Aufgabe hinzufügen…" />
+          <button class="todo-add-btn" id="todoAddBtn" aria-label="Hinzufügen">
+            <span class="ms">add</span>
+          </button>
+        </div>
+        <div class="todo-list" id="todoList"></div>
+      </section>
+    </div>
+  </main>
+</div>
 
-      const $ = (sel, root = document) => root.querySelector(sel);
-      const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
-      const clampTheme = (t) => THEMES.includes(t) ? t : 'dark';
-      const readSettings = () => {
-        try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) ?? {}; }
-        catch { return {}; }
-      };
-      const saveSettings = (settings) => {
-        try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {}
-      };
-      const fmtTime = (d) => d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-      const fmtDate = (d) => d.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      const fmtShort = (d) => ({
-        date: d.toLocaleDateString('de-DE', { day: '2-digit', month: 'short' }),
-        weekday: d.toLocaleDateString('de-DE', { weekday: 'long' })
+<script>
+(() => {
+  const SK = 'mkweb-os7-v3';
+  const $ = id => document.getElementById(id);
+  const el = (tag, attrs = {}, ...children) => {
+    const e = document.createElement(tag);
+    Object.entries(attrs).forEach(([k, v]) => {
+      if (k === 'className') e.className = v;
+      else if (k === 'html') e.innerHTML = v;
+      else if (k === 'text') e.textContent = v;
+      else e.setAttribute(k, v);
+    });
+    children.forEach(c => c && e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
+    return e;
+  };
+
+  const ENGINES = {
+    google:     { url: 'https://www.google.com/search?q=',                label: 'Google' },
+    duckduckgo: { url: 'https://duckduckgo.com/?q=',                      label: 'DuckDuckGo' },
+    bing:       { url: 'https://www.bing.com/search?q=',                  label: 'Bing' },
+    youtube:    { url: 'https://www.youtube.com/results?search_query=',   label: 'YouTube' },
+    github:     { url: 'https://github.com/search?q=',                    label: 'GitHub' },
+    ecosia:     { url: 'https://www.ecosia.org/search?q=',               label: 'Ecosia' },
+  };
+
+  const APPS = [
+    { name:'ChatGPT',      url:'https://chat.openai.com',        icon:'chat',               cat:'tools' },
+    { name:'Claude',       url:'https://claude.ai',               icon:'psychology',         cat:'tools' },
+    { name:'Gemini',       url:'https://gemini.google.com',       icon:'bubble_chart',       cat:'tools' },
+    { name:'Notion',       url:'https://notion.so',               icon:'article',            cat:'tools' },
+    { name:'GitHub',       url:'https://github.com',              icon:'code',               cat:'dev' },
+    { name:'CodePen',      url:'https://codepen.io',              icon:'terminal',           cat:'dev' },
+    { name:'MDN',          url:'https://developer.mozilla.org/de', icon:'menu_book',         cat:'dev' },
+    { name:'Stack Overflow', url:'https://stackoverflow.com',     icon:'lightbulb',          cat:'dev' },
+    { name:'Vercel',       url:'https://vercel.com',              icon:'rocket_launch',      cat:'dev' },
+    { name:'Gmail',        url:'https://mail.google.com',         icon:'mail',               cat:'social' },
+    { name:'WhatsApp',     url:'https://web.whatsapp.com',        icon:'chat_bubble',        cat:'social' },
+    { name:'Calendar',     url:'https://calendar.google.com',     icon:'calendar_month',     cat:'tools' },
+    { name:'Spotify',      url:'https://spotify.com',             icon:'headphones',         cat:'social' },
+    { name:'YouTube',      url:'https://youtube.com',             icon:'play_circle',        cat:'social' },
+    { name:'Unsplash',     url:'https://unsplash.com',            icon:'image',              cat:'tools' },
+    { name:'Figma',        url:'https://figma.com',               icon:'design_services',    cat:'dev' },
+    { name:'Drive',        url:'https://drive.google.com',        icon:'cloud',              cat:'tools' },
+    { name:'Wikipedia',    url:'https://de.wikipedia.org',        icon:'public',             cat:'tools' },
+  ];
+
+  const QUOTES = [
+    ['Der einzige Weg, großartige Arbeit zu leisten, ist, zu lieben, was man tut.', 'Steve Jobs'],
+    ['Fantasie ist wichtiger als Wissen, denn Wissen ist begrenzt.', 'Albert Einstein'],
+    ['Sei du selbst die Veränderung, die du dir wünschst für diese Welt.', 'Mahatma Gandhi'],
+    ['Was immer du tun kannst oder träumst es zu können, fang damit an.', 'Goethe'],
+    ['Die Zukunft gehört denen, die an der Schönheit ihrer Träume glauben.', 'Eleanor Roosevelt'],
+    ['Es ist nicht genug zu wissen, man muss es auch anwenden.', 'Goethe'],
+    ['Der beste Weg, die Zukunft vorauszusagen, ist, sie zu gestalten.', 'Peter F. Drucker'],
+    ['In der Mitte jeder Schwierigkeit liegt eine Möglichkeit.', 'Albert Einstein'],
+    ['Kleine Schritte in die richtige Richtung können sich als der größte Schritt deines Lebens herausstellen.', 'Unbekannt'],
+    ['Tu was du kannst, mit dem was du hast, wo immer du bist.', 'Theodore Roosevelt'],
+    ['Code ist Poesie.', 'WordPress'],
+    ['Zuerst löse das Problem. Dann schreibe den Code.', 'John Johnson'],
+  ];
+
+  const WEATHERS = [
+    { temp:22, desc:'Leicht bewölkt', icon:'partly_cloudy_day', hum:'65%', wind:'12 km/h', feels:'20°C' },
+    { temp:18, desc:'Bedeckt',         icon:'cloud',             hum:'78%', wind:'18 km/h', feels:'16°C' },
+    { temp:26, desc:'Sonnig',          icon:'sunny',             hum:'45%', wind:'8 km/h',  feels:'28°C' },
+    { temp:14, desc:'Regen',           icon:'rainy',             hum:'90%', wind:'22 km/h', feels:'11°C' },
+    { temp:8,  desc:'Neblig',          icon:'foggy',             hum:'95%', wind:'5 km/h',  feels:'6°C'  },
+  ];
+
+  // Load / save
+  let S;
+  try { S = JSON.parse(localStorage.getItem(SK)) || {}; } catch { S = {}; }
+  S.theme   ??= 'dark';
+  S.engine  ??= 'google';
+  S.notes   ??= '';
+  S.todos   ??= [];
+  const save = () => { try { localStorage.setItem(SK, JSON.stringify(S)); } catch {} };
+
+  // Theme
+  const html = document.documentElement;
+  html.dataset.theme = S.theme;
+  function setTheme(t) {
+    S.theme = t;
+    html.dataset.theme = t;
+    $('themeIcon').textContent = t === 'dark' ? 'light_mode' : 'dark_mode';
+    $('themeLabel').textContent = t === 'dark' ? 'Hell' : 'Dunkel';
+    save();
+    island('palette', t === 'dark' ? 'Dark Mode' : 'Light Mode', 'Theme gewechselt', 1800);
+  }
+  setTheme(S.theme);
+  $('themeBtn').addEventListener('click', () => setTheme(S.theme === 'dark' ? 'light' : 'dark'));
+
+  // Clock
+  function pad(n) { return String(n).padStart(2, '0'); }
+  const DAYS = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  const MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  function greeting(h) {
+    if (h < 5)  return 'Gute Nacht';
+    if (h < 11) return 'Guten Morgen';
+    if (h < 17) return 'Guten Tag';
+    if (h < 21) return 'Guten Abend';
+    return 'Gute Nacht';
+  }
+  function tick() {
+    const now = new Date();
+    const h = now.getHours(), m = now.getMinutes(), sec = now.getSeconds();
+    $('timeClock').textContent = `${pad(h)}:${pad(m)}`;
+    $('timeSec').textContent = pad(sec);
+    $('dateDisplay').textContent = `${DAYS[now.getDay()]}, ${now.getDate()}. ${MONTHS[now.getMonth()]} ${now.getFullYear()}`;
+    $('greeting').textContent = greeting(h);
+    // Focus overlay
+    $('focusTime').textContent = `${pad(h)}:${pad(m)}`;
+    $('focusDate').textContent = `${DAYS[now.getDay()]}, ${now.getDate()}. ${MONTHS[now.getMonth()]}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Island
+  let islandTimer;
+  function island(icon, title, sub, dur = 2400, busy = false) {
+    clearTimeout(islandTimer);
+    $('islandTitle').textContent = title;
+    $('islandSub').textContent = sub;
+    $('islandDot').className = 'island-dot' + (busy ? ' pulse' : '');
+    $('islandWaves').style.display = busy ? 'flex' : 'none';
+    const el = $('island');
+    el.classList.add('wide');
+    islandTimer = setTimeout(() => {
+      el.classList.remove('wide');
+      $('islandTitle').textContent = 'MKWEB OS 7';
+      $('islandSub').textContent = `Suchmaschine: ${ENGINES[S.engine]?.label || 'Google'}`;
+      $('islandDot').className = 'island-dot';
+      $('islandWaves').style.display = 'none';
+    }, dur);
+  }
+  $('islandClose').addEventListener('click', e => {
+    e.stopPropagation();
+    clearTimeout(islandTimer);
+    $('island').classList.remove('wide');
+    $('islandTitle').textContent = 'MKWEB OS 7';
+    $('islandSub').textContent = `Suchmaschine: ${ENGINES[S.engine]?.label || 'Google'}`;
+    $('islandDot').className = 'island-dot';
+    $('islandWaves').style.display = 'none';
+  });
+  setTimeout(() => island('waving_hand', 'Willkommen zurück!', 'Schönen Tag noch.', 2800), 600);
+
+  // Engine
+  function selectEngine(key) {
+    S.engine = key;
+    save();
+    document.querySelectorAll('.eng-btn').forEach(b => b.classList.toggle('active', b.dataset.engine === key));
+    $('headerEnginePill').textContent = ENGINES[key]?.label || key;
+    island('travel_explore', ENGINES[key]?.label || key, 'Suchmaschine gewechselt', 1800);
+  }
+  document.querySelectorAll('.eng-btn').forEach(b => {
+    b.addEventListener('click', () => selectEngine(b.dataset.engine));
+  });
+  selectEngine(S.engine);
+
+  // Search
+  function doSearch(query) {
+    const q = (query || '').trim();
+    if (!q) return;
+    const eng = ENGINES[S.engine] || ENGINES.google;
+    island('search', 'Suche…', `"${q}" auf ${eng.label}`, 1000, true);
+    setTimeout(() => window.open(eng.url + encodeURIComponent(q), '_blank', 'noopener'), 600);
+  }
+  [$('mainSearch'), $('headerSearch'), $('focusSearch')].forEach(inp => {
+    if (!inp) return;
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(inp.value); });
+  });
+  $('searchGoBtn').addEventListener('click', () => doSearch($('mainSearch').value));
+
+  // Weather
+  let wIdx = 0;
+  function showWeather(data) {
+    $('weatherTemp').textContent = data.temp + '°C';
+    $('weatherDesc').textContent = data.desc;
+    $('weatherIconMs').textContent = data.icon;
+    $('weatherHum').textContent = data.hum;
+    $('weatherWind').textContent = data.wind;
+    $('weatherFeels').textContent = 'Fühlt sich an: ' + data.feels;
+    island(data.icon, data.temp + '°C · Heidenheim', data.desc, 3000);
+  }
+  $('weatherRefresh').addEventListener('click', () => {
+    island('cloud_sync', 'Wetter wird geladen…', 'Bitte warten…', 1800, true);
+    setTimeout(() => {
+      wIdx = (wIdx + 1) % WEATHERS.length;
+      showWeather(WEATHERS[wIdx]);
+    }, 900);
+  });
+  showWeather(WEATHERS[0]);
+
+  // Quote
+  let qIdx = Math.floor(Math.random() * QUOTES.length);
+  function showQuote() {
+    const [text, author] = QUOTES[qIdx];
+    $('quoteText').textContent = text;
+    $('quoteAuthor').textContent = '— ' + author;
+  }
+  showQuote();
+  $('quoteRefresh').addEventListener('click', () => {
+    qIdx = (qIdx + 1) % QUOTES.length;
+    showQuote();
+    island('format_quote', 'Neues Zitat', QUOTES[qIdx][1], 1600);
+  });
+
+  // Apps
+  let activeFilter = 'all';
+  function renderApps() {
+    const grid = $('appsGrid');
+    grid.innerHTML = '';
+    const filtered = APPS.filter(a => activeFilter === 'all' || a.cat === activeFilter);
+    filtered.forEach(app => {
+      const tile = el('a', { className: 'app-tile glass', href: app.url, target: '_blank', rel: 'noopener noreferrer', 'data-name': app.name });
+      tile.appendChild(el('span', { className: 'ms fill', text: app.icon, 'aria-hidden': 'true' }));
+      tile.appendChild(el('div', { className: 'app-tile-label', text: app.name }));
+      tile.addEventListener('mouseenter', () => island(app.icon, app.name, 'Wird geöffnet…', 1400));
+      grid.appendChild(tile);
+    });
+  }
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      activeFilter = b.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      renderApps();
+    });
+  });
+  renderApps();
+
+  // Notes
+  const notesEl = $('notesArea');
+  notesEl.value = S.notes;
+  updateNoteChars();
+  let notesSaveTimer;
+  notesEl.addEventListener('input', () => {
+    S.notes = notesEl.value;
+    updateNoteChars();
+    clearTimeout(notesSaveTimer);
+    notesSaveTimer = setTimeout(() => {
+      save();
+      const badge = $('saveBadge');
+      badge.classList.add('show');
+      setTimeout(() => badge.classList.remove('show'), 2000);
+    }, 800);
+  });
+  function updateNoteChars() {
+    $('noteChars').textContent = notesEl.value.length + ' Zeichen';
+  }
+
+  // Todos
+  function renderTodos() {
+    const list = $('todoList');
+    list.innerHTML = '';
+    if (!S.todos.length) {
+      list.appendChild(el('div', { className: 'todo-empty' },
+        el('span', { className: 'ms', text: 'task_alt' }),
+        el('span', { text: 'Keine Aufgaben – gut gemacht!' })
+      ));
+      return;
+    }
+    S.todos.forEach((todo, i) => {
+      const item = el('div', { className: 'todo-item' });
+      const check = el('button', { className: 'todo-check' + (todo.done ? ' done' : ''), 'aria-label': 'Erledigt' });
+      check.appendChild(el('span', { className: 'ms', text: 'check' }));
+      check.addEventListener('click', () => {
+        S.todos[i].done = !S.todos[i].done;
+        save(); renderTodos();
+        if (S.todos[i].done) island('task_alt', 'Erledigt!', todo.text.slice(0, 40), 1600);
       });
-      const engineName = (key) => SEARCH_ENGINES[key]?.label ?? 'Google';
+      const txt = el('div', { className: 'todo-text' + (todo.done ? ' done' : ''), text: todo.text });
+      const del = el('button', { className: 'todo-del', 'aria-label': 'Löschen' });
+      del.appendChild(el('span', { className: 'ms', text: 'delete' }));
+      del.addEventListener('click', () => { S.todos.splice(i, 1); save(); renderTodos(); });
+      item.appendChild(check); item.appendChild(txt); item.appendChild(del);
+      list.appendChild(item);
+    });
+  }
+  renderTodos();
+  function addTodo() {
+    const val = $('todoInput').value.trim();
+    if (!val) return;
+    S.todos.push({ text: val, done: false });
+    $('todoInput').value = '';
+    save(); renderTodos();
+    island('add_task', 'Aufgabe hinzugefügt', val.slice(0, 40), 1600);
+  }
+  $('todoAddBtn').addEventListener('click', addTodo);
+  $('todoInput').addEventListener('keydown', e => { if (e.key === 'Enter') addTodo(); });
 
-      const state = {
-        settings: {
-          theme: 'dark',
-          showAvatar: true,
-          engine: 'google',
-          weatherLocation: 'heidenheim'
-        },
-        islandTimer: null,
-        islandModeTimer: null,
-        quoteTimer: null,
-        timeTimer: null,
-        islandMode: 'default',
-        islandExpanded: false,
-        islandToggleTick: true
-      };
+  // Fullscreen
+  $('fullBtn').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const full = !!document.fullscreenElement;
+    $('fullIcon').textContent = full ? 'fullscreen_exit' : 'fullscreen';
+    $('fullLabel').textContent = full ? 'Exit' : 'Vollbild';
+  });
 
-      const els = {
-        html: document.documentElement,
-        island: $('#island'),
-        islandIcon: $('#islandIcon'),
-        islandTitle: $('#islandTitle'),
-        islandSubtitle: $('#islandSubtitle'),
-        islandWave: $('#islandWave'),
-        islandDismiss: $('#islandDismiss'),
-        time: $('#time'),
-        date: $('#date'),
-        quoteText: $('#quoteText'),
-        quoteAuthor: $('#quoteAuthor'),
-        search: $('#search'),
-        themeBtn: $('#themeBtn'),
-        fullBtn: $('#fullBtn'),
-        avatarBtn: $('#avatarBtn'),
-        avatar: $('#avatar'),
-        weatherLink: $('#weatherLink'),
-        engineBtns: $$('.search-engine'),
-        appCards: $$('.app-card')
-      };
+  // Focus Mode
+  const overlay = $('focusOverlay');
+  $('focusBtn').addEventListener('click', () => overlay.classList.add('show'));
+  $('focusCloseBtn').addEventListener('click', () => overlay.classList.remove('show'));
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('show'); });
+  overlay.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('show'); });
+  overlay.addEventListener('shown', () => $('focusSearch').focus());
 
-      function setIsland(icon, title, subtitle, opts = {}) {
-        els.islandIcon.textContent = icon;
-        els.islandTitle.textContent = title;
-        els.islandSubtitle.textContent = subtitle;
-        els.island.classList.toggle('busy', !!opts.busy);
-      }
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (overlay.classList.contains('show')) $('focusSearch').focus();
+      else $('mainSearch').focus();
+    }
+    if (e.key === 'Escape' && overlay.classList.contains('show')) overlay.classList.remove('show');
+  });
 
-      function showIsland(icon, title, subtitle, duration = 2400, opts = {}) {
-        clearTimeout(state.islandTimer);
-        setIsland(icon, title, subtitle, opts);
-        if (opts.expanded ?? true) els.island.classList.add('expanded');
-        state.islandTimer = setTimeout(() => {
-          els.island.classList.remove('expanded');
-          resetIsland();
-        }, duration);
-      }
+  // Initial island
+  $('islandSub').textContent = `Suchmaschine: ${ENGINES[S.engine]?.label || 'Google'}`;
 
-      function resetIsland() {
-        const engine = state.settings.engine;
-        const cfg = SEARCH_ENGINES[engine] || SEARCH_ENGINES.google;
-        setIsland(cfg.icon, 'Suchmaschine', `Aktiv: ${cfg.label}`);
-        els.island.classList.remove('busy');
-        if (!state.islandExpanded) els.island.classList.remove('expanded');
-      }
-
-      function applyTheme(theme) {
-        const next = clampTheme(theme);
-        els.html.dataset.theme = next;
-        state.settings.theme = next;
-        saveSettings(state.settings);
-        showIsland('palette', 'Theme geändert', `Aktiv: ${next[0].toUpperCase()}${next.slice(1)}`, 1800, { expanded: true });
-      }
-
-      function cycleTheme() {
-        const idx = THEMES.indexOf(state.settings.theme);
-        applyTheme(THEMES[(idx + 1) % THEMES.length]);
-      }
-
-      function updateQuote() {
-        const [text, author] = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-        els.quoteText.textContent = `"${text}"`;
-        els.quoteAuthor.textContent = `— ${author}`;
-      }
-
-      function updateClock() {
-        const now = new Date();
-        els.time.textContent = fmtTime(now);
-        els.date.textContent = fmtDate(now);
-      }
-
-      function selectEngine(engine) {
-        state.settings.engine = SEARCH_ENGINES[engine] ? engine : 'google';
-        saveSettings(state.settings);
-        els.engineBtns.forEach(btn => {
-          const active = btn.dataset.engine === state.settings.engine;
-          btn.setAttribute('aria-pressed', String(active));
-        });
-        resetIsland();
-      }
-
-      function performSearch() {
-        const query = els.search.value.trim();
-        if (!query) return;
-        const engine = SEARCH_ENGINES[state.settings.engine] || SEARCH_ENGINES.google;
-        const url = engine.url + encodeURIComponent(query);
-        showIsland('arrow_forward', 'Suche läuft…', `Öffne Ergebnisse für „${query}“`, 900, { busy: true, expanded: true });
-        window.setTimeout(() => {
-          window.open(url, '_blank', 'noopener,noreferrer');
-          els.search.value = '';
-        }, 700);
-      }
-
-      function fakeWeather(locationKey) {
-        const data = WEATHER[locationKey] || WEATHER.heidenheim;
-        return new Promise(resolve => setTimeout(() => resolve(data), 450));
-      }
-
-      async function onWeatherClick(e) {
-        e.preventDefault();
-        const key = state.settings.weatherLocation;
-        showIsland('cloud_sync', 'Wetter wird geladen…', 'Bitte kurz warten', 2200, { busy: true, expanded: true });
-        try {
-          const w = await fakeWeather(key);
-          const icon = w.icon === 'rain' ? 'rainy' : w.icon;
-          showIsland(icon, `${w.temp}°C`, `${w.description} in ${w.location}`, 3400, { expanded: true });
-        } catch {
-          showIsland('error', 'Fehler', 'Wetterdaten nicht verfügbar', 2200, { expanded: true });
-        }
-      }
-
-      function syncAvatar() {
-        const show = !!state.settings.showAvatar;
-        els.avatar.classList.toggle('hidden', !show);
-        els.avatarBtn.textContent = show ? '🙈 Avatar' : '🐵 Avatar';
-        els.avatar.setAttribute('aria-hidden', String(!show));
-      }
-
-      function toggleAvatar() {
-        state.settings.showAvatar = !state.settings.showAvatar;
-        saveSettings(state.settings);
-        syncAvatar();
-      }
-
-      function toggleFullscreen() {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen?.();
-        } else {
-          document.exitFullscreen?.();
-        }
-      }
-
-      function bindAppHover(card) {
-        let hoverTimer = null;
-        card.addEventListener('mouseenter', () => {
-          clearTimeout(hoverTimer);
-          hoverTimer = setTimeout(() => {
-            const name = card.dataset.name || 'App';
-            const icon = card.dataset.icon || 'apps';
-            setIsland(icon, name, 'Starte App…', { busy: false });
-            els.island.classList.add('expanded');
-          }, 250);
-        });
-        card.addEventListener('mouseleave', () => {
-          clearTimeout(hoverTimer);
-          resetIsland();
-        });
-        card.addEventListener('focus', () => {
-          const name = card.dataset.name || 'App';
-          setIsland(card.dataset.icon || 'apps', name, 'Schnellzugriff');
-          els.island.classList.add('expanded');
-        });
-        card.addEventListener('blur', resetIsland);
-      }
-
-      function init() {
-        state.settings = {
-          ...state.settings,
-          ...readSettings()
-        };
-        state.settings.theme = clampTheme(state.settings.theme);
-        state.settings.engine = SEARCH_ENGINES[state.settings.engine] ? state.settings.engine : 'google';
-        els.html.dataset.theme = state.settings.theme;
-
-        updateClock();
-        updateQuote();
-        resetIsland();
-        syncAvatar();
-        selectEngine(state.settings.engine);
-
-        clearInterval(state.timeTimer);
-        state.timeTimer = setInterval(updateClock, 1000);
-        clearInterval(state.quoteTimer);
-        state.quoteTimer = setInterval(updateQuote, 60 * 60 * 1000);
-
-        els.engineBtns.forEach(btn => btn.addEventListener('click', () => selectEngine(btn.dataset.engine)));
-        els.search.addEventListener('keydown', e => { if (e.key === 'Enter') performSearch(); });
-        els.themeBtn.addEventListener('click', cycleTheme);
-        els.fullBtn.addEventListener('click', toggleFullscreen);
-        els.avatarBtn.addEventListener('click', toggleAvatar);
-        els.weatherLink.addEventListener('click', onWeatherClick);
-        els.islandDismiss.addEventListener('click', (e) => { e.stopPropagation(); els.island.classList.remove('expanded'); resetIsland(); });
-        els.island.addEventListener('click', (e) => {
-          if (e.target.closest('#islandDismiss')) return;
-          state.islandExpanded = !state.islandExpanded;
-          els.island.classList.toggle('expanded', state.islandExpanded);
-          if (!state.islandExpanded) resetIsland();
-        });
-
-        els.appCards.forEach(bindAppHover);
-
-        document.addEventListener('fullscreenchange', () => {
-          els.fullBtn.textContent = document.fullscreenElement ? 'Exit Fullscreen' : '🚀 Vollbild';
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && els.island.classList.contains('expanded')) {
-            state.islandExpanded = false;
-            els.island.classList.remove('expanded');
-            resetIsland();
-          }
-          if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-            e.preventDefault();
-            els.search.focus();
-          }
-        });
-
-        showIsland('info', 'Willkommen!', 'Wähle eine Suchmaschine aus.', 1800, { expanded: true });
-        console.log('MKWEB OS 7 verbessert geladen');
-      }
-
-      init();
-    })();
-  </script>
+})();
+</script>
 </body>
 </html>
